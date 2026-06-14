@@ -1,0 +1,597 @@
+device_id,property,value,error,unit,remarks
+10.1002admi.202500231_Sample1,VBM,-5.6,,eV,For ITO/NiOx
+10.1002admi.202500231_Sample1,Voc,1.02,0.01,V,AM 1.5G
+10.1002admi.202500231_Sample1,Jsc,20.97,1.13,mA cm−2,AM 1.5G
+10.1002admi.202500231_Sample1,FF,76.0,0.005,%,AM 1.5G
+10.1002admi.202500231_Sample1,PCE,16.31,1.0,%,AM 1.5G
+10.1002admi.202500231_Sample1,Rs,0.68,,Ohm/cm2,
+10.1002admi.202500231_Sample1,FWHM,0.144,0.079,eV,
+10.1002admi.202500231_Sample1,HTL optical Band gap,3.85,,eV,NiOx NPs
+10.1002admi.202500231_Sample1,PSK Optical band gap,1.609,,eV,
+10.1002admi.202500231_Sample1,VBM (UPS),-5.72,,eV,
+10.1002admi.202500231_Sample2,VBM,-5.56,,eV,"of ITO/NiOx IL1%,"
+10.1002admi.202500231_Sample2,Voc,1.04,0.01,V,AM 1.5G
+10.1002admi.202500231_Sample2,Jsc,22.01,1.14,mA cm−2,AM 1.5G
+10.1002admi.202500231_Sample2,FF,75.0,0.03,%,AM 1.5G
+10.1002admi.202500231_Sample2,PCE,17.11,1.125,%,AM 1.5G
+10.1002admi.202500231_Sample2,Rs,0.64,,Ohm/cm2,
+10.1002admi.202500231_Sample2,FWHM,0.125,0.016,eV,
+10.1002admi.202500231_Sample2,HTL optical Band gap,3.85,,eV,NiOx NPs
+10.1002admi.202500231_Sample2,PSK Optical band gap,1.62,,eV,
+10.1002admi.202500231_Sample3,VBM,-5.5,,eV,"of ITO/NiOx IL2%,"
+10.1002admi.202500231_Sample3,Voc,1.0,0.01,V,AM 1.5G
+10.1002admi.202500231_Sample3,Jsc,21.86,0.22,mA cm−2,AM 1.5G
+10.1002admi.202500231_Sample3,FF,78.0,0.01,%,AM 1.5G
+10.1002admi.202500231_Sample3,PCE,16.97,0.36,%,AM 1.5G
+10.1002admi.202500231_Sample3,Rs,0.62,,Ohm/cm2,
+10.1002admi.202500231_Sample3,FWHM,0.097,0.007,eV,
+10.1002admi.202500231_Sample3,HTL optical Band gap,3.85,,eV,NiOx NPs
+10.1002admi.202500231_Sample3,PSK Optical band gap,1.62,,eV,
+10.1002admi.202500231_Sample3,VBM (UPS),-5.4,,eV,
+10.1002admi.202500231_Sample4,VBM,-5.6,,eV,"of ITO/NiOx IL4%,"
+10.1002admi.202500231_Sample4,Avg_Voc,0.99,0.003,V,AM 1.5G
+10.1002admi.202500231_Sample4,Avg_Jsc,20.79,0.74,mA cm−2,AM 1.5G
+10.1002admi.202500231_Sample4,FF,79.0,0.01,%,AM 1.5G
+10.1002admi.202500231_Sample4,PCE,16.25,0.63,%,AM 1.5G
+10.1002admi.202500231_Sample4,Rs,0.53,,Ohm/cm2,
+10.1002admi.202500231_Sample4,FWHM,0.51,0.139,eV,
+10.1002admi.202500231_Sample4,HTL optical Band gap,3.85,,eV,NiOx NPs
+10.1002admi.202500231_Sample4,PSK Optical band gap,1.62,,eV,
+10.1016j.jechem.2021.11.029_Sample1,Voc (RS),1.064,,%,
+10.1016j.jechem.2021.11.029_Sample1,Jsc (RS),21.32,,%,
+10.1016j.jechem.2021.11.029_Sample1,FF (RS),78.58,,%,
+10.1016j.jechem.2021.11.029_Sample1,PCE (RS),17.83,,%,
+10.1016j.jechem.2021.11.029_Sample1,Voc (FS),1.061,,%,
+10.1016j.jechem.2021.11.029_Sample1,Jsc (FS),21.12,,%,
+10.1016j.jechem.2021.11.029_Sample1,FF (FS),79.47,,%,
+10.1016j.jechem.2021.11.029_Sample1,PCE (FS),17.81,,,
+10.1016j.jechem.2021.11.029_Sample1,Average Voc,1.065,,%,
+10.1016j.jechem.2021.11.029_Sample1,Average Jsc,20.78,,%,
+10.1016j.jechem.2021.11.029_Sample1,Average FF,79.6,,%,
+10.1016j.jechem.2021.11.029_Sample1,Average PCE,17.62,,%,
+10.1016j.jechem.2021.11.029_Sample1,Integrated Jsc,20.35,,mA/cm-2,
+10.1016j.jechem.2021.11.029_Sample1,Contact angle,31.88,,deg,For NiOx
+10.1016j.jechem.2021.11.029_Sample1,Grain size,283.0,,nm,From SEM
+10.1016j.jechem.2021.11.029_Sample1,VBM,-5.05,,eV,
+10.1016j.jechem.2021.11.029_Sample1,Work Function,4.69,,eV,
+10.1016j.jechem.2021.11.029_Sample1,Hole Mobility,0.000297,,cm2/Vs,
+10.1016j.jechem.2021.11.029_Sample1,VTFL,0.66,,V,
+10.1016j.jechem.2021.11.029_Sample1,Trap density,6080000000000000.0,,cm-3,
+10.1016j.jechem.2021.11.029_Sample2,Voc (RS),1.118,,%,
+10.1016j.jechem.2021.11.029_Sample2,Jsc (RS),21.98,,%,
+10.1016j.jechem.2021.11.029_Sample2,FF (RS),82.09,,%,
+10.1016j.jechem.2021.11.029_Sample2,PCE (RS),20.16,,%,
+10.1016j.jechem.2021.11.029_Sample2,Voc (FS),1.122,,%,
+10.1016j.jechem.2021.11.029_Sample2,Jsc (FS),22.12,,%,
+10.1016j.jechem.2021.11.029_Sample2,FF (FS),81.11,,%,
+10.1016j.jechem.2021.11.029_Sample2,PCE (FS),20.12,,,
+10.1016j.jechem.2021.11.029_Sample2,Average Voc,1.117,,%,
+10.1016j.jechem.2021.11.029_Sample2,Average Jsc,22.1,,%,
+10.1016j.jechem.2021.11.029_Sample2,Average FF,81.52,,%,
+10.1016j.jechem.2021.11.029_Sample2,Average PCE,20.13,,%,
+10.1016j.jechem.2021.11.029_Sample2,Integrated Jsc,21.08,,mA/cm-2,
+10.1016j.jechem.2021.11.029_Sample2,Contact angle,80.81,,deg,For NiOx/BDT-POZ
+10.1016j.jechem.2021.11.029_Sample2,Grain size,329.0,,nm,From SEM
+10.1016j.jechem.2021.11.029_Sample2,Energy gap,0.42,,eV,From Valence band spectra
+10.1016j.jechem.2021.11.029_Sample2,VBM,-5.29,,eV,
+10.1016j.jechem.2021.11.029_Sample2,Work Function,4.87,,eV,
+10.1016j.jechem.2021.11.029_Sample2,Hole Mobility,0.000266,,cm2/Vs,
+10.1016j.jechem.2021.11.029_Sample2,VTFL,0.41,,V,
+10.1016j.jechem.2021.11.029_Sample2,Trap density,3780000000000000.0,,cm-3,
+10.1016j.nanoen.2021.106285_Sample1,Roughness,13.2,,nm,From AFM
+10.1016j.nanoen.2021.106285_Sample1,Electron Trap Density,4100000000000000.0,,cm-3,From electron-only I-V
+10.1016j.nanoen.2021.106285_Sample1,Hole Trap Density,3000000000000000.0,,cm-3,From hole-only I-V
+10.1016j.nanoen.2021.106285_Sample1,Electron VTFL,0.29,,V,From SCLC measurement
+10.1016j.nanoen.2021.106285_Sample1,Hole VTFL,0.21,,V,From SCLC measurement
+10.1016j.nanoen.2021.106285_Sample1,Work Function,5.16,,eV,For FTO/NiOx via UPS
+10.1016j.nanoen.2021.106285_Sample1,Voc,1.062,,V,
+10.1016j.nanoen.2021.106285_Sample1,Jsc,22.92,,mA/cm2,
+10.1016j.nanoen.2021.106285_Sample1,FF,74.89,,%,
+10.1016j.nanoen.2021.106285_Sample1,PCE Average,18.23,,%,
+10.1016j.nanoen.2021.106285_Sample1,EIS Rs,29.7,,Ohm,
+10.1016j.nanoen.2021.106285_Sample1,EIS Rrec,14563.62,,,
+10.1016j.nanoen.2021.106285_Sample2,PCE,20.28,,%,
+10.1016j.nanoen.2021.106285_Sample2,Voc,1.104,,V,
+10.1016j.nanoen.2021.106285_Sample2,Jsc,23.95,,mA/cm2,
+10.1016j.nanoen.2021.106285_Sample2,FF,76.69,,%,
+10.1016j.nanoen.2021.106285_Sample2,Electron Trap Density,2690000000000000.0,,cm-3,From electron-only I-V
+10.1016j.nanoen.2021.106285_Sample2,Hole Trap Density,1500000000000000.0,,cm-3,From hole-only I-V
+10.1016j.nanoen.2021.106285_Sample2,Hole VTFL,0.11,,V,From SCLC measurement
+10.1016j.nanoen.2021.106285_Sample2,Work Function,5.21,,eV,For FTO/NiOx/PTAA via UPS
+10.1016j.nanoen.2021.106285_Sample2,EIS Rs,20.98,,Ohm,
+10.1016j.nanoen.2021.106285_Sample2,EIS Rrec,39161.17,,Ohm,
+10.1016j.nanoen.2021.106285_Sample3,PCE,21.9,,%,Champion Device
+10.1016j.nanoen.2021.106285_Sample3,Voc,1.142,,V,Champion Device
+10.1016j.nanoen.2021.106285_Sample3,Jsc,24.44,,mA/cm2,Champion Device
+10.1016j.nanoen.2021.106285_Sample3,FF,78.46,,%,Champion Device
+10.1016j.nanoen.2021.106285_Sample3,Electron Trap Density,2270000000000000.0,,cm-3,From electron-only I-V
+10.1016j.nanoen.2021.106285_Sample3,Hole Trap Density,990000000000000.0,,cm-3,From hole-only I-V
+10.1016j.nanoen.2021.106285_Sample3,Electron VTFL,0.16,,V,From SCLC measurement
+10.1016j.nanoen.2021.106285_Sample3,Work Function,5.48,,eV,For FTO/NiOx/PTAA/SnO2 via UPS
+10.1016j.nanoen.2021.106285_Sample3,EIS Rs,12.79,,Ohm,
+10.1016j.nanoen.2021.106285_Sample3,EIS Rrec,87083.71,,Ohm,
+10.1016j.nanoen.2021.106285_Sample3,Roughness,8.5,,nm,For FTO/NiOx/PTAA
+10.1021_acsami.5c16972_Sample1,Electrical conductivity,0.0012,,S cm-1,ITO/NiOx/Ag
+10.1021_acsami.5c16972_Sample1,Hole mobility,0.0003671,,m2 V-1 s-1,ITO/NiOx/Ag
+10.1021_acsami.5c16972_Sample1,Roughness RMS,7.33,,nm,of NiOx without treatment
+10.1021_acsami.5c16972_Sample1,VBM,-5.44,,eV,of NiOx without treatment
+10.1021_acsami.5c16972_Sample1,Fermi level,-4.41,,eV,of NiOx without treatment
+10.1021_acsami.5c16972_Sample1,HTL grain size,657.0,,nm,NiOx
+10.1021_acsami.5c16972_Sample1,PSK grain size,694.0,,nm,
+10.1021_acsami.5c16972_Sample1,TRPL lifetime,588.0,,ns,NiOx/PVK
+10.1021_acsami.5c16972_Sample1,RS Voc,1.06,,V,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,RS Jsc,20.71,,mAcm-2,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,RS FF,79.65,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,RS PCE,17.5,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,FS Voc,1.0,,V,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,FS Jsc,20.06,,mAcm-2,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,FS FF,77.44,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,FS PCE,15.58,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample1,HI,10.9,,%,
+10.1021_acsami.5c16972_Sample1,the slope of light intensity-dependent Voc,1.84,,kBT/q,
+10.1021_acsami.5c16972_Sample1,SCLC trap densitiy,2900000000000000.0,,cm-3,ITO/NiOx/perovskite/spiro/Ag.
+10.1021_acsami.5c16972_Sample1,EIS Rs,14.12,,Ohm,
+10.1021_acsami.5c16972_Sample1,EIS Rrec,2881.0,,Ohm,
+10.1021_acsami.5c16972_Sample1,EIS Crec,3.3e-08,,F,
+10.1021_acsami.5c16972_Sample2,Electrical conductivity,0.0016,,S cm-1,ITO/NiOx/Me-4PACz/Ag
+10.1021_acsami.5c16972_Sample2,Hole mobility,0.0004646,,m2 V-1 s-1,ITO/NiOx/Me-4PACz/Ag
+10.1021_acsami.5c16972_Sample2,Roughness RMS,6.37,,nm,of NiOx + treatment layer
+10.1021_acsami.5c16972_Sample2,VBM,-5.58,,eV,of NiOx + treatment layer
+10.1021_acsami.5c16972_Sample2,Fermi level,-4.7,,eV,of NiOx + treatment layer
+10.1021_acsami.5c16972_Sample2,HTL grain size,799.0,,nm,NiOx/Me-4PACz
+10.1021_acsami.5c16972_Sample2,PSK grain size,792.0,,nm,
+10.1021_acsami.5c16972_Sample2,TRPL lifetime,717.0,,ns,NiOx/PVK
+10.1021_acsami.5c16972_Sample2,RS Voc,1.08,,V,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,RS Jsc,23.89,,mAcm-2,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,RS FF,78.21,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,RS PCE,20.33,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,FS Voc,1.09,,V,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,FS Jsc,22.79,,mAcm-2,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,FS FF,74.8,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,FS PCE,18.73,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample2,HI,7.8,,%,
+10.1021_acsami.5c16972_Sample2,the slope of light intensity-dependent Voc,1.494,,kBT/q,
+10.1021_acsami.5c16972_Sample2,SCLC trap densitiy,2240000000000000.0,,cm-3,ITO/NiOx/Me-4PACz/perovskite/spiro/Ag.
+10.1021_acsami.5c16972_Sample2,EIS Rs,4.76,,Ohm,
+10.1021_acsami.5c16972_Sample2,EIS Rrec,3817.0,,Ohm,
+10.1021_acsami.5c16972_Sample2,EIS Crec,3.06e-08,,F,
+10.1021_acsami.5c16972_Sample3,Electrical conductivity,0.002,,S cm-1,ITO/NiOx/Me-4PACz+PCPTFB/Ag
+10.1021_acsami.5c16972_Sample3,Hole mobility,0.0006941,,m2 V-1 s-1,ITO/NiOx/Me-4PACz+PCPTFB/Ag
+10.1021_acsami.5c16972_Sample3,Roughness RMS,5.51,,nm,of NiOx + treatment layer
+10.1021_acsami.5c16972_Sample3,VBM,-5.61,,eV,of NiOx + treatment layer
+10.1021_acsami.5c16972_Sample3,Fermi level,-4.77,,eV,of NiOx + treatment layer
+10.1021_acsami.5c16972_Sample3,HTL grain size,882.0,,nm,NiOx/Me-4PACz +PCPTFB
+10.1021_acsami.5c16972_Sample3,PSK grain size,1000.0,,nm,
+10.1021_acsami.5c16972_Sample3,TRPL lifetime,1497.0,,ns,NiOx/PVK
+10.1021_acsami.5c16972_Sample3,RS Voc,1.13,,V,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,RS Jsc,24.88,,mAcm-2,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,RS FF,84.38,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,RS PCE,23.68,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,FS Voc,1.13,,V,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,FS Jsc,24.69,,mAcm-2,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,FS FF,81.63,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,FS PCE,22.89,,%,"AM1.5G, scan rate = 20 mV/s, delay time = 0.01s."
+10.1021_acsami.5c16972_Sample3,HI,3.3,,%,
+10.1021_acsami.5c16972_Sample3,the slope of light intensity-dependent Voc,1.208,,kBT/q,
+10.1021_acsami.5c16972_Sample3,SCLC trap densitiy,1140000000000000.0,,cm-3,ITO/NiOx/Me-4PACz+PCPTFB/perovskite/spiro/Ag.
+10.1021_acsami.5c16972_Sample3,EIS Rs,3.76,,Ohm,
+10.1021_acsami.5c16972_Sample3,EIS Rrec,4543.0,,Ohm,
+10.1021_acsami.5c16972_Sample3,EIS Crec,2.84e-08,,F,
+10_1002_smll_202504237_Sample1,Champion Voc,1.15,,V,Table 2
+10_1002_smll_202504237_Sample1,Champion Jsc,18.43,,mA cm-2,Table 2
+10_1002_smll_202504237_Sample1,Champion FF,71.0,,%,Table 2
+10_1002_smll_202504237_Sample1,Champion PCE,15.11,,%,Table 2
+10_1002_smll_202504237_Sample1,AFM rms,29.72,3.77,nm,Figure 2a
+10_1002_smll_202504237_Sample1,VBM,0.55,,eV,Figure 3b
+10_1002_smll_202504237_Sample1,Work Function (UPS),4.39,,eV,Figure 3a
+10_1002_smll_202504237_Sample1,Hole mobility (Hall),3.46,,cm2 V-1 s-1,Table S1
+10_1002_smll_202504237_Sample1,Carrier concentration (Hall),8.1e+18,,cm-3,Table S1
+10_1002_smll_202504237_Sample1,Conductivity (Hall),4.49,,S cm-1,Table S1
+10_1002_smll_202504237_Sample1,Sheet resistance,124000.0,,Ω/sq,Table S1
+10_1002_smll_202504237_Sample2,Champion Voc,1.17,,V,Table 2
+10_1002_smll_202504237_Sample2,Champion Jsc,18.26,,mA cm-2,Table 2
+10_1002_smll_202504237_Sample2,Champion FF,77.0,,%,Table 2
+10_1002_smll_202504237_Sample2,Champion PCE,16.61,,%,Table 2
+10_1002_smll_202504237_Sample2,AFM rms,29.75,3.29,nm,Figure 2b
+10_1002_smll_202504237_Sample2,VBM,0.56,,eV,Figure 3b
+10_1002_smll_202504237_Sample2,Work Function (UPS),4.57,,eV,Figure 3a
+10_1002_smll_202504237_Sample2,Hole mobility (Hall),43.2,,cm2 V-1 s-1,Table S1
+10_1002_smll_202504237_Sample2,Carrier concentration (Hall),1.51e+18,,cm-3,Table S1
+10_1002_smll_202504237_Sample2,Conductivity (Hall),10.4,,S cm-1,Table S1
+10_1002_smll_202504237_Sample2,Sheet resistance,53400.0,,Ω/sq,Table S1
+10_1002_solr_202200422_Sample1,Champion PCE (RS),20.12,,%,"Reverse scan, Table 1 / Table S1"
+10_1002_solr_202200422_Sample1,Champion PCE (FS),19.2,,%,"Forward scan, Table 1"
+10_1002_solr_202200422_Sample1,Average PCE (RS),19.18,0.55,%,Table S1
+10_1002_solr_202200422_Sample1,Champion Voc (RS),1.11,,V,"Reverse scan, Table 1"
+10_1002_solr_202200422_Sample1,Champion Voc (FS),1.1,,V,"Forward scan, Table 1"
+10_1002_solr_202200422_Sample1,Average Voc (RS),1.1,0.02,V,Table S1
+10_1002_solr_202200422_Sample1,Champion Jsc (RS),22.53,,mA cm-2,"Reverse scan, Table 1"
+10_1002_solr_202200422_Sample1,Champion Jsc (FS),21.89,,mA cm-2,"Forward scan, Table 1"
+10_1002_solr_202200422_Sample1,Average Jsc (RS),22.05,0.22,mA cm-2,Table S1
+10_1002_solr_202200422_Sample1,Champion FF (RS),80.4,,%,"Reverse scan, Table 1"
+10_1002_solr_202200422_Sample1,Champion FF (FS),79.74,,%,"Forward scan, Table 1"
+10_1002_solr_202200422_Sample1,Average FF (RS),79.57,0.45,%,Table S1
+10_1002_solr_202200422_Sample1,Hysteresis Index,4.6,,%,Table 1
+10_1002_solr_202200422_Sample1,Rs,8.51,,Ω cm2,Table 1
+10_1002_solr_202200422_Sample1,Rsh,3567.0,,Ω cm2,Table 1
+10_1002_solr_202200422_Sample1,VTFL,0.75,,V,Fig. 2c
+10_1002_solr_202200422_Sample1,Defect density (nt),2.7e+18,,cm-3,Fig. 2c
+10_1002_solr_202200422_Sample1,Hole mobility (µp),8.3e-07,,cm2 V-1 s-1,Fig. 2c
+10_1002_solr_202200422_Sample1,Conductivity (σ),6e-06,,S cm-1,Fig. 2d
+10_1002_solr_202200422_Sample1,AFM RMS roughness,10.9,,nm,Fig. 3a
+10_1002_solr_202200422_Sample1,Contact angle (NiOx),21.2,,degrees,Fig. 3c
+10_1002_solr_202200422_Sample2,Champion PCE (RS),22.81,,%,"Reverse scan, Table 1 / Table S1"
+10_1002_solr_202200422_Sample2,Champion PCE (FS),22.13,,%,"Forward scan, Table 1"
+10_1002_solr_202200422_Sample2,Average PCE (RS),22.09,0.36,%,Table S1
+10_1002_solr_202200422_Sample2,Champion Voc (RS),1.15,,V,"Reverse scan, Table 1"
+10_1002_solr_202200422_Sample2,Champion Voc (FS),1.14,,V,Table 1
+10_1002_solr_202200422_Sample2,Average Voc (RS),1.15,0.01,V,Table S1
+10_1002_solr_202200422_Sample2,Champion Jsc (RS),23.49,,mA cm-2,"Reverse scan, Table 1"
+10_1002_solr_202200422_Sample2,Champion Jsc (FS),23.15,,mA cm-2,"Forward scan, Table 1"
+10_1002_solr_202200422_Sample2,Average Jsc (RS),22.96,0.15,mA cm-2,Table S1
+10_1002_solr_202200422_Sample2,Champion FF (RS),84.68,,%,"Reverse scan, Table 1"
+10_1002_solr_202200422_Sample2,Champion FF (FS),83.84,,%,"Forward scan, Table 1"
+10_1002_solr_202200422_Sample2,Average FF (RS),84.13,0.38,%,Table S1
+10_1002_solr_202200422_Sample2,Hysteresis Index,3.0,,%,Table 1
+10_1002_solr_202200422_Sample2,Rs,3.52,,Ω cm2,Table 1
+10_1002_solr_202200422_Sample2,Rsh,12001.0,,Ω cm2,Table 1
+10_1002_solr_202200422_Sample2,VTFL,0.57,,V,Fig. 2c
+10_1002_solr_202200422_Sample2,Defect density (nt),1.97e+18,,cm-3,Fig. 2c
+10_1002_solr_202200422_Sample2,Hole mobility (µp),2.3e-06,,cm2 V-1 s-1,Fig. 2c
+10_1002_solr_202200422_Sample2,Conductivity (σ),2.5e-05,,S cm-1,Fig. 2d
+10_1002_solr_202200422_Sample2,AFM RMS roughness,10.2,,nm,Fig. 3b
+10_1002_solr_202200422_Sample2,Contact angle (NiOx),18.6,,degrees,Fig. 3d
+10_1002_solr_202400534_Sample1,Champion Voc,1.147,,V,Figure 1c
+10_1002_solr_202400534_Sample1,Champion Jsc,22.24,,mA cm-2,Figure 1c
+10_1002_solr_202400534_Sample1,Champion FF,80.3,,%,Figure 1c
+10_1002_solr_202400534_Sample1,Champion PCE,20.37,,%,Figure 1c
+10_1002_solr_202400534_Sample1,Integrated Jsc (EQE),22.42,,mA cm-2,Figure 1d
+10_1002_solr_202400534_Sample1,EIS Rs,42.11,,Ω,Table S2
+10_1002_solr_202400534_Sample1,EIS Rrec,32909.0,,Ω,Table S2
+10_1002_solr_202400534_Sample1,VTFL,0.74,,V,Figure 4d
+10_1002_solr_202400534_Sample1,AFM Rq (top surface),34.2,,nm,Figure 3a-i
+10_1002_solr_202400534_Sample1,AFM Rq (buried surface),4.74,,nm,Figure 3b-i
+10_1002_solr_202400534_Sample1,KPFM potential fluctuation (top),63.2,,mV,Figure 3a-ii
+10_1002_solr_202400534_Sample1,KPFM potential fluctuation (buried),172.0,,mV,Figure 3b-ii
+10_1002_solr_202400534_Sample1,Grain size range (SEM),,,μm,Figure S4
+10_1002_solr_202400534_Sample2,Champion Voc,1.155,,V,Figure 1c
+10_1002_solr_202400534_Sample2,Champion Jsc,25.96,,mA cm-2,Figure 1c
+10_1002_solr_202400534_Sample2,Champion FF,80.4,,%,Figure 1c
+10_1002_solr_202400534_Sample2,Champion PCE,24.21,,%,Figure 1c
+10_1002_solr_202400534_Sample2,Integrated Jsc,24.34,,mA cm-2,Figure 1d
+10_1002_solr_202400534_Sample2,EIS Rs,35.93,,Ω,Table S2
+10_1002_solr_202400534_Sample2,EIS Rrec,36409.0,,Ω,Tar Table S2
+10_1002_solr_202400534_Sample2,VTFL,0.68,,V,Figure 4d
+10_1002_solr_202400534_Sample2,AFM Rq (top surface),27.3,,nm,Figure 3c-i
+10_1002_solr_202400534_Sample2,AFM Rq (buried surface),4.75,,nm,Figure 3d-i
+10_1002_solr_202400534_Sample2,KPFM potential fluctuation (top),26.8,,mV,Figure 3c-ii
+10_1002_solr_202400534_Sample2,KPFM potential fluctuation (buried),97.4,,mV,Figure 3d-ii
+10_1002_solr_202400534_Sample2,AFM Rq (NiOx@Me-2PACz+TFMBAFa surface),4.19,,nm,Figure 3f-i
+10_1002_solr_202400534_Sample2,KPFM potential fluctuation (HTL+TFMBAFa),15.0,,mV,Figure 3f-ii
+10_1002_solr_202400534_Sample2,Grain size range (SEM),,,μm,
+10_1002adma_202507730_Sample1,RS Voc,1.158,,V,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,RS Jsc,26.35,,mAcm-2,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,RS FF,80.4,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,RS PCE,24.5,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,FS Voc,1.156,,V,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,FS Jsc,26.32,,mAcm-2,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,FS FF,78.5,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,FS PCE,23.8,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample1,HI,2.86,,%,
+10_1002adma_202507730_Sample1,Trap Density,1.01e+17,,cm-3,From SCLC measurement
+10_1002adma_202507730_Sample1,VTFL,0.91,,V,From SCLC measurement
+10_1002adma_202507730_Sample1,EIS Rec,3487.0,,Ω,
+10_1002adma_202507730_Sample1,EIS Rs,24.51,,Ω,
+10_1002adma_202507730_Sample1,Vbi,1.09,,V,
+10_1002adma_202507730_Sample1,TRPL Lifetime,0.86,,μs,
+10_1002adma_202507730_Sample1,tDOS,4860000000000000.0,,cm-3 eV-1,
+10_1002adma_202507730_Sample2,Trap Density,8.62e+16,,cm-3,From SCLC measurement
+10_1002adma_202507730_Sample2,VTFL,0.78,,V,From SCLC measurement
+10_1002adma_202507730_Sample2,Contact Angle,31.84,,deg,Initial water contact angle
+10_1002adma_202507730_Sample3,RS Voc,1.171,,V,
+10_1002adma_202507730_Sample3,RS Jsc,26.55,,mAcm-2,
+10_1002adma_202507730_Sample3,RS FF,81.6,,%,
+10_1002adma_202507730_Sample3,RS PCE,25.36,,%,
+10_1002adma_202507730_Sample3,Trap Density,5.75e+16,,cm-3,From SCLC measurement
+10_1002adma_202507730_Sample3,VTFL,0.52,,V,From SCLC measurement
+10_1002adma_202507730_Sample3,Contact angle,38.47,,deg,Initial water contact angle
+10_1002adma_202507730_Sample4,RS Voc,1.18,,V,
+10_1002adma_202507730_Sample4,RS Jsc,26.48,,mAcm-2,
+10_1002adma_202507730_Sample4,RS FF,82.7,,%,
+10_1002adma_202507730_Sample4,RS PCE,25.84,,%,
+10_1002adma_202507730_Sample5,RS Voc,1.195,,V,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,RS Jsc,26.49,,mAcm-2,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,RS FF,83.6,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,RS PCE,26.5,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,FS Voc,1.193,,V,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,FS Jsc,26.51,,mAcm-2,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,FS FF,83.2,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,FS PCE,26.3,,%,"AM1.5G, scan rate = 50 mV/s, delay time = 0.2s."
+10_1002adma_202507730_Sample5,HI,0.75,,%,
+10_1002adma_202507730_Sample5,Certified PCE (RS),25.96,,%,Certified by National Institute of Metrology (China)
+10_1002adma_202507730_Sample5,Certified PCE (FS),25.83,,%,Certified by National Institute of Metrology (China)
+10_1002adma_202507730_Sample5,Aperture Area,0.07427,,cm2,
+10_1002adma_202507730_Sample5,Trap Density,3.41e+16,,cm-3,From SCLC measurement
+10_1002adma_202507730_Sample5,VTFL,0.31,,V,From SCLC measurement
+10_1002adma_202507730_Sample5,EIS Rec,6134.0,,Ω,
+10_1002adma_202507730_Sample5,EIS Rs,9.43,,Ω,
+10_1002adma_202507730_Sample5,Vbi,1.17,,V,
+10_1002adma_202507730_Sample5,TRPL Lifetime,1.37,,μs,
+10_1002adma_202507730_Sample5,tDOS,1390000000000000.0,,cm-3 e/V,
+10_1016_j_heliyon_2024_e25352_Sample1,Champion Jsc,24.5,,mA cm-2,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample1,Champion Voc,1.04,,V,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample1,Champion FF,73.0,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample1,Champion PCE,18.7,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample1,SPO,,,%,Stabilized MPP output; Table 1 (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample1,EQE Jsc,,,mA cm-2,Integrated from EQE spectrum; Figure 2b (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample1,Active Area,4.0,,mm2,Defined by metal mask; Section 2.2
+10_1016_j_heliyon_2024_e25352_Sample1,Grain Size,,,nm,SEM shown (Figure 4) but no quantitative values reported — manual measurement needed
+10_1016_j_heliyon_2024_e25352_Sample2,Champion Jsc,24.8,,mA cm-2,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample2,Champion Voc,1.01,,V,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample2,Champion FF,76.9,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample2,Champion PCE,19.3,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample2,SPO,,,%,Stabilized MPP output; Table 1 (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample2,EQE Jsc,,,mA cm-2,Integrated from EQE spectrum; Figure 2b (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample2,Active Area,4.0,,mm2,Defined by metal mask; Section 2.2
+10_1016_j_heliyon_2024_e25352_Sample2,Grain Size,,,nm,SEM shown (Figure 4) but no quantitative values reported — manual measurement needed
+10_1016_j_heliyon_2024_e25352_Sample3,Champion Jsc,25.0,,mA cm-2,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample3,Champion Voc,1.06,,V,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample3,Champion FF,78.5,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample3,Champion PCE,20.5,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample3,SPO,20.4,,%,Stabilized MPP output; Table 1 (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample3,EQE Jsc,24.5,,mA cm-2,Integrated from EQE spectrum; Figure 2b (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample3,Active Area,4.0,,mm2,Defined by metal mask; Section 2.2
+10_1016_j_heliyon_2024_e25352_Sample3,Grain Size,,,nm,SEM shown (Figure 4) but no quantitative values reported — manual measurement needed
+10_1016_j_heliyon_2024_e25352_Sample4,Champion Jsc,24.3,,mA cm-2,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample4,Champion Voc,1.06,,V,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample4,Champion FF,75.2,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample4,Champion PCE,19.4,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample4,SPO,,,%,Stabilized MPP output; Table 1 (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample4,EQE Jsc,,,mA cm-2,Integrated from EQE spectrum; Figure 2b (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample4,Active Area,4.0,,mm2,Defined by metal mask; Section 2.2
+10_1016_j_heliyon_2024_e25352_Sample4,Grain Size,,,nm,SEM shown (Figure 4) but no quantitative values reported — manual measurement needed
+10_1016_j_heliyon_2024_e25352_Sample5,Champion Jsc,24.8,,mA cm-2,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample5,Champion Voc,1.02,,V,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample5,Champion FF,72.0,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample5,Champion PCE,18.2,,%,Table 1; single scan direction reported
+10_1016_j_heliyon_2024_e25352_Sample5,SPO,,,%,Stabilized MPP output; Table 1 (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample5,EQE Jsc,,,mA cm-2,Integrated from EQE spectrum; Figure 2b (CsI-10 only)
+10_1016_j_heliyon_2024_e25352_Sample5,Active Area,4.0,,mm2,Defined by metal mask; Section 2.2
+10_1016_j_heliyon_2024_e25352_Sample5,Grain Size,,,nm,SEM shown (Figure 4) but no quantitative values reported — manual measurement needed
+10_1016_j_solener_2025_113286_Sample1,Champion PCE,14.94,,%,
+10_1016_j_solener_2025_113286_Sample1,Average Voc,0.984,0.024,V,
+10_1016_j_solener_2025_113286_Sample1,Average Jsc,20.63,0.31,mA cm-2,
+10_1016_j_solener_2025_113286_Sample1,Average FF,0.69,0.016,,
+10_1016_j_solener_2025_113286_Sample1,Average PCE,14.16,0.4,%,
+10_1016_j_solener_2025_113286_Sample1,Champion Voc,0.996,,V,
+10_1016_j_solener_2025_113286_Sample1,Champion Jsc,20.92,,mA cm-2,
+10_1016_j_solener_2025_113286_Sample1,Champion FF,0.71,,,
+10_1016_j_solener_2025_113286_Sample1,Hysteresis Index,8.2,,%,
+10_1016_j_solener_2025_113286_Sample1,VTFL,1.02,,V,
+10_1016_j_solener_2025_113286_Sample1,Hole trap density,1.98e+16,,cm-3,
+10_1016_j_solener_2025_113286_Sample1,Grain size (avg),430.0,,nm,
+10_1016_j_solener_2025_113286_Sample1,VBM (VB-XPS),0.44,,eV,from Fig. 2d
+10_1016_j_solener_2025_113286_Sample1,Bandgap (sp-NiOx),3.8,,eV,from Fig. 1b
+10_1016_j_solener_2025_113286_Sample1,Contact angle,47.0,,degrees,"Water contact angle on pristine sp-NiOx/perovskite, Fig. 8b"
+10_1016_j_solener_2025_113286_Sample2,Champion PCE,16.59,,%,
+10_1016_j_solener_2025_113286_Sample2,Average Voc,1.048,0.012,V,
+10_1016_j_solener_2025_113286_Sample2,Average Jsc,21.2,0.16,mA cm-2,
+10_1016_j_solener_2025_113286_Sample2,Average FF,0.72,0.005,,
+10_1016_j_solener_2025_113286_Sample2,Average PCE,16.08,0.18,%,
+10_1016_j_solener_2025_113286_Sample2,Champion Voc,1.065,,V,
+10_1016_j_solener_2025_113286_Sample2,Champion Jsc,21.41,,mA cm-2,
+10_1016_j_solener_2025_113286_Sample2,Champion FF,0.72,,,
+10_1016_j_solener_2025_113286_Sample2,Hysteresis Index,4.0,,%,
+10_1016_j_solener_2025_113286_Sample2,VTFL,0.92,,V,
+10_1016_j_solener_2025_113286_Sample2,Hole trap density,1.79e+16,,cm-3,
+10_1016_j_solener_2025_113286_Sample2,Grain size (avg),436.0,,nm,
+10_1016_j_solener_2025_113286_Sample2,Ideality factor n,1.13,,,
+10_1016_j_solener_2025_113286_Sample2,Contact angle,61.3,,degrees,
+10_1021_acsami_4c14300_Sample1,Champion Voc (RS),1.09,,V,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample1,Champion Jsc (RS),24.49,,mA cm-2,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample1,Champion FF (RS),77.15,,%,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample1,Champion PCE (RS),20.67,,%,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample1,Champion Voc (FS),1.07,,V,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample1,Champion Jsc (FS),24.58,,mA cm-2,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample1,Champion FF (FS),76.58,,%,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample1,Champion PCE (FS),20.13,,%,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample1,Jsc from EQE,22.96,,mA cm-2,Integrated Jsc from EQE (Figure 4c)
+10_1021_acsami_4c14300_Sample1,VTFL,0.16,,V,Trap-filling limit voltage from SCLC (Figure 2d)
+10_1021_acsami_4c14300_Sample1,EIS Rs,26.84,,Ω,from EIS (Table S2)
+10_1021_acsami_4c14300_Sample1,EIS Rrec,21500000.0,,Ω,from EIS (Table S2)
+10_1021_acsami_4c14300_Sample1,AFM rms,9.33,,nm,RMS roughness of NiOx film (Figure S2a)
+10_1021_acsami_4c14300_Sample1,Contact Angle,21.0,,deg,Contact angle of perovskite precursor on NiOx (Figure 2c)
+10_1021_acsami_4c14300_Sample1,Grain Size,490.0,,nm,Mean grain size from SEM histogram (Figure S5a)
+10_1021_acsami_4c14300_Sample2,Champion Voc (RS),1.13,,V,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample2,Champion Jsc (RS),24.63,,mA cm-2,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample2,Champion FF (RS),81.68,,%,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample2,Champion PCE (RS),22.76,,%,"Champion device, reverse scan (RS), Table 1"
+10_1021_acsami_4c14300_Sample2,Champion Voc (FS),1.13,,V,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample2,Champion Jsc (FS),24.61,,mA cm-2,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample2,Champion FF (FS),81.48,,%,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample2,Champion PCE (FS),22.67,,%,"Champion device, forward scan (FS), Table 1"
+10_1021_acsami_4c14300_Sample2,Jsc from EQE,24.05,,mA cm-2,Integrated Jsc from EQE (Figure 4c)
+10_1021_acsami_4c14300_Sample2,VTFL,0.09,,V,Trap-filling limit voltage from SCLC (Figure 2d)
+10_1021_acsami_4c14300_Sample2,EIS Rs,29.72,,Ω,Series resistance from EIS (Table S2)
+10_1021_acsami_4c14300_Sample2,EIS Rrec,170000000.0,,Ω,from EIS low-freq (Table S2)
+10_1021_acsami_4c14300_Sample2,AFM rms,8.26,,nm,RMS roughness of NiOx-TFFA film (Figure S2b)
+10_1021_acsami_4c14300_Sample2,Contact Angle,9.0,,deg,Contact angle of perovskite precursor on NiOx-TFFA (Figure 2c)
+10_1021_acsami_4c14300_Sample2,Grain Size (top surface),580.0,,nm,"Mean grain size from SEM histogram (Figure S5b), 0.58 µm"
+10_1021_acsami_5c15868_Sample1,Champion Voc,1.11,,V,"Champion device, Table S4"
+10_1021_acsami_5c15868_Sample1,Champion Jsc,21.01,,mA cm-2,"Champion device, Table S4"
+10_1021_acsami_5c15868_Sample1,Champion FF,81.39,,%,"Champion device, Table S4"
+10_1021_acsami_5c15868_Sample1,Champion PCE,18.98,,%,"Champion device, Table S4"
+10_1021_acsami_5c15868_Sample1,Avg Voc,1.08,0.03,V,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample1,Avg Jsc,20.85,0.44,mA cm-2,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample1,Avg FF,80.03,1.54,%,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample1,Avg PCE,18.09,0.56,%,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample1,Hysteresis Index,4.4,,%,HI from J-V (Figure 3b inset)
+10_1021_acsami_5c15868_Sample1,VTFL,0.631,,V,Trap-filling limit voltage from SCLC (Figure 3e)
+10_1021_acsami_5c15868_Sample1,EIS Rs,1.05,,Ω cm²,Series resistance from EIS (Table S7)
+10_1021_acsami_5c15868_Sample1,EIS Rrec,10960.0,,Ω cm²,Recombination resistance from EIS (Table S7)
+10_1021_acsami_5c15868_Sample1,AFM rms (HTL),3.87,,nm,RMS roughness of NiOx film (Figure S6a)
+10_1021_acsami_5c15868_Sample1,AFM rms (PVK),21.1,,nm,RMS roughness of PVK film on NiOx (Figure 2b)
+10_1021_acsami_5c15868_Sample1,Contact Angle (HTL),7.0,,deg,Water contact angle on NiOx (Figure 2a)
+10_1021_acsami_5c15868_Sample1,KPFM CPD,1.46,,V,Average contact potential difference (Figure S12)
+10_1021_acsami_5c15868_Sample2,Champion Voc,1.23,,V,"Champion device (optimal SAM conc.), Table S4"
+10_1021_acsami_5c15868_Sample2,Champion Jsc,22.48,,mA cm-2,"Champion device, Table S4"
+10_1021_acsami_5c15868_Sample2,Champion FF,80.99,,%,"Champion device, Table S4"
+10_1021_acsami_5c15868_Sample2,Champion PCE,22.39,,%,"Champion device, Table S4"
+10_1021_acsami_5c15868_Sample2,Avg Voc (20 dev),1.23,0.01,V,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample2,Avg Jsc (20 dev),22.36,0.18,mA cm-2,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample2,Avg FF (20 dev),80.2,0.76,%,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample2,Avg PCE (20 dev),22.09,0.25,%,"Average of 20 devices, Table S4"
+10_1021_acsami_5c15868_Sample2,Hysteresis Index,2.5,,%,HI from J-V (Figure 3b inset)
+10_1021_acsami_5c15868_Sample2,VTFL,0.515,,V,Trap-filling limit voltage from SCLC (Figure 3e)
+10_1021_acsami_5c15868_Sample2,EIS Rs,0.92,,Ω cm²,Series resistance from EIS (Table S7)
+10_1021_acsami_5c15868_Sample2,EIS Rrec,22260.0,,Ω cm²,Recombination resistance from EIS (Table S7)
+10_1021_acsami_5c15868_Sample2,AFM rms (HTL),3.74,,nm,RMS roughness of NiOx/SAM film (Figure S6b)
+10_1021_acsami_5c15868_Sample2,AFM rms (PVK),18.8,,nm,RMS roughness of PVK film on NiOx/SAM (Figure 2b)
+10_1021_acsami_5c15868_Sample2,Contact Angle,79.0,,deg,Water contact angle on NiOx/SAM (Figure 2a)
+10_1021_acsami_5c15868_Sample2,KPFM CPD,1.22,,V,Average contact potential difference (Figure S12)
+10_1021_acsami_5c15868_Sample3,Champion Voc,1.23,,V,"Champion device, Figure 3b / Table S5"
+10_1021_acsami_5c15868_Sample3,Champion Jsc,22.86,,mA cm-2,"Champion device, Figure 3b / Table S5"
+10_1021_acsami_5c15868_Sample3,Champion FF,82.91,,%,"Champion device, Figure 3b / Table S5"
+10_1021_acsami_5c15868_Sample3,Champion PCE,23.31,,%,"Champion device, Figure 3b / Table S5"
+10_1021_acsami_5c15868_Sample3,Champion Voc,1.23,,V,"Forward scan, Figure 3b inset"
+10_1021_acsami_5c15868_Sample3,Champion Jsc,22.84,,mA cm-2,"Forward scan, Figure 3b inset"
+10_1021_acsami_5c15868_Sample3,Champion FF,81.39,,%,"Forward scan, Figure 3b inset"
+10_1021_acsami_5c15868_Sample3,Champion PCE,23.03,,%,"Forward scan, Figure 3b inset"
+10_1021_acsami_5c15868_Sample3,Avg Voc (20 dev),1.24,0.01,V,"Average of 20 devices, Table S5"
+10_1021_acsami_5c15868_Sample3,Avg Jsc (20 dev),22.95,0.23,mA cm-2,"Average of 20 devices, Table S5"
+10_1021_acsami_5c15868_Sample3,Avg FF (20 dev),81.6,0.77,%,"Average of 20 devices, Table S5"
+10_1021_acsami_5c15868_Sample3,Avg PCE (20 dev),23.19,0.22,%,"Average of 20 devices, Table S5"
+10_1021_acsami_5c15868_Sample3,Hysteresis Index,1.2,,%,HI from J-V (Figure 3b inset)
+10_1021_acsami_5c15868_Sample3,VTFL,0.367,,V,Trap-filling limit voltage from SCLC (Figure 3e)
+10_1021_acsami_5c15868_Sample3,EIS Rs,0.9,,Ω cm²,Series resistance from EIS (Table S7)
+10_1021_acsami_5c15868_Sample3,EIS Rrec,34470.0,,Ω cm²,Recombination resistance from EIS (Table S7)
+10_1021_acsami_5c15868_Sample3,AFM rms (HTL),3.48,,nm,RMS roughness of NiOx/SAM/GPC film (Figure S6c)
+10_1021_acsami_5c15868_Sample3,AFM rms (PVK),16.9,,nm,RMS roughness of PVK film on NiOx/SAM/GPC (Figure 2b)
+10_1021_acsami_5c15868_Sample3,Contact Angle,52.0,,deg,Water contact angle on NiOx/SAM/GPC (Figure 2a)
+10_1021_acsami_5c15868_Sample3,KPFM CPD,1.02,,V,Average contact potential difference (Figure S12)
+10_1039_d3lf00258f_Sample1,Champion PCE,13.98,,%,
+10_1039_d3lf00258f_Sample1,Average Jsc,20.46,,mA cm-2,
+10_1039_d3lf00258f_Sample1,Average Voc,0.97,,V,
+10_1039_d3lf00258f_Sample1,Average FF,65.39,,%,
+10_1039_d3lf00258f_Sample1,Average PCE,12.94,,%,
+10_1039_d3lf00258f_Sample1,VTFL,0.47,,V,
+10_1039_d3lf00258f_Sample1,Trap density,5770000000000000.0,,cm-3,
+10_1039_d3lf00258f_Sample1,Grain size (avg),314.4,,nm,
+10_1039_d3lf00258f_Sample1,Ideality factor n,2.44,,,
+10_1039_d3lf00258f_Sample1,JSC alpha factor,0.94,,,
+10_1039_d3lf00258f_Sample1,Active area,4.5,,mm2,
+10_1039_d3lf00258f_Sample1,AFM Roughness (Avg),16.8,,nm,
+10_1039_d3lf00258f_Sample1,Fermi level,-4.09,,eV,
+10_1039_d3lf00258f_Sample1,VB (UPS),-5.14,,eV,
+10_1039_d3lf00258f_Sample2,Champion PCE,17.28,,%,
+10_1039_d3lf00258f_Sample2,Average Jsc,21.82,,mA cm-2,
+10_1039_d3lf00258f_Sample2,Average Voc,1.01,,V,
+10_1039_d3lf00258f_Sample2,Average FF,70.97,,%,
+10_1039_d3lf00258f_Sample2,Average PCE,15.62,,%,
+10_1039_d3lf00258f_Sample2,VTFL,0.38,,V,
+10_1039_d3lf00258f_Sample2,Trap density,4660000000000000.0,,cm-3,
+10_1039_d3lf00258f_Sample2,Grain size (avg),566.7,,nm,
+10_1039_d3lf00258f_Sample2,Ideality factor n,1.88,,,
+10_1039_d3lf00258f_Sample2,JSC alpha factor,0.995,,,
+10_1039_d3lf00258f_Sample2,Active area,4.5,,mm2,
+10_1039_d3lf00258f_Sample2,AFM Roughness (Avg),14.3,,nm,
+10_1039_d3lf00258f_Sample2,Fermi level,-3.95,,eV,
+10_1039_d3lf00258f_Sample2,VB (UPS),-5.4,,eV,
+10_1039_d3lf00258f_Sample3,Champion PCE,14.87,,%,
+10_1039_d3lf00258f_Sample3,Average Jsc,20.99,,mA cm-2,
+10_1039_d3lf00258f_Sample3,Average Voc,0.97,,V,
+10_1039_d3lf00258f_Sample3,Average FF,68.54,,%,
+10_1039_d3lf00258f_Sample3,Average PCE,14.03,,%,
+10_1039_d3lf00258f_Sample3,VTFL,0.39,,V,
+10_1039_d3lf00258f_Sample3,Trap density,5160000000000000.0,,cm-3,
+10_1039_d3lf00258f_Sample3,Grain size (avg),562.9,,nm,
+10_1039_d3lf00258f_Sample3,AFM Roughness (Avg),14.5,,nm,
+10_1039_d3lf00258f_Sample3,VB (UPS),-5.39,,eV,
+10_1039_d3lf00258f_Sample3,Fermi level,-3.89,,eV,
+10_1039_d3lf00258f_Sample3,Ideality factor n,1.51,,,
+10_1039_d3lf00258f_Sample3,JSC alpha factor,0.995,,,
+10_1039_d3lf00258f_Sample3,Active area,4.5,,mm2,
+10_1039_d3lf00258f_Sample4,Champion PCE,14.88,,%,
+10_1039_d3lf00258f_Sample4,Average Jsc,20.73,,mA cm-2,
+10_1039_d3lf00258f_Sample4,Average Voc,0.99,,V,
+10_1039_d3lf00258f_Sample4,Average FF,69.3,,%,
+10_1039_d3lf00258f_Sample4,Average PCE,14.26,,%,
+10_1039_d3lf00258f_Sample4,VTFL,0.42,,V,
+10_1039_d3lf00258f_Sample4,Trap density,4800000000000000.0,,cm-3,
+10_1039_d3lf00258f_Sample4,Grain size (avg),511.61,,nm,
+10_1039_d3lf00258f_Sample4,AFM Roughness (Avg),15.3,,nm,
+10_1039_d3lf00258f_Sample4,VB (UPS),-5.3,,eV,
+10_1039_d3lf00258f_Sample4,Fermi level,-3.88,,eV,
+10_1039_d3lf00258f_Sample4,Ideality factor n,1.584,,,
+10_1039_d3lf00258f_Sample4,JSC alpha factor,0.994,,,
+10_1039_d3lf00258f_Sample4,Active area,4.5,,mm2,
+10_1126_science_ade9637_Sample1,Champion PCE,21.6,,%,
+10_1126_science_ade9637_Sample1,Champion Voc,1.14,,V,
+10_1126_science_ade9637_Sample1,Champion Jsc,24.5,,mA cm-2,
+10_1126_science_ade9637_Sample1,Champion FF,77.3,,%,
+10_1126_science_ade9637_Sample1,Active area,0.0414,,cm2,defined by metal shadow mask
+10_1126_science_ade9637_Sample1,Trap density,3810000000000000.0,,cm-3,SCLC hole-only device; VTFL used for calculation
+10_1126_science_ade9637_Sample1,VTFL,0.68,,V,trap-filling limit voltage from SCLC
+10_1126_science_ade9637_Sample1,AFM RMS roughness,5.6,,nm,of HSL surface on ITO substrate
+10_1126_science_ade9637_Sample1,Contact angle,36.5,,deg,water contact angle of HSL surface on ITO
+10_1126_science_ade9637_Sample1,Grain size,,,nm,SEM images shown in Fig S19; no quantitative values reported
+10_1126_science_ade9637_Sample2,Champion PCE,25.6,,%,
+10_1126_science_ade9637_Sample2,Champion Voc,1.19,,V,
+10_1126_science_ade9637_Sample2,Champion Jsc,25.4,,mA cm-2,
+10_1126_science_ade9637_Sample2,Champion FF,84.6,,%,
+10_1126_science_ade9637_Sample2,Verified PCE,25.6,,%,certified by SIMIT; reverse scan; area 0.0414 cm²
+10_1126_science_ade9637_Sample2,Active area,0.0414,,cm2,defined by metal shadow mask
+10_1126_science_ade9637_Sample2,Trap density,1960000000000000.0,,cm-3,SCLC hole-only device; VTFL used for calculation
+10_1126_science_ade9637_Sample2,VTFL,0.35,,V,trap-filling limit voltage from SCLC
+10_1126_science_ade9637_Sample2,AFM RMS roughness,5.1,,nm,of HSL surface on ITO substrate
+10_1126_science_ade9637_Sample2,Contact angle,73.2,,deg,water contact angle of HSL surface on ITO
+10_1126_science_ade9637_Sample2,Grain size,,,nm,SEM images shown in Fig S19; no quantitative values reported
+10_31635_ccschem_025_202505977_Sample1,Champion Voc,1.15,,V,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample1,Champion Jsc,23.53,,mA cm-2,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample1,Champion FF,76.4,,%,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample1,Champion PCE,20.17,,%,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample1,Avg Voc,1.15,0.01,V,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample1,Avg Jsc,23.09,0.43,mA cm-2,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample1,Avg FF,75.8,1.68,%,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample1,Avg PCE,19.56,0.44,%,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample1,VTFL,0.15,,V,
+10_31635_ccschem_025_202505977_Sample1,Trap Density,3395000000000000.0,,cm-3,
+10_31635_ccschem_025_202505977_Sample1,AFM rms,4.7,,nm,RMS roughness of NiOx film (Figure S12a)
+10_31635_ccschem_025_202505977_Sample1,Contact Angle,21.44,,deg,Contact angle of perovskite precursor on NiOx (Figure S13a)
+10_31635_ccschem_025_202505977_Sample1,VBM (UPS),5.02,,eV,Valence band max from UPS (Figure S8)
+10_31635_ccschem_025_202505977_Sample1,WF (UPS),4.52,,eV,From Figure S8
+10_31635_ccschem_025_202505977_Sample1,,1.02,,%,PLQY of perovskite film on NiOx (Figure 3d)
+10_31635_ccschem_025_202505977_Sample1,Grain Size,,,nm,Not quantitatively reported
+10_31635_ccschem_025_202505977_Sample2,Champion Voc,1.19,,V,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample2,Champion Jsc,24.23,,mA cm-2,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample2,Champion FF,79.77,,%,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample2,Champion PCE,23.07,,%,"Best device, Table S3"
+10_31635_ccschem_025_202505977_Sample2,Avg Voc,1.19,0.01,V,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample2,Avg Jsc,24.29,0.35,mA cm-2,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample2,Avg FF,78.17,1.5,%,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample2,Avg PCE,22.59,0.32,%,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample2,VTFL,0.12,,V,Trap-filling limit voltage from SCLC (Figure 3f)
+10_31635_ccschem_025_202505977_Sample2,Trap Density,2829000000000000.0,,cm-3,
+10_31635_ccschem_025_202505977_Sample2,EIS Rrec,372.0,,Ω,Recombination resistance from EIS (Figure 4f)
+10_31635_ccschem_025_202505977_Sample2,AFM rms,3.89,,nm,RMS roughness of NiOx/2PACz film (Figure S12b)
+10_31635_ccschem_025_202505977_Sample2,Contact Angle,31.1,,deg,Contact angle of perovskite precursor on NiOx/2PACz (Figure S13b)
+10_31635_ccschem_025_202505977_Sample2,VBM (UPS),-5.53,,eV,Valence band max from UPS (Figure S8)
+10_31635_ccschem_025_202505977_Sample2,WF (UPS),4.77,,eV,Work function from UPS (Figure S8)
+10_31635_ccschem_025_202505977_Sample2,Grain Size,,,nm,Not quantitatively reported
+10_31635_ccschem_025_202505977_Sample3,Champion Voc,1.2,,V,"Best device (champion), Table S3 / Figure 4b"
+10_31635_ccschem_025_202505977_Sample3,Champion Jsc,25.48,,mA cm-2,"Best device (champion), Table S3 / Figure 4b"
+10_31635_ccschem_025_202505977_Sample3,Champion FF,82.71,,%,"Best device (champion), Table S3 / Figure 4b"
+10_31635_ccschem_025_202505977_Sample3,Champion PCE,25.28,,%,"Best device (champion), Table S3 / Figure 4b"
+10_31635_ccschem_025_202505977_Sample3,Jsc from EQE,24.4,,mA cm-2,Integrated Jsc from EQE spectrum (Figure 4c)
+10_31635_ccschem_025_202505977_Sample3,Avg Voc,1.2,0.01,V,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample3,Avg Jsc,25.16,0.23,mA cm-2,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample3,Avg FF,81.17,0.87,%,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample3,Avg PCE,24.48,0.37,%,"Average of 20 devices, Table S3"
+10_31635_ccschem_025_202505977_Sample3,VTFL,0.1,,V,Trap-filling limit voltage from SCLC (Figure 3f)
+10_31635_ccschem_025_202505977_Sample3,Trap Density,2121000000000000.0,,cm-3,
+10_31635_ccschem_025_202505977_Sample3,EIS Rrec,488.0,,Ω,Recombination resistance from EIS (Figure 4f)
+10_31635_ccschem_025_202505977_Sample3,AFM rms,3.15,,nm,RMS roughness of NiOx/2Br-4PADMAc film (Figure S12c)
+10_31635_ccschem_025_202505977_Sample3,Contact Angle,38.39,,deg,Contact angle of perovskite precursor on NiOx/2Br-4PADMAc (Figure S13c)
+10_31635_ccschem_025_202505977_Sample3,VBM (UPS),-5.63,,eV,Valence band max from UPS (Figure S8)
+10_31635_ccschem_025_202505977_Sample3,WF (UPS),5.04,,eV,Work function from UPS (Figure S8)
+10_31635_ccschem_025_202505977_Sample3,Grain Size,,,nm,Not quantitatively reported
