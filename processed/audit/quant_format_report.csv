@@ -1,0 +1,13 @@
+table,column,n,pure_number_%,has_letters/unit_%,range_%,multivalue_%,examples_dirty
+devices,sample_no,44,100.0,0.0,0.0,0.0,
+layers,thickness_nm,105,88.6,5.7,3.8,1.9,"400-450 | 4, 100 | 400 Å | 90 Å | 1200 Å"
+materials,amount,323,100.0,0.0,0.0,0.0,
+process,parameter,595,26.4,4.2,1.7,69.4,"3000, 30 | 270, 10800 | 60, 3600 | 1000,500,10 | 4000,2000,35"
+properties,value,544,96.9,3.1,0.0,0.0,3.3e-08 | 3.06e-08 | 2.84e-08 | 8.1e+18 | 1.51e+18
+properties,error,74,100.0,0.0,0.0,0.0,
+stability,temperature_c,48,87.5,12.5,0.0,0.0,RT
+stability,humidity_pct,26,53.8,0.0,26.9,0.0,50 - 60 | 50–60 | 45–55 | 30-50 | 60 ± 5
+stability,time_hr,59,100.0,0.0,0.0,0.0,
+stability,retention_pct,50,98.0,0.0,0.0,0.0,< 55
+stability,initial_pce,4,100.0,0.0,0.0,0.0,
+stability,final_pce,4,100.0,0.0,0.0,0.0,

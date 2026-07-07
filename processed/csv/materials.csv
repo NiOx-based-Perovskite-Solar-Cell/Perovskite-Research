@@ -1,50 +1,47 @@
 device_id,layer_id,material,type,solvent,amount,unit
 10.1002admi.202500231_Sample1,1.0,ITO,,,,
-10.1002admi.202500231_Sample1,2.0,NiOx NPs,Solution,H2O,22.0,mg/ml
-10.1002admi.202500231_Sample1,3.0,,,,,
+10.1002admi.202500231_Sample1,2.0,NiOx NPs,Solution,De-ionized water,22.0,mg/ml
 10.1002admi.202500231_Sample1,3.0,,,,,
 10.1002admi.202500231_Sample1,4.0,PbI2,Solution,DMF/DMSO (4/1 V/V),324.0,mg
 10.1002admi.202500231_Sample1,4.0,CsI,Solution,DMF/DMSO (4/1 V/V),11.0,mg
 10.1002admi.202500231_Sample1,4.0,PbBr2,Solution,DMF/DMSO (4/1 V/V),47.0,mg
-10.1002admi.202500231_Sample1,4.0,MABr,solution,DMF/DMSO (4/1 V/V),14.0,
+10.1002admi.202500231_Sample1,4.0,MABr,Solution,DMF/DMSO (4/1 V/V),14.0,
 10.1002admi.202500231_Sample1,4.0,FAI,Solution,DMF/DMSO (4/1 V/V),110.0,mg
 10.1002admi.202500231_Sample1,5.0,,,,,
 10.1002admi.202500231_Sample1,6.0,C60,Solution,CB,,
 10.1002admi.202500231_Sample1,7.0,BCP,Solution,ethanol,,
 10.1002admi.202500231_Sample1,8.0,Ag,,,,
 10.1002admi.202500231_Sample2,1.0,ITO,,,,
-10.1002admi.202500231_Sample2,1.0,NiOx NPs,Solution,H2O,22.0,mg/ml
-10.1002admi.202500231_Sample2,3.0,EMIMI,solution,,25.0,mg/ml
+10.1002admi.202500231_Sample2,2.0,NiOx NPs,Solution,De-ionized water,22.0,mg/ml
+10.1002admi.202500231_Sample2,3.0,EMIMI,Solution,,25.0,mg/ml
 10.1002admi.202500231_Sample2,4.0,PbI2,Solution,DMF/DMSO (4/1 V/V),324.0,mg
 10.1002admi.202500231_Sample2,4.0,CsI,Solution,DMF/DMSO (4/1 V/V),11.0,mg
 10.1002admi.202500231_Sample2,4.0,PbBr2,Solution,DMF/DMSO (4/1 V/V),47.0,mg
-10.1002admi.202500231_Sample2,4.0,MABr,solution,DMF/DMSO (4/1 V/V),14.0,
+10.1002admi.202500231_Sample2,4.0,MABr,Solution,DMF/DMSO (4/1 V/V),14.0,
 10.1002admi.202500231_Sample2,4.0,FAI,Solution,DMF/DMSO (4/1 V/V),110.0,mg
 10.1002admi.202500231_Sample2,5.0,,,,,
 10.1002admi.202500231_Sample2,6.0,C60,Solution,CB,,
 10.1002admi.202500231_Sample2,7.0,BCP,Solution,ethanol,,
 10.1002admi.202500231_Sample2,8.0,Ag,,,,
 10.1002admi.202500231_Sample3,1.0,ITO,,,,
-10.1002admi.202500231_Sample3,1.0,NiOx NPs,Solution,H2O,22.0,mg/ml
-10.1002admi.202500231_Sample3,3.0,NiOx NPs+EMIMI,Solution,H2O,25.0,mg/ml
-10.1002admi.202500231_Sample3,3.0,,,,,
+10.1002admi.202500231_Sample3,2.0,NiOx NPs,Solution,De-ionized water,22.0,mg/ml
+10.1002admi.202500231_Sample3,3.0,EMIMI,Solution,,25.0,mg/ml
 10.1002admi.202500231_Sample3,4.0,PbI2,Solution,DMF/DMSO (4/1 V/V),324.0,mg
 10.1002admi.202500231_Sample3,4.0,CsI,Solution,DMF/DMSO (4/1 V/V),11.0,mg
 10.1002admi.202500231_Sample3,4.0,PbBr2,Solution,DMF/DMSO (4/1 V/V),47.0,mg
-10.1002admi.202500231_Sample3,4.0,MABr,solution,DMF/DMSO (4/1 V/V),14.0,
+10.1002admi.202500231_Sample3,4.0,MABr,Solution,DMF/DMSO (4/1 V/V),14.0,
 10.1002admi.202500231_Sample3,4.0,FAI,Solution,DMF/DMSO (4/1 V/V),110.0,mg
 10.1002admi.202500231_Sample3,5.0,,,,,
-10.1002admi.202500231_Sample3,6.0,C60,Solution,CB,0.25,ml
-10.1002admi.202500231_Sample3,7.0,BCP,Solution,ethanol,5.0,mg mL-1
+10.1002admi.202500231_Sample3,6.0,C60,Solution,CB,,
+10.1002admi.202500231_Sample3,7.0,BCP,Solution,ethanol,,
 10.1002admi.202500231_Sample3,8.0,Ag,,,,
 10.1002admi.202500231_Sample4,1.0,ITO,,,,
-10.1002admi.202500231_Sample4,1.0,NiOx NPs,Solution,H2O,22.0,mg/ml
+10.1002admi.202500231_Sample4,2.0,NiOx NPs,Solution,H2O,22.0,mg/ml
 10.1002admi.202500231_Sample4,3.0,EMIMI,Solution,,25.0,mg/ml
-10.1002admi.202500231_Sample4,3.0,,,,,
 10.1002admi.202500231_Sample4,4.0,PbI2,Solution,DMF/DMSO (4/1 V/V),324.0,mg
 10.1002admi.202500231_Sample4,4.0,CsI,Solution,DMF/DMSO (4/1 V/V),11.0,mg
 10.1002admi.202500231_Sample4,4.0,PbBr2,Solution,DMF/DMSO (4/1 V/V),47.0,mg
-10.1002admi.202500231_Sample4,4.0,MABr,solution,DMF/DMSO (4/1 V/V),14.0,
+10.1002admi.202500231_Sample4,4.0,MABr,Solution,DMF/DMSO (4/1 V/V),14.0,
 10.1002admi.202500231_Sample4,4.0,FAI,Solution,DMF/DMSO (4/1 V/V),110.0,mg
 10.1002admi.202500231_Sample4,5.0,,,,,
 10.1002admi.202500231_Sample4,6.0,C60,Solution,CB,,
@@ -233,7 +230,7 @@ device_id,layer_id,material,type,solvent,amount,unit
 10_1002_solr_202400534_Sample2,7.0,BCP,,,,
 10_1002_solr_202400534_Sample2,8.0,Cu,,,,
 10_1002adma_202507730_Sample1,1.0,ITO,,,,
-10_1002adma_202507730_Sample1,2.0,NiOx,Nanoparticles,DI Water:IPA (3:1 v/v),15.0,mg mL-1
+10_1002adma_202507730_Sample1,2.0,NiOx NPs,Solution,DI Water:IPA (3:1 v/v),15.0,mg mL-1
 10_1002adma_202507730_Sample1,3.0,,,,,
 10_1002adma_202507730_Sample1,4.0,PSK Precursor,Precursor,DMF/DMSO (4/1 V/V),1.6,M
 10_1002adma_202507730_Sample1,4.0,MAPbCl3,Additive,DMF/DMSO (4/1 V/V),5.0,mol%

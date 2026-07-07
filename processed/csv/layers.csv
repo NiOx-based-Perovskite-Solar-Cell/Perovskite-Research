@@ -1,36 +1,36 @@
 device_id,layer_id,layer_type,material,thickness_nm
 10.1002admi.202500231_Sample1,1,Anode,ITO,
-10.1002admi.202500231_Sample1,2,HTL,NiOx,
+10.1002admi.202500231_Sample1,2,HTL,NiOx NPs,
 10.1002admi.202500231_Sample1,3,HTL treatment,,
-10.1002admi.202500231_Sample1,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],
+10.1002admi.202500231_Sample1,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],400-450
 10.1002admi.202500231_Sample1,5,PSK treatment,,
-10.1002admi.202500231_Sample1,6,ETL,C60,50.0
-10.1002admi.202500231_Sample1,7,ETL treatment,BCP,10.0
-10.1002admi.202500231_Sample1,8,Cathode,Ag,100.0
+10.1002admi.202500231_Sample1,6,ETL,C60,50
+10.1002admi.202500231_Sample1,7,ETL treatment,BCP,10
+10.1002admi.202500231_Sample1,8,Cathode,Ag,100
 10.1002admi.202500231_Sample2,1,Anode,ITO,
 10.1002admi.202500231_Sample2,2,HTL,NiOx NPs,
 10.1002admi.202500231_Sample2,3,HTL treatment,EMIMI-1%,
-10.1002admi.202500231_Sample2,4,PSK,[ (Cs0.05FA0.79MA0.16)Pb(I.87Br0.13)3 ],
+10.1002admi.202500231_Sample2,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],400-450
 10.1002admi.202500231_Sample2,5,PSK treatment,,
-10.1002admi.202500231_Sample2,6,ETL,C60,50.0
-10.1002admi.202500231_Sample2,7,ETL treatment,BCP,10.0
-10.1002admi.202500231_Sample2,8,Cathode,Ag,100.0
+10.1002admi.202500231_Sample2,6,ETL,C60,50
+10.1002admi.202500231_Sample2,7,ETL treatment,BCP,10
+10.1002admi.202500231_Sample2,8,Cathode,Ag,100
 10.1002admi.202500231_Sample3,1,Anode,ITO,
 10.1002admi.202500231_Sample3,2,HTL,NiOx NPs,
-10.1002admi.202500231_Sample3,3,HTL treatment,EMIMI,
-10.1002admi.202500231_Sample3,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],
+10.1002admi.202500231_Sample3,3,HTL treatment,EMIMI-2%,
+10.1002admi.202500231_Sample3,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],400-450
 10.1002admi.202500231_Sample3,5,PSK treatment,,
-10.1002admi.202500231_Sample3,6,ETL,C60,50.0
-10.1002admi.202500231_Sample3,7,ETL treatment,BCP,10.0
-10.1002admi.202500231_Sample3,8,Cathode,Ag,100.0
+10.1002admi.202500231_Sample3,6,ETL,C60,50
+10.1002admi.202500231_Sample3,7,ETL treatment,BCP,10
+10.1002admi.202500231_Sample3,8,Cathode,Ag,100
 10.1002admi.202500231_Sample4,1,Anode,ITO,
 10.1002admi.202500231_Sample4,2,HTL,NiOx NPs,
 10.1002admi.202500231_Sample4,3,HTL treatment,EMIMI-4%,
-10.1002admi.202500231_Sample4,4,PSK,[ (Cs0.05FA0.79MA0.16)Pb(I.87Br0.13)3 ],
+10.1002admi.202500231_Sample4,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],400-450
 10.1002admi.202500231_Sample4,5,PSK treatment,,
-10.1002admi.202500231_Sample4,6,ETL,C60,50.0
-10.1002admi.202500231_Sample4,7,ETL treatment,BCP,10.0
-10.1002admi.202500231_Sample4,8,Cathode,Ag,100.0
+10.1002admi.202500231_Sample4,6,ETL,C60,50
+10.1002admi.202500231_Sample4,7,ETL treatment,BCP,10
+10.1002admi.202500231_Sample4,8,Cathode,Ag,100
 10.1016j.jechem.2021.11.029_Sample1,1,Anode,ITO,
 10.1016j.jechem.2021.11.029_Sample1,2,HTL,NiOx,
 10.1016j.jechem.2021.11.029_Sample1,3,HTL treatment,,

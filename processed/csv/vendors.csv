@@ -2,6 +2,7 @@ device_id,material,purity,vendor
 10.1002admi.202500231_Sample1,ITO coated glass,9 - 15 Ω □-1,"Colorado Concept Coatings LLC, 96041"
 10.1002admi.202500231_Sample1,DMF,99.9,Sigma-Aldrich
 10.1002admi.202500231_Sample1,DMSO,99,Alfa Aesar
+10.1002admi.202500231_Sample1,CB,99.8,Acros Organics
 10.1002admi.202500231_Sample1,C60,99,MER Corporation
 10.1002admi.202500231_Sample1,BCP,96,Sigma Aldrich
 10.1002admi.202500231_Sample1,PbI2,99.99,TCI
@@ -14,47 +15,50 @@ device_id,material,purity,vendor
 10.1002admi.202500231_Sample1,EMIMI,,Iolitec GmbH
 10.1002admi.202500231_Sample1,Ag,,
 10.1002admi.202500231_Sample2,ITO coated glass,9 - 15 Ω □-1,"Colorado Concept Coatings LLC, 96041"
-10.1002admi.202500231_Sample2,CB,99.8,Acros-Organics
 10.1002admi.202500231_Sample2,DMF,99.9,Sigma-Aldrich
 10.1002admi.202500231_Sample2,DMSO,99,Alfa Aesar
+10.1002admi.202500231_Sample2,CB,99.8,Acros Organics
 10.1002admi.202500231_Sample2,C60,99,MER Corporation
 10.1002admi.202500231_Sample2,BCP,96,Sigma Aldrich
 10.1002admi.202500231_Sample2,PbI2,99.99,TCI
 10.1002admi.202500231_Sample2,CsI,99.999,Sigma Aldrich
-10.1002admi.202500231_Sample2,MABr,99.99,Greatcell Solar Materials
+10.1002admi.202500231_Sample2,MABr,>99.99,Greatcell Solar Materials
 10.1002admi.202500231_Sample2,PbBr2,99.99,TCI
 10.1002admi.202500231_Sample2,FAI,99.99,Greatcell Solar Materials
-10.1002admi.202500231_Sample2,NiNO3.6H2O,97,Sigma Aldrich
-10.1002admi.202500231_Sample2,NaOH,97,Sigma-Aldrich
+10.1002admi.202500231_Sample2,NiNO3.6H2O,>97,Sigma Aldrich
+10.1002admi.202500231_Sample2,NaOH,>97,Sigma-Aldrich
 10.1002admi.202500231_Sample2,EMIMI,,Iolitec GmbH
+10.1002admi.202500231_Sample2,Ag,,
 10.1002admi.202500231_Sample3,ITO coated glass,9 - 15 Ω □-1,"Colorado Concept Coatings LLC, 96041"
-10.1002admi.202500231_Sample3,CB,99.8,Acros-Organics
 10.1002admi.202500231_Sample3,DMF,99.9,Sigma-Aldrich
 10.1002admi.202500231_Sample3,DMSO,99,Alfa Aesar
+10.1002admi.202500231_Sample3,CB,99.8,Acros Organics
 10.1002admi.202500231_Sample3,C60,99,MER Corporation
 10.1002admi.202500231_Sample3,BCP,96,Sigma Aldrich
-10.1002admi.202500231_Sample3,PbI2,99.99,"trace metals basis for Perovskite precursor, TCI.,"
+10.1002admi.202500231_Sample3,PbI2,99.99,TCI
 10.1002admi.202500231_Sample3,CsI,99.999,Sigma Aldrich
-10.1002admi.202500231_Sample3,MABr,99.99,Greatcell Solar Materials
-10.1002admi.202500231_Sample3,PbBr2,99.99,"trace metals basis for Perovskite precursor, TCI"
+10.1002admi.202500231_Sample3,MABr,>99.99,Greatcell Solar Materials
+10.1002admi.202500231_Sample3,PbBr2,99.99,TCI
 10.1002admi.202500231_Sample3,FAI,99.99,Greatcell Solar Materials
-10.1002admi.202500231_Sample3,NiNO3.6H2O,97,Sigma Aldrich
-10.1002admi.202500231_Sample3,NaOH,97,Sigma-Aldrich
+10.1002admi.202500231_Sample3,NiNO3.6H2O,>97,Sigma Aldrich
+10.1002admi.202500231_Sample3,NaOH,>97,Sigma-Aldrich
 10.1002admi.202500231_Sample3,EMIMI,,Iolitec GmbH
+10.1002admi.202500231_Sample3,Ag,,
 10.1002admi.202500231_Sample4,ITO coated glass,9 - 15 Ω □-1,"Colorado Concept Coatings LLC, 96041"
-10.1002admi.202500231_Sample4,CB,99.8,Acros-Organics
 10.1002admi.202500231_Sample4,DMF,99.9,Sigma-Aldrich
 10.1002admi.202500231_Sample4,DMSO,99,Alfa Aesar
+10.1002admi.202500231_Sample4,CB,99.8,Acros Organics
 10.1002admi.202500231_Sample4,C60,99,MER Corporation
 10.1002admi.202500231_Sample4,BCP,96,Sigma Aldrich
 10.1002admi.202500231_Sample4,PbI2,99.99,TCI
 10.1002admi.202500231_Sample4,CsI,99.999,Sigma Aldrich
-10.1002admi.202500231_Sample4,MABr,99.99,Greatcell Solar Materials
+10.1002admi.202500231_Sample4,MABr,>99.99,Greatcell Solar Materials
 10.1002admi.202500231_Sample4,PbBr2,99.99,TCI
 10.1002admi.202500231_Sample4,FAI,99.99,Greatcell Solar Materials
-10.1002admi.202500231_Sample4,NiNO3.6H2O,97,Sigma Aldrich
-10.1002admi.202500231_Sample4,NaOH,97,Sigma-Aldrich
+10.1002admi.202500231_Sample4,NiNO3.6H2O,>97,Sigma Aldrich
+10.1002admi.202500231_Sample4,NaOH,>97,Sigma-Aldrich
 10.1002admi.202500231_Sample4,EMIMI,,Iolitec GmbH
+10.1002admi.202500231_Sample4,Ag,,
 10.1016j.jechem.2021.11.029_Sample1,FAI,,Great Cell Solar Ltd.
 10.1016j.jechem.2021.11.029_Sample1,MABr,,Great Cell Solar Ltd.
 10.1016j.jechem.2021.11.029_Sample1,PEAI,,Xian Polymer Light Technol. Corp.

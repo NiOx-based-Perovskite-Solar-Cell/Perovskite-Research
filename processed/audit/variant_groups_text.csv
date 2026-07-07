@@ -1,0 +1,36 @@
+table,column,canonical_key,n_variants,variants,total_rows
+materials,solvent,dmfdmso41vv,4,DMF/DMSO (4/1 V/V) ×51  |  DMF/DMSO (4:1 V/V) ×43  |  DMF/DMSO (4:1 v/v) ×8  |  DMF:DMSO (4:1 v/v) ×12,114
+properties,unit,macm2,4,mA cm-2 ×52  |  mA/cm-2 ×2  |  mA/cm2 ×3  |  mAcm-2 ×12,69
+materials,solvent,dmfdmso3081vv,4,DMF /DMSO (3.08/1 V/V) ×1  |  DMF/DMSO (3.08/1 V/V) ×1  |  DMF/DMSO (3.08/1 v/v) ×2  |  DMFDMSO (3.08/1 v/v) ×2,6
+process,process_type,thermalevaporation,3,Thermal Evaporation ×12  |  Thermal evaporation ×6  |  ThermalEvaporation ×64,82
+process,process_type,spincoating,2,Spin coating ×9  |  SpinCoating ×204,213
+process,unit,csec,2,"C, sec ×153  |  C,sec ×4",157
+vendors,vendor,sigmaaldrich,2,Sigma Aldrich ×12  |  Sigma-Aldrich ×88,100
+layers,layer_type,htltreatment,2,HTL Treatment ×1  |  HTL treatment ×42,43
+process,process_type,antisolvent,2,AntiSolvent ×35  |  Antisolvent ×7,42
+layers,layer_type,psktreatment,2,PSK Treatment ×1  |  PSK treatment ×39,40
+process,description,cb,2,"CB ×23  |  CB, ×1",24
+materials,unit,mgml,2,mg/mL ×15  |  mg/ml ×7,22
+vendors,vendor,xianpolymerlighttechnologycorp,2,Xi-an Polymer Light Technology Corp. ×16  |  Xian Polymer Light Technology Corp ×5,21
+process,process_type,plasmatreat,2,Plasma Treat ×17  |  PlasmaTreat ×4,21
+process,unit,torr,2,Torr ×17  |  torr ×4,21
+properties,property,grainsize,2,Grain Size ×10  |  Grain size ×10,20
+materials,solvent,dmfdmso41,2,DMF/DMSO (4:1) ×8  |  DMF:DMSO (4:1) ×10,18
+properties,property,contactangle,2,Contact Angle ×8  |  Contact angle ×9,17
+properties,property,trapdensity,2,Trap Density ×7  |  Trap density ×8,15
+properties,property,averagevoc,2,Average Voc ×12  |  AverageVoc ×1,13
+materials,unit,µl,2,µL ×9  |  µl ×1,10
+process,unit,µlsec,2,"µL, sec ×7  |  µl, sec ×2",9
+properties,property,holemobility,2,Hole Mobility ×2  |  Hole mobility ×7,9
+materials,solvent,ethanol,2,Ethanol ×1  |  ethanol ×7,8
+process,unit,rpmrpmssec,2,"RPM, RPM/s,sec ×4  |  RPM,RPM/s,sec ×4",8
+properties,property,workfunction,2,Work Function ×7  |  Work function ×1,8
+materials,solvent,deionizedwater,2,De-ionized water ×3  |  Deionized water ×4,7
+materials,type,antisolvent,2,Anti-solvent ×2  |  Antisolvent ×4,6
+properties,property,holetrapdensity,2,Hole Trap Density ×3  |  Hole trap density ×2,5
+stability,environment,ambient,2,Ambient ×2  |  ambient ×3,5
+materials,solvent,ethylalcohol,2,Ethyl Alcohol ×2  |  ethyl alcohol ×2,4
+process,process_type,presputtering,2,Pre-sputtering ×2  |  PreSputtering ×2,4
+process,unit,wmtorrsec,2,"W, mtorr, sec ×3  |  W, mtorr,sec ×1",4
+process,description,ultrasonicipaacetonediwater,2,"Ultrasonic, IPA, Acetone, DI Water ×1  |  Ultrasonic, IPA, acetone, DI Water ×1",2
+process,description,cosputtering1sccmo2+19sccmar,2,"Co-sputtering, 1 sccm O2 + 19 sccm Ar ×1  |  Co-sputtering, 1 sccm O2 + 19 sccm Ar, ×1",2

@@ -39,9 +39,20 @@ STABILITY_MAP = {
     "normalize pce (%)": "retention_pct",
     "final normalize pce (%)": "retention_pct",
     "t80 (hr)": "t80_hr",
+    "initial pce (%)": "initial_pce",
+    "final pce (%)": "final_pce",
 }
 STABILITY_COLS = ["environment", "encapsulation", "temperature_c",
-                  "humidity_pct", "time_hr", "retention_pct", "t80_hr"]
+                  "humidity_pct", "time_hr", "retention_pct", "t80_hr",
+                  "initial_pce", "final_pce"]
+
+# The 6 sheets every workbook is expected to have. Any *extra* sheet whose
+# header looks like Process steps (has StepOrder + ProcessType) is treated as
+# additional process/synthesis steps and folded into the `process` table
+# (this project is process-centric). Anything else triggers a drift warning
+# so new data is never silently dropped.
+KNOWN_SHEETS = {"Layer", "Vender", "Materials", "Process",
+                "Properties", "Stability"}
 
 
 def parse_device_id(path: str):
@@ -65,10 +76,16 @@ def _clean(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def build_tables():
+def _is_process_like(cols) -> bool:
+    s = {str(c).strip() for c in cols}
+    return {"StepOrder", "ProcessType"} <= s
+
+
+def build_tables(warn=True):
     files = sorted(glob.glob(os.path.join(RAW_DIR, "*.xlsx")))
     devices, layers, vendors, materials, process, properties, stability = (
         [], [], [], [], [], [], [])
+    warnings = []
 
     for f in files:
         device_id, doi_raw, sample_no = parse_device_id(f)
@@ -88,20 +105,41 @@ def build_tables():
         mat.insert(0, "device_id", device_id)
         materials.append(mat)
 
-        pro = _clean(pd.read_excel(f, "Process")).dropna(how="all")
-        pro.insert(0, "device_id", device_id)
-        process.append(pro)
+        # Process + any extra process-like sheet (e.g. "NiOx synthesis").
+        # `source_sheet` keeps provenance so folded-in steps stay traceable.
+        for sh in xl.sheet_names:
+            if sh == "Process" or (sh not in KNOWN_SHEETS
+                                   and _is_process_like(pd.read_excel(f, sh, nrows=0).columns)):
+                pro = _clean(pd.read_excel(f, sh)).dropna(how="all")
+                pro.insert(0, "source_sheet", sh)
+                pro.insert(0, "device_id", device_id)
+                process.append(pro)
 
         prp = _clean(pd.read_excel(f, "Properties")).dropna(how="all")
         prp.insert(0, "device_id", device_id)
         properties.append(prp)
 
         stb = pd.read_excel(f, "Stability")
+        for c in stb.columns:
+            if str(c).strip().lower() not in STABILITY_MAP:
+                warnings.append(f"{device_id} [Stability]: unmapped column "
+                                f"'{str(c).strip()}' (dropped)")
         stb.columns = [STABILITY_MAP.get(str(c).strip().lower(), str(c).strip())
                        for c in stb.columns]
         stb = _clean(stb).dropna(how="all")
         stb.insert(0, "device_id", device_id)
         stability.append(stb)
+
+        # flag any sheet we neither know nor recognized as process-like
+        for sh in xl.sheet_names:
+            if sh not in KNOWN_SHEETS and not _is_process_like(
+                    pd.read_excel(f, sh, nrows=0).columns):
+                warnings.append(f"{device_id}: unknown sheet '{sh}' (ignored)")
+
+    if warn and warnings:
+        print("⚠️  SCHEMA DRIFT (data preserved where possible):")
+        for w in warnings:
+            print("   -", w)
 
     def cat(frames):
         return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
@@ -118,7 +156,7 @@ def build_tables():
     process = cat(process).rename(columns={
         "LayerID": "layer_id", "StepOrder": "step_order",
         "ProcessType": "process_type", "Descriptions": "description",
-        "Parameter": "parameter", "Unit": "unit"})
+        "Parameter": "parameter", "Unit": "unit", "Remarks": "note"})
     properties = cat(properties).rename(columns={
         "Properties": "property", "Values": "value",
         "Errors": "error", "Unit": "unit", "Remarks": "remarks"})
