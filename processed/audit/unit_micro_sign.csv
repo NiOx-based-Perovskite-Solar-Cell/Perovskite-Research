@@ -1,0 +1,10 @@
+table,raw_unit,micro_sign_U+00B5,greek_mu_U+03BC,codepoints
+materials.unit,μL,False,True,U+03BC
+materials.unit,µL,True,False,U+00B5
+materials.unit,µl,True,False,U+00B5
+process.unit,"µL, sec",True,False,U+00B5
+process.unit,"μL, sec",False,True,U+03BC
+process.unit,μL,False,True,U+03BC
+process.unit,"µl, sec",True,False,U+00B5
+process.unit,µL,True,False,U+00B5
+properties.unit,μm,False,True,U+03BC
