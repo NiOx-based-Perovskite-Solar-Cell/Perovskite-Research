@@ -66,9 +66,12 @@ def parse_device_id(path: str):
 
 def _clean(df: pd.DataFrame) -> pd.DataFrame:
     df.columns = [str(c).strip() for c in df.columns]
-    # normalize whitespace/newlines inside string cells
+    # normalize whitespace/newlines inside string cells.
+    # NB: check for string OR object dtype — pandas >=3.0 reads text columns as
+    # the new "str" dtype (not "object"), so an `== object` test silently skips
+    # all cleaning and leaves untrimmed whitespace (e.g. "NiOx " vs "NiOx").
     for c in df.columns:
-        if df[c].dtype == object:
+        if pd.api.types.is_string_dtype(df[c]) or df[c].dtype == object:
             df[c] = (df[c].astype(str)
                           .str.replace(r"\s+", " ", regex=True)
                           .str.strip()
