@@ -7,7 +7,7 @@ Each workbook in `Raw Data/` is ONE device (solar cell sample) and is named
 
 This script flattens all workbooks into tidy, normalized tables linked by a
 single key `device_id` (the filename stem). It writes three representations:
-    processed/csv/*.csv        tidy long tables (analysis / version control)
+    processed/normalize/*.csv     tidy long tables (analysis / version control)
     processed/perovskite.sqlite   relational DB with foreign keys (SQL queries)
     processed/json/<device>.json  nested per-device document (archival / sharing)
 
@@ -174,7 +174,7 @@ def build_tables(warn=True):
 
 
 def write_csv(tables):
-    d = os.path.join(OUT_DIR, "csv")
+    d = os.path.join(OUT_DIR, "normalize")
     os.makedirs(d, exist_ok=True)
     for name, df in tables.items():
         df.to_csv(os.path.join(d, f"{name}.csv"), index=False)
