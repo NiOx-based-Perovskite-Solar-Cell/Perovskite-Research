@@ -1,0 +1,9 @@
+table,column,device_id,property,before,after,note
+properties,value_parsed,10.1002admi.202500231_Sample1,FF,0.76,76.0,FF scale x100
+properties,value_parsed,10.1002admi.202500231_Sample2,FF,0.75,75.0,FF scale x100
+properties,value_parsed,10.1002admi.202500231_Sample3,FF,0.78,78.0,FF scale x100
+properties,value_parsed,10.1002admi.202500231_Sample4,FF,0.79,79.0,FF scale x100
+properties,value_parsed,10_1016_j_solener_2025_113286_Sample1,Average FF,0.69,69.0,FF scale x100
+properties,value_parsed,10_1016_j_solener_2025_113286_Sample1,Champion FF,0.71,71.0,FF scale x100
+properties,value_parsed,10_1016_j_solener_2025_113286_Sample2,Average FF,0.72,72.0,FF scale x100
+properties,value_parsed,10_1016_j_solener_2025_113286_Sample2,Champion FF,0.72,72.0,FF scale x100

@@ -1,0 +1,45 @@
+table,column,raw,canonical,n_rows,rule
+layers,layer_type,HTL Treatment,HTL treatment,1,majority
+layers,layer_type,PSK Treatment,PSK treatment,1,majority
+materials,solvent,DMF /DMSO (3.08/1 V/V),DMF/DMSO (3.08/1 v/v),1,override
+materials,solvent,DMF/DMSO (3.08/1 V/V),DMF/DMSO (3.08/1 v/v),1,override
+materials,solvent,DMFDMSO (3.08/1 v/v),DMF/DMSO (3.08/1 v/v),2,override
+materials,solvent,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v),51,override
+materials,solvent,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v),43,override
+materials,solvent,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v),12,override
+materials,solvent,DMF:DMSO (4:1),DMF/DMSO (4:1),10,override
+materials,solvent,De-ionized water,Deionized water,3,majority
+materials,solvent,Ethanol,ethanol,1,majority
+materials,solvent,Ethyl Alcohol,ethyl alcohol,2,majority
+materials,type,Anti-solvent,Antisolvent,2,majority
+materials,unit,mg/ml,mg/mL,7,majority
+materials,unit,mol,mol%,6,majority
+materials,unit,µl,µL,1,majority
+process,description,"CB,",CB,1,majority
+process,description,"Co-sputtering, 1 sccm O2 + 19 sccm Ar","Co-sputtering, 1 sccm O2 + 19 sccm Ar,",1,majority
+process,description,"Ultrasonic, IPA, Acetone, DI Water","Ultrasonic, IPA, acetone, DI Water",1,majority
+process,process_type,Antisolvent,AntiSolvent,7,majority
+process,process_type,PlasmaTreat,Plasma Treat,4,majority
+process,process_type,Pre-sputtering,PreSputtering,2,majority
+process,process_type,SpinCoating,Spin coating,204,override
+process,process_type,Thermal Evaporation,Thermal evaporation,12,override
+process,process_type,ThermalEvaporation,Thermal evaporation,64,override
+process,unit,"C,sec","C, sec",4,majority
+process,unit,"RPM, RPM/s,sec","RPM,RPM/s,sec",4,majority
+process,unit,torr,Torr,4,majority
+process,unit,"W, mtorr,sec","W, mtorr, sec",1,majority
+process,unit,"µl, sec","µL, sec",2,majority
+properties,property,Contact Angle,Contact angle,8,majority
+properties,property,Grain Size,Grain size,10,override
+properties,property,Hole trap density,Hole Trap Density,2,majority
+properties,property,Hole Mobility,Hole mobility,2,majority
+properties,property,Trap Density,Trap density,7,majority
+properties,property,Work function,Work Function,1,majority
+properties,unit,mA/cm-2,mA cm-2,2,majority
+properties,unit,mA/cm2,mA cm-2,3,majority
+properties,unit,mAcm-2,mA cm-2,12,majority
+stability,environment,Ambient,ambient,2,majority
+vendors,vendor,Sigma Aldrich,Sigma-Aldrich,12,majority
+vendors,vendor,Xi'an Polymer Light Technology Corp.,Xi-an Polymer Light Technology Corp.,4,majority
+vendors,vendor,Xian Polymer Light Technology Corp,Xi-an Polymer Light Technology Corp.,5,majority
+vendors,vendor,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd.",12,majority

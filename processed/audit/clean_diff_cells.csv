@@ -1,0 +1,567 @@
+step,table,column,row,device_id,before,after
+1-unicode/ws,materials,unit,157,10_1002_smll_202504237_Sample1,μL,µL
+1-unicode/ws,materials,unit,169,10_1002_smll_202504237_Sample2,μL,µL
+1-unicode/ws,process,unit,284,10_1002_solr_202400534_Sample1,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,300,10_1002_solr_202400534_Sample2,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,314,10_1002adma_202507730_Sample1,μL,µL
+1-unicode/ws,process,unit,330,10_1002adma_202507730_Sample2,μL,µL
+1-unicode/ws,process,unit,346,10_1002adma_202507730_Sample3,μL,µL
+1-unicode/ws,process,unit,362,10_1002adma_202507730_Sample4,μL,µL
+1-unicode/ws,process,unit,378,10_1002adma_202507730_Sample5,μL,µL
+1-unicode/ws,process,unit,392,10_1016_j_heliyon_2024_e25352_Sample1,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,406,10_1016_j_heliyon_2024_e25352_Sample2,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,420,10_1016_j_heliyon_2024_e25352_Sample3,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,434,10_1016_j_heliyon_2024_e25352_Sample4,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,448,10_1016_j_heliyon_2024_e25352_Sample5,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,535,10_1021_acsami_5c15868_Sample2,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,553,10_1021_acsami_5c15868_Sample3,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,569,10_1039_d3lf00258f_Sample1,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,586,10_1039_d3lf00258f_Sample2,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,603,10_1039_d3lf00258f_Sample3,"μL, sec","µL, sec"
+1-unicode/ws,process,unit,620,10_1039_d3lf00258f_Sample4,"μL, sec","µL, sec"
+1-unicode/ws,properties,unit,1,10.1002admi.202500231_Sample1,mA cm−2,mA cm-2
+1-unicode/ws,properties,unit,13,10.1002admi.202500231_Sample2,mA cm−2,mA cm-2
+1-unicode/ws,properties,unit,25,10.1002admi.202500231_Sample3,mA cm−2,mA cm-2
+1-unicode/ws,properties,unit,37,10.1002admi.202500231_Sample4,mA cm−2,mA cm-2
+1-unicode/ws,properties,unit,264,10_1002_solr_202400534_Sample2,μm,µm
+2-typo,properties,property,138,10.1021_acsami.5c16972_Sample1,Trap densitiy,Trap density
+2-typo,properties,property,158,10.1021_acsami.5c16972_Sample2,Trap densitiy,Trap density
+2-typo,properties,property,178,10.1021_acsami.5c16972_Sample3,Trap densitiy,Trap density
+2-typo,properties,property,425,10_1021_acsami_5c15868_Sample2,AverageVoc,Average Voc
+3-variant,layers,layer_type,282,10_1039_d3lf00258f_Sample1,HTL Treatment,HTL treatment
+3-variant,layers,layer_type,284,10_1039_d3lf00258f_Sample1,PSK Treatment,PSK treatment
+3-variant,materials,solvent,1,10.1002admi.202500231_Sample1,De-ionized water,Deionized water
+3-variant,materials,solvent,3,10.1002admi.202500231_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,4,10.1002admi.202500231_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,5,10.1002admi.202500231_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,6,10.1002admi.202500231_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,7,10.1002admi.202500231_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,13,10.1002admi.202500231_Sample2,De-ionized water,Deionized water
+3-variant,materials,solvent,15,10.1002admi.202500231_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,16,10.1002admi.202500231_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,17,10.1002admi.202500231_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,18,10.1002admi.202500231_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,19,10.1002admi.202500231_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,25,10.1002admi.202500231_Sample3,De-ionized water,Deionized water
+3-variant,materials,solvent,27,10.1002admi.202500231_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,28,10.1002admi.202500231_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,29,10.1002admi.202500231_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,30,10.1002admi.202500231_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,31,10.1002admi.202500231_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,39,10.1002admi.202500231_Sample4,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,40,10.1002admi.202500231_Sample4,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,41,10.1002admi.202500231_Sample4,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,42,10.1002admi.202500231_Sample4,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,43,10.1002admi.202500231_Sample4,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,75,10.1016j.nanoen.2021.106285_Sample1,DMF/DMSO (3.08/1 V/V),DMF/DMSO (3.08/1 v/v)
+3-variant,materials,solvent,76,10.1016j.nanoen.2021.106285_Sample1,DMF /DMSO (3.08/1 V/V),DMF/DMSO (3.08/1 v/v)
+3-variant,materials,solvent,77,10.1016j.nanoen.2021.106285_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,78,10.1016j.nanoen.2021.106285_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,88,10.1016j.nanoen.2021.106285_Sample2,DMFDMSO (3.08/1 v/v),DMF/DMSO (3.08/1 v/v)
+3-variant,materials,solvent,89,10.1016j.nanoen.2021.106285_Sample2,DMFDMSO (3.08/1 v/v),DMF/DMSO (3.08/1 v/v)
+3-variant,materials,solvent,90,10.1016j.nanoen.2021.106285_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,91,10.1016j.nanoen.2021.106285_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,103,10.1016j.nanoen.2021.106285_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,104,10.1016j.nanoen.2021.106285_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,116,10.1021_acsami.5c16972_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,117,10.1021_acsami.5c16972_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,118,10.1021_acsami.5c16972_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,119,10.1021_acsami.5c16972_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,120,10.1021_acsami.5c16972_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,128,10.1021_acsami.5c16972_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,129,10.1021_acsami.5c16972_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,130,10.1021_acsami.5c16972_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,131,10.1021_acsami.5c16972_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,132,10.1021_acsami.5c16972_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,141,10.1021_acsami.5c16972_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,142,10.1021_acsami.5c16972_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,143,10.1021_acsami.5c16972_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,144,10.1021_acsami.5c16972_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,145,10.1021_acsami.5c16972_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,233,10_1002adma_202507730_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,234,10_1002adma_202507730_Sample1,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,242,10_1002adma_202507730_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,243,10_1002adma_202507730_Sample2,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,251,10_1002adma_202507730_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,252,10_1002adma_202507730_Sample3,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,260,10_1002adma_202507730_Sample4,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,261,10_1002adma_202507730_Sample4,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,269,10_1002adma_202507730_Sample5,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,270,10_1002adma_202507730_Sample5,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,342,10_1016_j_solener_2025_113286_Sample1,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,343,10_1016_j_solener_2025_113286_Sample1,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,344,10_1016_j_solener_2025_113286_Sample1,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,345,10_1016_j_solener_2025_113286_Sample1,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,346,10_1016_j_solener_2025_113286_Sample1,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,354,10_1016_j_solener_2025_113286_Sample2,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,355,10_1016_j_solener_2025_113286_Sample2,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,356,10_1016_j_solener_2025_113286_Sample2,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,357,10_1016_j_solener_2025_113286_Sample2,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,358,10_1016_j_solener_2025_113286_Sample2,DMF:DMSO (4:1),DMF/DMSO (4:1)
+3-variant,materials,solvent,367,10_1021_acsami_4c14300_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,368,10_1021_acsami_4c14300_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,369,10_1021_acsami_4c14300_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,370,10_1021_acsami_4c14300_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,371,10_1021_acsami_4c14300_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,378,10_1021_acsami_4c14300_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,379,10_1021_acsami_4c14300_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,380,10_1021_acsami_4c14300_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,381,10_1021_acsami_4c14300_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,382,10_1021_acsami_4c14300_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,389,10_1021_acsami_5c15868_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,390,10_1021_acsami_5c15868_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,391,10_1021_acsami_5c15868_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,392,10_1021_acsami_5c15868_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,393,10_1021_acsami_5c15868_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,401,10_1021_acsami_5c15868_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,402,10_1021_acsami_5c15868_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,403,10_1021_acsami_5c15868_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,404,10_1021_acsami_5c15868_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,405,10_1021_acsami_5c15868_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,414,10_1021_acsami_5c15868_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,415,10_1021_acsami_5c15868_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,416,10_1021_acsami_5c15868_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,417,10_1021_acsami_5c15868_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,418,10_1021_acsami_5c15868_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,480,10_1126_science_ade9637_Sample1,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,481,10_1126_science_ade9637_Sample1,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,482,10_1126_science_ade9637_Sample1,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,483,10_1126_science_ade9637_Sample1,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,484,10_1126_science_ade9637_Sample1,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,485,10_1126_science_ade9637_Sample1,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,491,10_1126_science_ade9637_Sample2,Ethanol,ethanol
+3-variant,materials,solvent,492,10_1126_science_ade9637_Sample2,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,493,10_1126_science_ade9637_Sample2,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,494,10_1126_science_ade9637_Sample2,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,495,10_1126_science_ade9637_Sample2,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,496,10_1126_science_ade9637_Sample2,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,497,10_1126_science_ade9637_Sample2,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,507,10_31635_ccschem_025_202505977_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,508,10_31635_ccschem_025_202505977_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,509,10_31635_ccschem_025_202505977_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,510,10_31635_ccschem_025_202505977_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,511,10_31635_ccschem_025_202505977_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,512,10_31635_ccschem_025_202505977_Sample1,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,519,10_31635_ccschem_025_202505977_Sample2,Ethyl Alcohol,ethyl alcohol
+3-variant,materials,solvent,520,10_31635_ccschem_025_202505977_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,521,10_31635_ccschem_025_202505977_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,522,10_31635_ccschem_025_202505977_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,523,10_31635_ccschem_025_202505977_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,524,10_31635_ccschem_025_202505977_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,525,10_31635_ccschem_025_202505977_Sample2,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,532,10_31635_ccschem_025_202505977_Sample3,Ethyl Alcohol,ethyl alcohol
+3-variant,materials,solvent,533,10_31635_ccschem_025_202505977_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,534,10_31635_ccschem_025_202505977_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,535,10_31635_ccschem_025_202505977_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,536,10_31635_ccschem_025_202505977_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,537,10_31635_ccschem_025_202505977_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,solvent,538,10_31635_ccschem_025_202505977_Sample3,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v)
+3-variant,materials,type,486,10_1126_science_ade9637_Sample1,Anti-solvent,Antisolvent
+3-variant,materials,type,498,10_1126_science_ade9637_Sample2,Anti-solvent,Antisolvent
+3-variant,materials,unit,1,10.1002admi.202500231_Sample1,mg/ml,mg/mL
+3-variant,materials,unit,13,10.1002admi.202500231_Sample2,mg/ml,mg/mL
+3-variant,materials,unit,14,10.1002admi.202500231_Sample2,mg/ml,mg/mL
+3-variant,materials,unit,25,10.1002admi.202500231_Sample3,mg/ml,mg/mL
+3-variant,materials,unit,26,10.1002admi.202500231_Sample3,mg/ml,mg/mL
+3-variant,materials,unit,37,10.1002admi.202500231_Sample4,mg/ml,mg/mL
+3-variant,materials,unit,38,10.1002admi.202500231_Sample4,mg/ml,mg/mL
+3-variant,materials,unit,358,10_1016_j_solener_2025_113286_Sample2,µl,µL
+3-variant,materials,unit,367,10_1021_acsami_4c14300_Sample1,mol,mol%
+3-variant,materials,unit,368,10_1021_acsami_4c14300_Sample1,mol,mol%
+3-variant,materials,unit,369,10_1021_acsami_4c14300_Sample1,mol,mol%
+3-variant,materials,unit,378,10_1021_acsami_4c14300_Sample2,mol,mol%
+3-variant,materials,unit,379,10_1021_acsami_4c14300_Sample2,mol,mol%
+3-variant,materials,unit,380,10_1021_acsami_4c14300_Sample2,mol,mol%
+3-variant,process,description,75,10.1016j.jechem.2021.11.029_Sample1,"Ultrasonic, IPA, Acetone, DI Water","Ultrasonic, IPA, acetone, DI Water"
+3-variant,process,description,231,10_1002_smll_202504237_Sample2,"Co-sputtering, 1 sccm O2 + 19 sccm Ar","Co-sputtering, 1 sccm O2 + 19 sccm Ar,"
+3-variant,process,description,569,10_1039_d3lf00258f_Sample1,"CB,",CB
+3-variant,process,process_type,1,10.1002admi.202500231_Sample1,PlasmaTreat,Plasma Treat
+3-variant,process,process_type,3,10.1002admi.202500231_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,6,10.1002admi.202500231_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,7,10.1002admi.202500231_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,10,10.1002admi.202500231_Sample1,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,11,10.1002admi.202500231_Sample1,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,12,10.1002admi.202500231_Sample1,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,19,10.1002admi.202500231_Sample2,PlasmaTreat,Plasma Treat
+3-variant,process,process_type,22,10.1002admi.202500231_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,25,10.1002admi.202500231_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,26,10.1002admi.202500231_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,29,10.1002admi.202500231_Sample2,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,30,10.1002admi.202500231_Sample2,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,31,10.1002admi.202500231_Sample2,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,38,10.1002admi.202500231_Sample3,PlasmaTreat,Plasma Treat
+3-variant,process,process_type,41,10.1002admi.202500231_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,44,10.1002admi.202500231_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,45,10.1002admi.202500231_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,48,10.1002admi.202500231_Sample3,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,49,10.1002admi.202500231_Sample3,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,50,10.1002admi.202500231_Sample3,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,57,10.1002admi.202500231_Sample4,PlasmaTreat,Plasma Treat
+3-variant,process,process_type,60,10.1002admi.202500231_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,63,10.1002admi.202500231_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,64,10.1002admi.202500231_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,67,10.1002admi.202500231_Sample4,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,68,10.1002admi.202500231_Sample4,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,69,10.1002admi.202500231_Sample4,Thermal Evaporation,Thermal evaporation
+3-variant,process,process_type,78,10.1016j.jechem.2021.11.029_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,82,10.1016j.jechem.2021.11.029_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,83,10.1016j.jechem.2021.11.029_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,86,10.1016j.jechem.2021.11.029_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,87,10.1016j.jechem.2021.11.029_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,88,10.1016j.jechem.2021.11.029_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,89,10.1016j.jechem.2021.11.029_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,93,10.1016j.jechem.2021.11.029_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,95,10.1016j.jechem.2021.11.029_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,97,10.1016j.jechem.2021.11.029_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,98,10.1016j.jechem.2021.11.029_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,101,10.1016j.jechem.2021.11.029_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,102,10.1016j.jechem.2021.11.029_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,103,10.1016j.jechem.2021.11.029_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,104,10.1016j.jechem.2021.11.029_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,109,10.1016j.nanoen.2021.106285_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,112,10.1016j.nanoen.2021.106285_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,113,10.1016j.nanoen.2021.106285_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,115,10.1016j.nanoen.2021.106285_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,118,10.1016j.nanoen.2021.106285_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,120,10.1016j.nanoen.2021.106285_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,121,10.1016j.nanoen.2021.106285_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,122,10.1016j.nanoen.2021.106285_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,127,10.1016j.nanoen.2021.106285_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,130,10.1016j.nanoen.2021.106285_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,132,10.1016j.nanoen.2021.106285_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,134,10.1016j.nanoen.2021.106285_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,137,10.1016j.nanoen.2021.106285_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,139,10.1016j.nanoen.2021.106285_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,140,10.1016j.nanoen.2021.106285_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,141,10.1016j.nanoen.2021.106285_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,146,10.1016j.nanoen.2021.106285_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,149,10.1016j.nanoen.2021.106285_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,151,10.1016j.nanoen.2021.106285_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,153,10.1016j.nanoen.2021.106285_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,156,10.1016j.nanoen.2021.106285_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,158,10.1016j.nanoen.2021.106285_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,159,10.1016j.nanoen.2021.106285_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,161,10.1016j.nanoen.2021.106285_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,165,10.1021_acsami.5c16972_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,168,10.1021_acsami.5c16972_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,169,10.1021_acsami.5c16972_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,172,10.1021_acsami.5c16972_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,174,10.1021_acsami.5c16972_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,176,10.1021_acsami.5c16972_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,180,10.1021_acsami.5c16972_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,182,10.1021_acsami.5c16972_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,187,10.1021_acsami.5c16972_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,188,10.1021_acsami.5c16972_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,191,10.1021_acsami.5c16972_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,193,10.1021_acsami.5c16972_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,195,10.1021_acsami.5c16972_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,199,10.1021_acsami.5c16972_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,201,10.1021_acsami.5c16972_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,206,10.1021_acsami.5c16972_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,207,10.1021_acsami.5c16972_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,210,10.1021_acsami.5c16972_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,212,10.1021_acsami.5c16972_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,214,10.1021_acsami.5c16972_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,220,10_1002_smll_202504237_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,221,10_1002_smll_202504237_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,226,10_1002_smll_202504237_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,227,10_1002_smll_202504237_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,228,10_1002_smll_202504237_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,234,10_1002_smll_202504237_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,235,10_1002_smll_202504237_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,240,10_1002_smll_202504237_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,241,10_1002_smll_202504237_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,242,10_1002_smll_202504237_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,246,10_1002_solr_202200422_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,249,10_1002_solr_202200422_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,250,10_1002_solr_202200422_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,254,10_1002_solr_202200422_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,256,10_1002_solr_202200422_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,258,10_1002_solr_202200422_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,262,10_1002_solr_202200422_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,265,10_1002_solr_202200422_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,266,10_1002_solr_202200422_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,270,10_1002_solr_202200422_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,272,10_1002_solr_202200422_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,274,10_1002_solr_202200422_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,278,10_1002_solr_202400534_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,280,10_1002_solr_202400534_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,282,10_1002_solr_202400534_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,283,10_1002_solr_202400534_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,285,10_1002_solr_202400534_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,287,10_1002_solr_202400534_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,288,10_1002_solr_202400534_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,289,10_1002_solr_202400534_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,290,10_1002_solr_202400534_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,294,10_1002_solr_202400534_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,296,10_1002_solr_202400534_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,298,10_1002_solr_202400534_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,299,10_1002_solr_202400534_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,301,10_1002_solr_202400534_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,303,10_1002_solr_202400534_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,304,10_1002_solr_202400534_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,305,10_1002_solr_202400534_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,306,10_1002_solr_202400534_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,309,10_1002adma_202507730_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,312,10_1002adma_202507730_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,313,10_1002adma_202507730_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,316,10_1002adma_202507730_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,317,10_1002adma_202507730_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,318,10_1002adma_202507730_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,319,10_1002adma_202507730_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,322,10_1002adma_202507730_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,328,10_1002adma_202507730_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,329,10_1002adma_202507730_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,332,10_1002adma_202507730_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,333,10_1002adma_202507730_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,334,10_1002adma_202507730_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,335,10_1002adma_202507730_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,338,10_1002adma_202507730_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,344,10_1002adma_202507730_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,345,10_1002adma_202507730_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,348,10_1002adma_202507730_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,349,10_1002adma_202507730_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,350,10_1002adma_202507730_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,351,10_1002adma_202507730_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,354,10_1002adma_202507730_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,360,10_1002adma_202507730_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,361,10_1002adma_202507730_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,364,10_1002adma_202507730_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,365,10_1002adma_202507730_Sample4,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,366,10_1002adma_202507730_Sample4,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,367,10_1002adma_202507730_Sample4,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,370,10_1002adma_202507730_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,376,10_1002adma_202507730_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,377,10_1002adma_202507730_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,380,10_1002adma_202507730_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,381,10_1002adma_202507730_Sample5,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,382,10_1002adma_202507730_Sample5,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,383,10_1002adma_202507730_Sample5,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,387,10_1016_j_heliyon_2024_e25352_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,390,10_1016_j_heliyon_2024_e25352_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,391,10_1016_j_heliyon_2024_e25352_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,394,10_1016_j_heliyon_2024_e25352_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,395,10_1016_j_heliyon_2024_e25352_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,396,10_1016_j_heliyon_2024_e25352_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,400,10_1016_j_heliyon_2024_e25352_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,403,10_1016_j_heliyon_2024_e25352_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,404,10_1016_j_heliyon_2024_e25352_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,405,10_1016_j_heliyon_2024_e25352_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,408,10_1016_j_heliyon_2024_e25352_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,409,10_1016_j_heliyon_2024_e25352_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,410,10_1016_j_heliyon_2024_e25352_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,414,10_1016_j_heliyon_2024_e25352_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,417,10_1016_j_heliyon_2024_e25352_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,418,10_1016_j_heliyon_2024_e25352_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,419,10_1016_j_heliyon_2024_e25352_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,422,10_1016_j_heliyon_2024_e25352_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,423,10_1016_j_heliyon_2024_e25352_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,424,10_1016_j_heliyon_2024_e25352_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,428,10_1016_j_heliyon_2024_e25352_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,431,10_1016_j_heliyon_2024_e25352_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,432,10_1016_j_heliyon_2024_e25352_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,433,10_1016_j_heliyon_2024_e25352_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,436,10_1016_j_heliyon_2024_e25352_Sample4,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,437,10_1016_j_heliyon_2024_e25352_Sample4,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,438,10_1016_j_heliyon_2024_e25352_Sample4,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,442,10_1016_j_heliyon_2024_e25352_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,445,10_1016_j_heliyon_2024_e25352_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,446,10_1016_j_heliyon_2024_e25352_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,447,10_1016_j_heliyon_2024_e25352_Sample5,SpinCoating,Spin coating
+3-variant,process,process_type,450,10_1016_j_heliyon_2024_e25352_Sample5,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,451,10_1016_j_heliyon_2024_e25352_Sample5,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,452,10_1016_j_heliyon_2024_e25352_Sample5,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,459,10_1016_j_solener_2025_113286_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,460,10_1016_j_solener_2025_113286_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,464,10_1016_j_solener_2025_113286_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,465,10_1016_j_solener_2025_113286_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,466,10_1016_j_solener_2025_113286_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,472,10_1016_j_solener_2025_113286_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,474,10_1016_j_solener_2025_113286_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,475,10_1016_j_solener_2025_113286_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,479,10_1016_j_solener_2025_113286_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,480,10_1016_j_solener_2025_113286_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,481,10_1016_j_solener_2025_113286_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,484,10_1021_acsami_4c14300_Sample1,Pre-sputtering,PreSputtering
+3-variant,process,process_type,488,10_1021_acsami_4c14300_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,491,10_1021_acsami_4c14300_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,493,10_1021_acsami_4c14300_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,495,10_1021_acsami_4c14300_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,498,10_1021_acsami_4c14300_Sample2,Pre-sputtering,PreSputtering
+3-variant,process,process_type,501,10_1021_acsami_4c14300_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,503,10_1021_acsami_4c14300_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,506,10_1021_acsami_4c14300_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,508,10_1021_acsami_4c14300_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,510,10_1021_acsami_4c14300_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,517,10_1021_acsami_5c15868_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,518,10_1021_acsami_5c15868_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,519,10_1021_acsami_5c15868_Sample1,Antisolvent,AntiSolvent
+3-variant,process,process_type,521,10_1021_acsami_5c15868_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,523,10_1021_acsami_5c15868_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,524,10_1021_acsami_5c15868_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,525,10_1021_acsami_5c15868_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,531,10_1021_acsami_5c15868_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,533,10_1021_acsami_5c15868_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,534,10_1021_acsami_5c15868_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,535,10_1021_acsami_5c15868_Sample2,Antisolvent,AntiSolvent
+3-variant,process,process_type,537,10_1021_acsami_5c15868_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,539,10_1021_acsami_5c15868_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,540,10_1021_acsami_5c15868_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,541,10_1021_acsami_5c15868_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,547,10_1021_acsami_5c15868_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,549,10_1021_acsami_5c15868_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,551,10_1021_acsami_5c15868_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,552,10_1021_acsami_5c15868_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,553,10_1021_acsami_5c15868_Sample3,Antisolvent,AntiSolvent
+3-variant,process,process_type,555,10_1021_acsami_5c15868_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,557,10_1021_acsami_5c15868_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,558,10_1021_acsami_5c15868_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,559,10_1021_acsami_5c15868_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,563,10_1039_d3lf00258f_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,567,10_1039_d3lf00258f_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,568,10_1039_d3lf00258f_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,569,10_1039_d3lf00258f_Sample1,Antisolvent,AntiSolvent
+3-variant,process,process_type,572,10_1039_d3lf00258f_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,574,10_1039_d3lf00258f_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,575,10_1039_d3lf00258f_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,579,10_1039_d3lf00258f_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,582,10_1039_d3lf00258f_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,584,10_1039_d3lf00258f_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,585,10_1039_d3lf00258f_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,586,10_1039_d3lf00258f_Sample2,Antisolvent,AntiSolvent
+3-variant,process,process_type,589,10_1039_d3lf00258f_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,591,10_1039_d3lf00258f_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,592,10_1039_d3lf00258f_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,596,10_1039_d3lf00258f_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,599,10_1039_d3lf00258f_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,601,10_1039_d3lf00258f_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,602,10_1039_d3lf00258f_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,603,10_1039_d3lf00258f_Sample3,Antisolvent,AntiSolvent
+3-variant,process,process_type,606,10_1039_d3lf00258f_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,608,10_1039_d3lf00258f_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,609,10_1039_d3lf00258f_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,613,10_1039_d3lf00258f_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,616,10_1039_d3lf00258f_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,618,10_1039_d3lf00258f_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,619,10_1039_d3lf00258f_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,620,10_1039_d3lf00258f_Sample4,Antisolvent,AntiSolvent
+3-variant,process,process_type,623,10_1039_d3lf00258f_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,625,10_1039_d3lf00258f_Sample4,SpinCoating,Spin coating
+3-variant,process,process_type,626,10_1039_d3lf00258f_Sample4,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,661,10_31635_ccschem_025_202505977_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,664,10_31635_ccschem_025_202505977_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,667,10_31635_ccschem_025_202505977_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,668,10_31635_ccschem_025_202505977_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,670,10_31635_ccschem_025_202505977_Sample1,SpinCoating,Spin coating
+3-variant,process,process_type,671,10_31635_ccschem_025_202505977_Sample1,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,675,10_31635_ccschem_025_202505977_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,677,10_31635_ccschem_025_202505977_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,679,10_31635_ccschem_025_202505977_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,682,10_31635_ccschem_025_202505977_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,683,10_31635_ccschem_025_202505977_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,685,10_31635_ccschem_025_202505977_Sample2,SpinCoating,Spin coating
+3-variant,process,process_type,686,10_31635_ccschem_025_202505977_Sample2,ThermalEvaporation,Thermal evaporation
+3-variant,process,process_type,690,10_31635_ccschem_025_202505977_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,692,10_31635_ccschem_025_202505977_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,694,10_31635_ccschem_025_202505977_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,697,10_31635_ccschem_025_202505977_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,698,10_31635_ccschem_025_202505977_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,700,10_31635_ccschem_025_202505977_Sample3,SpinCoating,Spin coating
+3-variant,process,process_type,701,10_31635_ccschem_025_202505977_Sample3,ThermalEvaporation,Thermal evaporation
+3-variant,process,unit,6,10.1002admi.202500231_Sample1,"RPM, RPM/s,sec","RPM,RPM/s,sec"
+3-variant,process,unit,25,10.1002admi.202500231_Sample2,"RPM, RPM/s,sec","RPM,RPM/s,sec"
+3-variant,process,unit,38,10.1002admi.202500231_Sample3,"W, mtorr,sec","W, mtorr, sec"
+3-variant,process,unit,44,10.1002admi.202500231_Sample3,"RPM, RPM/s,sec","RPM,RPM/s,sec"
+3-variant,process,unit,47,10.1002admi.202500231_Sample3,"C,sec","C, sec"
+3-variant,process,unit,61,10.1002admi.202500231_Sample4,"C,sec","C, sec"
+3-variant,process,unit,63,10.1002admi.202500231_Sample4,"RPM, RPM/s,sec","RPM,RPM/s,sec"
+3-variant,process,unit,66,10.1002admi.202500231_Sample4,"C,sec","C, sec"
+3-variant,process,unit,125,10.1016j.nanoen.2021.106285_Sample2,"C,sec","C, sec"
+3-variant,process,unit,461,10_1016_j_solener_2025_113286_Sample1,"µl, sec","µL, sec"
+3-variant,process,unit,476,10_1016_j_solener_2025_113286_Sample2,"µl, sec","µL, sec"
+3-variant,process,unit,575,10_1039_d3lf00258f_Sample1,torr,Torr
+3-variant,process,unit,592,10_1039_d3lf00258f_Sample2,torr,Torr
+3-variant,process,unit,609,10_1039_d3lf00258f_Sample3,torr,Torr
+3-variant,process,unit,626,10_1039_d3lf00258f_Sample4,torr,Torr
+3-variant,properties,property,65,10.1016j.jechem.2021.11.029_Sample1,Hole Mobility,Hole mobility
+3-variant,properties,property,86,10.1016j.jechem.2021.11.029_Sample2,Hole Mobility,Hole mobility
+3-variant,properties,property,274,10_1002adma_202507730_Sample1,Trap Density,Trap density
+3-variant,properties,property,280,10_1002adma_202507730_Sample2,Trap Density,Trap density
+3-variant,properties,property,282,10_1002adma_202507730_Sample2,Contact Angle,Contact angle
+3-variant,properties,property,287,10_1002adma_202507730_Sample3,Trap Density,Trap density
+3-variant,properties,property,305,10_1002adma_202507730_Sample5,Trap Density,Trap density
+3-variant,properties,property,317,10_1016_j_heliyon_2024_e25352_Sample1,Grain Size,Grain size
+3-variant,properties,property,324,10_1016_j_heliyon_2024_e25352_Sample2,Grain Size,Grain size
+3-variant,properties,property,331,10_1016_j_heliyon_2024_e25352_Sample3,Grain Size,Grain size
+3-variant,properties,property,338,10_1016_j_heliyon_2024_e25352_Sample4,Grain Size,Grain size
+3-variant,properties,property,345,10_1016_j_heliyon_2024_e25352_Sample5,Grain Size,Grain size
+3-variant,properties,property,356,10_1016_j_solener_2025_113286_Sample1,Hole trap density,Hole Trap Density
+3-variant,properties,property,371,10_1016_j_solener_2025_113286_Sample2,Hole trap density,Hole Trap Density
+3-variant,properties,property,388,10_1021_acsami_4c14300_Sample1,Contact Angle,Contact angle
+3-variant,properties,property,389,10_1021_acsami_4c14300_Sample1,Grain Size,Grain size
+3-variant,properties,property,403,10_1021_acsami_4c14300_Sample2,Contact Angle,Contact angle
+3-variant,properties,property,404,10_1021_acsami_4c14300_Sample2,Grain Size,Grain size
+3-variant,properties,property,433,10_1021_acsami_5c15868_Sample2,Contact Angle,Contact angle
+3-variant,properties,property,451,10_1021_acsami_5c15868_Sample3,Contact Angle,Contact angle
+3-variant,properties,property,527,10_31635_ccschem_025_202505977_Sample1,Trap Density,Trap density
+3-variant,properties,property,528,10_31635_ccschem_025_202505977_Sample1,Contact Angle,Contact angle
+3-variant,properties,property,530,10_31635_ccschem_025_202505977_Sample1,Work function,Work Function
+3-variant,properties,property,531,10_31635_ccschem_025_202505977_Sample1,Grain Size,Grain size
+3-variant,properties,property,541,10_31635_ccschem_025_202505977_Sample2,Trap Density,Trap density
+3-variant,properties,property,543,10_31635_ccschem_025_202505977_Sample2,Contact Angle,Contact angle
+3-variant,properties,property,546,10_31635_ccschem_025_202505977_Sample2,Grain Size,Grain size
+3-variant,properties,property,557,10_31635_ccschem_025_202505977_Sample3,Trap Density,Trap density
+3-variant,properties,property,559,10_31635_ccschem_025_202505977_Sample3,Contact Angle,Contact angle
+3-variant,properties,property,562,10_31635_ccschem_025_202505977_Sample3,Grain Size,Grain size
+3-variant,properties,unit,60,10.1016j.jechem.2021.11.029_Sample1,mA/cm-2,mA cm-2
+3-variant,properties,unit,80,10.1016j.jechem.2021.11.029_Sample2,mA/cm-2,mA cm-2
+3-variant,properties,unit,96,10.1016j.nanoen.2021.106285_Sample1,mA/cm2,mA cm-2
+3-variant,properties,unit,103,10.1016j.nanoen.2021.106285_Sample2,mA/cm2,mA cm-2
+3-variant,properties,unit,113,10.1016j.nanoen.2021.106285_Sample3,mA/cm2,mA cm-2
+3-variant,properties,unit,130,10.1021_acsami.5c16972_Sample1,mAcm-2,mA cm-2
+3-variant,properties,unit,134,10.1021_acsami.5c16972_Sample1,mAcm-2,mA cm-2
+3-variant,properties,unit,150,10.1021_acsami.5c16972_Sample2,mAcm-2,mA cm-2
+3-variant,properties,unit,154,10.1021_acsami.5c16972_Sample2,mAcm-2,mA cm-2
+3-variant,properties,unit,170,10.1021_acsami.5c16972_Sample3,mAcm-2,mA cm-2
+3-variant,properties,unit,174,10.1021_acsami.5c16972_Sample3,mAcm-2,mA cm-2
+3-variant,properties,unit,266,10_1002adma_202507730_Sample1,mAcm-2,mA cm-2
+3-variant,properties,unit,270,10_1002adma_202507730_Sample1,mAcm-2,mA cm-2
+3-variant,properties,unit,284,10_1002adma_202507730_Sample3,mAcm-2,mA cm-2
+3-variant,properties,unit,291,10_1002adma_202507730_Sample4,mAcm-2,mA cm-2
+3-variant,properties,unit,295,10_1002adma_202507730_Sample5,mAcm-2,mA cm-2
+3-variant,properties,unit,299,10_1002adma_202507730_Sample5,mAcm-2,mA cm-2
+3-variant,stability,environment,35,10_1016_j_solener_2025_113286_Sample1,Ambient,ambient
+3-variant,stability,environment,36,10_1016_j_solener_2025_113286_Sample2,Ambient,ambient
+3-variant,vendors,vendor,5,10.1002admi.202500231_Sample1,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,7,10.1002admi.202500231_Sample1,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,11,10.1002admi.202500231_Sample1,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,20,10.1002admi.202500231_Sample2,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,22,10.1002admi.202500231_Sample2,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,26,10.1002admi.202500231_Sample2,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,35,10.1002admi.202500231_Sample3,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,37,10.1002admi.202500231_Sample3,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,41,10.1002admi.202500231_Sample3,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,50,10.1002admi.202500231_Sample4,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,52,10.1002admi.202500231_Sample4,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,56,10.1002admi.202500231_Sample4,Sigma Aldrich,Sigma-Aldrich
+3-variant,vendors,vendor,255,10_1002_solr_202400534_Sample1,Xi'an Polymer Light Technology Corp.,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,256,10_1002_solr_202400534_Sample1,Xi'an Polymer Light Technology Corp.,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,275,10_1002_solr_202400534_Sample2,Xi'an Polymer Light Technology Corp.,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,276,10_1002_solr_202400534_Sample2,Xi'an Polymer Light Technology Corp.,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,286,10_1002adma_202507730_Sample1,Xian Polymer Light Technology Corp,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,289,10_1002adma_202507730_Sample2,Xian Polymer Light Technology Corp,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,293,10_1002adma_202507730_Sample3,Xian Polymer Light Technology Corp,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,297,10_1002adma_202507730_Sample4,Xian Polymer Light Technology Corp,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,301,10_1002adma_202507730_Sample5,Xian Polymer Light Technology Corp,Xi-an Polymer Light Technology Corp.
+3-variant,vendors,vendor,416,10_1021_acsami_4c14300_Sample1,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,417,10_1021_acsami_4c14300_Sample1,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,418,10_1021_acsami_4c14300_Sample1,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,419,10_1021_acsami_4c14300_Sample1,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,420,10_1021_acsami_4c14300_Sample1,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,421,10_1021_acsami_4c14300_Sample1,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,431,10_1021_acsami_4c14300_Sample2,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,432,10_1021_acsami_4c14300_Sample2,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,433,10_1021_acsami_4c14300_Sample2,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,434,10_1021_acsami_4c14300_Sample2,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,435,10_1021_acsami_4c14300_Sample2,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."
+3-variant,vendors,vendor,436,10_1021_acsami_4c14300_Sample2,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd."

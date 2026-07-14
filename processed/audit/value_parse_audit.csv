@@ -1,0 +1,80 @@
+table,column,device_id,raw,parsed,vmin,vmax,extra,note
+layers,thickness_nm,10.1002admi.202500231_Sample1,400-450,425.0,400.0,450.0,PSK,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=450)"
+layers,thickness_nm,10.1002admi.202500231_Sample2,400-450,425.0,400.0,450.0,PSK,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=450)"
+layers,thickness_nm,10.1002admi.202500231_Sample3,400-450,425.0,400.0,450.0,PSK,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=450)"
+layers,thickness_nm,10.1002admi.202500231_Sample4,400-450,425.0,400.0,450.0,PSK,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=450)"
+layers,thickness_nm,10_1002_solr_202200422_Sample1,"4, 100",104.0,4.0,100.0,Cathode,หลายชั้นย่อยในเซลล์เดียว: ผลรวม 104 nm (ชั้นย่อย 4 + 100)
+layers,thickness_nm,10_1002_solr_202200422_Sample2,"4, 100",104.0,4.0,100.0,Cathode,หลายชั้นย่อยในเซลล์เดียว: ผลรวม 104 nm (ชั้นย่อย 4 + 100)
+layers,thickness_nm,10_1002_solr_202400534_Sample1,400 Å,40.0,40.0,40.0,ETL treatment (1),แปลงหน่วย: 400 Å = 40 nm (1 Å = 0.1 nm)
+layers,thickness_nm,10_1002_solr_202400534_Sample1,90 Å,9.0,9.0,9.0,ETL treatment (2),แปลงหน่วย: 90 Å = 9 nm (1 Å = 0.1 nm)
+layers,thickness_nm,10_1002_solr_202400534_Sample1,1200 Å,120.0,120.0,120.0,Cathode,แปลงหน่วย: 1200 Å = 120 nm (1 Å = 0.1 nm)
+layers,thickness_nm,10_1002_solr_202400534_Sample2,400 Å,40.0,40.0,40.0,ETL treatment (1),แปลงหน่วย: 400 Å = 40 nm (1 Å = 0.1 nm)
+layers,thickness_nm,10_1002_solr_202400534_Sample2,90 Å,9.0,9.0,9.0,ETL treatment (2),แปลงหน่วย: 90 Å = 9 nm (1 Å = 0.1 nm)
+layers,thickness_nm,10_1002_solr_202400534_Sample2,1200 Å,120.0,120.0,120.0,Cathode,แปลงหน่วย: 1200 Å = 120 nm (1 Å = 0.1 nm)
+stability,temperature_c,10_1016_j_solener_2025_113286_Sample1,RT,25.0,,,,RT (room temperature) -> 25 C [assumption: CONFIG]
+stability,temperature_c,10_1016_j_solener_2025_113286_Sample2,RT,25.0,,,,RT (room temperature) -> 25 C [assumption: CONFIG]
+stability,temperature_c,10_1039_d3lf00258f_Sample1,RT,25.0,,,,RT (room temperature) -> 25 C [assumption: CONFIG]
+stability,temperature_c,10_1039_d3lf00258f_Sample2,RT,25.0,,,,RT (room temperature) -> 25 C [assumption: CONFIG]
+stability,temperature_c,10_1039_d3lf00258f_Sample3,RT,25.0,,,,RT (room temperature) -> 25 C [assumption: CONFIG]
+stability,temperature_c,10_1039_d3lf00258f_Sample4,RT,25.0,,,,RT (room temperature) -> 25 C [assumption: CONFIG]
+stability,humidity_pct,10.1016j.nanoen.2021.106285_Sample1,50 - 60,55.0,50.0,60.0,,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)"
+stability,humidity_pct,10.1016j.nanoen.2021.106285_Sample2,50–60,55.0,50.0,60.0,,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)"
+stability,humidity_pct,10.1016j.nanoen.2021.106285_Sample3,45–55,50.0,45.0,55.0,,"ช่วงค่า: ใช้ค่ากลาง 50 (min=45, max=55)"
+stability,humidity_pct,10.1016j.nanoen.2021.106285_Sample3,50–60,55.0,50.0,60.0,,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)"
+stability,humidity_pct,10.1021_acsami.5c16972_Sample1,30-50,40.0,30.0,50.0,,"ช่วงค่า: ใช้ค่ากลาง 40 (min=30, max=50)"
+stability,humidity_pct,10.1021_acsami.5c16972_Sample2,30-50,40.0,30.0,50.0,,"ช่วงค่า: ใช้ค่ากลาง 40 (min=30, max=50)"
+stability,humidity_pct,10.1021_acsami.5c16972_Sample3,30-50,40.0,30.0,50.0,,"ช่วงค่า: ใช้ค่ากลาง 40 (min=30, max=50)"
+stability,humidity_pct,10_1002_solr_202200422_Sample1,60 ± 5,60.0,55.0,65.0,,"ค่ากลาง±คลาดเคลื่อน: 60 (min=55, max=65)"
+stability,humidity_pct,10_1021_acsami_5c15868_Sample1,25 ± 5,25.0,20.0,30.0,,"ค่ากลาง±คลาดเคลื่อน: 25 (min=20, max=30)"
+stability,humidity_pct,10_1021_acsami_5c15868_Sample1,50 ± 5,50.0,45.0,55.0,,"ค่ากลาง±คลาดเคลื่อน: 50 (min=45, max=55)"
+stability,humidity_pct,10_1021_acsami_5c15868_Sample3,25 ± 5,25.0,20.0,30.0,,"ค่ากลาง±คลาดเคลื่อน: 25 (min=20, max=30)"
+stability,humidity_pct,10_1021_acsami_5c15868_Sample3,50 ± 5,50.0,45.0,55.0,,"ค่ากลาง±คลาดเคลื่อน: 50 (min=45, max=55)"
+stability,retention_pct,10_1016_j_solener_2025_113286_Sample1,< 55,55.0,,,<,ค่า censored: รู้แค่ว่า ต่ำกว่า 55 — ห้ามใช้เป็นค่าจริงโดยไม่ดูธง censor
+vendors,purity,10.1002admi.202500231_Sample1,9 - 15 Ω □-1,,,,sheet_resistance_misfiled,sheet resistance ของ substrate (9 - 15 Ω □-1) ถูกกรอกในช่อง purity — Ω ในไฟล์คือ U+2126 OHM SIGN
+vendors,purity,10.1002admi.202500231_Sample1,>99.99,99.99,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 99.99%
+vendors,purity,10.1002admi.202500231_Sample1,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1002admi.202500231_Sample1,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1002admi.202500231_Sample2,9 - 15 Ω □-1,,,,sheet_resistance_misfiled,sheet resistance ของ substrate (9 - 15 Ω □-1) ถูกกรอกในช่อง purity — Ω ในไฟล์คือ U+2126 OHM SIGN
+vendors,purity,10.1002admi.202500231_Sample2,>99.99,99.99,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 99.99%
+vendors,purity,10.1002admi.202500231_Sample2,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1002admi.202500231_Sample2,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1002admi.202500231_Sample3,9 - 15 Ω □-1,,,,sheet_resistance_misfiled,sheet resistance ของ substrate (9 - 15 Ω □-1) ถูกกรอกในช่อง purity — Ω ในไฟล์คือ U+2126 OHM SIGN
+vendors,purity,10.1002admi.202500231_Sample3,>99.99,99.99,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 99.99%
+vendors,purity,10.1002admi.202500231_Sample3,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1002admi.202500231_Sample3,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1002admi.202500231_Sample4,9 - 15 Ω □-1,,,,sheet_resistance_misfiled,sheet resistance ของ substrate (9 - 15 Ω □-1) ถูกกรอกในช่อง purity — Ω ในไฟล์คือ U+2126 OHM SIGN
+vendors,purity,10.1002admi.202500231_Sample4,>99.99,99.99,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 99.99%
+vendors,purity,10.1002admi.202500231_Sample4,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1002admi.202500231_Sample4,>97,97.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 97%
+vendors,purity,10.1016j.nanoen.2021.106285_Sample1,20 wt,,,,concentration_wt_pct,ความเข้มข้น 20 wt% ของ dispersion — ไม่ใช่ purity (ข้อมูลผิดชนิด)
+vendors,purity,10.1016j.nanoen.2021.106285_Sample2,20 wt,,,,concentration_wt_pct,ความเข้มข้น 20 wt% ของ dispersion — ไม่ใช่ purity (ข้อมูลผิดชนิด)
+vendors,purity,10.1016j.nanoen.2021.106285_Sample3,20 wt,,,,concentration_wt_pct,ความเข้มข้น 20 wt% ของ dispersion — ไม่ใช่ purity (ข้อมูลผิดชนิด)
+vendors,purity,10_1002_solr_202400534_Sample1,>99.0,99.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 99.0%
+vendors,purity,10_1002_solr_202400534_Sample1,≥99.99,99.99,,,percent_lower_bound,qualifier ≥: ความบริสุทธิ์อย่างน้อย 99.99%
+vendors,purity,10_1002_solr_202400534_Sample1,≥99.5,99.5,,,percent_lower_bound,qualifier ≥: ความบริสุทธิ์อย่างน้อย 99.5%
+vendors,purity,10_1002_solr_202400534_Sample2,>99.0,99.0,,,percent_lower_bound,qualifier >: ความบริสุทธิ์อย่างน้อย 99.0%
+vendors,purity,10_1002_solr_202400534_Sample2,≥99.99,99.99,,,percent_lower_bound,qualifier ≥: ความบริสุทธิ์อย่างน้อย 99.99%
+vendors,purity,10_1002_solr_202400534_Sample2,≥99.5,99.5,,,percent_lower_bound,qualifier ≥: ความบริสุทธิ์อย่างน้อย 99.5%
+vendors,purity,10_1016_j_solener_2025_113286_Sample1,Anhydrous,,,,grade_descriptor,เกรดตัวทำละลาย 'ปราศจากน้ำ' — ไม่ใช่ตัวเลขความบริสุทธิ์
+vendors,purity,10_1016_j_solener_2025_113286_Sample1,Anhydrous,,,,grade_descriptor,เกรดตัวทำละลาย 'ปราศจากน้ำ' — ไม่ใช่ตัวเลขความบริสุทธิ์
+vendors,purity,10_1016_j_solener_2025_113286_Sample1,Anhydrous,,,,grade_descriptor,เกรดตัวทำละลาย 'ปราศจากน้ำ' — ไม่ใช่ตัวเลขความบริสุทธิ์
+vendors,purity,10_1016_j_solener_2025_113286_Sample2,Anhydrous,,,,grade_descriptor,เกรดตัวทำละลาย 'ปราศจากน้ำ' — ไม่ใช่ตัวเลขความบริสุทธิ์
+vendors,purity,10_1016_j_solener_2025_113286_Sample2,Anhydrous,,,,grade_descriptor,เกรดตัวทำละลาย 'ปราศจากน้ำ' — ไม่ใช่ตัวเลขความบริสุทธิ์
+vendors,purity,10_1016_j_solener_2025_113286_Sample2,Anhydrous,,,,grade_descriptor,เกรดตัวทำละลาย 'ปราศจากน้ำ' — ไม่ใช่ตัวเลขความบริสุทธิ์
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
+vendors,purity,10_1126_science_ade9637_Sample1,Not provided,,,,missing,
