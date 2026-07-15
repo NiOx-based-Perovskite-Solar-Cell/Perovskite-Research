@@ -43,22 +43,6 @@
     "nanoparticles": "nanoparticles"
   },
   "properties_unit": {
-    "mA cm-2": "mA/cm²",
-    "mAcm-2": "mA/cm²",
-    "mA cm−2": "mA/cm²",
-    "mA/cm2": "mA/cm²",
-    "mA/cm-2": "mA/cm²",
-    "Ω": "ohm",
-    "Ohm": "ohm",
-    "Ω cm²": "ohm·cm²",
-    "Ω cm2": "ohm·cm²",
-    "Ohm/cm2": "ohm/cm²",
-    "Ω/sq": "ohm/sq",
-    "deg": "degree",
-    "degrees": "degree",
-    "S cm-1": "S/cm",
-    "cm2 V-1 s-1": "cm²/(V·s)",
-    "cm2/Vs": "cm²/(V·s)",
-    "m2 V-1 s-1": "m²/(V·s)"
-  }
-}
+    "mA cm-2": "mA/cm�",
+    "mAcm-2": "mA/cm�",
+    
