@@ -1,8 +1,8 @@
 metric,n,n_distinct_units,units,flag
 other,101,12,"V x35, ns x12, % x12, eV x11, Ω x8, nm x6, Ohm x5, cm-3 x4, F x3, Ω cm² x3, cm-3 eV-1 x1, cm-3 e/V x1",MULTI-UNIT
-Jsc,79,6,"mA cm-2 x52, mAcm-2 x12, % x6, mA cm−2 x4, mA/cm2 x3, mA/cm-2 x2",MULTI-UNIT
+Jsc,79,2,"mA cm-2 x73, % x6",MULTI-UNIT
 Voc,67,2,"V x61, % x6",MULTI-UNIT
-grain size,27,2,"nm x26, μm x1",MULTI-UNIT
+grain size,27,2,"nm x26, µm x1",MULTI-UNIT
 series R (Rs),23,6,"Ohm x6, Ω x6, Ohm/cm2 x4, Ω cm² x3, Ω/sq x2, Ω cm2 x2",MULTI-UNIT
 contact angle,18,2,"deg x14, degrees x4",MULTI-UNIT
 mobility,9,3,"cm2 V-1 s-1 x4, m2 V-1 s-1 x3, cm2/Vs x2",MULTI-UNIT
