@@ -19,9 +19,11 @@ __pycache__/
 ~$*.xlsx
 ~$*.xls
 
-# caveman skills (ดึงจาก github ติดตั้งใหม่ได้ด้วย skills-lock.json)
+# caveman skills (ติดตั้งเองได้ ไม่ต้องเก็บในรีโป)
 .agents/
 agent/
+.claude/skills/
+skills-lock.json
 
 # Claude Code (เก็บ settings.json ที่แชร์ได้ ไม่เก็บของเครื่องตัวเอง)
 .claude/settings.local.json
