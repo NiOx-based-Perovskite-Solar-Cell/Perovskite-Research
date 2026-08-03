@@ -484,6 +484,12 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 
 1. ~~**`100108000`**~~ — **ปิดแล้ว 2026-08-04** ด้วย Supporting Information (`100 °C for 30 min` = 1800 s) พร้อมแก้ Sample2/4 ที่ผิดด้วย ไม่เหลือแถวติดธง `param_note` ในทั้ง dataset
 2. ~~`antisolvent_timing_s` มี 2 จุดอ้างอิง~~ — **แก้แล้ว** ดู `antisolvent_drop_s` / `antisolvent_drop_frac` ในหัวข้อ target_table
+6. ~~`a_Cs = 0.333` ของ `10_1002_solr_202200422`~~ — **ปิดแล้ว 2026-08-04** เปิด SI ของเปเปอร์ ([Yang et al., Solar RRL 2022](https://onlinelibrary.wiley.com/doi/10.1002/solr.202200422)) พบว่า**เปเปอร์เขียน `0.7 M CsI` จริง** (Raw Excel เรากรอกตรงต้นฉบับ ไม่ใช่ความผิดการกรอก) แต่หลักฐานฟิสิกส์ 4 ชั้นชี้ว่า**เปเปอร์เองพิมพ์ผิดจาก 0.07**: (1) 0.07 ให้สูตรมาตรฐาน Cs05FA81MA14 + A/B=0.97 stoichiometric / 0.7 ให้ A เกิน B 39% (2) precursor ตัวอื่นตรง recipe Saliba คลาสสิก ×1.18 ซึ่ง CsI effective ~0.07-0.09 (3) PL peak ~770 nm ใน SI Fig S12 = bandgap มาตรฐาน ขัดกับ Cs 33% ที่ต้อง blue-shift (4) เปเปอร์เรียกเองว่า "CsFAMA triple cation" — user ยืนยันแก้เป็น 0.07 (recheck §8.9) → a_Cs=0.048, a_FA=0.81, a_MA=0.143 ตอนนี้ a_Cs สูงสุดทั้ง dataset = 0.15 (สมเหตุผล)
+   - **บทเรียนสำคัญ**: raw Excel กรอกถูกทุกตัวในเคสนี้ — บางครั้งต้นฉบับ (เปเปอร์) คือตัวที่ผิด การ validate ต้องเช็คถึงระดับความสมเหตุผลทางฟิสิกส์ ไม่ใช่แค่เทียบกับต้นทาง
+7. หมายเหตุเล็ก (ไม่ใช่บั๊ก แต่ควรรู้ตอนใช้):
+   - `psk_anneal_time_s` ใช้ **ผลรวม** ทุกขั้น Annealing ที่ L4 — device ที่อบสองขั้น (เช่น `smll_202504237`: 30°C 40 นาที + 100°C 20 นาที) จะได้ 3600 ซึ่งรวมเวลาขั้นอุ่นต่ำเข้าไปด้วย ไม่ใช่เวลาที่อุณหภูมิหลักอย่างเดียว (`psk_anneal_C` ใช้ max = 100 ถูกต้อง)
+   - `properties` มี 4 คู่ (device, property) ซ้ำของ `acsami_5c15868_Sample3` — เป็น Champion ค่าเดียวกันรายงานสองที่ (ตาราง vs forward-scan inset) ค่าต่างกัน <0.3% pivot ใช้ max เลือกค่าตารางให้อัตโนมัติ ไม่กระทบผล
+   - `pce` สูงสุด 26.5 และ `retention` 100.85% ตรวจแล้ว**ถูกต้อง** — มาจากเปเปอร์ระดับ record ปี 2024-25 (Adv. Mater., Science) และ retention เกิน 100 จาก light-soaking (มี note กำกับในไฟล์แล้ว)
 3. Thermal evaporation rate เป็นช่วง (`0.5-1 Å/s`) parse ไม่ได้ 12 แถว — ไม่ใช่ knob หลัก ปล่อยไว้
 4. stability n=14 — exploratory เท่านั้น
 5. **โมเดลถัดไป**: RandomForest + SHAP, LeaveOneGroupOut(paper) 15 fold, เทรน voc/jsc/ff แยกแล้วคูณเป็น pce, รายงาน mean±SD + bootstrap — ผลทั้งหมด = hypothesis สำหรับ wet-lab validation

@@ -13,8 +13,8 @@ device_id,comp_source,cross_check,b_site,layer_material,precursor_status,a_Cs,a_
 10.1021_acsami.5c16972_Sample3,formula,ตรง,Pb,[(FA0.83MA0.17)0.95Cs0.05Pb(I0.9Br0.1)3],ok (mass),0.05,0.788,0.162,0.9,0.1
 10_1002_smll_202504237_Sample1,formula,,Pb,Cs0.05(FA0.83MA0.17)0.95Pb(I0.83Br0.17)3,ตกหล่น: CsI,0.05,0.788,0.162,0.83,0.17
 10_1002_smll_202504237_Sample2,formula,,Pb,Cs0.05(FA0.83MA0.17)0.95Pb(I0.83Br0.17)3,ตกหล่น: CsI,0.05,0.788,0.162,0.83,0.17
-10_1002_solr_202200422_Sample1,precursor,-- (สูตรแตกไม่ได้),Pb,CsFAMA (Cs/FA/MA triple-cation),ok (molar),0.333,0.567,0.1,0.877,0.123
-10_1002_solr_202200422_Sample2,precursor,-- (สูตรแตกไม่ได้),Pb,CsFAMA (Cs/FA/MA triple-cation),ok (molar),0.333,0.567,0.1,0.877,0.123
+10_1002_solr_202200422_Sample1,precursor,-- (สูตรแตกไม่ได้),Pb,CsFAMA (Cs/FA/MA triple-cation),ok (molar) | §8.9: CsI 0.7->0.07 (typo ในเปเปอร์),0.048,0.81,0.143,0.86,0.14
+10_1002_solr_202200422_Sample2,precursor,-- (สูตรแตกไม่ได้),Pb,CsFAMA (Cs/FA/MA triple-cation),ok (molar) | §8.9: CsI 0.7->0.07 (typo ในเปเปอร์),0.048,0.81,0.143,0.86,0.14
 10_1002_solr_202400534_Sample1,formula,"ต่าง: Br, I",Pb,Cs0.05(FA0.83MA0.12)0.95Pb(I0.83Br0.17)3,ok (molar),0.052,0.828,0.12,0.83,0.17
 10_1002_solr_202400534_Sample2,formula,"ต่าง: Br, I",Pb,Cs0.05(FA0.83MA0.12)0.95Pb(I0.83Br0.17)3 + TFMBAFa additive,ok (molar),0.052,0.828,0.12,0.83,0.17
 10_1002adma_202507730_Sample1,formula,,Pb,Cs0.05MA0.05FA0.90PbI3,ไม่มีแถว precursor,0.05,0.9,0.05,1.0,
