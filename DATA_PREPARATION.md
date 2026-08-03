@@ -102,6 +102,20 @@ notebook เสริม: `after_col_prepare.ipynb` (ยุบเป็น devic
 
 ## รายไฟล์ `prepared_v2/` — คอลัมน์ + วิธีใช้ + จุดระวัง
 
+### ทำไมต้องมี 3 ไฟล์ derived (ไฟล์ที่ recheck สร้างใหม่ ไม่ได้ mirror จาก `prepared/`)
+
+**`target_table.csv` — จุดตัดสินใจทั้งหมดถูกฝังไว้ที่เดียว**
+ML ต้องการ 1 แถว = 1 device แต่ข้อมูลดิบกระจายอยู่ 5 ตาราง (properties หลายแถวต่อ device, process ราย step, stability รายเงื่อนไข) ถ้าให้แต่ละ notebook pivot เอง จะพลาดซ้ำแบบบั๊ก Champion/Average ที่เคยเกิด — ไฟล์นี้จึง encode การตัดสินใจทุกข้อไว้แล้ว: เลือก variant ชุดเดียวกัน (`jv_variant`), fill 0 ให้ไอออนที่ไม่อยู่ในสูตร, แยก sign convention ของ antisolvent, knob เฉพาะ layer ที่ถูกต้อง
+**อิทธิพล**: เป็นไฟล์เดียวที่ขั้น modeling อ่าน — ถ้าไฟล์นี้ผิด ทุกโมเดลผิดตาม และถ้าแก้กติกา (เช่น เปลี่ยน variant rule) ต้องแก้ที่ recheck §7 แล้ว regenerate ไม่ใช่แก้ปลายทาง
+
+**`psk_composition.csv` — หลักฐานที่มาของ X ควบคุม**
+สูตรเคมี (a_Cs/a_FA/x_Br) เป็น confounder ตัวใหญ่สุดของ process knob: paper ที่เปลี่ยน knob มักเปลี่ยนสูตรด้วย ถ้าไม่ใส่ composition เข้าโมเดล SHAP จะโทษ knob ทั้งที่จริงเป็นผลของสูตร — จึงต้องมี composition ครบ 44/44 และต้อง**พิสูจน์ได้ว่าค่าเชื่อถือได้**: ไฟล์นี้เก็บ `comp_source` (มาจากสูตรนามหรือคำนวณจาก precursor), `cross_check` (2 แหล่งอิสระตรงกันไหม), `precursor_status` (ทำไมบาง device คำนวณไม่ได้) + ไอออนครบทุกตัว (a_MA, x_I ที่ target_table ไม่ได้ดึง)
+**อิทธิพล**: target_table ดึงไปแค่ 3 คอลัมน์ — ไฟล์นี้คือ audit trail สำหรับเขียน methods ใน paper/thesis และเป็นที่กลับมาดูเมื่อ reviewer ถามที่มาของตัวเลข
+
+**`device_layer_flags.csv` — intermediate เพื่อ join เบา ๆ**
+ธงสถาปัตยกรรม (เคลือบ/anneal) ระดับ device ที่ notebook อื่น (เช่น `after_col_prepare`) join ได้โดยไม่ต้องลาก `devices.csv` ทั้งตาราง — ข้อมูล**ซ้ำโดยตั้งใจ**กับใน `devices.csv` และ `target_table.csv` (ไม่มีคอลัมน์ที่มีเฉพาะไฟล์นี้) ถ้าอยากเข้มงวดลบได้โดยไม่เสียข้อมูล แต่เก็บไว้เพราะต้นทุนศูนย์
+**อิทธิพล**: ต่ำสุดใน 3 ตัว — สะดวก ไม่ใช่จำเป็น
+
 ### `target_table.csv` (44×29) — 1 แถว = 1 device ⭐ ตารางหลัก modeling
 - **key**: `device_id` / paper แยกได้จาก `device_id.rsplit("_Sample", 1)[0]` (ใช้เป็น group ใน LOPO)
 - **ธง layer** (8): `is_coated`, `n_coating_layers`, `coat_htl/psk/etl`, `anneal_htl/psk`
