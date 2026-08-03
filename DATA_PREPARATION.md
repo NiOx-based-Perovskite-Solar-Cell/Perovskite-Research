@@ -99,8 +99,36 @@ notebook เสริม: `after_col_prepare.ipynb` (ยุบเป็น devic
 
 ⚠️ **ข้อควรระวังตอน join**: `process.csv` มีแถว placeholder ที่ `process_type` เป็น NaN 28 แถว (L1=5, L3=13, L5=10 — ไม่มี parameter/unit เลยสักแถว เป็นช่องว่างของ template) ถ้านับ device จาก `layer_id` อย่างเดียวจะได้ L3=38, L5=32 ซึ่งเกินจริง **ต้อง filter `process_type.notna()` ก่อนเสมอ** — ไม่ต้องลบแถวออก เพราะมันบอกว่า "ช่องนี้มีอยู่ใน template แต่ไม่มีข้อมูล" ซึ่งต่างจาก "ไม่มีแถวเลย"
 
+### ตัดสินใจแล้ว: **ไม่ดึงพารามิเตอร์การเคลือบ (L3/L5/L7) เป็น feature**
+
+ข้อมูลมีครบและ join ได้ (L3 26 dev, L5 22 dev, L7 44 dev มี `Spin coating__RPM`, `Annealing__C` ฯลฯ) แต่**ตั้งใจไม่ทำ** — ไม่ใช่ลืม
+
+เหตุผลที่ตัดสินใจ (ตรวจข้อมูลจริงแล้ว 2026-08-04):
+
+| knob | จำนวน paper | ค่าต่างกันทั้งหมด | **paper ที่แปรค่าภายในตัวเอง** |
+|---|---|---|---|
+| L3 `Spin coating__RPM` | 10 | 5 | 1 |
+| L3 `Annealing__C` | 11 | 4 | 0 |
+| L5 `Spin coating__RPM` | 8 | 4 | **0** |
+| L5 `Annealing__C` | 4 | 2 | 0 |
+| L7 `Spin coating__RPM` | 7 | 5 | 0 |
+
+1. **คอลัมน์ขวาสุดคือตัวตัดสิน** — เกือบทุก paper ใช้ค่าเดียวกันทุก sample แปลว่าค่าเหล่านี้ไม่แปรผัน*ภายใน* paper ใต้ LOPO โมเดลแยกไม่ออกว่าเป็นผลของ knob หรือของ paper → กลายเป็น **paper fingerprint** แบบเดียวกับ NiOx synthesis
+   (ต่างจาก `psk_spin_rpm` / `antisolvent_timing_s` ที่ผู้เขียนจงใจแปรระหว่าง sample เพราะเป็นตัวแปรที่เขาศึกษา — จึงดึงมาใช้)
+2. **สิ่งที่แปรจริงถูกจับไว้แล้ว** — สิ่งที่ paper ตั้งใจแปรคือ*ชนิดสาร* (PEAI มี/ไม่มี, EMIMI 1%/2%/4%) ไม่ใช่พารามิเตอร์การเคลือบ → `coat_psk`, `coat_htl`, `htl_mod_kind`, `psk_mod_kind` ครอบไว้หมดแล้ว
+3. **N=44 กับ 15 fold** — เพิ่ม feature ที่ไม่ให้ข้อมูลใหม่คือกิน degrees of freedom เปล่า และเพิ่มโอกาส false positive ตอนอ่าน SHAP
+
+**เมื่อไหร่ถึงค่อยกลับมาพิจารณา**: หลังมี baseline model แล้วทำ error analysis — ถ้าพบว่า residual เกาะกลุ่มกับวิธีเคลือบ ค่อยเพิ่มแบบ **categorical** (`psk_coat_method` = spin / evaporation / none) ไม่ใช่ดึงตัวเลข RPM ตรง ๆ
+
+**วิธี join ถ้าถึงเวลานั้นจริง:**
+```python
+proc = proc[(proc.source_sheet == "Process") & proc.process_type.notna()]
+coat = layers[layers.layer_id.isin([3, 5, 7])].merge(
+    proc[proc.layer_id.isin([3, 5, 7])], on=["device_id", "layer_id"], how="left")
+```
+ครอบคลุมทุกเคสที่เป็น coating จริง — 3 เคส additive ไม่มีวิธีเคลือบให้ดึงเพราะไม่ได้เคลือบ ให้ไปดูขั้น `Mix` ที่ L2 แทน
+
 **การใช้ในข้อมูล/โมเดล:**
-- ถ้าจะดึง "วิธีเคลือบ" เป็น feature: join `layers[layer_id∈{3,5,7}]` กับ `process[layer_id∈{3,5,7}]` (filter `process_type.notna()`) ได้ครบทุกเคสที่เป็น coating จริง — 3 เคส additive ไม่มีวิธีเคลือบให้ดึงเพราะไม่ได้เคลือบ ให้ไปดูขั้น `Mix` ที่ L2 แทน
 - `coat_htl`/`coat_psk`/`n_coating_layers` **นับเฉพาะเคลือบทับจริง** (additive ไม่นับ เพราะไม่ได้เพิ่มชั้น) → `coat_htl` = 26 ไม่ใช่ 29 / ถ้าอยากได้ "HTL ถูกดัดแปลงไหม" (รวม additive) ใช้ `htl_mod_kind.notna()`
 - `layers.csv` คอลัมน์ `layer_kind` ก็แยกเช่นกัน: main 218 / coating 94 / **additive 3** / ว่าง 37
 - ธง `coat_htl` (L3), `coat_psk` (L5), `coat_etl` (L7) + `is_coated`, `n_coating_layers` — อยู่ใน devices / device_layer_flags / target_table (สร้างใน recheck §2)
@@ -355,3 +383,5 @@ proc = proc[(proc.source_sheet == "Process") & proc.process_type.notna()]   # �
 5. **โมเดลถัดไป**: RandomForest + SHAP, LeaveOneGroupOut(paper) 15 fold, เทรน voc/jsc/ff แยกแล้วคูณเป็น pce, รายงาน mean±SD + bootstrap — ผลทั้งหมด = hypothesis สำหรับ wet-lab validation
 
 **ปิดไปแล้ว** (เคยอยู่ในรายการนี้): 27 unit errors ปิดครบ (ดู `properties.csv`) · psk_composition export แล้ว · layers แถวพอง · Champion/Average ปน · `coat_*` นับ additive · NiOx synthesis รั่วเข้า feature
+
+**ตัดสินใจว่าไม่ทำ** (อย่าเปิดใหม่โดยไม่มีเหตุผลใหม่): ดึงพารามิเตอร์การเคลือบ L3/L5/L7 เป็น feature — ไม่แปรผันภายใน paper จะกลายเป็น paper fingerprint (เหตุผลเต็มในหัวข้อชั้นเคลือบผิว)
