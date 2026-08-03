@@ -122,7 +122,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10.1016j.nanoen.2021.106285_Sample3,Rrec,87083.71,,Ohm,EIS,Ohm,87083.71,,Rrec,,,,,87083.71,
 10.1016j.nanoen.2021.106285_Sample3,Roughness,8.5,,nm,For FTO/NiOx/PTAA,nm,8.5,,Roughness,,,,,8.5,
 10.1021_acsami.5c16972_Sample1,Electrical conductivity,0.0012,,S cm-1,ITO/NiOx/Ag,S cm-1,0.0012,,Electrical conductivity,,,,,0.0012,
-10.1021_acsami.5c16972_Sample1,Hole mobility,0.0003671,,m2 V-1 s-1,ITO/NiOx/Ag,cm2 V-1 s-1,3.671,หน่วย m2 -> cm2 (x1e4): 0.0003671 -> 3.671,mobility,,,,hole,0.0003671,
+10.1021_acsami.5c16972_Sample1,Hole mobility,0.0003671,,m2 V-1 s-1,ITO/NiOx/Ag,cm2 V-1 s-1,3.671,หน่วย m2 -> cm2 (x1e4): 0.0003671 -> 3.671,mobility,,,,hole,3.671,recheck §8.7: ซิงก์ value_parsed = value_corrected (m2 -> cm2 x1e4)
 10.1021_acsami.5c16972_Sample1,Roughness RMS,7.33,,nm,of NiOx without treatment,nm,7.33,,Roughness RMS,,,,,7.33,
 10.1021_acsami.5c16972_Sample1,VBM,-5.44,,eV,of NiOx without treatment,eV,-5.44,,VBM,,,,,-5.44,
 10.1021_acsami.5c16972_Sample1,Fermi level,-4.41,,eV,of NiOx without treatment,eV,-4.41,,Fermi level,,,,,-4.41,
@@ -142,7 +142,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10.1021_acsami.5c16972_Sample1,Rrec,2881.0,,Ohm,EIS,Ohm,2881.0,,Rrec,,,,,2881.0,
 10.1021_acsami.5c16972_Sample1,Crec,3.3e-08,,F,EIS,F,3.3e-08,,Crec,,,,,3.3e-08,
 10.1021_acsami.5c16972_Sample2,Electrical conductivity,0.0016,,S cm-1,ITO/NiOx/Me-4PACz/Ag,S cm-1,0.0016,,Electrical conductivity,,,,,0.0016,
-10.1021_acsami.5c16972_Sample2,Hole mobility,0.0004646,,m2 V-1 s-1,ITO/NiOx/Me-4PACz/Ag,cm2 V-1 s-1,4.646,หน่วย m2 -> cm2 (x1e4): 0.0004646 -> 4.646,mobility,,,,hole,0.0004646,
+10.1021_acsami.5c16972_Sample2,Hole mobility,0.0004646,,m2 V-1 s-1,ITO/NiOx/Me-4PACz/Ag,cm2 V-1 s-1,4.646,หน่วย m2 -> cm2 (x1e4): 0.0004646 -> 4.646,mobility,,,,hole,4.646,recheck §8.7: ซิงก์ value_parsed = value_corrected (m2 -> cm2 x1e4)
 10.1021_acsami.5c16972_Sample2,Roughness RMS,6.37,,nm,of NiOx + treatment layer,nm,6.37,,Roughness RMS,,,,,6.37,
 10.1021_acsami.5c16972_Sample2,VBM,-5.58,,eV,of NiOx + treatment layer,eV,-5.58,,VBM,,,,,-5.58,
 10.1021_acsami.5c16972_Sample2,Fermi level,-4.7,,eV,of NiOx + treatment layer,eV,-4.7,,Fermi level,,,,,-4.7,
@@ -162,7 +162,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10.1021_acsami.5c16972_Sample2,Rrec,3817.0,,Ohm,EIS,Ohm,3817.0,,Rrec,,,,,3817.0,
 10.1021_acsami.5c16972_Sample2,Crec,3.06e-08,,F,EIS,F,3.06e-08,,Crec,,,,,3.06e-08,
 10.1021_acsami.5c16972_Sample3,Electrical conductivity,0.002,,S cm-1,ITO/NiOx/Me-4PACz+PCPTFB/Ag,S cm-1,0.002,,Electrical conductivity,,,,,0.002,
-10.1021_acsami.5c16972_Sample3,Hole mobility,0.0006941,,m2 V-1 s-1,ITO/NiOx/Me-4PACz+PCPTFB/Ag,cm2 V-1 s-1,6.941,หน่วย m2 -> cm2 (x1e4): 0.0006941 -> 6.941,mobility,,,,hole,0.0006941,
+10.1021_acsami.5c16972_Sample3,Hole mobility,0.0006941,,m2 V-1 s-1,ITO/NiOx/Me-4PACz+PCPTFB/Ag,cm2 V-1 s-1,6.941,หน่วย m2 -> cm2 (x1e4): 0.0006941 -> 6.941,mobility,,,,hole,6.941,recheck §8.7: ซิงก์ value_parsed = value_corrected (m2 -> cm2 x1e4)
 10.1021_acsami.5c16972_Sample3,Roughness RMS,5.51,,nm,of NiOx + treatment layer,nm,5.51,,Roughness RMS,,,,,5.51,
 10.1021_acsami.5c16972_Sample3,VBM,-5.61,,eV,of NiOx + treatment layer,eV,-5.61,,VBM,,,,,-5.61,
 10.1021_acsami.5c16972_Sample3,Fermi level,-4.77,,eV,of NiOx + treatment layer,eV,-4.77,,Fermi level,,,,,-4.77,

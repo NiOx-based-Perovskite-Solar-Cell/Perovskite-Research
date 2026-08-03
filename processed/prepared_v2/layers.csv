@@ -9,7 +9,7 @@ device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thicknes
 10.1002admi.202500231_Sample1,8,Cathode,Ag,100,100.0,100.0,100.0,,Metal electrode,main
 10.1002admi.202500231_Sample2,1,Anode,ITO,,,,,,TCO,main
 10.1002admi.202500231_Sample2,2,HTL,NiOx NPs,,,,,,NiOx,main
-10.1002admi.202500231_Sample2,3,HTL treatment,EMIMI-1%,,,,,,,coating
+10.1002admi.202500231_Sample2,3,HTL treatment,EMIMI-1%,,,,,,,additive
 10.1002admi.202500231_Sample2,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],400-450,425.0,400.0,450.0,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=450)",,main
 10.1002admi.202500231_Sample2,5,PSK treatment,,,,,,,,
 10.1002admi.202500231_Sample2,6,ETL,C60,50,50.0,50.0,50.0,,C60,main
@@ -17,7 +17,7 @@ device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thicknes
 10.1002admi.202500231_Sample2,8,Cathode,Ag,100,100.0,100.0,100.0,,Metal electrode,main
 10.1002admi.202500231_Sample3,1,Anode,ITO,,,,,,TCO,main
 10.1002admi.202500231_Sample3,2,HTL,NiOx NPs,,,,,,NiOx,main
-10.1002admi.202500231_Sample3,3,HTL treatment,EMIMI-2%,,,,,,,coating
+10.1002admi.202500231_Sample3,3,HTL treatment,EMIMI-2%,,,,,,,additive
 10.1002admi.202500231_Sample3,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],400-450,425.0,400.0,450.0,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=450)",,main
 10.1002admi.202500231_Sample3,5,PSK treatment,,,,,,,,
 10.1002admi.202500231_Sample3,6,ETL,C60,50,50.0,50.0,50.0,,C60,main
@@ -25,7 +25,7 @@ device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thicknes
 10.1002admi.202500231_Sample3,8,Cathode,Ag,100,100.0,100.0,100.0,,Metal electrode,main
 10.1002admi.202500231_Sample4,1,Anode,ITO,,,,,,TCO,main
 10.1002admi.202500231_Sample4,2,HTL,NiOx NPs,,,,,,NiOx,main
-10.1002admi.202500231_Sample4,3,HTL treatment,EMIMI-4%,,,,,,,coating
+10.1002admi.202500231_Sample4,3,HTL treatment,EMIMI-4%,,,,,,,additive
 10.1002admi.202500231_Sample4,4,PSK,[ (Cs.05FA.79MA.16)Pb(I.87Br.13)3 ],400-450,425.0,400.0,450.0,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=450)",,main
 10.1002admi.202500231_Sample4,5,PSK treatment,,,,,,,,
 10.1002admi.202500231_Sample4,6,ETL,C60,50,50.0,50.0,50.0,,C60,main
