@@ -18,7 +18,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10.1002admi.202500231_Sample2,Rs,0.64,,Ohm/cm2,,Ohm/cm2,0.64,,Rs,,,,,0.64,
 10.1002admi.202500231_Sample2,FWHM,0.125,0.016,eV,,eV,0.125,,FWHM,,,,,0.125,
 10.1002admi.202500231_Sample2,HTL optical band gap,3.85,,eV,NiOx NPs,eV,3.85,,optical band gap,,,HTL,,3.85,
-10.1002admi.202500231_Sample2,PSK optical band gap,1.62,,eV,,eV,1.62,,optical band gap,,,PSK,,1.62,
+10.1002admi.202500231_Sample2,PSK optical band gap,1.62,,eV,,eV,1.62,,optical band gap,,,PSK,,1.605,recheck §8.8: ค่าเดิมเป็น PL peak แก้เป็น Tauc Eg จาก SI Figure S10b
 10.1002admi.202500231_Sample2,VBM,-5.42,,eV,UPS,eV,-5.42,,VBM,,,,,-5.42,
 10.1002admi.202500231_Sample2,TRPL t1,19.0,2.0,ns,HTL/PSK half-stack,ns,19.0,,TRPL t1,,,,,19.0,
 10.1002admi.202500231_Sample2,TRPL t2,71.0,1.0,ns,HTL/PSK half-stack,ns,71.0,,TRPL t2,,,,,71.0,
@@ -30,7 +30,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10.1002admi.202500231_Sample3,Rs,0.62,,Ohm/cm2,,Ohm/cm2,0.62,,Rs,,,,,0.62,
 10.1002admi.202500231_Sample3,FWHM,0.097,0.007,eV,,eV,0.097,,FWHM,,,,,0.097,
 10.1002admi.202500231_Sample3,HTL optical band gap,3.85,,eV,NiOx NPs,eV,3.85,,optical band gap,,,HTL,,3.85,
-10.1002admi.202500231_Sample3,PSK optical band gap,1.62,,eV,,eV,1.62,,optical band gap,,,PSK,,1.62,
+10.1002admi.202500231_Sample3,PSK optical band gap,1.62,,eV,,eV,1.62,,optical band gap,,,PSK,,1.615,recheck §8.8: ค่าเดิมเป็น PL peak แก้เป็น Tauc Eg จาก SI Figure S10b
 10.1002admi.202500231_Sample3,VBM,-5.42,,eV,UPS,eV,-5.42,,VBM,,,,,-5.42,
 10.1002admi.202500231_Sample3,TRPL t1,13.0,2.0,ns,HTL/PSK half-stack,ns,13.0,,TRPL t1,,,,,13.0,
 10.1002admi.202500231_Sample3,TRPL t2,76.0,3.0,ns,HTL/PSK half-stack,ns,76.0,,TRPL t2,,,,,76.0,
@@ -42,7 +42,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10.1002admi.202500231_Sample4,Rs,0.53,,Ohm/cm2,,Ohm/cm2,0.53,,Rs,,,,,0.53,
 10.1002admi.202500231_Sample4,FWHM,0.51,0.139,eV,,eV,0.51,,FWHM,,,,,0.51,
 10.1002admi.202500231_Sample4,HTL optical band gap,3.85,,eV,NiOx NPs,eV,3.85,,optical band gap,,,HTL,,3.85,
-10.1002admi.202500231_Sample4,PSK optical band gap,1.62,,eV,,eV,1.62,,optical band gap,,,PSK,,1.62,
+10.1002admi.202500231_Sample4,PSK optical band gap,1.62,,eV,,eV,1.62,,optical band gap,,,PSK,,1.616,recheck §8.8: ค่าเดิมเป็น PL peak แก้เป็น Tauc Eg จาก SI Figure S10b
 10.1002admi.202500231_Sample4,VBM,-5.42,,eV,UPS,eV,-5.42,,VBM,,,,,-5.42,
 10.1002admi.202500231_Sample4,TRPL t1,19.0,2.0,ns,HTL/PSK half-stack,ns,19.0,,TRPL t1,,,,,19.0,
 10.1002admi.202500231_Sample4,TRPL t2,90.0,1.0,ns,HTL/PSK half-stack,ns,90.0,,TRPL t2,,,,,90.0,

@@ -239,7 +239,7 @@ coat = layers[layers.layer_id.isin([3, 5, 7])].merge(
 | § | ทำอะไร |
 |---|---|
 | 1-3 | `layer_kind` (main/coating), ธง device: `is_coated`, `coat_htl/psk/etl`, `anneal_htl/psk` |
-| 4.0 | **PARAM_FIX 8 แถว** — parameter ตัวเลขติดกัน/comma หาย แก้ด้วยค่ายืนยันจาก sibling sample ใน Raw Excel (เช่น `27010800` → `270, 10800`) + คอลัมน์ `param_fixed` กำกับ / เหลือ 1 แถวกำกวม (`100108000`) ติดธงรอเปิด paper |
+| 4.0 | **PARAM_FIX 11 แถว** — parameter ตัวเลขติดกัน/comma หาย + ค่าผิด ทุกค่าของ `10.1002admi.202500231` ยืนยันจาก **Supporting Information** ของ paper แล้ว (ดูหัวข้อ Ground-truth validation) + คอลัมน์ `param_fixed` กำกับ / **ไม่เหลือแถวติดธง** |
 | 4 | แตก `parameter`+`unit` (คั่น comma จับคู่ตามตำแหน่ง) → **53 knob columns** ชื่อ `process_type__unit` |
 | 6 | รวมหน่วยเวลา → `*__time_s` (sec+min×60+hr×3600) |
 | 6.1 | AntiSolvent: รวม ml+uL → `vol_uL` / เวลาหยดมี **2 จุดอ้างอิง** (ลบ = ก่อนจบ spin, บวก = หลังเริ่ม) เก็บ `timing_ref` กำกับ |
@@ -268,7 +268,7 @@ coat = layers[layers.layer_id.isin([3, 5, 7])].merge(
 
 | ไฟล์ | ขนาด | หมายเหตุ |
 |---|---|---|
-| `target_table.csv` | 44×32 | **ตารางหลักสำหรับ modeling**: Y (jv_variant กำกับ) + mediator + stability + X knob + composition + etl_family |
+| `target_table.csv` | 44×35 | **ตารางหลักสำหรับ modeling**: Y (jv_variant กำกับ) + mediator + stability + X knob + composition + etl_family |
 | `process.csv` | 702×71 | ทุก process ราย layer + 53 knob columns + param_fixed/param_note |
 | `layers.csv` | 352×11 | + layer_kind |
 | `devices.csv` | 44×11 | + ธงเคลือบ/anneal |
@@ -295,15 +295,33 @@ ML ต้องการ 1 แถว = 1 device แต่ข้อมูลด�
 ธงสถาปัตยกรรม (เคลือบ/anneal) ระดับ device ที่ notebook อื่น (เช่น `after_col_prepare`) join ได้โดยไม่ต้องลาก `devices.csv` ทั้งตาราง — ข้อมูล**ซ้ำโดยตั้งใจ**กับใน `devices.csv` และ `target_table.csv` (ไม่มีคอลัมน์ที่มีเฉพาะไฟล์นี้) ถ้าอยากเข้มงวดลบได้โดยไม่เสียข้อมูล แต่เก็บไว้เพราะต้นทุนศูนย์
 **อิทธิพล**: ต่ำสุดใน 3 ตัว — สะดวก ไม่ใช่จำเป็น
 
-### `target_table.csv` (44×32) — 1 แถว = 1 device ⭐ ตารางหลัก modeling
+### `target_table.csv` (44×35) — 1 แถว = 1 device ⭐ ตารางหลัก modeling
 - **key**: `device_id` / paper แยกได้จาก `device_id.rsplit("_Sample", 1)[0]` (ใช้เป็น group ใน LOPO)
 - **ธง layer** (10): `is_coated`, `n_coating_layers`, `coat_htl/psk/etl`, `anneal_htl/psk` + `htl_mod_kind`/`psk_mod_kind` (coating/additive — ดูหัวข้อชั้นเคลือบผิว) — ⚠️ `is_coated`/`coat_etl` True ทั้ง 44 (ทุก device มี L7) variance 0 ใช้เป็น feature ไม่ได้ ตัวที่มี variance คือ `coat_htl` (26) กับ `coat_psk` (22)
 - **Y** (5): `pce voc jsc ff` (43 dev) + `jv_variant` บอกที่มา (champion 23 / plain 16 / average 4) — 4 ค่ามาจากชุดเดียวกันเสมอ
 - **mediator** (4): `vtfl` (28) ตัวหลัก, `trap_density` (22), `rs` (22), `rrec` (15)
 - **stability** (2): `retention_25c` (14), `degradation_rate` (14)
-- **X knob** (7): `psk_spin_rpm` (43), `psk_anneal_C` (40), `psk_anneal_time_s` (42), `antisolvent_vol_uL` (35), `antisolvent_timing_s`+`timing_ref` (32), `htl_anneal_C` (41)
+- **X knob** (10): `psk_spin_rpm` (43), `psk_anneal_C` (40), `psk_anneal_time_s` (41), `antisolvent_vol_uL` (35), `htl_anneal_C` (41), `psk_spin_last_s` (42) + จังหวะหยด antisolvent 4 คอลัมน์ (ดูด้านล่าง)
+
+**จังหวะหยด antisolvent — ใช้ `antisolvent_drop_frac` เป็นตัวหลัก**
+
+ค่าดิบมี 2 จุดอ้างอิงที่รวมสเกลตรง ๆ ไม่ได้ (`antisolvent_timing_s` + `antisolvent_timing_ref`): บวก = วินาทีหลังเริ่ม spin ขั้นสุดท้าย, ลบ = วินาทีก่อนจบ recheck §9 แปลงรวมด้วยความยาว spin ขั้นสุดท้าย (`psk_spin_last_s`):
+
+| คอลัมน์ | ความหมาย | n |
+|---|---|---|
+| `antisolvent_timing_s` | ค่าดิบตามที่ paper เขียน (ยังมี 2 จุดอ้างอิง) | 32 |
+| `antisolvent_timing_ref` | `after_start` 26 / `before_end` 6 | 32 |
+| `psk_spin_last_s` | ความยาว spin ขั้นสุดท้ายของชั้น PSK | 42 |
+| **`antisolvent_drop_s`** | **วินาทีนับจากเริ่ม spin ขั้นสุดท้าย — แกนเดียวกันหมด** | 32 |
+| **`antisolvent_drop_frac`** | `drop_s / psk_spin_last_s` (0-1) เทียบข้ามสูตรที่ spin ไม่เท่ากันได้ | 30 |
+
+แปลง 6 device ที่เป็น `before_end`: admi spin 35 s, timing −10 → หยดวินาทีที่ **25** · acsami.5c16972 spin 40 s, timing −5 → **35** มี gate assert ว่าจุดหยดต้องอยู่ใน `0 < t ≤ spin duration` ทุกตัว
+`drop_frac` ว่าง 2 device (`solr_202400534`) เพราะไม่มี spin duration — ค่าบวกอยู่แล้วจึงใช้ `drop_s` ได้ปกติ
+
+**ผลของการรวมสเกล** (naive spearman, ยังไม่คุม paper — ทิศทางเท่านั้น): `drop_frac ~ pce` **+0.52** (p=0.003) ดีกว่าค่าดิบ `timing_s ~ pce` +0.44 (p=0.012) สอดคล้องกับกลไก: จังหวะหยดที่สำคัญคือ*สัดส่วน*ของช่วง spin (หน้าต่างตกผลึก) ไม่ใช่วินาทีสัมบูรณ์
+⚠️ อย่าใส่ทั้ง `timing_s` และ `drop_s`/`drop_frac` พร้อมกัน — เป็นข้อมูลเดียวกัน จะทำให้ SHAP กระจายเครดิตมั่ว
 - **X ควบคุม** (4): `a_Cs a_FA x_Br` (44 — ไอออนไม่อยู่ในสูตร = 0 จริง) + `etl_family` (44, categorical: PCBM/C60/BCP — ชนิด ETL กระทบรอยต่อ/การเก็บอิเล็กตรอน ต้องคุมเหมือน composition; ⚠️ BCP มีแค่ 2 dev จาก paper เดียว ถ้า SHAP ชี้ BCP อย่าเชื่อ)
-- ⚠️ `antisolvent_timing_s`: ลบ = ก่อนจบ spin, บวก = หลังเริ่ม — แยกกลุ่มตาม `timing_ref` ก่อนใช้ / `pce` ขาด 1 dev ที่ variant ไม่รายงาน ใช้ voc×jsc×ff/100 แทนได้
+- ⚠️ `pce` ขาด 1 dev ที่ variant ไม่รายงาน ใช้ voc×jsc×ff/100 แทนได้
 
 ### `process.csv` (702×71) — 1 แถว = 1 ขั้นตอน process ต่อ layer
 - **key**: `device_id + layer_id + step_order` / คอลัมน์ดิบ: `process_type description parameter unit note`
@@ -370,18 +388,202 @@ proc = proc[(proc.source_sheet == "Process") & proc.process_type.notna()]   # �
 ### `devices.csv` (44×13) / `device_layer_flags.csv` (44×10)
 - devices = ทะเบียน device (`doi_raw sample_no source_file`) + ธง layer / flags = ธงชุดเดียวกันแยกไฟล์ (ซ้ำกับใน target_table — ใช้ตัวไหนก็ได้)
 
+## Ground-truth validation — เทียบข้อมูลที่สกัดกับตัวเปเปอร์จริง (2026-08-04)
+
+ทำกับ `10.1002admi.202500231` ([Tirado et al., *Adv. Mater. Interfaces* **12**, e00231, 2025](https://doi.org/10.1002/admi.202500231), open access CC-BY) เป็น paper ตัวอย่าง — เปิดไฟล์เต็มแล้วไล่เทียบทุกค่าที่สกัดได้
+
+**ผลรวม: ตรงเป๊ะ 30/30 ค่า ไม่มีคลาดเคลื่อนสักตัว**
+
+| สิ่งที่เทียบ | แหล่งในเปเปอร์ | ผล |
+|---|---|---|
+| Voc, Jsc, FF, PCE, Rs (4 device) | Table 1 | **20/20 ตรง** |
+| TRPL τ_avg, ∂A/∂V FWHM (4 device) | Table 2 | **8/8 ตรง** |
+| องค์ประกอบ PSK | ข้อความ §2 `(Cs.05FA.79MA.16)Pb(I.87Br.13)3` | ตรง — `a_Cs` 0.05 / `a_FA` 0.79 / `a_MA` 0.16 / `x_I` 0.87 / `x_Br` 0.13 |
+| โครงสร้างชั้น | §2.4 `ITO/HTL/CsFAMA/C60/BCP/Ag` | ตรง — L1-L8 ครบ, L5 ว่างจริง (ไม่มี PSK treatment) |
+| ความหนา PSK | §2.5 "≈400–450 nm of CsFAMA" | ตรง — `400-450` parse เป็น 425 (ค่ากลาง) |
+| Stability | §2.4 "72 h ... ISOS-L2 ... unencapsulated" | ตรง — `time_hr` 72, `environment` ISOS-L2, `encapsulation` N |
+
+นัยสำคัญ: **pipeline สกัด/คลีนไม่ได้ทำค่าเพี้ยน** ทั้งการแปลง FF ×100 (0.76 → 76), การ parse ช่วงความหนา, การแตกสูตร ABX₃, และการ map layer — ผ่านการตรวจกับต้นทางจริงหมด
+
+**สิ่งที่พบเพิ่มระหว่างตรวจ:**
+
+1. **ค่า JV ของ paper นี้เป็น "average" ไม่ใช่ champion** — Table 1 รายงาน mean ± SD แต่ช่อง `property` ในไฟล์เขียนแค่ `Voc`/`Jsc`/... ไม่มีคำนำหน้า ตัวจัด variant เลยให้ `jv_variant = "plain"` ⚠️ ตอนเทียบข้าม paper ให้จำว่า `plain` ของ paper นี้ = average ไม่ใช่ champion
+2. **`VBM = −5.42` ซ้ำกันทั้ง Sample2/3/4** — ข้อความในเปเปอร์รายงาน UPS แค่ 2 ค่า (−5.7 สำหรับ ITO/NiOx, −5.4 สำหรับ ITO/NiOx-IL2%) ค่าของ IL1%/IL4% น่าจะถูกคัดลอกมาจาก IL2% ค่าจริงรายตัวอยู่ใน Table S5 (Supporting Information) — ควรเช็คก่อนใช้ VBM เป็น feature
+   (คนละชุดกับ VBM จาก spectroelectrochemistry ในเปเปอร์ซึ่งได้ 5.6 / 5.56 / 5.5 / 5.6 eV แยกรายตัว)
+3. **`PSK optical band gap` ของ Sample1 = 1.609 eV** — เปเปอร์เขียนขัดกันเอง: ประโยคหนึ่งบอก shift ไป 1.57 eV เมื่อ EMIMI เพิ่ม อีกประโยคบอกตัวที่ treated กลับมาที่ 1.62 eV ตามปกติ ข้อมูลเราตีความแบบหลัง (control เพี้ยน / treated = 1.62) ซึ่งสมเหตุผลทางฟิสิกส์กว่า แต่ตัวเลข 1.609 ไม่ตรงกับ 1.57 ที่เปเปอร์เขียน
+4. **Experimental Section ไม่อยู่ในตัวเปเปอร์** — อยู่ใน Supporting Information (ตัวบทอ้าง "As detailed in the Experimental Section" แต่ไฟล์หลัก 8 หน้าไม่มีหัวข้อนี้) จึงยังไม่ได้ค่า annealing ที่ค้างอยู่
+
+### เปิด Supporting Information แล้ว — ปิดทุกเคสค้างของ paper นี้
+
+โหลด `admi70014-sup-0001-SuppMat.pdf` (SI, 27 หน้า) ได้ **Experimental Section เต็ม** ที่ไม่มีในไฟล์หลัก
+
+**ยืนยันตรงเพิ่มอีก 12 ค่า** — SI §1.1-1.2 vs ข้อมูลเรา:
+
+| SI เขียนว่า | ข้อมูลเรา | ผล |
+|---|---|---|
+| precursor: 324 mg PbI₂, 47 PbBr₂, 110 FAI, 11 CsI, 14 MABr | ตรงทุกตัว | ✅ |
+| ตัวทำละลาย 0.512 ml DMF + 0.128 ml DMSO | `solvent_ratio` = 4:1 | ✅ |
+| NiOx 22 mg/ml · EMIMI 25 mg/ml | ตรง | ✅ |
+| ล้าง acetone 10 min + IPA 10 min | `Wash 1200 sec` (ผลรวม) | ✅ |
+| ผสม precursor 60 °C, 1 h | `60, 3600` | ✅ |
+| spin 1000 rpm/500 rpm·s⁻¹/10 s → 4000/2000/35 s | ตรงเป๊ะ | ✅ |
+| **"At 10 s before the end ... 0.25 ml chlorobenzene"** | `0.25, -10` | ✅ **ยืนยัน convention ค่าลบ = ก่อนจบ spin** |
+| C60 50 nm, BCP 10 nm, Ag 100 nm | ตรง | ✅ |
+| อัตราระเหย 0.5-1 Å/s @ 1×10⁻⁶ Torr | ตรง | ✅ |
+| NiOx synthesis: 6 M, NaOH 7 M pH 10, ล้าง 4 ครั้ง, อบ 80 °C 12 h, เผา 270 °C 3 h | ตรงทุกขั้น | ✅ |
+| NiOx Eg 3.85 eV (Fig S10a) | ตรง | ✅ |
+
+**และพบ error 3 จุดที่แก้แล้ว:**
+
+| # | SI ระบุ | ค่าเดิม | แก้เป็น |
+|---|---|---|---|
+| 1 | *"put on a hot plate at **100 °C for 30 min**"* | S1 `100,1800` ✓ / S2 `100,108000` / S3 `100108000` / S4 `100,10800` | **`100, 1800` ทั้ง 4** — เคส `100108000` ปิดแล้ว |
+| 2 | *"O₂-plasma at 155 W with 600 mtorr ... for **10 min**"* | S4 `155,600,3600` | **`155, 600, 600`** — PARAM_FIX เดิมของเราเดา 3600 ผิด |
+| 3 | Fig S10b Tauc: control **1.609** / 1% **1.605** / 2% **1.615** / 4% **1.616** eV | S2/S3/S4 = 1.620 ทั้งหมด | ค่ารายตัวตาม SI (ค่าเดิมคือ PL peak จากตัวบท ไม่ใช่ Tauc Eg) |
+
+ผลข้างเคียงที่สำคัญ: **outlier `psk_anneal_time_s` = 108000 s (30 ชม.) หายไป** ตอนนี้ median 1800 max 3600 ทั้ง dataset สมเหตุผลหมด และ `psk_anneal_time_s ~ voc` เปลี่ยนจาก +0.36 เป็น **+0.44** (p=0.004) เพราะ outlier เคยบิดอันดับ
+
+**⚠️ เรื่องที่ยังต้องตัดสินใจ — `htl_anneal_C` ของ 4 device นี้**
+
+SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม NiOx เลย** — มีแค่ spin coat 3000 rpm 30 s แล้วไปต่อชั้น perovskite ส่วน `270 °C 3 h` อยู่ใน §1.1 **Materials synthesis** = การ**เผาผง** NiOx ก่อนเอามาละลาย
+แถว `Annealing 270, 10800` ที่ L2 ใน Process sheet จึง**ซ้ำกับ NiOx synthesis sheet** ไม่ใช่ขั้นตอนสร้างเซลล์ → `htl_anneal_C = 270` ของ 4 device นี้อาจไม่ควรมี
+กระทบ feature ที่ correlation แรงสุดตอนนี้ (`htl_anneal_C ~ ff` = −0.74) — ยังไม่แก้ รอตัดสินใจ
+
+**Table S5 ยืนยันข้อสงสัยเรื่อง VBM**: มีแถว EMIMI แถวเดียว (2%) → `VBM = −5.42` ของ Sample2 (1%) และ Sample4 (4%) **ถูกคัดลอกมาจากค่า 2%** ไม่ได้วัดแยก ห้ามใช้เป็น feature รายตัว
+
+## ⛔ ข้อค้นพบสำคัญที่สุด — X knob เชิงตัวเลข **คงที่ภายใน paper ทุกตัว**
+
+ตรวจ 2026-08-04 หลังเปิด SI: นับว่ามีกี่ paper ที่ค่าของ feature นั้น**ต่างกันระหว่าง device ของตัวเอง**
+
+| feature | paper ที่แปรค่าภายในตัวเอง (จาก 15) |
+|---|---|
+| `htl_mod_kind` | **11** ✅ |
+| `coat_htl` | **10** ✅ |
+| `n_coating_layers` | **10** ✅ (ตัวเดียวกับ coat_htl) |
+| `psk_spin_rpm` | 1 |
+| `a_Cs` / `a_FA` / `x_Br` | 1 |
+| `psk_anneal_C` · `psk_anneal_time_s` · `psk_spin_last_s` · `htl_anneal_C` | **0** ⛔ |
+| `antisolvent_vol_uL` · `antisolvent_drop_s` · `antisolvent_drop_frac` | **0** ⛔ |
+| `coat_psk` · `coat_etl` · `psk_mod_kind` · `etl_family` · `anneal_htl` · `anneal_psk` | **0** ⛔ |
+| *(เทียบ)* `pce` · `voc` · `vtfl` | **15 / 15 / 11** — Y แปรครบทุก paper ตามที่ควรเป็น |
+
+**แปลว่า**: ในแต่ละ paper นักวิจัยเปลี่ยน**สารที่ใช้ดัดแปลง HTL** (EMIMI 1/2/4%, SAM มี/ไม่มี ...) แต่ **ไม่เปลี่ยน process knob เชิงตัวเลขเลย** — spin RPM, อุณหภูมิ/เวลา anneal, ปริมาณและจังหวะ antisolvent ตั้งค่าเดียวแล้วใช้กับทุก device ในเปเปอร์นั้น
+
+**ผลต่อ modeling**: knob ที่แปรค่า 0 paper คือ **confound 100% กับ paper identity** ใต้ LeaveOneGroupOut โมเดลแยกไม่ออกว่าเป็นผลของ knob หรือของ "ห้องแล็บไหนทำ" → correlation แรง ๆ ที่เห็นก่อนหน้า (`htl_anneal_C ~ ff` −0.74, `antisolvent_drop_frac ~ pce` +0.52) เป็น **between-paper ล้วน** = paper fingerprint ไม่ใช่ความสัมพันธ์เชิงกลไก
+
+**สิ่งที่เหลือใช้ได้จริงใต้ LOPO**: `coat_htl` / `htl_mod_kind` (การดัดแปลงผิว HTL) — 10-11 paper มี contrast ภายในตัวเอง (control vs treated) เป็น within-paper comparison ที่แท้จริง
+
+**สิ่งที่ต้องตัดสินใจ** (ยังไม่ทำ):
+1. เปลี่ยนคำถามวิจัยเป็น "การดัดแปลงผิว HTL ส่งผลต่อ Y อย่างไร" ซึ่งตอบได้จริงด้วยข้อมูลชุดนี้ — หรือ
+2. คงคำถามเดิม (process knob ขับ grain size) แล้วยอมรับว่าต้อง**เก็บเปเปอร์เพิ่มที่แปร knob ภายในตัวเอง** (เช่น paper ที่ศึกษา antisolvent timing โดยตรง) — หรือ
+3. รายงานผลเป็น between-paper association พร้อมประกาศข้อจำกัดชัดเจนว่าไม่ใช่ causal
+
+หมายเหตุ: ข้อนี้เป็นเหตุผลเดียวกับที่ตัดสินใจไม่ดึงพารามิเตอร์การเคลือบ L3/L5/L7 (หัวข้อชั้นเคลือบผิว) — ตอนนี้ยืนยันแล้วว่าปัญหานี้ครอบ **ทุก** knob เชิงตัวเลข ไม่ใช่แค่ของชั้นเคลือบ
+
 ## ค้าง / ระวัง
 
-1. **`100108000`** (admi S3, L4 Annealing, หน่วย `C, sec`) — **แถวเดียวที่ยังติดธง `param_note`**
-   - อ่านตรงตัว = 100°C, 108000 sec (30 ชม.) — ไม่สมเหตุผลสำหรับ perovskite
-   - sibling ในไฟล์เดียวกันขัดกันเอง: S1 = `100, 1800` (30 นาที), S4 = `100, 10800` (3 ชม.)
-   - นับหลัก: `100108000` = 9 หลัก ถ้าเป็น `100,1800` จะได้ 7 หลัก ถ้าเป็น `100,10800` จะได้ 8 หลัก + เผลอพิมพ์ 0 เกิน 1 ตัว = 9 หลัก → **น่าจะเป็น `100, 10800` ตาม S4** แต่ยังเป็นการอนุมาน
-   - พยายามเปิด paper แล้ว ([Tirado et al., Adv. Mater. Interfaces 2025](https://advanced.onlinelibrary.wiley.com/doi/10.1002/admi.202500231)) ติด paywall (HTTP 402) เข้าถึง experimental section ไม่ได้ → **คงติดธงไว้ ไม่เดา** ถ้ามี institutional access ให้เช็คค่า annealing ของ perovskite แล้วเติมใน `PARAM_FIX` (recheck §4.0)
-2. `antisolvent_timing_s` มี 2 จุดอ้างอิง — ใช้ per-group (`timing_ref`) หรือทำ binary feature
+1. ~~**`100108000`**~~ — **ปิดแล้ว 2026-08-04** ด้วย Supporting Information (`100 °C for 30 min` = 1800 s) พร้อมแก้ Sample2/4 ที่ผิดด้วย ไม่เหลือแถวติดธง `param_note` ในทั้ง dataset
+2. ~~`antisolvent_timing_s` มี 2 จุดอ้างอิง~~ — **แก้แล้ว** ดู `antisolvent_drop_s` / `antisolvent_drop_frac` ในหัวข้อ target_table
 3. Thermal evaporation rate เป็นช่วง (`0.5-1 Å/s`) parse ไม่ได้ 12 แถว — ไม่ใช่ knob หลัก ปล่อยไว้
 4. stability n=14 — exploratory เท่านั้น
 5. **โมเดลถัดไป**: RandomForest + SHAP, LeaveOneGroupOut(paper) 15 fold, เทรน voc/jsc/ff แยกแล้วคูณเป็น pce, รายงาน mean±SD + bootstrap — ผลทั้งหมด = hypothesis สำหรับ wet-lab validation
 
-**ปิดไปแล้ว** (เคยอยู่ในรายการนี้): 27 unit errors ปิดครบ (ดู `properties.csv`) · psk_composition export แล้ว · layers แถวพอง · Champion/Average ปน · `coat_*` นับ additive · NiOx synthesis รั่วเข้า feature
+**ปิดไปแล้ว** (เคยอยู่ในรายการนี้): `100108000` + outlier annealing (ปิดด้วย SI) · antisolvent 2 จุดอ้างอิง · 27 unit errors ปิดครบ (ดู `properties.csv`) · psk_composition export แล้ว · layers แถวพอง · Champion/Average ปน · `coat_*` นับ additive · NiOx synthesis รั่วเข้า feature
 
 **ตัดสินใจว่าไม่ทำ** (อย่าเปิดใหม่โดยไม่มีเหตุผลใหม่): ดึงพารามิเตอร์การเคลือบ L3/L5/L7 เป็น feature — ไม่แปรผันภายใน paper จะกลายเป็น paper fingerprint (เหตุผลเต็มในหัวข้อชั้นเคลือบผิว)
+
+
+---
+
+# หลังการเตรียมข้อมูล — ข้อมูลตอบอะไรได้ ทางเลือก และแผนที่จะไปต่อ
+
+> เขียน 2026-08-04 หลังการเตรียมข้อมูลเสร็จสมบูรณ์ (target_table 44×35 ผ่าน ground-truth validation กับเปเปอร์จริง 30/30 ค่า) — ส่วนนี้คือ "แล้วยังไงต่อ" สำหรับขั้น modeling และการคุยกับอาจารย์ที่ปรึกษา
+
+## 1. สถานะข้อมูลโดยสรุป
+
+- 44 devices / 15 papers ทุกตัวเป็น p-i-n NiOx-based perovskite solar cell
+- ฝั่ง Y ครบ: `voc jsc ff` 43 dev (variant-consistent), mediator `vtfl` 28 dev, `retention_25c` 14 dev
+- ฝั่ง X ครบ: process knob 10 คอลัมน์, composition 3, สถาปัตยกรรม (`etl_family`, ธง coat/mod) — ทุกค่าผ่านการ audit และ 1 เปเปอร์ผ่านการเทียบกับต้นฉบับแบบ 100%
+- คุณภาพข้อมูลไม่ใช่ปัญหาอีกต่อไป — **ปัญหาเดียวที่เหลือคือโครงสร้างของข้อมูล** (ข้อ 2)
+
+## 2. ข้อจำกัดเชิงโครงสร้าง — สิ่งที่ข้อมูลชุดนี้ตอบไม่ได้
+
+หลักการพื้นฐาน: จะวัดผลของตัวแปร X ได้ ต้องมีตัวอย่างที่ **X ต่างกันแต่อย่างอื่นเหมือนกัน** ใน dataset นี้ "อย่างอื่นเหมือนกัน" มีทางเดียวคือ **อยู่ในเปเปอร์เดียวกัน** (แล็บเดียว คนเดียว เครื่องเดียว ล็อตสารเดียว) — การเทียบข้ามเปเปอร์จะปนกับความต่างของแล็บเสมอ (พิสูจน์ในข้อมูล: variance ของ PCE ระหว่างเปเปอร์ใหญ่กว่าภายในเปเปอร์ ~3 เท่า)
+
+ผลนับจริง (จำนวนเปเปอร์ที่ค่าแปรผันภายในตัวเอง จาก 15):
+
+| กลุ่มตัวแปร | แปรภายในเปเปอร์ | สถานะ |
+|---|---|---|
+| การดัดแปลงผิว HTL (`htl_mod_kind`, `coat_htl`) | **10-11** | ✅ ใช้เป็นตัวแปรหลักได้ |
+| สูตรเคมี (`a_Cs a_FA x_Br`) | 1 | ใช้เป็นตัวควบคุม |
+| ปุ่มตัวเลขทุกตัว (RPM, อุณหภูมิ, เวลา, antisolvent) | **0** | ⛔ confound 100% กับ paper |
+| สถาปัตยกรรมอื่น (`etl_family`, `coat_psk`, ...) | 0 | ⛔ เช่นกัน |
+| (เทียบ) Y: `pce voc vtfl` | 15 / 15 / 11 | แปรตามปกติ — ยืนยันว่าวิธีนับไม่เพี้ยน |
+
+สาเหตุไม่ใช่ความบังเอิญ: นักวิจัยแต่ละกลุ่มตั้งสูตรการผลิตไว้คงที่ แล้วแปรเฉพาะสิ่งที่ตัวเองศึกษา — และสิ่งที่วงการ p-i-n ศึกษาช่วงนี้คือ buried interface / การดัดแปลงผิว HTL พอดี
+
+## 3. ทางเลือก 3 ทาง และเหตุผล
+
+**ทาง 1 — ปรับคำถามให้ตรงกับที่ข้อมูลตอบได้: "การดัดแปลงผิว HTL ช่วยจริงไหม ผ่านกลไกอะไร" (แนะนำ)**
+- ทำได้ทันที ไม่ต้องเก็บข้อมูลเพิ่ม
+- มี within-paper contrast 10-11 เปเปอร์ = การเทียบแบบ A/B ในแล็บเดียวกัน ซึ่งเป็นหลักฐานที่แข็งแรงที่สุดที่ observational data แบบนี้ให้ได้
+- ยังคงโครงเดิมทุกอย่าง: input=process (ขั้นตอนดัดแปลงผิว), mediator=คุณภาพผลึก (VTFL), output=ประสิทธิภาพ+เสถียรภาพ
+- ข้อแลก: ปุ่มตัวเลขเปลี่ยนบทบาทจาก "คำตอบ" เป็น "จุดตั้งต้นสูตรแล็บ"
+
+**ทาง 2 — คงคำถามเดิม แล้วเก็บเปเปอร์เพิ่มชนิดที่แปรปุ่มภายในตัวเอง**
+- เช่น เปเปอร์ที่ศึกษา antisolvent timing โดยตรง (ทดลอง 5/10/15 วิ ในแล็บเดียว), เปเปอร์ optimize อุณหภูมิ anneal
+- ตอบคำถามเดิมได้จริง แต่ต้นทุนสูง: หา screen สกัด คลีน ต่อเปเปอร์ ~ชั่วโมงระดับสิบ และเปเปอร์แบบนี้กระจัดกระจายกว่า
+- เหมาะเป็น**ส่วนขยาย**หลังทาง 1 มีผลแล้ว ไม่เหมาะเป็นทางหลักภายใต้เวลาฝึกงาน
+
+**ทาง 3 — คงทุกอย่าง รายงานเป็น between-paper association**
+- เร็วสุด แต่ข้อสรุปอ่อนสุด: ทุก correlation ของปุ่มตัวเลขแยกไม่ออกจากลายนิ้วมือแล็บ
+- reviewer/กรรมการสอบจะโจมตีจุดนี้ได้ทันที และเราไม่มีคำตอบ
+- ใช้ได้เฉพาะเป็น "ภาคผนวก exploratory" ประกอบทาง 1
+
+**ทำไมทาง 1 ถึงไม่ใช่การล้มเลิกเป้าหมายเดิม** — เป้าหมายเดิมคือ "หา process ที่นำไปสู่ผลึก/ประสิทธิภาพ/เสถียรภาพที่ดีที่สุด แล้วเอากลับไปทำแล็บ (closed loop)" การดัดแปลงผิว HTL **คือ process ตัวหนึ่ง** และ closed loop ยังครบ — แค่แบ่งงานใหม่:
+
+```
+ML (วรรณกรรม 15 เปเปอร์)                     แล็บจริง (ของเรา)
+────────────────────────────                ────────────────────────────
+ตอบ: ขั้นตอนไหนสำคัญ + กลไกอะไร              ตอบ: ตั้งค่าตัวเลขเท่าไหร่
+"HTL mod ช่วยจริง ผ่านการลด trap"            สูตรตั้งต้น = ค่ากลางวรรณกรรม
+= เลือกคันโยกที่ควรลงทุน                      (4000 rpm, 100°C 30 min,
+                                             antisolvent ~50-75% ของ spin)
+                                             แล้วแปรทีละปุ่มในแล็บเดียวกัน
+                                             = ไม่มี confound เพราะคุมเองหมด
+```
+
+**ML ส่วนนี้ไม่ได้หาค่า parameter** — มันหาว่า "ขั้นตอนไหนมี impact + ทำงานผ่านกลไกอะไร" ส่วนค่าตัวเลขที่ดีที่สุดเป็นหน้าที่ของแล็บ ซึ่งเป็นที่เดียวที่หาได้อย่างถูกต้องอยู่แล้ว เป้าหมายสุดท้ายอยู่ครบ แค่คำตอบมาจากสองแหล่งประกอบกัน
+
+## 4. ผลเบื้องต้นที่ยืนยันว่าทาง 1 มีของจริง (คำนวณจากข้อมูลแล้ว 2026-08-04)
+
+เทียบคู่ภายในเปเปอร์เดียวกัน (device ที่ดัดแปลงผิว HTL − control ของเปเปอร์นั้น) 11 เปเปอร์:
+
+| Δ (treated − control) | median | ทิศทางบวกกี่เปเปอร์ |
+|---|---|---|
+| ΔPCE | **+2.09 %** | **11/11** |
+| ΔFF | +2.62 | 11/11 |
+| ΔJsc | +0.72 mA cm⁻² | 11/11 |
+| ΔVoc | +0.045 V | 9/11 |
+| **ΔVTFL** | **−0.145 V** | ลดลง **8/8** |
+| Δretention@25C | +25 % | 3/3 (n เล็กมาก) |
+
+- 11/11 ทิศเดียวกัน: ถ้าไม่มีผลจริง โอกาสเกิดสุ่ม ≈ 0.1% (sign test)
+- **กลไกโผล่ในข้อมูลเอง**: VTFL ลดทุกเปเปอร์ที่วัด = trap ลดจริง → โซ่ `ดัดแปลงผิว → trap↓ → FF/Voc↑ → PCE↑` มีหลักฐานครบทุกข้อต่อ
+- ขั้น modeling เต็ม (RF+SHAP+LOPO, คุม composition + etl_family, bootstrap CI) จะทำให้ตัวเลขพวกนี้แข็งแรงและแยกรายกลุ่มสารได้
+
+⚠️ ข้อจำกัดที่ต้องประกาศเสมอ: **publication bias** — เปเปอร์มักตีพิมพ์เฉพาะการดัดแปลงที่สำเร็จ 11/11 จึงอาจสูงเกินความเป็นจริงของ "การดัดแปลงแบบสุ่มสักอย่าง" ผลที่รายงานจึงตีความว่า "การดัดแปลงที่ผ่านการคัดของแต่ละแล็บแล้ว ให้ผลขนาดนี้" ไม่ใช่ "ดัดแปลงอะไรก็ได้แล้วจะดีขึ้น"
+
+## 5. งานนี้ต่างจากเปเปอร์ที่ตีพิมพ์แล้วอย่างไร — อะไรใหม่ อะไรไม่ใหม่
+
+**สิ่งที่ไม่ใหม่ (ต้องยอมรับตรง ๆ):** ข้อความ "การดัดแปลงผิว HTL ช่วยเพิ่มประสิทธิภาพ" ไม่ใหม่ — เปเปอร์แต่ละฉบับใน dataset ก็อ้างแบบนี้กับสารของตัวเองอยู่แล้ว
+
+**สิ่งที่ใหม่ (ไม่มีเปเปอร์เดี่ยวไหนทำได้):**
+
+1. **การสังเคราะห์ข้ามแล็บอย่างเป็นระบบ (meta-analysis)** — เปเปอร์เดี่ยวพูดได้แค่ "สาร X ของฉัน ในแล็บฉัน ดีขึ้น Y%" ไม่มีใครตอบว่า "ปรากฏการณ์นี้ generalize ข้ามสาร (SAM / ionic liquid / Al₂O₃ / BDT-POZ) ข้ามแล็บ ข้ามสูตร perovskite ไหม ขนาดผลรวมเท่าไหร่" — เราตอบได้ เพราะรวม 11 การทดลอง A/B จากคนละแล็บมาไว้ในกรอบเดียว
+2. **กลไกที่ยืนยันข้ามแล็บ** — เปเปอร์เดี่ยววัด trap ของตัวเอง เราแสดงว่า VTFL ลด **8/8 เปเปอร์อิสระ** = หลักฐานเชิงกลไกที่แข็งแรงกว่าเปเปอร์ไหน ๆ ใน dataset + วัดขนาด mediation (ผลผ่าน trap กี่ % ผ่านทางอื่นกี่ %) ซึ่งไม่มีเปเปอร์เดี่ยวทำ
+3. **จัดอันดับกลุ่มสารบนสนามเดียวกัน** — SHAP แยกว่า SAM vs ionic liquid vs oxide ตัวไหนให้ผลผ่านกลไกไหน โดยคุมสูตรเคมี — การเทียบแบบนี้ทำไม่ได้ในเปเปอร์เดี่ยวเพราะแต่ละฉบับมีสารเดียว
+4. **ระเบียบวิธีที่ตรงข้ามกับงาน ML-perovskite กระแสหลัก** — งาน ML ส่วนใหญ่ (เช่นที่ใช้ Perovskite Database หลักหมื่น device) เน้นหาวัสดุใหม่ เทรนข้าม lab โดย**ไม่คุม lab confound** และไม่มี mediator ของเราเล็กกว่ามากแต่: คลีนถึงระดับ audit รายค่า, LOPO กันลายนิ้วมือแล็บ, แยก within/between-paper อย่างชัดเจน, มี mediation — เป็นจุดขายเชิง methodology ที่เขียนเป็น contribution ได้
+5. **Closed loop** — ผล ML ถูกออกแบบให้จบที่สูตรแล็บ + การทดลองยืนยันจริง ไม่ใช่จบที่ leaderboard
+
+**ประโยคสรุป** งานนี้ไม่ได้ค้นพบว่า "การดัดแปลงผิว HTL ช่วย" — งานนี้เป็นงานแรก (ในขอบเขตที่สำรวจ) ที่**วัดว่าช่วยเท่าไหร่ ช่วยผ่านกลไกอะไร และ generalize แค่ไหน** ข้ามสาร-ข้ามแล็บ ด้วยข้อมูลที่ควบคุม confound ระดับเปเปอร์ แล้วปิดวงจรด้วยการทดลองจริง
