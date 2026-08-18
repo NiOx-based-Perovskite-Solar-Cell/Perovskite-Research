@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>สไลด์นำเสนอ — การเตรียมข้อมูลและ EDA</title>
+<style>
+  :root{
+    --ink:#14130f; --ink2:#41403a; --muted:#76746c; --line:#dfddd4; --tint:#f7f6f0;
+    --blue:#2a78d6; --orange:#eb6834; --green:#1baf7a; --red:#c0392b;
+  }
+  @page{ size:280mm 157.5mm; margin:0; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:"Sarabun","Leelawadee UI","Thonburi",sans-serif;
+        color:var(--ink); background:#fff; font-size:11pt; line-height:1.5; }
+  .slide{ width:280mm; height:157.5mm; padding:11mm 14mm 9mm;
+          page-break-after:always; position:relative; overflow:hidden;
+          display:flex; flex-direction:column; }
+  .slide:last-child{ page-break-after:auto; }
+  .num{ position:absolute; right:11mm; bottom:6mm; font-size:9pt; color:var(--muted); }
+  .tag{ position:absolute; left:14mm; bottom:6mm; font-size:8.6pt; color:var(--muted);
+        letter-spacing:.1em; text-transform:uppercase; }
+
+  h1{ font-size:27pt; line-height:1.16; letter-spacing:-.015em; font-weight:700; }
+  h2{ font-size:19pt; line-height:1.2; font-weight:700; margin-bottom:.12em; }
+  .sub{ font-size:11pt; color:var(--ink2); font-weight:400; }
+  .hd{ border-bottom:2.5px solid var(--ink); padding-bottom:.4em; margin-bottom:.8em; }
+  .eyebrow{ font-size:9pt; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:.45em; }
+  code{ font-family:"SF Mono",Menlo,monospace; font-size:.86em; color:var(--ink2); }
+  h4{ font-size:10.4pt; }
+  .body{ flex:1; display:flex; gap:8mm; min-height:0; }
+  .col{ flex:1; min-width:0; }
+  .muted{ color:var(--muted); }
+
+  ul{ list-style:none; }
+  li{ position:relative; padding-left:1em; margin-bottom:.42em; font-size:10.4pt; line-height:1.45; }
+  li::before{ content:"—"; position:absolute; left:0; color:var(--muted); }
+  li.ok::before{ content:"✓"; color:var(--green); font-weight:700; }
+  li.no::before{ content:"✕"; color:var(--red); font-weight:700; }
+
+  .tiles{ display:flex; gap:4mm; }
+  .tile{ flex:1; border:1px solid var(--line); border-radius:8px; padding:3mm 3.6mm; background:#fff; }
+  .tile .v{ font-size:21pt; font-weight:700; line-height:1.05; letter-spacing:-.02em; }
+  .tile .v.g{ color:var(--green); } .tile .v.b{ color:var(--blue); } .tile .v.r{ color:var(--red); }
+  .tile .k{ font-size:8.8pt; color:var(--muted); margin-top:.2em; line-height:1.32; }
+
+  .box{ border:1px solid var(--line); border-radius:8px; padding:3.2mm 4mm; background:var(--tint); }
+  .box.key{ background:#eef4fd; border-color:#c2d8f5; }
+  .box.warn{ background:#fdf3ee; border-color:#f2cdb9; }
+  .box.good{ background:#eefaf5; border-color:#bde7d7; }
+  .box.plain{ background:#fff; }
+  .box h4{ margin-bottom:.28em; }
+  .box p{ font-size:10pt; line-height:1.48; }
+  .box p+p{ margin-top:.35em; }
+
+  table{ width:100%; border-collapse:collapse; font-size:9.6pt; }
+  th,td{ text-align:left; padding:.3em .5em; border-bottom:1px solid var(--line); }
+  th{ font-size:8.6pt; color:var(--muted); background:var(--tint); font-weight:700; }
+  td.n,th.n{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  tr.hi td{ background:#fdf3ee; }
+  tr.hig td{ background:#eefaf5; }
+  .g{ color:var(--green); font-weight:700; } .r{ color:var(--red); font-weight:700; }
+  .bad{ color:var(--red); }
+
+  figure{ display:flex; flex-direction:column; min-height:0; }
+  figure.cap img{ max-height:62mm; }
+  figure.wide img{ max-height:76mm; }
+  figure img{ width:100%; height:auto; max-height:100%; object-fit:contain;
+              border:1px solid var(--line); border-radius:6px; }
+  figcaption{ font-size:8.4pt; color:var(--muted); margin-top:.35em; line-height:1.4; }
+
+  .strip{ display:flex; }
+  .strip .s{ flex:1; padding:2.8mm 3.2mm; border:1px solid var(--line); background:#fff; }
+  .strip .s:first-child{ border-radius:8px 0 0 8px; }
+  .strip .s:last-child{ border-radius:0 8px 8px 0; }
+  .strip .s+.s{ border-left:none; }
+  .strip .s.hi{ background:var(--ink); border-color:var(--ink); }
+  .strip .s.hi *{ color:#fff !important; }
+  .strip .t{ font-size:9.2pt; font-weight:700; line-height:1.22; }
+  .strip .d{ font-size:8.2pt; color:var(--muted); margin-top:.22em; line-height:1.32; }
+
+  .stack{ display:flex; gap:1.4mm; }
+  .stack .ly{ flex:1; border:1px solid var(--line); border-radius:6px; padding:2.2mm 2.4mm; background:#fff; }
+  .stack .ly.hl{ background:#dcebfb; border-color:#7aabe8; border-width:1.5px; }
+  .stack .ly.hl2{ background:#f0f6fd; border-color:#c2d8f5; }
+  .stack .ly.psk{ background:var(--ink); border-color:var(--ink); }
+  .stack .ly.psk *{ color:#fff !important; }
+  .stack .i{ font-size:7.6pt; color:var(--muted); font-weight:700; }
+  .stack .n{ font-size:9pt; font-weight:700; line-height:1.18; margin-top:.08em; }
+  .stack .m{ font-size:7.8pt; color:var(--muted); line-height:1.3; margin-top:.25em; }
+
+  .loop{ display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .loop>div{ flex:1; padding:2.8mm 3.6mm; }
+  .loop>div+div{ border-left:1px solid var(--line); background:var(--tint); }
+  .loop h4{ font-size:9.6pt; margin-bottom:.25em; }
+  .loop li{ font-size:9.2pt; margin-bottom:.22em; }
+
+  .kv{ display:flex; gap:3mm; margin-bottom:.45em; align-items:baseline; }
+  .kv .k{ flex:0 0 26mm; font-size:9.2pt; color:var(--muted); }
+  .kv .v{ flex:1; font-size:10.2pt; }
+
+  .def{ border-left:3px solid var(--blue); padding-left:.75em; }
+  .def b{ color:var(--blue); }
+  .def p{ font-size:9.7pt; line-height:1.45; }
+</style>
+</head>
+<body>
+
+<!-- ================= 1 ================= -->
+<section class="slide">
+  <div class="eyebrow">รายงานความคืบหน้า · สิงหาคม 2569</div>
+  <h1 style="margin-bottom:.22em">การเตรียมข้อมูลและ EDA<br>เซลล์แสงอาทิตย์เพอรอฟสไกต์</h1>
+  <p class="sub" style="margin-bottom:4mm">เตรียมข้อมูลเสร็จแล้ว · ยังไม่เริ่มสร้างแบบจำลอง · เจอข้อจำกัดที่ทำให้ต้องปรับคำถามวิจัย</p>
+
+  <div class="tiles" style="margin-bottom:4mm">
+    <div class="tile"><div class="v">44</div><div class="k">devices (เซลล์) จากไฟล์ Excel 44 ไฟล์</div></div>
+    <div class="tile"><div class="v">15</div><div class="k">เปเปอร์ = 15 แล็บ ทั้งหมดเป็นชนิด p-i-n NiO<sub>x</sub></div></div>
+    <div class="tile"><div class="v">2–5</div><div class="k">devices ต่อ 1 เปเปอร์ (เฉลี่ยราว 3 ตัว)</div></div>
+    <div class="tile"><div class="v g">30/30</div><div class="k">ค่าที่ตรวจย้อนกับเปเปอร์ต้นฉบับแล้วตรง</div></div>
+  </div>
+
+  <div class="body" style="gap:7mm">
+    <div class="col" style="flex:.9">
+      <h4 style="margin-bottom:.35em">เป้าหมาย</h4>
+      <ul>
+        <li>หาว่า<b>ขั้นตอนการผลิตตัวไหน</b>ทำให้เซลล์ดีขึ้น และดีขึ้น<b>เพราะอะไร</b></li>
+        <li>เอาคำตอบกลับไป<b>ทดลองจริงในแล็บ</b> — ไม่ใช่จบที่ตัวเลขความแม่นยำ</li>
+      </ul>
+      <div class="box key" style="margin-top:3mm">
+        <h4>ข้อความหลักของวันนี้</h4>
+        <p><b>คุณภาพข้อมูลไม่ใช่ปัญหาแล้ว</b> — ปัญหาคือ<b>วิธีที่เปเปอร์ออกแบบการทดลอง</b>
+        ทำให้บางคำถามตอบไม่ได้เลย ต่อให้ข้อมูลสะอาดแค่ไหนก็ตาม</p>
+      </div>
+    </div>
+
+    <div class="col" style="flex:1.1">
+      <h4 style="margin-bottom:.35em">ข้อมูล 1 เปเปอร์หน้าตาแบบนี้ —
+        <span class="muted" style="font-weight:400; font-size:9.4pt">ตัวอย่างจริงจาก <code>heliyon_2024</code></span></h4>
+      <table>
+        <thead><tr><th>device</th><th>ทำอะไรกับผิว HTL</th><th class="n">PCE</th><th>เรียกว่า</th></tr></thead>
+        <tbody>
+          <tr><td>Sample1</td><td>ไม่ทำอะไร (สูตรมาตรฐาน)</td><td class="n">18.70</td><td><b>control</b></td></tr>
+          <tr><td>Sample2</td><td>เคลือบ CsI 5 mg/mL</td><td class="n">19.30</td><td>treated</td></tr>
+          <tr class="hig"><td>Sample3</td><td>เคลือบ CsI 10 mg/mL</td><td class="n"><b>20.50</b></td><td>treated</td></tr>
+          <tr><td>Sample4</td><td>เคลือบ CsI 15 mg/mL</td><td class="n">19.40</td><td>treated</td></tr>
+          <tr class="hi"><td>Sample5</td><td>เคลือบ CsI 20 mg/mL</td><td class="n bad">18.20</td><td>treated</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:9.6pt; color:var(--ink2); margin-top:1.6mm">
+        <b>control</b> = ตัวเทียบ ไม่ได้ดัดแปลง · <b>treated</b> = ตัวที่ถูกดัดแปลง<br>
+        ทุกตัวทำในแล็บเดียวกัน คนเดียวกัน สารล็อตเดียวกัน <b>ต่างกันแค่ปริมาณ CsI</b> → เทียบกันได้ตรง ๆ
+        (สังเกตว่า 20 mg/mL แย่กว่าไม่ใส่เลย)</p>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 1 · ภาพรวม</div><div class="num">1 / 8</div>
+</section>
+
+<!-- ================= 2 ================= -->
+<section class="slide">
+  <div class="hd">
+    <h2>การเตรียมข้อมูล — ทำอะไรไป และเชื่อถือได้แค่ไหน</h2>
+    <p class="sub">ไฟล์ Excel 1 ไฟล์ = 1 device (ไฟล์ละ 6 ชีต) → ตารางเดียวที่ 1 แถว = 1 device พร้อมป้อนแบบจำลอง</p>
+  </div>
+
+  <div class="strip" style="margin-bottom:4.5mm">
+    <div class="s"><div class="t">Raw Excel<br>44 ไฟล์</div><div class="d">สกัดด้วยมือจากเปเปอร์ 15 ฉบับ</div></div>
+    <div class="s"><div class="t">แตกเป็น 7 ตาราง</div><div class="d">ผูกกันด้วยรหัส device และเลขชั้นของเซลล์</div></div>
+    <div class="s"><div class="t">คลีนทีละเรื่อง</div><div class="d">ตัวสะกด หน่วย ตัวเลข สูตรเคมี — ตรวจทุกครั้งที่บันทึก</div></div>
+    <div class="s"><div class="t">รวมเป็นตารางเดียว</div><div class="d">ตัดสินใจเรื่องที่กำกวมให้จบที่นี่ที่เดียว</div></div>
+    <div class="s hi"><div class="t"><code>target_table</code><br>44 แถว × 35 คอลัมน์</div><div class="d">พร้อมสร้างแบบจำลอง</div></div>
+  </div>
+
+  <div class="body">
+    <div class="col" style="flex:1.05">
+      <h4 style="margin-bottom:.35em">บั๊ก 4 ตัวที่เจอ — ทุกตัวเป็นชนิด “ผิดแบบเงียบ ไม่มี error เตือน”</h4>
+      <table>
+        <tbody>
+          <tr><td style="width:33%"><b>เลขชั้นเป็นข้อความคนละแบบ</b><br><code>'1.0'</code> กับ <code>'1'</code></td>
+              <td>เชื่อมสองตารางแล้วได้ <b>0 แถว</b> โปรแกรมไม่ฟ้องเลย เพราะมันมองว่าเป็นคนละค่า</td></tr>
+          <tr><td><b>ค่าประสิทธิภาพปนกันคนละชุด</b></td>
+              <td>ทำให้ค่าที่ควรเท่ากันตามสูตรฟิสิกส์กลับไม่เท่า — ตัวอย่างจริงในสไลด์ 4</td></tr>
+          <tr><td><b>แก้หน่วยแล้วตัวเลขไม่ตาม</b></td>
+              <td>แก้หน่วยจาก m² เป็น cm² (ต่างกัน 10,000 เท่า) แต่ตัวเลขที่โมเดลใช้จริงยังเป็นค่าเดิม</td></tr>
+          <tr><td><b>สูตรเตรียมวัตถุดิบรั่วเข้ามา</b></td>
+              <td>ขั้นตอนสังเคราะห์ผง NiO<sub>x</sub> ไม่ใช่ขั้นตอนสร้างเซลล์ แต่ถูกนับรวมเป็นตัวแปร — สไลด์ 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col" style="flex:.95; display:flex; flex-direction:column; gap:3mm">
+      <div class="box good">
+        <h4>ตรวจย้อนกับเปเปอร์ต้นฉบับทีละค่า</h4>
+        <p>เลือกเปเปอร์ 1 ฉบับ เปิดทั้งตัวเปเปอร์และไฟล์ข้อมูลเสริม แล้วไล่เทียบทุกค่าที่สกัดมา
+        → <b>ตรง 30 จาก 30 ค่า</b> พิสูจน์ว่าการคลีนไม่ได้ทำค่าเพี้ยน</p>
+      </div>
+      <div class="box warn" style="flex:1">
+        <h4>สิ่งที่ไม่คาดคิด — บางครั้ง<u>เปเปอร์เอง</u>คือตัวที่ผิด</h4>
+        <p><b>เคสที่ 1</b> ข้อมูลเสริมระบุว่าอบ “100 °C 30 นาที” แต่ในไฟล์เรามีเคสที่กรอกเป็น <b>30 ชั่วโมง</b> → แก้แล้ว</p>
+        <p><b>เคสที่ 2</b> เปเปอร์หนึ่งเขียนความเข้มข้น <b>0.7 M</b> เรากรอกตรงตามต้นฉบับเป๊ะ
+        แต่ถ้าใช้ค่านี้ สูตรเคมีจะผิดหลักฟิสิกส์ (ไอออนเกินสมดุล 39%) → เปเปอร์พิมพ์ผิดจาก 0.07 M</p>
+        <p style="color:var(--ink2)"><b>บทเรียน:</b> ตรวจแค่ “ตรงกับต้นฉบับไหม” ไม่พอ
+        ต้องถามด้วยว่า <b>“ค่านี้เป็นไปได้จริงไหม”</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 2 · ภาพรวมการเตรียมข้อมูล</div><div class="num">2 / 8</div>
+</section>
+
+<!-- ================= 3 ================= -->
+<section class="slide">
+  <div class="hd">
+    <h2>เจาะการเตรียมข้อมูล ① — ข้อมูลดิบหน้าตาอย่างไร</h2>
+    <p class="sub">เซลล์ 1 ตัวคือฟิล์มบาง 8 ชั้นซ้อนกัน · บันทึกเป็นระบบเลขชั้น ทุก device ใช้โครงเดียวกันหมด จึงเทียบกันได้</p>
+  </div>
+
+  <div class="stack" style="margin-bottom:1.6mm">
+    <div class="ly"><div class="i">ชั้น 1</div><div class="n">Anode</div><div class="m">ขั้วโปร่งแสง<br>ITO / FTO</div></div>
+    <div class="ly"><div class="i">ชั้น 2</div><div class="n">HTL</div><div class="m">ส่งประจุบวก<br>NiO<sub>x</sub></div></div>
+    <div class="ly hl"><div class="i">ชั้น 3</div><div class="n">เคลือบผิว HTL</div><div class="m"><b>ตัวแปรหลักของงานนี้</b><br>มี 26/44 device</div></div>
+    <div class="ly psk"><div class="i">ชั้น 4</div><div class="n">Perovskite</div><div class="m">ชั้นดูดแสง<br>สูตร ABX₃</div></div>
+    <div class="ly hl2"><div class="i">ชั้น 5</div><div class="n">เคลือบผิว PSK</div><div class="m">PEAI เป็นหลัก<br>22/44 device</div></div>
+    <div class="ly"><div class="i">ชั้น 6</div><div class="n">ETL</div><div class="m">ส่งประจุลบ<br>C60 / PCBM</div></div>
+    <div class="ly hl2"><div class="i">ชั้น 7</div><div class="n">บัฟเฟอร์</div><div class="m">BCP<br>มีครบ 44/44</div></div>
+    <div class="ly"><div class="i">ชั้น 8</div><div class="n">Cathode</div><div class="m">ขั้วโลหะ<br>Ag / Au / Cu</div></div>
+  </div>
+  <p style="font-size:9.2pt; color:var(--muted); margin-bottom:3.5mm">
+    เลขคู่ = ชั้นหลัก · เลขคี่กลาง = ชั้นเคลือบผิวบาง ๆ ที่ใส่เพิ่มเพื่ออุดจุดบกพร่องตรงรอยต่อ ·
+    ชั้น 7 ทุก device มีหมด (ไม่มีตัวเทียบ) แต่<b>ชั้น 3 มีบ้างไม่มีบ้าง จึงเป็นตัวแปรที่ศึกษาได้</b></p>
+
+  <div class="body" style="flex:0 0 auto">
+    <div class="col" style="flex:1.15">
+      <h4 style="margin-bottom:.35em">งานคลีนหลัก ๆ ที่ทำ</h4>
+      <table style="font-size:9.2pt">
+        <tbody>
+          <tr><td style="width:36%">ตัวอักษรหน้าตาเหมือนกันแต่คนละตัว</td><td>μ (กรีก) กับ µ (micro) → คอมพิวเตอร์มองเป็นคนละค่า ต้องยุบเป็นตัวเดียว</td></tr>
+          <tr><td>คำเดียวกันสะกดต่างกัน</td><td><code>Spin coating</code> / <code>spin-coating</code> → ยุบเข้าชื่อมาตรฐาน</td></tr>
+          <tr><td>ตัวเลขติดมากับข้อความ</td><td><code>"400–450 nm"</code> → 425 · หน่วย Å → nm</td></tr>
+          <tr><td>ตัวทำละลาย 27 แบบ</td><td>ยุบเหลือ 16 ระบบ แตกเป็นชนิดที่ 1 / 2 พร้อมอัตราส่วน</td></tr>
+          <tr class="hig"><td><b>สูตรเคมีของชั้นดูดแสง</b></td><td><b>คำนวณจาก 2 ทางที่เป็นอิสระต่อกัน →</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col" style="flex:1">
+      <div class="box key">
+        <h4>ทำไมสูตรเคมีต้องคำนวณ 2 ทาง</h4>
+        <p><b>ทางที่ 1</b> — อ่านจากสูตรที่เปเปอร์เขียนไว้ตรง ๆ<br>
+        <code>(Cs<sub>0.05</sub>FA<sub>0.79</sub>MA<sub>0.16</sub>)Pb(I<sub>0.87</sub>Br<sub>0.13</sub>)₃</code></p>
+        <p><b>ทางที่ 2</b> — คำนวณย้อนจากสารที่ชั่งจริง เช่นเปเปอร์บอก “PbI₂ 324 mg”
+        → หารด้วยน้ำหนักโมเลกุล = จำนวนโมล → รวมไอออนทุกตัว → ได้สัดส่วนกลับมา</p>
+        <p style="color:var(--ink2)">สองทางนี้<b>ไม่ได้ใช้ข้อมูลชุดเดียวกัน</b> ถ้าผลออกมาตรงกันแปลว่าเชื่อได้
+        → <b>ตรงกัน 13 จาก 15 เปเปอร์</b> และได้สูตรครบทั้ง 44 device</p>
+        <p style="color:var(--ink2)">สำคัญเพราะสูตรเคมีมีผลต่อประสิทธิภาพโดยตรง ต้องใส่เข้าโมเดลเป็น<b>ตัวควบคุม</b>
+        ไม่งั้นผลของสิ่งที่เราสนใจจะปนกับผลของสูตรเคมี</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 3 · เจาะการเตรียมข้อมูล ①</div><div class="num">3 / 8</div>
+</section>
+
+<!-- ================= 4 ================= -->
+<section class="slide">
+  <div class="hd">
+    <h2>เจาะการเตรียมข้อมูล ② — จุดที่ต้อง “ตัดสินใจ” ไม่ใช่แค่คลีน</h2>
+    <p class="sub">งานที่ยากไม่ใช่การลบช่องว่างหรือแก้ตัวสะกด แต่คือจุดที่ข้อมูล<b>กำกวม</b> แล้วต้องเลือกว่าจะตีความอย่างไร</p>
+  </div>
+
+  <div class="body">
+    <div class="col" style="flex:1.2">
+      <h4 style="margin-bottom:.3em">① เปเปอร์รายงานค่า 2 ชุด — หยิบผสมกันไม่ได้</h4>
+      <p style="font-size:9.7pt; color:var(--ink2); margin-bottom:1.6mm">
+        เปเปอร์มักรายงานทั้ง <b>เซลล์ที่ดีที่สุด</b> และ <b>ค่าเฉลี่ยหลายเซลล์</b> ปนกันในตารางเดียว
+        วิธีดึงข้อมูลแบบเดิมคือ “หยิบค่ามากสุดของแต่ละช่อง” ซึ่งทำให้หยิบข้ามชุดกันโดยไม่รู้ตัว</p>
+      <table style="font-size:9.4pt">
+        <thead><tr><th>ค่าที่หยิบมาได้ (device จริงในข้อมูล)</th><th class="n">ค่า</th><th>มาจากชุด</th></tr></thead>
+        <tbody>
+          <tr><td>Voc — แรงดัน</td><td class="n">1.01</td><td>ค่าเฉลี่ย</td></tr>
+          <tr><td>Jsc — กระแส</td><td class="n">21.82</td><td>ค่าเฉลี่ย</td></tr>
+          <tr><td>FF — ความสมบูรณ์ของกราฟ</td><td class="n">70.97</td><td>ค่าเฉลี่ย</td></tr>
+          <tr class="hi"><td><b>PCE — ประสิทธิภาพรวม</b></td><td class="n bad"><b>17.28</b></td><td class="bad"><b>เซลล์ที่ดีที่สุด ← คนละชุด</b></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:9.6pt; margin-top:1.6mm">
+        ตรวจด้วยสูตรฟิสิกส์: <code>1.01 × 21.82 × 70.97 / 100</code> = <b>15.64</b>
+        แต่ PCE ที่หยิบมาได้คือ <b>17.28</b> → <b class="bad">ต่างกัน 1.64</b> ทั้งที่ตามสูตรต้องเท่ากัน</p>
+      <p style="font-size:9.6pt; margin-top:1mm">
+        <b>แก้:</b> บังคับให้ทั้ง 4 ค่ามาจากชุดเดียวกันเสมอ → ส่วนต่างเหลือ <b class="g">0.503</b>
+        ซึ่งเป็นแค่การปัดเศษปกติ และเพิ่มคอลัมน์กำกับว่าแถวนี้ใช้ชุดไหน</p>
+    </div>
+
+    <div class="col" style="flex:1; display:flex; flex-direction:column; gap:2.8mm">
+      <div class="box warn">
+        <h4>② เวลาเดียวกัน แต่เขียนคนละแบบ</h4>
+        <p>ต้องหยดสารช่วยตกผลึกให้ถูกจังหวะระหว่างปั่นเคลือบ แต่เปเปอร์เขียนคนละมาตรฐาน:</p>
+        <p style="margin-top:.3em">เปเปอร์ A — “หยดที่<b>วินาทีที่ 25</b> หลังเริ่มปั่น” → บันทึก <code>25</code><br>
+        เปเปอร์ B — “หยด<b>ก่อนปั่นจบ 10 วินาที</b>” → บันทึก <code>−10</code></p>
+        <p style="margin-top:.3em">ถ้าเปเปอร์ B ปั่นทั้งหมด 35 วินาที ค่า <code>−10</code> ก็คือ<b>วินาทีที่ 25 เหมือนกันเป๊ะ</b>
+        แต่ตัวเลขที่บันทึกไว้ต่างกันคนละขั้ว → เอาไปคำนวณรวมกันตรง ๆ ผิดทันที</p>
+        <p style="color:var(--ink2)"><b>แก้:</b> แปลงทุกค่าเข้าแกนเดียวกันก่อน แล้วเก็บเป็น<b>สัดส่วนของช่วงปั่น</b> (0–1)
+        เพื่อให้เทียบข้ามเปเปอร์ที่ปั่นไม่เท่ากันได้</p>
+      </div>
+
+      <div class="box good" style="flex:1">
+        <h4>③ กันข้อมูลที่ไม่ควรนับเป็นตัวแปร</h4>
+        <p>สูตร<b>สังเคราะห์ผง</b> NiO<sub>x</sub> (เตรียมวัตถุดิบก่อนเริ่มทำเซลล์) ถูกบันทึกปนอยู่กับขั้นตอนสร้างเซลล์
+        และมีอยู่ในเปเปอร์เดียวเท่านั้น</p>
+        <p>ถ้าปล่อยไว้ โมเดลจะใช้มันเป็น<b>ป้ายชื่อระบุเปเปอร์นั้น</b>ได้ทันที แทนที่จะเรียนกลไกจริง</p>
+        <p style="color:var(--ink2)"><b>แก้:</b> กรองออก แล้วใส่ระบบตรวจที่จะ<b>หยุดทำงานทันที</b>ถ้ามีใครเผลอเอาตัวกรองออกในอนาคต</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 4 · เจาะการเตรียมข้อมูล ②</div><div class="num">4 / 8</div>
+</section>
+
+<!-- ================= 5 ================= -->
+<section class="slide">
+  <div class="hd">
+    <h2>ปัญหาที่เจอ — ตัวเลขที่ดูเหมือนคำตอบ แต่ใช้ไม่ได้</h2>
+    <p class="sub">หลักการ: จะบอกว่า “A ทำให้ B ดีขึ้น” ได้ ต้องมีคู่เทียบที่<b>ต่างกันแค่ A</b> ส่วนอย่างอื่นเหมือนกันหมด</p>
+  </div>
+
+  <div class="body">
+    <div class="col" style="flex:1.05; display:flex; flex-direction:column; gap:2.6mm">
+      <div>
+        <h4 style="margin-bottom:.3em">ตัวอย่าง: อุณหภูมิอบชั้น HTL กับค่า FF</h4>
+        <table style="font-size:9.4pt">
+          <thead><tr><th>เปเปอร์</th><th class="n">อุณหภูมิอบ</th><th class="n">FF เฉลี่ย</th></tr></thead>
+          <tbody>
+            <tr><td>adma_202507730 <span class="muted">(5 device)</span></td><td class="n">120 °C</td><td class="n">82.1</td></tr>
+            <tr><td>jechem_2021 <span class="muted">(2 device)</span></td><td class="n">100 °C</td><td class="n">80.8</td></tr>
+            <tr><td>heliyon_2024 <span class="muted">(5 device)</span></td><td class="n">300 °C</td><td class="n">75.1</td></tr>
+            <tr><td>d3lf00258f <span class="muted">(4 device)</span></td><td class="n">450 °C</td><td class="n">68.6</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:9.7pt; margin-top:1.4mm">
+          ดูแล้วชัดมาก — <b>ยิ่งอบร้อน FF ยิ่งแย่</b> (สหสัมพันธ์ −0.74) เหมือนเจอกลไกสำคัญ</p>
+      </div>
+
+      <div class="box warn">
+        <h4>แต่สังเกตให้ดี — 1 อุณหภูมิ = 1 เปเปอร์ทั้งเปเปอร์</h4>
+        <p>ทุก device ในเปเปอร์เดียวกันใช้อุณหภูมิ<b>เดียวกันหมด</b> ไม่มีเปเปอร์ไหนลองสองอุณหภูมิเลยสักฉบับ</p>
+        <p>แปลว่าเราไม่ได้เทียบ “อบร้อน vs อบเย็น” — เรากำลังเทียบ <b>“แล็บ A vs แล็บ B vs แล็บ C”</b>
+        ซึ่งต่างกันทุกอย่าง · FF ที่ต่ำของ d3lf00258f อาจมาจาก 450 °C จริง
+        <b>หรือจากอะไรก็ได้อีกร้อยอย่างของแล็บนั้น</b> — แยกไม่ออก</p>
+      </div>
+
+      <div class="def">
+        <p><b>confound (ตัวกวน)</b> = ตัวแปรที่เกาะติดมากับตัวแปรที่เราสนใจ จนแยกไม่ออกว่าผลมาจากใคร ·
+        ที่นี่คือ <b>“เป็นแล็บไหน”</b> — เกาะแน่น 100% เพราะรู้อุณหภูมิก็รู้แล็บทันที</p>
+      </div>
+    </div>
+
+    <div class="col" style="flex:1; display:flex; flex-direction:column; gap:2.6mm">
+      <figure class="cap" style="flex:0 0 auto">
+        <img src="figures/fig3_slide.png" alt="การแปรผันภายในเปเปอร์">
+        <figcaption>แถบเทา (ผลลัพธ์) ต่างกันครบทุกเปเปอร์ตามที่ควรเป็น = ยืนยันว่าวิธีนับไม่ผิด ·
+          พารามิเตอร์ตัวเลขทุกตัวได้ 0–1 = แทบไม่มีเปเปอร์ไหนลองมากกว่า 1 ค่าเลย</figcaption>
+      </figure>
+
+      <div class="tiles">
+        <div class="tile"><div class="v r">0 / 15</div><div class="k">เปเปอร์ที่ลองพารามิเตอร์ตัวเลขมากกว่า 1 ค่า (ความเร็วปั่น อุณหภูมิ เวลา) → <b>ใช้ไม่ได้ทั้งกลุ่ม</b></div></div>
+        <div class="tile"><div class="v g">11 / 15</div><div class="k">เปเปอร์ที่มีทั้ง control และ treated ในตัวเอง (การเคลือบผิว HTL) → <b>ใช้ได้</b></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 5 · ข้อจำกัดที่พบ</div><div class="num">5 / 8</div>
+</section>
+
+<!-- ================= 6 ================= -->
+<section class="slide">
+  <div class="hd">
+    <h2>สิ่งที่ข้อมูลตอบได้จริง — และผลที่ได้</h2>
+    <p class="sub">ใช้เฉพาะ 11 เปเปอร์ที่มีทั้ง control และ treated อยู่ในเปเปอร์เดียวกัน (แบบตัวอย่าง CsI ในสไลด์แรก)</p>
+  </div>
+
+  <div class="body" style="gap:6mm">
+    <div class="col" style="flex:1.35; display:flex; flex-direction:column; gap:2.6mm">
+      <div class="box plain" style="padding:2.6mm 3.4mm">
+        <p style="font-size:9.8pt"><b>วิธีคิด</b> — ในแต่ละเปเปอร์ เอาค่าของตัวที่ดัดแปลง ลบด้วยค่าของ control
+        ในเปเปอร์เดียวกัน ได้ผลต่าง 1 ค่าต่อ 1 เปเปอร์ แล้วดูว่าทั้ง 11 เปเปอร์ไปทางเดียวกันหรือไม่</p>
+        <p style="font-size:9.4pt; color:var(--muted); margin-top:.3em">
+          เช่นเปเปอร์ CsI จากสไลด์แรก: 20.50 − 18.70 = <b>+1.80</b> · ทำแบบนี้ครบทุกเปเปอร์</p>
+      </div>
+
+      <figure class="cap wide" style="flex:0 0 auto">
+        <img src="figures/fig4_slide.png" alt="ผลต่างภายในเปเปอร์">
+        <figcaption>จุดน้ำเงิน = คิดจากค่าเฉลี่ยของตัวที่เคลือบทั้งหมด (รวมโดสที่แย่ด้วย) ·
+          จุดส้ม = คิดจากตัวที่ดีที่สุดของเปเปอร์นั้น</figcaption>
+      </figure>
+    </div>
+
+    <div class="col" style="flex:.82; display:flex; flex-direction:column; gap:2.6mm">
+      <table style="font-size:9.5pt">
+        <thead><tr><th>ตัวชี้วัด</th><th class="n">ดีขึ้นเฉลี่ย</th><th class="n">ดีขึ้นกี่เปเปอร์</th></tr></thead>
+        <tbody>
+          <tr><td><b>PCE</b> — ประสิทธิภาพรวม</td><td class="n"><b>+2.09 %</b></td><td class="n g">11/11</td></tr>
+          <tr><td>FF — ความสมบูรณ์ของกราฟ</td><td class="n">+2.62</td><td class="n g">11/11</td></tr>
+          <tr><td>Jsc — กระแส</td><td class="n">+0.72</td><td class="n g">11/11</td></tr>
+          <tr><td>Voc — แรงดัน</td><td class="n">+0.045</td><td class="n">9/11</td></tr>
+          <tr class="hig"><td><b>จุดบกพร่องในฟิล์ม</b><br><span class="muted" style="font-size:8.6pt">ยิ่งลดยิ่งดี</span></td>
+              <td class="n"><b>ลดลง</b></td><td class="n g">8/8</td></tr>
+        </tbody>
+      </table>
+
+      <div class="box good">
+        <h4>อ่านตารางนี้อย่างไร</h4>
+        <p>ถ้าการเคลือบผิวไม่มีผลจริง โอกาสที่ผลจะเป็นบวก<b>ครบทั้ง 11 เปเปอร์</b>โดยบังเอิญ ≈ <b>0.1%</b>
+        (เหมือนโยนเหรียญ 11 ครั้งออกหัวหมด)</p>
+        <p>และเห็น<b>สาเหตุ</b>ด้วย: จุดบกพร่องลดลงทุกเปเปอร์ที่วัด → ประจุไหลดีขึ้น → FF ขึ้น → PCE ขึ้น</p>
+      </div>
+
+      <div class="box warn">
+        <h4>ข้อควรระวังที่ต้องพูดเสมอ</h4>
+        <p>เปเปอร์มักตีพิมพ์เฉพาะการทดลองที่สำเร็จ ผล 11/11 จึงอาจสวยเกินจริง —
+        แต่ข้อมูลเราเองมีคำตอบ: CsI 20 mg/mL และ EMIMI 4% <b>แย่กว่าไม่ทำเลย</b> · <b>ปริมาณต้องพอดี</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 6 · ผลเบื้องต้น</div><div class="num">6 / 8</div>
+</section>
+
+<!-- ================= 7 ================= -->
+<section class="slide">
+  <div class="hd">
+    <h2>คำถามวิจัยที่ปรับ และขั้นต่อไป</h2>
+    <p class="sub">คำถามเดิมตอบไม่ได้ ไม่ใช่เพราะข้อมูลไม่พอ แต่เพราะไม่มีเปเปอร์ไหนออกแบบการทดลองมาให้ตอบได้</p>
+  </div>
+
+  <div class="box key" style="margin-bottom:3.5mm">
+    <div class="kv" style="margin-bottom:.3em">
+      <div class="k">คำถามเดิม</div>
+      <div class="v" style="color:var(--muted)">พารามิเตอร์การผลิตตัวไหน (ความเร็วปั่น อุณหภูมิ เวลา) ทำให้ผลึกดีขึ้น</div>
+    </div>
+    <div class="kv" style="margin-bottom:0">
+      <div class="k"><b>คำถามที่ปรับ</b></div>
+      <div class="v"><b>การเคลือบผิวชั้น HTL ช่วยให้เซลล์ดีขึ้นจริงหรือไม่ · ดีขึ้นเพราะกลไกอะไร ·
+        และใช้ได้กับหลายกลุ่มสาร หลายแล็บ หลายสูตรหรือเปล่า</b></div>
+    </div>
+  </div>
+
+  <div class="body" style="gap:6mm">
+    <div class="col">
+      <h4 style="margin-bottom:.35em">ทางเลือกที่ประเมินแล้ว</h4>
+      <ul>
+        <li class="ok"><b>ทาง 1 (เสนอ)</b> — ปรับคำถามให้ตรงกับที่ข้อมูลตอบได้ · ทำได้ทันที มีคู่เทียบในแล็บเดียวกัน 11 เปเปอร์</li>
+        <li><b>ทาง 2</b> — หาเปเปอร์เพิ่มที่ลองหลายค่าในแล็บเดียวกัน · ตอบคำถามเดิมได้ แต่ใช้เวลามาก เก็บไว้ทำทีหลัง</li>
+        <li class="no"><b>ทาง 3</b> — รายงานตัวเลขที่มีทั้งหมด · เร็วสุดแต่ถูกโจมตีได้ทันทีว่าเป็นแค่ความต่างของแล็บ</li>
+      </ul>
+
+      <h4 style="margin:2.5mm 0 .35em">แผนขั้นต่อไป</h4>
+      <ul>
+        <li>ฝึกโมเดล RandomForest แล้วดูว่าตัวแปรไหนมีน้ำหนักจริง</li>
+        <li>ตอนวัดผล <b>ตัดทั้งเปเปอร์ออกทีละฉบับ</b> — ไม่ให้โมเดลเห็นแล็บที่กำลังทดสอบเลยแม้แต่ device เดียว
+          กันไม่ให้โมเดล “จำแล็บ” แทนการเรียนกลไก</li>
+        <li>วัดว่าผลที่ดีขึ้นวิ่งผ่าน<b>การลดจุดบกพร่อง</b>กี่เปอร์เซ็นต์ ผ่านทางอื่นกี่เปอร์เซ็นต์ — ส่วนที่ใหม่ที่สุดของงาน</li>
+      </ul>
+    </div>
+
+    <div class="col" style="display:flex; flex-direction:column; gap:3mm">
+      <div class="box plain">
+        <h4 style="margin-bottom:.45em">ทาง 1 ไม่ใช่การล้มเป้าหมายเดิม — แค่แบ่งงานกันทำ</h4>
+        <div class="loop">
+          <div>
+            <h4>ML ตอบ (จากวรรณกรรม)</h4>
+            <ul>
+              <li><b>ควรลงแรงกับขั้นตอนไหน</b></li>
+              <li>ขั้นตอนนั้นทำงานผ่านกลไกอะไร</li>
+            </ul>
+          </div>
+          <div>
+            <h4>แล็บจริงตอบ</h4>
+            <ul>
+              <li><b>ตั้งค่าตัวเลขเท่าไรถึงดีที่สุด</b></li>
+              <li>คุมทุกอย่างเองได้ จึงไม่มีปัญหาตัวกวน</li>
+            </ul>
+          </div>
+        </div>
+        <p style="font-size:9.5pt; margin-top:.5em; color:var(--ink2)">
+          ค่าตั้งต้นที่ได้จากวรรณกรรม: ปั่น 4000 rpm · อบ 100 °C 30 นาที ·
+          หยดสารช่วยตกผลึกที่ราว 50–75% ของช่วงปั่น · เริ่มลองจากสารกลุ่ม SAM ซึ่งให้ผลดีที่สุดในข้อมูล</p>
+      </div>
+
+      <div class="box good" style="flex:1">
+        <h4>ต่อไปสไลด์สุดท้าย</h4>
+        <p>ถึงแม้ยังไม่ได้เริ่มสร้างแบบจำลอง ข้อมูลที่มีตอนนี้ก็บอกอะไรกับ<b>การทดลองจริงในแล็บ</b>ได้แล้ว 4 เรื่อง</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 7 · คำถามวิจัยและแผน</div><div class="num">7 / 8</div>
+</section>
+
+<!-- ================= 8 ================= -->
+<section class="slide">
+  <div class="hd">
+    <h2>ข้อมูลชุดนี้บอกอะไรกับแล็บได้ทันที</h2>
+    <p class="sub">4 ข้อนี้ใช้ได้เลยโดยไม่ต้องรอผลแบบจำลอง — เป็นการแปลงสิ่งที่พบให้เป็นคำแนะนำสำหรับการทดลองจริง</p>
+  </div>
+
+  <div class="body" style="gap:6mm">
+    <div class="col" style="flex:1.12; display:flex; flex-direction:column; gap:2.4mm">
+      <div class="box key" style="padding:2.8mm 3.6mm">
+        <h4>① ควรวัดอะไรเพื่อรู้เร็วว่ามาถูกทาง <span class="muted" style="font-weight:400">— มีค่าที่สุด</span></h4>
+        <p>กลไกที่พบคือ <b>จุดบกพร่องลด → FF ขึ้น → PCE ขึ้น</b> แปลว่าไม่ต้องรอวัด PCE อย่างเดียว
+        <b>วัดจุดบกพร่องด้วย SCLC ได้ตั้งแต่ต้น</b> · สารตัวไหนลดจุดบกพร่องไม่ได้ ตัดทิ้งได้เลยโดยไม่ต้องทำครบทุกขั้น → คัดกรองเร็วขึ้นมาก</p>
+      </div>
+
+      <div class="box warn" style="padding:2.8mm 3.6mm">
+        <h4>② ต้องไล่ปริมาณ ไม่ใช่แค่ “ใส่”</h4>
+        <p>สองเปเปอร์ที่ไล่ความเข้มข้นเป็นเส้นโค้งคว่ำทั้งคู่ และปริมาณสูงสุด<b>แย่กว่าไม่ใส่เลย</b>
+        (CsI 20 mg/mL · EMIMI 4%) → สิ่งที่ได้ผลคือ <b>“เคลือบในปริมาณที่พอดี”</b> ไม่ใช่ “เคลือบ”
+        · ออกแบบการทดลองเป็นชุดไล่ความเข้มข้น ห้ามลองค่าเดียวแล้วสรุป</p>
+      </div>
+
+      <div class="box" style="padding:2.8mm 3.6mm">
+        <h4>③ คาดหวังผลได้แค่ไหน</h4>
+        <p>ผลจริงจาก 11 เปเปอร์อยู่ระหว่าง <b>+0.80 ถึง +6.18</b> (ต่างกัน 8 เท่า) →
+        ได้ +2 ถือว่าปกติ ไม่ใช่ล้มเหลว · และช่วงที่กว้างขนาดนี้บอกว่า
+        <b>การปรับจูนสำคัญกว่าการเลือกสาร</b> เพราะสารทุกตระกูลให้ผลบวกได้ทั้งนั้น</p>
+      </div>
+
+      <div class="box" style="padding:2.8mm 3.6mm">
+        <h4>④ อย่าเสียเวลาตรงไหน</h4>
+        <p>ไม่มีหลักฐานว่าการไล่จูนความเร็วปั่นหรืออุณหภูมิจะให้ผลคุ้ม
+        และวรรณกรรมชี้ว่าทุกแล็บตั้งค่าใกล้เคียงกันอยู่แล้ว →
+        <b>ทรัพยากรควรลงที่การเคลือบผิว ไม่ใช่ไล่พารามิเตอร์</b></p>
+      </div>
+    </div>
+
+    <div class="col" style="flex:1; display:flex; flex-direction:column; gap:2.6mm">
+      <div>
+        <h4 style="margin-bottom:.35em">การทดลองที่ข้อมูลนี้ชี้ให้ทำ — ทำแบบที่เปเปอร์ทำ แต่ทำในแล็บเดียว</h4>
+        <table style="font-size:9.4pt">
+          <thead><tr><th>ชุดตัวอย่าง</th><th class="n">จำนวนโดส</th><th>สิ่งที่วัด</th></tr></thead>
+          <tbody>
+            <tr><td><b>control</b> — ไม่เคลือบ</td><td class="n">—</td><td>ตัวเทียบของทุกชุด</td></tr>
+            <tr><td>สาร A — ตระกูล SAM</td><td class="n">3–4</td><td rowspan="3" style="vertical-align:middle">PCE <b>และ</b><br>จุดบกพร่อง (SCLC)<br>ทุกตัว</td></tr>
+            <tr><td>สาร B — ตระกูลเกลือไอออน</td><td class="n">3–4</td></tr>
+            <tr><td>สาร C — ตระกูลโมเลกุลอินทรีย์</td><td class="n">3–4</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:9.6pt; margin-top:1.4mm">
+          ทำแบบนี้แล้ว<b>ตอบได้ทั้งสองคำถามที่วรรณกรรมตอบไม่ได้</b> — สารตระกูลไหนดีกว่า
+          (เพราะอยู่แล็บเดียวกัน จึงไม่มีตัวกวน) และปริมาณที่เหมาะของแต่ละตัวคือเท่าไร</p>
+      </div>
+
+      <div class="box key">
+        <h4>ถ้าอยากให้ ML จัดอันดับสารได้เองในอนาคต</h4>
+        <p>ต้องเก็บเปเปอร์เพิ่มด้วยเกณฑ์เฉพาะ คือ<b>เปเปอร์ที่เทียบสารต่างตระกูลกันในฉบับเดียว</b>
+        ไม่ใช่เก็บเปเปอร์เพิ่มทั่ว ๆ ไป เพราะเปเปอร์ทั่วไปจะซ้ำรูปแบบเดิม (สารตระกูลเดียว + control) แล้วก็ตอบไม่ได้อยู่ดี</p>
+      </div>
+
+      <div class="box good" style="flex:1">
+        <h4>สิ่งที่อยากขอความเห็น</h4>
+        <p>ยืนยัน<b>ทาง 1</b> เป็นทางหลักได้ไหม · เก็บทาง 3 ไว้เป็นภาคผนวก ·
+        เปิดทาง 2 ไว้ทำต่อถ้ามีเวลาเหลือหลังผลของทาง 1 ออกแล้ว</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tag">สไลด์ 8 · ข้อเสนอต่อการทดลองจริง</div><div class="num">8 / 8</div>
+</section>
+
+</body>
+</html>

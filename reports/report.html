@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>รายงานการเตรียมข้อมูลและ EDA — Perovskite Solar Cell</title>
+<style>
+  :root{
+    --ink:#141310; --ink2:#3f3d38; --muted:#6f6d66; --line:#dedcd3; --bg:#ffffff;
+    --tint:#f6f5ef; --blue:#2a78d6; --orange:#eb6834; --green:#1baf7a; --red:#c0392b;
+  }
+  @page{ size:A4; margin:16mm 15mm 18mm 15mm; }
+  *{ box-sizing:border-box; }
+  body{
+    font-family:"Sarabun","Leelawadee UI","Thonburi",sans-serif;
+    color:var(--ink); background:var(--bg);
+    font-size:10.2pt; line-height:1.62; margin:0;
+  }
+  h1,h2,h3,h4{ line-height:1.3; margin:0 0 .35em; font-weight:700; }
+  h1{ font-size:21pt; letter-spacing:-.01em; }
+  h2{ font-size:14.5pt; margin-top:1.5em; padding-bottom:.3em; border-bottom:2px solid var(--ink); }
+  h3{ font-size:11.6pt; margin-top:1.35em; color:var(--ink); }
+  h4{ font-size:10.4pt; margin-top:1.1em; color:var(--ink2); }
+  p{ margin:0 0 .7em; }
+  ul,ol{ margin:0 0 .8em; padding-left:1.15em; }
+  li{ margin-bottom:.3em; }
+  code{ font-family:"SF Mono",Menlo,monospace; font-size:.87em;
+        background:var(--tint); padding:.06em .3em; border-radius:3px; color:var(--ink2); }
+  a{ color:var(--blue); text-decoration:none; }
+  .muted{ color:var(--muted); }
+  .small{ font-size:9pt; }
+
+  /* ---------- cover ---------- */
+  .cover{ padding-top:22mm; page-break-after:always; }
+  .kicker{ font-size:9.5pt; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:.9em; }
+  .cover h1{ font-size:27pt; margin-bottom:.3em; }
+  .cover .sub{ font-size:13pt; color:var(--ink2); font-weight:400; margin-bottom:2.2em; line-height:1.5; }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:2.4em; }
+  .chip{ border:1px solid var(--line); border-radius:99px; padding:.28em .85em; font-size:9pt; color:var(--ink2); }
+  .toc{ border-top:1px solid var(--line); padding-top:1.1em; }
+  .toc ol{ list-style:none; padding:0; margin:0; counter-reset:sec; }
+  .toc li{ counter-increment:sec; padding:.42em 0; border-bottom:1px solid var(--line);
+           display:flex; gap:.7em; font-size:10.4pt; }
+  .toc li::before{ content:counter(sec); color:var(--muted); min-width:1.3em; font-variant-numeric:tabular-nums; }
+  .toc .d{ color:var(--muted); font-size:9.2pt; margin-left:auto; text-align:right; max-width:52%; }
+
+  /* ---------- blocks ---------- */
+  .lead{ font-size:11pt; color:var(--ink2); border-left:3px solid var(--ink); padding-left:.9em; margin:0 0 1.3em; }
+  .box{ border:1px solid var(--line); border-radius:7px; padding:.85em 1em; margin:1em 0; background:var(--tint); }
+  .box.warn{ background:#fdf3ee; border-color:#f2cdb9; }
+  .box.good{ background:#eefaf5; border-color:#bfe8d8; }
+  .box.key{ background:#eef4fd; border-color:#c4d9f5; }
+  .box h4{ margin:0 0 .35em; font-size:10pt; }
+  .box p:last-child, .box ul:last-child{ margin-bottom:0; }
+
+  table{ width:100%; border-collapse:collapse; margin:.85em 0 1.1em; font-size:9.1pt; }
+  th,td{ text-align:left; padding:.42em .6em; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--tint); font-weight:700; font-size:8.8pt; color:var(--ink2); }
+  td.num,th.num{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  tr.total td{ border-top:1.5px solid var(--ink); font-weight:700; }
+  .ok{ color:var(--green); font-weight:700; }
+  .no{ color:var(--red); font-weight:700; }
+
+  figure{ margin:1.1em 0 1.3em; page-break-inside:avoid; }
+  figure img{ width:100%; display:block; border:1px solid var(--line); border-radius:5px; }
+  figcaption{ font-size:8.8pt; color:var(--muted); margin-top:.45em; line-height:1.5; }
+  figcaption b{ color:var(--ink2); }
+
+  /* pipeline diagram */
+  .pipe{ margin:1.1em 0 1.3em; }
+  .pstep{ display:flex; gap:.8em; align-items:flex-start; padding:.55em 0; }
+  .pstep .n{ flex:0 0 1.7em; height:1.7em; border-radius:50%; background:var(--ink); color:#fff;
+             font-size:8.6pt; display:flex; align-items:center; justify-content:center; font-weight:700; margin-top:.1em; }
+  .pstep .b{ flex:1; }
+  .pstep .t{ font-weight:700; font-size:10pt; }
+  .pstep .t code{ background:none; padding:0; color:var(--blue); }
+  .pstep .d{ font-size:9.1pt; color:var(--ink2); }
+  .pstep .o{ font-size:8.7pt; color:var(--muted); margin-top:.15em; }
+  .prule{ margin-left:.85em; border-left:2px solid var(--line); height:.5em; }
+
+  .cols{ display:flex; gap:1.1em; }
+  .cols>div{ flex:1; }
+  .loop{ display:flex; gap:0; border:1px solid var(--line); border-radius:7px; overflow:hidden; margin:1em 0; }
+  .loop>div{ flex:1; padding:.8em .95em; }
+  .loop>div+div{ border-left:1px solid var(--line); }
+  .loop h4{ margin:0 0 .3em; font-size:9.6pt; }
+  .loop ul{ margin:0; padding-left:1em; font-size:9pt; }
+
+  .brk{ page-break-before:always; }
+  .avoid{ page-break-inside:avoid; }
+  footer{ margin-top:2.2em; padding-top:.8em; border-top:1px solid var(--line);
+          font-size:8.6pt; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <div class="kicker">รายงานความคืบหน้า · สิงหาคม 2569</div>
+  <h1>การเตรียมข้อมูลและการสำรวจข้อมูล<br>เซลล์แสงอาทิตย์เพอรอฟสไกต์</h1>
+  <p class="sub">จาก Raw Excel 44 ไฟล์ ถึงชุดข้อมูลพร้อมสร้างแบบจำลอง<br>
+     พร้อมข้อจำกัดเชิงโครงสร้างที่พบ และคำถามวิจัยที่ปรับให้ตรงกับสิ่งที่ข้อมูลตอบได้</p>
+
+  <div class="chips">
+    <span class="chip">44 devices</span>
+    <span class="chip">15 เปเปอร์</span>
+    <span class="chip">p-i-n NiO<sub>x</sub> ทั้งหมด</span>
+    <span class="chip">target_table 44 × 35</span>
+    <span class="chip">ground-truth 30/30 ค่า</span>
+    <span class="chip">ยังไม่เริ่ม modeling</span>
+  </div>
+
+  <div class="toc">
+    <ol>
+      <li><span>Workflow การเตรียมข้อมูล</span><span class="d">pipeline · การคลีน · บั๊กที่แก้ · การตรวจกับต้นฉบับ</span></li>
+      <li><span>การสำรวจข้อมูล (EDA)</span><span class="d">confound ระดับเปเปอร์ · ผล within-paper · กลไก · dose-response</span></li>
+      <li><span>เหตุผล ข้อจำกัด และความเป็นไปได้</span><span class="d">อะไรตอบได้ อะไรตอบไม่ได้ และเพราะอะไร</span></li>
+      <li><span>คำถามวิจัย</span><span class="d">คำถามที่ปรับ · เหตุผล · แผนสร้างแบบจำลอง</span></li>
+    </ol>
+  </div>
+
+  <div class="box key" style="margin-top:2em">
+    <h4>สรุปสั้นที่สุด</h4>
+    <p>คุณภาพข้อมูลไม่ใช่ปัญหาแล้ว — ทุกค่าผ่านการคลีนและตรวจย้อนกับเปเปอร์ต้นฉบับ
+    <strong>ปัญหาที่เหลือคือโครงสร้างของข้อมูล</strong>: นักวิจัยแต่ละกลุ่มตั้งค่าพารามิเตอร์การผลิตไว้คงที่
+    แล้วแปรเฉพาะ<em>สารที่ใช้ดัดแปลงผิว HTL</em> ทำให้พารามิเตอร์เชิงตัวเลขทุกตัว
+    (ความเร็วปั่น อุณหภูมิอบ จังหวะ antisolvent) แยกไม่ออกจากตัวตนของเปเปอร์
+    คำถามวิจัยจึงปรับจาก “พารามิเตอร์ตัวไหนขับคุณภาพผลึก” เป็น
+    <strong>“การดัดแปลงผิว HTL ช่วยจริงไหม และทำงานผ่านกลไกใด”</strong>
+    ซึ่งตอบได้ด้วยการเทียบ A/B ภายในแล็บเดียวกัน 11 เปเปอร์ และผลเบื้องต้นชัดเจนมาก</p>
+  </div>
+</section>
+
+<!-- ============ 1. WORKFLOW ============ -->
+<h2>1 · Workflow การเตรียมข้อมูล</h2>
+
+<p class="lead">ข้อมูลตั้งต้นคือไฟล์ Excel 44 ไฟล์ (1 ไฟล์ = 1 device, ไฟล์ละ 6 ชีต) ที่สกัดด้วยมือจากเปเปอร์ 15 ฉบับ
+เป้าหมายของขั้นนี้คือแปลงให้เป็นตารางเดียวที่ 1 แถว = 1 device พร้อมป้อนแบบจำลอง โดยทุกการตัดสินใจต้องตรวจสอบย้อนกลับได้</p>
+
+<h3>1.1 เส้นทางข้อมูล</h3>
+
+<div class="pipe">
+  <div class="pstep">
+    <div class="n">0</div>
+    <div class="b">
+      <div class="t">Raw Data/*.xlsx</div>
+      <div class="d">44 ไฟล์ = 44 devices จาก 15 เปเปอร์ ไฟล์ละ 6 ชีต (device, layers, materials, process, properties, stability, vendors)</div>
+    </div>
+  </div>
+  <div class="prule"></div>
+  <div class="pstep">
+    <div class="n">1</div>
+    <div class="b">
+      <div class="t"><code>explore_reschema.ipynb</code> — แตกชีตเป็นตาราง normalize</div>
+      <div class="d">ผูกทุกแถวด้วย <code>device_id</code> (= DOI_SampleN) และวางโครงชั้นแบบระบบตำแหน่ง:
+        เลขคู่ = ชั้นหลัก (1 Anode, 2 HTL, 4 PSK, 6 ETL, 8 Cathode) · เลขคี่กลาง = ชั้นเคลือบผิว (3, 5, 7)</div>
+      <div class="o">ผลลัพธ์ → <code>processed/normalize/</code> 7 ตาราง</div>
+    </div>
+  </div>
+  <div class="prule"></div>
+  <div class="pstep">
+    <div class="n">2</div>
+    <div class="b">
+      <div class="t"><code>column_prepare.ipynb</code> — คลีนคอลัมน์ทีละเรื่อง (102 cells)</div>
+      <div class="d">ทำงานแบบ “สำรวจก่อน แล้วค่อยแก้” ทีละหมวด A–L มี gate ตรวจก่อนและหลังเขียนลงดิสก์ทุกครั้ง</div>
+      <div class="o">ผลลัพธ์ → <code>processed/prepared/</code> + audit trail ใน <code>processed/audit/</code></div>
+    </div>
+  </div>
+  <div class="prule"></div>
+  <div class="pstep">
+    <div class="n">3</div>
+    <div class="b">
+      <div class="t"><code>recheck_comlumn_preapare.ipynb</code> — ตรวจซ้ำ + สร้างตารางเป้าหมาย</div>
+      <div class="d">แตกพารามิเตอร์ออกเป็น 53 คอลัมน์ knob, รวมหน่วยเวลา, เลือกค่า JV ให้มาจากชุดเดียวกัน, สร้างดัชนีเสถียรภาพ</div>
+      <div class="o">ผลลัพธ์ → <code>processed/prepared_v2/</code> 10 ไฟล์</div>
+    </div>
+  </div>
+  <div class="prule"></div>
+  <div class="pstep">
+    <div class="n">4</div>
+    <div class="b">
+      <div class="t"><code>explore_prepared_v2.ipynb</code> · <code>eda_htl_modification.ipynb</code> — EDA</div>
+      <div class="d">ตัวแรกสำรวจภาพรวมทั้งชุด ตัวหลังเจาะคำถามวิจัยที่ปรับใหม่ (บทที่ 2) — ทั้งคู่อ่านอย่างเดียว ไม่เขียนดิสก์</div>
+    </div>
+  </div>
+  <div class="prule"></div>
+  <div class="pstep">
+    <div class="n">5</div>
+    <div class="b">
+      <div class="t">ขั้นถัดไป — RandomForest + SHAP, LeaveOneGroupOut(paper)</div>
+      <div class="d">ยังไม่เริ่ม รอสรุปคำถามวิจัยกับอาจารย์ที่ปรึกษาก่อน</div>
+    </div>
+  </div>
+</div>
+
+<h3>1.2 งานคลีนที่ทำจริง</h3>
+
+<table>
+  <thead><tr><th style="width:8%">หมวด</th><th>สิ่งที่แก้</th><th style="width:34%">ประเด็นสำคัญ</th></tr></thead>
+  <tbody>
+    <tr><td>A</td><td>Unicode ปะปน (μ กรีก กับ µ micro), ช่องว่างเกิน</td><td>ทำให้ค่าที่ควรเป็นตัวเดียวกันถูกนับแยก</td></tr>
+    <tr><td>B–C</td><td>คำสะกดผิด และสะกดต่างกัน (ตัวพิมพ์/วรรคตอน)</td><td>ยุบเข้าตารางชื่อมาตรฐาน (canonical map)</td></tr>
+    <tr><td>D–E</td><td>แปลง <code>thickness_nm</code> เป็นตัวเลข</td><td>รวมการแปลงหน่วย Å→nm และค่าที่กรอกเป็นช่วง</td></tr>
+    <tr><td>F, L</td><td>เสถียรภาพ: อุณหภูมิ/ความชื้น/retention เป็นตัวเลข</td><td>retention เพิ่มจาก 24 เป็น 28 devices จากการพบรูปแบบ percent ของ Excel</td></tr>
+    <tr><td>G</td><td>แปลงความบริสุทธิ์ของสารจากผู้ขาย</td><td>ฝั่ง provenance ไม่ใช้เป็นตัวแปรต้น</td></tr>
+    <tr><td>H</td><td>จัดกลุ่มตระกูลวัสดุ <code>material_family</code></td><td>ค่าว่างมีความหมายต่างกันตามชั้น ไม่ใช่ข้อมูลตกหล่น</td></tr>
+    <tr><td>I</td><td>หน่วยของค่าที่วัดผิด</td><td>ตรวจแล้ว 15 แถวที่สงสัยเป็นค่าที่ถูกต้อง</td></tr>
+    <tr><td><strong>J</strong></td><td><strong>สูตรเคมีของชั้นดูดแสง</strong> (<code>a_Cs a_FA x_Br</code>)</td><td>คำนวณจาก <strong>2 แหล่งอิสระ</strong>: สูตรที่เปเปอร์เขียน และคำนวณย้อนจากสารตั้งต้น (โมล/มวล÷น้ำหนักโมเลกุล) ตรงกัน 13/15 เปเปอร์ ครบ 44/44 devices</td></tr>
+    <tr><td>K</td><td>ตัวทำละลาย 27 แบบ → 16 ระบบ</td><td>แตกเป็น solvent_1/2 พร้อมอัตราส่วนเชิงตัวเลข</td></tr>
+  </tbody>
+</table>
+
+<div class="box warn">
+  <h4>บั๊กที่พบระหว่างทางและแก้แล้ว</h4>
+  <ul>
+    <li><strong><code>layer_id</code> เป็น <code>'1.0'</code> กับ <code>'1'</code></strong> — การเชื่อมตารางได้ 0 แถวโดยไม่มี error แจ้ง เป็นบั๊กประเภทที่อันตรายที่สุดเพราะเงียบ</li>
+    <li><strong>regex <code>contains("m2 V")</code> จับ <code>cm2 V-1 s-1</code> ผิด</strong> — รายงานว่ามี 7 เคสที่ต้องแก้ ทั้งที่จริงมี 3</li>
+    <li><strong>ค่า JV ปนกันระหว่าง Champion กับ Average</strong> — การ pivot ด้วย max หยิบ Voc จากชุดหนึ่งและ FF จากอีกชุด ทำให้ <code>PCE ≠ Voc×Jsc×FF/100</code> คลาดสูงสุด 1.64 หลังบังคับให้เลือกจากชุดเดียวกันเหลือ 0.503 ซึ่งเป็นแค่การปัดเศษ</li>
+    <li><strong><code>value_parsed</code> ไม่ตามการแก้หน่วย</strong> — การแก้ที่เปลี่ยน<em>ตัวเลข</em> (ความคล่องตัวโฮล m²→cm² ×10⁴) หายเงียบเพราะคำนวณจากค่าดิบ ตอนนี้ซิงก์แล้วและมี gate ดักไม่ให้เกิดซ้ำ</li>
+    <li><strong>การเชื่อมตาราง layers ทำแถวพอง 352→356</strong> — เพราะชั้นที่ 7 บาง device มี 2 วัสดุ (PCBM + BCP) เปลี่ยนวิธีเป็น map ตรงแทน</li>
+    <li><strong>ข้อมูลสังเคราะห์ผง NiO<sub>x</sub> รั่วเข้าไปเป็นตัวแปรต้น</strong> — เป็นสูตรเตรียมผงก่อนใช้งาน ไม่ใช่ขั้นตอนสร้างเซลล์ และมาจากเปเปอร์เดียว จึงบังคับกรองออก 3 ชั้น (กรองตอนดึง, gate ตอน export, ป้ายเตือนในผลลัพธ์)</li>
+  </ul>
+</div>
+
+<h3 class="brk">1.3 การตรวจย้อนกับเปเปอร์ต้นฉบับ (ground-truth validation)</h3>
+
+<p>เลือกเปเปอร์ตัวอย่าง 1 ฉบับ (<em>Tirado et al., Adv. Mater. Interfaces</em> 2025, open access)
+แล้วเปิดทั้งตัวเปเปอร์และไฟล์ Supporting Information ไล่เทียบทุกค่าที่สกัดมา</p>
+
+<table>
+  <thead><tr><th>สิ่งที่เทียบ</th><th style="width:26%">แหล่งในเปเปอร์</th><th class="num" style="width:14%">ผล</th></tr></thead>
+  <tbody>
+    <tr><td>Voc, Jsc, FF, PCE, Rs ของ 4 device</td><td>Table 1</td><td class="num ok">20/20</td></tr>
+    <tr><td>อายุพาหะ TRPL และความกว้างสเปกตรัม</td><td>Table 2</td><td class="num ok">8/8</td></tr>
+    <tr><td>สูตรเคมีชั้นดูดแสง, โครงสร้างชั้น, ความหนา, เงื่อนไขทดสอบเสถียรภาพ</td><td>เนื้อความ §2</td><td class="num ok">ตรงทั้งหมด</td></tr>
+    <tr><td>สารตั้งต้น 5 ชนิด, ตัวทำละลาย, ขั้นตอนปั่นเคลือบ, ความหนาชั้นระเหย, สูตรสังเคราะห์ NiO<sub>x</sub></td><td>SI §1.1–1.2</td><td class="num ok">12/12</td></tr>
+    <tr class="total"><td>รวม</td><td class="muted">เทียบทีละค่า</td><td class="num ok">30/30</td></tr>
+  </tbody>
+</table>
+
+<div class="box good">
+  <h4>สิ่งที่การตรวจนี้พิสูจน์ และสิ่งที่มันเจอโดยไม่คาดคิด</h4>
+  <p><strong>พิสูจน์ว่า</strong> การคลีนไม่ได้ทำค่าเพี้ยน — ทั้งการแปลง FF ×100, การ parse ช่วงความหนา, การแตกสูตร ABX₃ และการ map ชั้น ผ่านการเทียบกับต้นทางจริงหมด</p>
+  <p><strong>สิ่งที่เจอเพิ่ม</strong> — SI ระบุค่าที่ขัดกับข้อมูลเดิม 3 จุด และแก้ตามหลักฐานแล้ว:
+  เวลาอบ 30 นาที (ค่าเดิมมีเคสที่กรอกเป็น 30 ชั่วโมง), เวลาพลาสมา 10 นาที (ค่าที่เดาไว้ก่อนหน้าผิด),
+  และค่าแถบพลังงานรายตัวอย่างจาก Tauc plot ผลข้างเคียงคือ <strong>ค่าผิดปกติของเวลาอบหายไป</strong>
+  ทำให้ทั้งชุดข้อมูลมีค่ากลาง 1800 วินาที สูงสุด 3600 วินาที ซึ่งสมเหตุสมผลทางกายภาพทั้งหมด</p>
+  <p><strong>บทเรียนที่สำคัญกว่า</strong> — ในอีกเปเปอร์หนึ่งพบว่าไฟล์ Excel ของเรากรอก<em>ตรงตามต้นฉบับทุกตัว</em>
+  แต่หลักฐานทางฟิสิกส์ 4 ชั้นชี้ว่า<strong>ตัวเปเปอร์เองพิมพ์ผิด</strong> (0.7 M ที่ควรเป็น 0.07 M)
+  การตรวจสอบจึงต้องไปถึงระดับ “ค่านี้เป็นไปได้ทางฟิสิกส์ไหม” ไม่ใช่แค่ “ตรงกับต้นฉบับไหม”</p>
+</div>
+
+<h3>1.4 ผลลัพธ์ — <code>processed/prepared_v2/</code></h3>
+
+<table>
+  <thead><tr><th style="width:23%">ไฟล์</th><th class="num" style="width:12%">ขนาด</th><th>บทบาท</th></tr></thead>
+  <tbody>
+    <tr><td><strong><code>target_table.csv</code></strong></td><td class="num">44 × 35</td><td><strong>ตารางหลักสำหรับสร้างแบบจำลอง</strong> — 1 แถว = 1 device ฝังการตัดสินใจทุกข้อไว้แล้ว (เลือก variant ชุดเดียวกัน, เติม 0 ให้ไอออนที่ไม่อยู่ในสูตร, แยกจุดอ้างอิงเวลาของ antisolvent)</td></tr>
+    <tr><td><code>process.csv</code></td><td class="num">702 × 71</td><td>ทุกขั้นตอนรายชั้น + 53 คอลัมน์ knob + ร่องรอยการแก้พารามิเตอร์</td></tr>
+    <tr><td><code>properties.csv</code></td><td class="num">563 × 16</td><td>ค่าที่เปเปอร์รายงาน แตกเป็น base_property + ค่าที่ parse แล้ว</td></tr>
+    <tr><td><code>materials.csv</code></td><td class="num">543 × 13</td><td>สารตั้งต้นรายชั้น + ระบบตัวทำละลาย</td></tr>
+    <tr><td><code>layers.csv</code></td><td class="num">352 × 11</td><td>วัสดุรายชั้น + ความหนา + ชนิดชั้น (หลัก/เคลือบ/additive)</td></tr>
+    <tr><td><code>vendors.csv</code></td><td class="num">644 × 8</td><td>แหล่งซื้อและความบริสุทธิ์ — provenance</td></tr>
+    <tr><td><code>stability.csv</code></td><td class="num">62 × 20</td><td>1 แถว = 1 การทดสอบ (device เดียวมีได้หลายเงื่อนไข)</td></tr>
+    <tr><td><code>psk_composition.csv</code></td><td class="num">44 × 11</td><td>สูตรเคมีครบทุกไอออน + ที่มา + ผลเทียบ 2 แหล่ง — เป็นหลักฐานสำหรับเขียนระเบียบวิธี</td></tr>
+    <tr><td><code>devices.csv</code> · <code>device_layer_flags.csv</code></td><td class="num">44 × 13 · 44 × 10</td><td>ทะเบียน device และธงสถาปัตยกรรมชั้น</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ 2. EDA ============ -->
+<h2 class="brk">2 · การสำรวจข้อมูล (EDA)</h2>
+
+<p class="lead">EDA แบ่งเป็นสองระดับ: ระดับแรกสำรวจภาพรวมทั้งชุด ระดับที่สองเจาะเฉพาะคำถามที่ข้อมูลตอบได้จริง
+สิ่งที่พบในระดับแรกคือเหตุผลทั้งหมดที่ทำให้ต้องมีระดับที่สอง</p>
+
+<h3>2.1 ความครบถ้วนของข้อมูล</h3>
+
+<table>
+  <thead><tr><th style="width:20%">กลุ่ม</th><th>ตัวแปร</th><th class="num" style="width:16%">จำนวน device</th></tr></thead>
+  <tbody>
+    <tr><td>ผลลัพธ์ (Y)</td><td><code>voc</code> <code>jsc</code> <code>ff</code> — เลือกจากชุดค่าเดียวกันเสมอ, <code>pce</code></td><td class="num">43 · 42</td></tr>
+    <tr><td>ตัวแปรคั่นกลาง</td><td><code>vtfl</code> (ตัวแทนความหนาแน่นกับดักพาหะ)</td><td class="num">28</td></tr>
+    <tr><td></td><td><code>trap_density</code> · <code>rs</code> · <code>rrec</code></td><td class="num">22 · 22 · 15</td></tr>
+    <tr><td>เสถียรภาพ</td><td><code>retention_25c</code> · <code>degradation_rate</code></td><td class="num">14</td></tr>
+    <tr><td>พารามิเตอร์การผลิต</td><td>ความเร็วปั่น อุณหภูมิ/เวลาอบ ปริมาณและจังหวะ antisolvent (10 คอลัมน์)</td><td class="num">30–43</td></tr>
+    <tr><td>ตัวควบคุม</td><td><code>a_Cs</code> <code>a_FA</code> <code>x_Br</code> · <code>etl_family</code></td><td class="num">44</td></tr>
+    <tr><td>การดัดแปลงผิว</td><td><code>coat_htl</code> · <code>htl_mod_kind</code> · <code>coat_psk</code></td><td class="num">44</td></tr>
+  </tbody>
+</table>
+
+<p>ข้อสังเกตสำคัญสองข้อ: <strong>(1)</strong> <code>grain_size</code> ซึ่งเป็นแกนของคำถามวิจัยเดิม มีรายงานเพียง 13/44 device
+จึงใช้ <code>vtfl</code> เป็นตัวแทน (มี 28 device และสัมพันธ์กับความหนาแน่นกับดักโดยตรง rho +0.76)
+<strong>(2)</strong> ค่าที่หายไปหายเป็นก้อนตามเปเปอร์ ไม่ได้หายแบบสุ่ม — เปเปอร์ที่ไม่วัด SCLC ก็ไม่มีทั้งเปเปอร์
+จึงห้ามเติมค่าข้ามเปเปอร์เด็ดขาด</p>
+
+<div class="box warn">
+  <h4>สิ่งที่ยืนยันแล้วว่าใช้เป็นตัวแปรต้นไม่ได้</h4>
+  <p><code>PCE = Voc × Jsc × FF / 100</code> — พิสูจน์จากข้อมูลจริง (สหสัมพันธ์ 0.996) การฝึกแบบจำลองทำนาย PCE ตรง ๆ
+  จึงไม่ให้ข้อมูลใหม่เลย ต้องฝึกสามองค์ประกอบแยกแล้วคูณกลับ ·
+  <code>coat_etl</code> และ <code>is_coated</code> เป็นจริงทั้ง 44 device (ทุก device มีชั้นบัฟเฟอร์อย่างน้อย BCP)
+  ความแปรปรวนเป็นศูนย์ ใช้เป็นตัวแปรไม่ได้ เก็บไว้ตรวจความถูกต้องเท่านั้น</p>
+</div>
+
+<h3>2.2 ปัญหาแรกที่เห็น — ความต่างระหว่างแล็บกลบทุกอย่าง</h3>
+
+<figure>
+  <img src="figures/fig1_pce_by_paper.png" alt="PCE รายเปเปอร์">
+  <figcaption><b>รูปที่ 1</b> — ประสิทธิภาพของแต่ละ device แยกตามเปเปอร์ (จุดดำ = ค่ากลางของเปเปอร์นั้น)
+  ความแปรปรวนระหว่างเปเปอร์มากกว่าความแปรปรวนภายในเปเปอร์ประมาณ <b>3 เท่า</b>
+  แปลว่าถ้าเทียบ device ข้ามเปเปอร์กันตรง ๆ สิ่งที่วัดได้ส่วนใหญ่คือ “ฝีมือและเงื่อนไขของแล็บ” ไม่ใช่ผลของตัวแปรที่สนใจ
+  นี่คือเหตุผลที่ต้องใช้ LeaveOneGroupOut โดยจัดกลุ่มตามเปเปอร์</figcaption>
+</figure>
+
+<h3>2.3 ปัญหาที่สอง — และเป็นตัวชี้ขาด</h3>
+
+<p>หลักการพื้นฐานของการวัดผลของตัวแปรใด ๆ คือต้องมีตัวอย่างที่ <strong>ตัวแปรนั้นต่างกัน แต่อย่างอื่นเหมือนกัน</strong>
+ในชุดข้อมูลนี้ “อย่างอื่นเหมือนกัน” มีทางเดียวคือ<strong>อยู่ในเปเปอร์เดียวกัน</strong>
+(แล็บเดียว คนเดียว เครื่องเดียว ล็อตสารเคมีเดียว) จึงนับว่าตัวแปรแต่ละตัวแปรค่าภายในเปเปอร์ตัวเองกี่เปเปอร์</p>
+
+<figure>
+  <img src="figures/fig3_within_paper_variation.png" alt="การแปรผันภายในเปเปอร์">
+  <figcaption><b>รูปที่ 2</b> — จำนวนเปเปอร์ (จาก 15) ที่ค่าของตัวแปรนั้นแปรผันภายในเปเปอร์ตัวเอง
+  แถบเทาคือผลลัพธ์ Y ซึ่งแปรครบทุกเปเปอร์ตามที่ควรเป็น (ยืนยันว่าวิธีนับไม่เพี้ยน)
+  แถบเขียวคือการดัดแปลงผิว HTL ซึ่งแปร 10–11 เปเปอร์
+  <b>แถบส้มคือพารามิเตอร์เชิงตัวเลขทั้งหมด ซึ่งแปร 0–1 เปเปอร์</b></figcaption>
+</figure>
+
+<div class="box key">
+  <h4>ข้อค้นพบที่กำหนดทิศทางของงานทั้งหมด</h4>
+  <p>ในแต่ละเปเปอร์ นักวิจัย<strong>ตั้งสูตรการผลิตไว้คงที่</strong> แล้วแปรเฉพาะสิ่งที่ตัวเองศึกษา
+  และสิ่งที่วงการ p-i-n ศึกษาอยู่ในช่วงนี้พอดีคือ<strong>การดัดแปลงผิว HTL</strong> (buried interface)</p>
+  <p>ผลคือ ความเร็วปั่น อุณหภูมิและเวลาอบ ปริมาณและจังหวะ antisolvent
+  <strong>ไม่แปรค่าเลยแม้แต่เปเปอร์เดียว</strong> ตัวแปรเหล่านี้จึงเป็น “ลายนิ้วมือของเปเปอร์” อย่างสมบูรณ์
+  ใต้ LeaveOneGroupOut แบบจำลองแยกไม่ออกว่าผลที่เห็นมาจากพารามิเตอร์หรือมาจาก “แล็บไหนเป็นคนทำ”</p>
+  <p class="small">นัยตรง: สหสัมพันธ์แรง ๆ ที่เคยเห็นในการสำรวจรอบแรก เช่น อุณหภูมิอบ HTL กับ FF (−0.74)
+  หรือจังหวะหยด antisolvent กับ PCE (+0.52) <strong>เป็นความสัมพันธ์ระหว่างเปเปอร์ล้วน</strong> ไม่ใช่หลักฐานเชิงกลไก</p>
+</div>
+
+<h3 class="brk">2.4 ตัวแปรที่เหลือใช้ได้ — และเปเปอร์ที่ใช้ได้</h3>
+
+<figure>
+  <img src="figures/fig2_design_matrix.png" alt="design matrix">
+  <figcaption><b>รูปที่ 3</b> — device ทั้งหมดเรียงตามเปเปอร์ เทา = ไม่ดัดแปลงผิว HTL (control) ส้ม = ดัดแปลง (treated)
+  ข้อความใต้จุดคือสารที่ใช้ · <b>11 เปเปอร์มีทั้ง control และ treated ในตัวเอง</b> = มีการทดลอง A/B ในแล็บเดียวกันให้เทียบ
+  ส่วน 4 เปเปอร์ที่เหลือตกไปเพราะทุก device ถูกดัดแปลงหมด หรือไม่ถูกดัดแปลงเลย ซึ่งเป็นข้อจำกัดของการออกแบบการทดลอง ไม่ใช่ข้อมูลขาด</figcaption>
+</figure>
+
+<h3>2.5 ผลหลัก — การเทียบภายในเปเปอร์เดียวกัน</h3>
+
+<p>หน่วยวิเคราะห์เปลี่ยนจาก device เป็น <strong>เปเปอร์</strong>: ในแต่ละเปเปอร์คำนวณผลต่างระหว่างค่าเฉลี่ยของกลุ่มที่ดัดแปลง
+กับค่าของ control ในเปเปอร์นั้น ได้ผลต่าง 1 ค่าต่อ 1 เปเปอร์ จึงไม่เกิดปัญหานับตัวอย่างซ้ำ
+รายงานสองแบบคู่กันเสมอ — <strong>Δmean</strong> (เฉลี่ยทุกกลุ่มที่ดัดแปลง รวมโดสที่ยังไม่ปรับจูน) และ
+<strong>Δbest</strong> (เฉพาะตัวที่ดีที่สุด ตรงกับสิ่งที่เปเปอร์เคลม)</p>
+
+<figure>
+  <img src="figures/fig4_delta_within_paper.png" alt="ผลต่างภายในเปเปอร์">
+  <figcaption><b>รูปที่ 4</b> — ผลต่าง (ดัดแปลง − control) ของแต่ละเปเปอร์ · จุดน้ำเงิน = Δmean, สี่เหลี่ยมส้ม = Δbest
+  ค่า p มาจาก sign test แบบ exact binomial ซึ่งไม่ต้องสมมติการแจกแจง จึงเหมาะกับ n เล็ก</figcaption>
+</figure>
+
+<table>
+  <thead><tr><th>ตัวชี้วัด</th><th class="num">จำนวนเปเปอร์</th><th class="num">ค่ากลาง Δmean</th><th class="num">ค่ากลาง Δbest</th><th class="num">ทิศทางที่ดี</th><th class="num">sign test</th></tr></thead>
+  <tbody>
+    <tr><td><strong>PCE</strong> (%)</td><td class="num">11</td><td class="num"><strong>+2.09</strong></td><td class="num">+2.33</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
+    <tr><td>FF (จุด)</td><td class="num">11</td><td class="num">+2.62</td><td class="num">+4.53</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
+    <tr><td>Jsc (mA/cm²)</td><td class="num">11</td><td class="num">+0.72</td><td class="num">+0.90</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
+    <tr><td>Voc (V)</td><td class="num">11</td><td class="num">+0.045</td><td class="num">+0.050</td><td class="num">9/11</td><td class="num">p = 0.065</td></tr>
+    <tr><td><strong>VTFL</strong> (V, ต่ำดีกว่า)</td><td class="num">8</td><td class="num"><strong>−0.145</strong></td><td class="num">−0.175</td><td class="num ok">8/8</td><td class="num">p = 0.008</td></tr>
+    <tr><td>retention @25 °C (%)</td><td class="num">3</td><td class="num">+25</td><td class="num">+25</td><td class="num">3/3</td><td class="num muted">n เล็กเกินไป</td></tr>
+  </tbody>
+</table>
+
+<p>อ่านตารางนี้ว่า: ถ้าการดัดแปลงผิว HTL ไม่มีผลจริง โอกาสที่ผลจะออกมาทางบวกครบทั้ง 11 เปเปอร์โดยบังเอิญคือประมาณ 0.1%
+สังเกตว่า <strong>FF เป็นทางหลักที่ผลวิ่งผ่าน</strong> (11/11 และขนาดใหญ่) มากกว่า Voc (9/11)
+ซึ่งสอดคล้องกับกลไกที่เกิดที่<em>รอยต่อ</em>มากกว่ากลไกที่เกิดในเนื้อฟิล์ม</p>
+
+<h3>2.6 กลไก — ตัวแปรคั่นกลางบอกอะไร</h3>
+
+<p>สมมติฐานเชิงกลไกคือ <strong>ดัดแปลงผิว → กับดักพาหะที่รอยต่อลดลง → FF และ Voc สูงขึ้น → PCE สูงขึ้น</strong>
+ตัวที่วัดกลางทางได้คือ VTFL (แรงดันที่ต้องใช้เติมกับดักให้เต็ม จากการวัดแบบ SCLC) — <em>ค่าสูงแปลว่ากับดักเยอะ ฟิล์มแย่</em></p>
+
+<figure>
+  <img src="figures/fig5_vtfl_mediator.png" alt="VTFL">
+  <figcaption><b>รูปที่ 5</b> — ซ้าย: VTFL ของ control เทียบกับกลุ่มที่ดัดแปลง เชื่อมเส้นภายในเปเปอร์เดียวกัน ลดลงทั้ง 8 เปเปอร์ที่วัดได้
+  ขวา: เปเปอร์ที่กับดักลดมาก ได้ประสิทธิภาพเพิ่มมากขึ้นด้วยหรือไม่ — ทิศทางถูก แต่ n = 8 ยังประเมินความชันไม่แม่น</figcaption>
+</figure>
+
+<div class="box good">
+  <h4>ข้อต่อของโซ่กลไกครบทุกข้อ</h4>
+  <p>กับดักลดลง 8/8 เปเปอร์อิสระ → FF เพิ่ม 11/11 → PCE เพิ่ม 11/11
+  นี่คือหลักฐานเชิงกลไกที่<strong>ไม่มีเปเปอร์เดี่ยวฉบับไหนใน dataset ให้ได้</strong>
+  เพราะแต่ละฉบับวัดกับดักของสารตัวเองในแล็บตัวเองเท่านั้น</p>
+</div>
+
+<h3 class="brk">2.7 แยกตามกลุ่มสารที่ใช้ดัดแปลง</h3>
+
+<figure>
+  <img src="figures/fig7_by_mod_class.png" alt="ตามกลุ่มสาร">
+  <figcaption><b>รูปที่ 6</b> — ผลต่าง PCE เทียบ control ของเปเปอร์ตัวเอง แยกตามตระกูลเคมีของสารที่ใช้
+  (SAM = โมเลกุลชั้นเดียวตระกูลคาร์บาโซล เช่น 2PACz, Me-4PACz · เกลือไอออน = CsI, NH₄PF₆, LiPF₆, NaPF₆, EMIMI ·
+  โมเลกุลอินทรีย์อื่น = BDT-POZ, PTES, TFFA) จุดดำคือค่ากลาง</figcaption>
+</figure>
+
+<p><strong>ทุกกลุ่มไปทางบวกหมด</strong> โดย SAM นำอยู่ (ค่ากลาง +4.00 จาก 5 เปเปอร์) ตามด้วยโมเลกุลอินทรีย์ (+2.09 จาก 3 เปเปอร์)
+และเกลือไอออน (+0.65 จาก 3 เปเปอร์) — แต่ <strong>ยังจัดอันดับไม่ได้</strong> เพราะแต่ละกลุ่มมีเพียง 3–5 เปเปอร์
+และกลุ่มออกไซด์ (Al₂O₃) หลุดจากการเทียบไปเลย เพราะเปเปอร์เดียวที่ใช้สารนี้เคลือบทุก device จนไม่เหลือ control</p>
+
+<h3>2.8 เรื่องปริมาณ — สองเปเปอร์ที่ไล่ความเข้มข้น</h3>
+
+<figure>
+  <img src="figures/fig6_dose_response.png" alt="dose response">
+  <figcaption><b>รูปที่ 7</b> — สองเปเปอร์เดียวที่ทดลองไล่ความเข้มข้นภายในแล็บเดียวกัน
+  (บน: CsI 5/10/15/20 mg mL⁻¹ · ล่าง: EMIMI 1/2/4% แบบผสมในน้ำหมึกไม่ใช่เคลือบทับ)
+  เส้นประส้มคือค่าของ control จุดที่อยู่ต่ำกว่าเส้นแปลว่าดัดแปลงแล้วแย่ลง</figcaption>
+</figure>
+
+<div class="box warn">
+  <h4>ผลไม่ใช่ “ยิ่งมากยิ่งดี” — และข้อนี้สำคัญกว่าที่คิด</h4>
+  <p>ทั้งสองเปเปอร์ให้เส้นโค้งคว่ำที่มีจุดเหมาะสมชัดเจน: CsI ดีที่สุดที่ 10 mg/mL (+1.80) แต่ที่ 20 mg/mL
+  <strong>แย่กว่าไม่ใส่เลย</strong> (−0.50) ส่วน EMIMI ดีที่สุดที่ 1% และที่ 4% ก็ต่ำกว่า control เช่นกัน</p>
+  <p>นี่เป็น<strong>หลักฐานจากข้อมูลของเราเองว่า “ดัดแปลงอะไรก็ได้แล้วจะดีขึ้น” ไม่จริง</strong>
+  ซึ่งใช้ตอบข้อโจมตีเรื่องอคติจากการตีพิมพ์ได้โดยตรง และเป็นเหตุผลที่ต้องรายงาน Δmean คู่กับ Δbest เสมอ
+  ไม่ใช่เลือกรายงานแค่ตัวที่ดีที่สุด</p>
+</div>
+
+<h3>2.9 ตรวจตัวกวน — ผลต่างที่ได้สะอาดจริงไหม</h3>
+
+<p>ผลต่างในหัวข้อ 2.5 จะเชื่อถือได้ก็ต่อเมื่อภายในเปเปอร์เดียวกัน <em>ทุกอย่างนอกจากการดัดแปลงผิว HTL เหมือนกันหมด</em>
+จึงไล่ตรวจ 12 ตัวแปรในทั้ง 11 เปเปอร์ ได้แก่ สัดส่วนไอออนในสูตรเคมี ชนิด ETL ธงการเคลือบชั้นอื่น
+ความเร็วปั่น อุณหภูมิและเวลาอบ ปริมาณและจังหวะ antisolvent และชนิดของค่า JV ที่รายงาน</p>
+
+<div class="box good">
+  <h4>ผลตรวจ: ไม่มีเปเปอร์ใดที่ตัวแปรอื่นแปรร่วมไปกับการดัดแปลงเลย</h4>
+  <p>ทั้ง 12 ตัวแปร คงที่ภายในทั้ง 11 เปเปอร์ที่ใช้เทียบ แปลว่าผลต่างที่วัดได้ไม่ปนกับความต่างอื่น
+  (ตัวแปรที่แปรภายในเปเปอร์มีอยู่จริง 2 กรณี แต่อยู่ในเปเปอร์ที่ไม่มี control อยู่แล้ว จึงไม่กระทบผล)</p>
+</div>
+
+<p class="small muted">หมายเหตุ: ในทั้งชุดข้อมูลมีการเทียบเชิงตัวเลขภายในเปเปอร์อยู่ <strong>กรณีเดียว</strong> —
+เปเปอร์หนึ่งใช้ SAM ตัวเดียวกันทั้งสอง device ต่างกันแค่ความเร็วปั่นจาก 5000 เป็น 1000 rpm แล้วได้ PCE เพิ่มจาก 20.37 เป็น 24.21
+พร้อม VTFL ที่ลดลง เก็บไว้เป็นข้อสังเกตว่าพารามิเตอร์เชิงตัวเลข<em>น่าจะ</em>มีผลจริงถ้าเก็บข้อมูลมาถูกแบบ
+แต่ n = 1 เปเปอร์ สรุปอะไรไม่ได้ และเป็นตัวอย่างรูปธรรมว่า “เปเปอร์แบบไหนที่ต้องเก็บเพิ่ม”</p>
+
+<!-- ============ 3. LIMITS ============ -->
+<h2 class="brk">3 · เหตุผล ข้อจำกัด และความเป็นไปได้</h2>
+
+<p class="lead">บทนี้แยกให้ชัดว่าอะไรที่ชุดข้อมูลนี้ตอบได้ อะไรตอบไม่ได้ และตอบไม่ได้เพราะอะไร
+เพื่อไม่ให้ข้อสรุปในบทถัดไปถูกโจมตีในจุดที่เรารู้ตัวอยู่แล้ว</p>
+
+<h3>3.1 ข้อจำกัดเชิงโครงสร้าง — ข้อใหญ่ที่สุด</h3>
+
+<table>
+  <thead><tr><th style="width:34%">กลุ่มตัวแปร</th><th class="num" style="width:20%">แปรภายในเปเปอร์</th><th>สถานะ</th></tr></thead>
+  <tbody>
+    <tr><td>การดัดแปลงผิว HTL<br><span class="small muted"><code>htl_mod_kind</code> <code>coat_htl</code> <code>mod_class</code></span></td><td class="num ok">10–11 / 15</td><td><strong class="ok">ใช้เป็นตัวแปรหลักได้</strong> — มีการเทียบ A/B ในแล็บเดียวกันจริง</td></tr>
+    <tr><td>สูตรเคมีของชั้นดูดแสง<br><span class="small muted"><code>a_Cs</code> <code>a_FA</code> <code>x_Br</code></span></td><td class="num">1 / 15</td><td>ใช้เป็น<strong>ตัวควบคุม</strong> — ต้องใส่เข้าแบบจำลองเสมอเพราะกระทบ Voc/Jsc โดยตรงทางฟิสิกส์</td></tr>
+    <tr><td>พารามิเตอร์เชิงตัวเลขทุกตัว<br><span class="small muted">ความเร็วปั่น · อุณหภูมิ/เวลาอบ · antisolvent</span></td><td class="num no">0 / 15</td><td><strong class="no">ใช้ไม่ได้</strong> — confound 100% กับตัวตนของเปเปอร์</td></tr>
+    <tr><td>สถาปัตยกรรมอื่น<br><span class="small muted"><code>etl_family</code> <code>coat_psk</code> <code>coat_etl</code></span></td><td class="num no">0 / 15</td><td><strong class="no">ใช้ไม่ได้</strong> — เหตุผลเดียวกัน (ใส่เป็นตัวควบคุมได้ แต่ห้ามตีความ SHAP เชิงกลไก)</td></tr>
+    <tr><td class="muted">(เทียบ) ผลลัพธ์ Y</td><td class="num">15 / 15</td><td class="muted">แปรครบตามที่ควรเป็น — ยืนยันว่าวิธีนับไม่เพี้ยน</td></tr>
+  </tbody>
+</table>
+
+<p>สาเหตุไม่ใช่ความบังเอิญของการเลือกเปเปอร์ แต่เป็นธรรมชาติของวรรณกรรมสาขานี้:
+งานตีพิมพ์แต่ละชิ้นจะ<strong>ตรึงสูตรการผลิตไว้แล้วแปรเฉพาะสิ่งที่ตัวเองอ้างว่าค้นพบ</strong>
+การเก็บเปเปอร์เพิ่มด้วยเกณฑ์เดิมจึงไม่ช่วย — ต้องเปลี่ยนเกณฑ์การคัดเปเปอร์ ไม่ใช่เพิ่มจำนวน</p>
+
+<h3>3.2 ข้อจำกัดจากขนาดข้อมูล</h3>
+
+<table>
+  <thead><tr><th style="width:30%">ข้อจำกัด</th><th>ผลกระทบและวิธีรับมือ</th></tr></thead>
+  <tbody>
+    <tr><td><strong>N = 44 device / 15 กลุ่ม</strong></td><td>ตัวแปรต้นทุกตัวที่เพิ่มเข้าไปกินองศาอิสระและเพิ่มโอกาสอ่าน SHAP ผิด จึงต้องเลือกตัวแปรอย่างประหยัดและมีเหตุผลรองรับทุกตัว · ห้ามใช้ deep learning โดยสิ้นเชิง</td></tr>
+    <tr><td><strong>fold ของ LOPO มีขนาด 2–5 device</strong> (7 fold มี ≤2)</td><td>คำนวณค่าความแม่นรายกลุ่มแล้วเฉลี่ยจะผันผวนมาก ต้องรายงานเป็นการทำนายรวมทุก fold แทน พร้อม bootstrap</td></tr>
+    <tr><td><strong>ตัวแปรคั่นกลางมี 28 device</strong></td><td>การวิเคราะห์เส้นทางกลไกทำได้บนข้อมูลชุดย่อย ต้องรายงาน n ควบคู่เสมอ</td></tr>
+    <tr><td><strong>เสถียรภาพมี 14 device / 3 เปเปอร์ที่มีคู่เทียบ</strong></td><td>ทำได้แค่ระดับข้อสังเกต ห้ามใช้เป็นผลหลัก · อีกทั้งแต่ละ device ทดสอบคนละเงื่อนไข (25–85 °C, 1–5000 ชั่วโมง) เทียบข้ามเงื่อนไขตรง ๆ ไม่ได้</td></tr>
+    <tr><td><strong>ขนาดเกรนมี 13/44</strong></td><td>ตัวแปรที่เป็นแกนของคำถามเดิมวัดไม่ได้จริง ต้องใช้ VTFL แทน (28 device)</td></tr>
+  </tbody>
+</table>
+
+<h3>3.3 อคติจากการตีพิมพ์ (publication bias)</h3>
+
+<div class="box warn">
+  <p>ผล 11/11 ต้องอ่านอย่างระมัดระวัง: เปเปอร์จะตีพิมพ์เฉพาะการดัดแปลงที่<em>สำเร็จ</em>
+  ตัวเลขที่ได้จึงหมายถึง <strong>“การดัดแปลงที่ผ่านการคัดเลือกและปรับจูนของแต่ละแล็บมาแล้ว ให้ผลขนาดนี้”</strong>
+  ไม่ได้หมายความว่า <em>“ดัดแปลงอะไรก็ได้แล้วจะดีขึ้น”</em></p>
+  <p>สิ่งที่ช่วยได้คือข้อมูล dose-response ในหัวข้อ 2.8 ซึ่งแสดงจากข้อมูลของเราเองว่า
+  การดัดแปลงที่ปริมาณไม่เหมาะสม<strong>ทำให้แย่กว่าไม่ทำเลย</strong> — จึงต้องประกาศข้อจำกัดนี้ทุกครั้ง
+  และรายงาน Δmean (ซึ่งรวมโดสที่แย่เข้าไปด้วย) เป็นค่าหลัก ไม่ใช่ Δbest</p>
+</div>
+
+<h3>3.4 สิ่งที่ตัดสินใจไม่ทำ พร้อมเหตุผล</h3>
+
+<table>
+  <thead><tr><th style="width:34%">สิ่งที่ไม่ทำ</th><th>เหตุผล</th></tr></thead>
+  <tbody>
+    <tr><td>ดึงพารามิเตอร์การเคลือบของชั้นที่ 3/5/7 (ความเร็วปั่น อุณหภูมิอบ) เป็นตัวแปรต้น</td><td>ข้อมูลมีครบและเชื่อมได้ แต่<strong>ตั้งใจไม่ทำ</strong> — ตรวจแล้วเกือบทุกเปเปอร์ใช้ค่าเดียวกันทุกตัวอย่าง จึงจะกลายเป็นลายนิ้วมือของเปเปอร์เช่นกัน สิ่งที่เปเปอร์ตั้งใจแปรคือ<em>ชนิดสาร</em> ซึ่งจับไว้แล้วด้วยธง <code>coat_*</code> และ <code>*_mod_kind</code></td></tr>
+    <tr><td>ใช้ข้อมูลการสังเคราะห์ผง NiO<sub>x</sub></td><td>มาจากเปเปอร์เดียว 4 device — เป็นลายนิ้วมือสมบูรณ์แบบ บังคับกรองออก 3 ชั้นและมี gate ที่จะ fail ทันทีถ้ามีคนเผลอเอาตัวกรองออก</td></tr>
+    <tr><td>ฝึกแบบจำลองทำนาย PCE โดยตรง</td><td>PCE เป็นผลคูณของ Voc, Jsc, FF (สหสัมพันธ์ 0.996) ไม่มีข้อมูลใหม่ ต้องฝึกสามตัวแยกแล้วคูณกลับ</td></tr>
+    <tr><td>เติมค่าที่หายไป (imputation)</td><td>ค่าหายเป็นก้อนตามเปเปอร์ ไม่ได้หายแบบสุ่ม การเติมข้ามเปเปอร์คือการประดิษฐ์ข้อมูลของแล็บหนึ่งจากอีกแล็บหนึ่ง</td></tr>
+    <tr><td>Deep learning</td><td>N = 44 · ไม่มีทางได้ผลที่เชื่อถือได้ และตีความกลไกไม่ได้ซึ่งขัดกับเป้าหมายของงาน</td></tr>
+  </tbody>
+</table>
+
+<h3 class="brk">3.5 ความเป็นไปได้ — สามทางเลือกที่ประเมินแล้ว</h3>
+
+<table>
+  <thead><tr><th style="width:26%">ทางเลือก</th><th>ข้อดี</th><th>ข้อเสีย</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong class="ok">ทาง 1 (แนะนำ)</strong><br>ปรับคำถามให้ตรงกับสิ่งที่ข้อมูลตอบได้</td>
+      <td>ทำได้ทันทีโดยไม่ต้องเก็บข้อมูลเพิ่ม · มีการเทียบ A/B ในแล็บเดียวกัน 11 เปเปอร์ ซึ่งเป็นหลักฐานที่แข็งแรงที่สุดที่ข้อมูลจากวรรณกรรมให้ได้ · โครงงานทั้งหมดยังเหมือนเดิม (ตัวแปรต้น → ตัวแปรคั่นกลาง → ผลลัพธ์)</td>
+      <td>พารามิเตอร์เชิงตัวเลขเปลี่ยนบทบาทจาก “คำตอบ” เป็น “ค่าตั้งต้นสำหรับแล็บ”</td>
+    </tr>
+    <tr>
+      <td><strong>ทาง 2</strong><br>คงคำถามเดิม แล้วเก็บเปเปอร์เพิ่มชนิดที่แปรพารามิเตอร์ในตัวเอง</td>
+      <td>ตอบคำถามเดิมได้จริง เช่น เปเปอร์ที่ทดลองจังหวะหยด antisolvent 5/10/15 วินาทีในแล็บเดียว</td>
+      <td>ต้นทุนสูงมาก — ค้นหา คัดกรอง สกัด และคลีนต่อเปเปอร์ใช้เวลาระดับหลายชั่วโมง และเปเปอร์แบบนี้กระจัดกระจายกว่ามาก ไม่เหมาะเป็นทางหลักภายใต้กรอบเวลาฝึกงาน</td>
+    </tr>
+    <tr>
+      <td><strong>ทาง 3</strong><br>คงทุกอย่าง รายงานเป็นความสัมพันธ์ระหว่างเปเปอร์</td>
+      <td>เร็วที่สุด</td>
+      <td class="no">ข้อสรุปอ่อนที่สุด — ทุกสหสัมพันธ์ของพารามิเตอร์แยกไม่ออกจากลายนิ้วมือแล็บ กรรมการสอบโจมตีจุดนี้ได้ทันทีและเราไม่มีคำตอบ ใช้ได้เฉพาะเป็นภาคผนวกเชิงสำรวจ</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box key">
+  <h4>ทาง 1 ไม่ใช่การล้มเลิกเป้าหมายเดิม</h4>
+  <p>เป้าหมายเดิมคือ “หาขั้นตอนการผลิตที่นำไปสู่ผลึก ประสิทธิภาพ และเสถียรภาพที่ดีที่สุด แล้วนำกลับไปทดลองในแล็บจริง”
+  — <strong>การดัดแปลงผิว HTL ก็คือขั้นตอนการผลิตขั้นหนึ่ง</strong> วงจรปิดยังครบ เพียงแบ่งงานใหม่ระหว่างสองแหล่ง</p>
+  <div class="loop">
+    <div>
+      <h4>ส่วนที่ ML ตอบ (จากวรรณกรรม 15 เปเปอร์)</h4>
+      <ul>
+        <li>ขั้นตอนไหนมีผลจริง และมีผลผ่านกลไกใด</li>
+        <li>ตัวอย่าง: “การดัดแปลงผิว HTL ช่วยจริง โดยทำงานผ่านการลดกับดักพาหะ”</li>
+        <li>= เลือกคันโยกที่ควรลงแรง</li>
+      </ul>
+    </div>
+    <div>
+      <h4>ส่วนที่แล็บจริงตอบ</h4>
+      <ul>
+        <li>ค่าตัวเลขที่เหมาะสมคือเท่าไร</li>
+        <li>ค่าตั้งต้นจากค่ากลางของวรรณกรรม (ปั่น 4000 rpm, อบ 100 °C 30 นาที, หยด antisolvent ที่ราว 50–75% ของช่วงปั่น)</li>
+        <li>แล้วแปรทีละพารามิเตอร์ในแล็บเดียวกัน = ไม่มี confound เพราะควบคุมเองทั้งหมด</li>
+      </ul>
+    </div>
+  </div>
+  <p class="small">ML ส่วนนี้<strong>ไม่ได้มีหน้าที่หาค่าพารามิเตอร์</strong> แต่หาว่าขั้นตอนไหนมีผลและทำงานผ่านกลไกใด
+  ส่วนค่าที่ดีที่สุดเป็นงานของแล็บ ซึ่งเป็นที่เดียวที่หาได้อย่างถูกต้องอยู่แล้ว</p>
+</div>
+
+<!-- ============ 4. RQ ============ -->
+<h2 class="brk">4 · คำถามวิจัย</h2>
+
+<h3>4.1 คำถามเดิม และเหตุผลที่ต้องปรับ</h3>
+
+<p><strong>คำถามเดิม:</strong> “พารามิเตอร์การผลิตตัวไหนขับขนาดเกรนของผลึก และส่งผลต่อประสิทธิภาพและเสถียรภาพอย่างไร”</p>
+
+<p>คำถามนี้ตอบไม่ได้ด้วยข้อมูลชุดนี้ด้วยเหตุผลสองชั้นที่เป็นอิสระจากกัน:
+<strong>(1)</strong> ขนาดเกรนมีรายงานเพียง 13/44 device — แก้ได้ด้วยการใช้ VTFL เป็นตัวแทน
+<strong>(2)</strong> พารามิเตอร์เชิงตัวเลขทุกตัวไม่แปรค่าภายในเปเปอร์เลย — <strong>แก้ไม่ได้ด้วยข้อมูลที่มี</strong>
+เหตุผลข้อที่สองคือตัวตัดสิน</p>
+
+<h3>4.2 คำถามที่ปรับ</h3>
+
+<div class="box key">
+  <h4>คำถามหลัก</h4>
+  <p style="font-size:11.5pt"><strong>การดัดแปลงผิวชั้นนำโฮล (HTL surface modification) ในเซลล์เพอรอฟสไกต์แบบ p-i-n
+  ช่วยเพิ่มประสิทธิภาพและเสถียรภาพได้จริงหรือไม่ ผลนั้นทำงานผ่านกลไกใด
+  และ generalize ข้ามชนิดสาร ข้ามแล็บ และข้ามสูตรเคมีได้เพียงใด</strong></p>
+</div>
+
+<table>
+  <thead><tr><th style="width:6%">ข้อ</th><th>คำถามย่อย</th><th style="width:30%">วิธีตอบ</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1</strong></td><td>ผลของการดัดแปลงผิว HTL มีขนาดเท่าไร และคงเส้นคงวาข้ามแล็บแค่ไหน</td><td>เทียบ treated กับ control ภายในเปเปอร์เดียวกัน 11 เปเปอร์ + bootstrap CI</td></tr>
+    <tr><td><strong>2</strong></td><td>ผลนั้นวิ่งผ่านการลดกับดักพาหะเป็นสัดส่วนเท่าไร และผ่านทางอื่นเท่าไร</td><td>วิเคราะห์เส้นทางผ่าน VTFL (8 เปเปอร์ที่วัด) — วัดขนาด mediation</td></tr>
+    <tr><td><strong>3</strong></td><td>ผลกระจายไปที่ Voc, Jsc หรือ FF เป็นหลัก และบอกอะไรเรื่องกลไก</td><td>ฝึกแบบจำลองแยกสามตัวแล้วเทียบ SHAP ของแต่ละตัว</td></tr>
+    <tr><td><strong>4</strong></td><td>ตระกูลสารต่างกันให้ผลผ่านกลไกต่างกันหรือไม่</td><td>SHAP รายกลุ่มโดยคุมสูตรเคมี — <em>รายงานพร้อมข้อจำกัดเรื่อง n</em></td></tr>
+    <tr><td><strong>5</strong></td><td>ผลด้านเสถียรภาพไปทางเดียวกับด้านประสิทธิภาพหรือไม่</td><td>เชิงสำรวจเท่านั้น (3 เปเปอร์ที่มีคู่เทียบ) — ประกาศข้อจำกัดชัดเจน</td></tr>
+  </tbody>
+</table>
+
+<h3>4.3 อะไรใหม่เมื่อเทียบกับเปเปอร์ที่ตีพิมพ์แล้ว</h3>
+
+<p><strong>สิ่งที่ไม่ใหม่ (ต้องยอมรับตรง ๆ):</strong> ข้อความว่า “การดัดแปลงผิว HTL ช่วยเพิ่มประสิทธิภาพ” ไม่ใหม่เลย —
+เปเปอร์ทุกฉบับใน dataset ก็อ้างแบบนี้กับสารของตัวเอง</p>
+
+<table>
+  <thead><tr><th style="width:32%">สิ่งที่ใหม่</th><th>ทำไมเปเปอร์เดี่ยวทำไม่ได้</th></tr></thead>
+  <tbody>
+    <tr><td><strong>การสังเคราะห์ข้ามแล็บอย่างเป็นระบบ</strong></td><td>เปเปอร์เดี่ยวพูดได้แค่ “สารของฉัน ในแล็บฉัน ดีขึ้นเท่านี้” ไม่มีใครตอบได้ว่าปรากฏการณ์นี้ generalize ข้ามสาร ข้ามแล็บ ข้ามสูตรเพอรอฟสไกต์หรือไม่ และขนาดผลรวมเท่าไร — เราตอบได้เพราะรวมการทดลอง A/B 11 ชุดจากคนละแล็บมาไว้ในกรอบเดียว</td></tr>
+    <tr><td><strong>กลไกที่ยืนยันข้ามแล็บ</strong></td><td>เปเปอร์เดี่ยววัดกับดักของตัวเอง เราแสดงว่ากับดักลดลง 8/8 เปเปอร์อิสระ และวัดได้ว่าผลวิ่งผ่านกลไกนี้เป็นสัดส่วนเท่าไร ซึ่งไม่มีเปเปอร์เดี่ยวฉบับใดทำ</td></tr>
+    <tr><td><strong>จัดกลุ่มสารบนสนามเดียวกัน</strong></td><td>แต่ละเปเปอร์มีสารเดียว จึงเทียบข้ามตระกูลไม่ได้เลยโดยธรรมชาติ</td></tr>
+    <tr><td><strong>ระเบียบวิธีที่ต่างจากงาน ML สายเพอรอฟสไกต์กระแสหลัก</strong></td><td>งานส่วนใหญ่ที่ใช้ฐานข้อมูลหลักหมื่น device เน้นหาวัสดุใหม่ ฝึกข้ามแล็บโดย<em>ไม่คุม</em> confound ระดับแล็บ และไม่มีตัวแปรคั่นกลาง ของเราเล็กกว่ามาก แต่คลีนถึงระดับตรวจรายค่า ใช้ LOPO กันลายนิ้วมือแล็บ แยก within/between อย่างชัดเจน และมีการวิเคราะห์กลไก — เขียนเป็น contribution เชิงระเบียบวิธีได้</td></tr>
+    <tr><td><strong>วงจรปิดถึงแล็บจริง</strong></td><td>ผลถูกออกแบบให้จบที่สูตรตั้งต้นสำหรับการทดลองจริง ไม่ใช่จบที่ตารางอันดับความแม่นยำ</td></tr>
+  </tbody>
+</table>
+
+<h3>4.4 แผนขั้นต่อไป</h3>
+
+<table>
+  <thead><tr><th style="width:24%">ขั้น</th><th>รายละเอียด</th></tr></thead>
+  <tbody>
+    <tr><td><strong>แบบจำลอง</strong></td><td>RandomForest + SHAP · LeaveOneGroupOut โดยจัดกลุ่มตามเปเปอร์ 15 fold · ฝึก <code>voc</code> <code>jsc</code> <code>ff</code> แยกแล้วคูณกลับเป็น <code>pce</code></td></tr>
+    <tr><td><strong>ตัวแปรที่ใช้</strong></td><td>ตัวแปรหลัก: <code>htl_mod_kind</code> <code>coat_htl</code> <code>mod_class</code> · ตัวควบคุมบังคับ: <code>a_Cs</code> <code>a_FA</code> <code>x_Br</code> <code>etl_family</code></td></tr>
+    <tr><td><strong>การรายงานผล</strong></td><td>การทำนายรวมทุก fold (ไม่ใช่ค่าเฉลี่ยรายกลุ่ม เพราะ fold เล็ก) · bootstrap CI ของผลต่างระดับเปเปอร์ · ประกาศข้อจำกัดเรื่องอคติจากการตีพิมพ์ทุกครั้ง</td></tr>
+    <tr><td><strong>การวิเคราะห์กลไก</strong></td><td>วัดขนาด mediation ผ่าน VTFL — ผลตรงเทียบกับผลที่วิ่งผ่านการลดกับดัก · เป็นส่วนที่ใหม่ที่สุดของงาน</td></tr>
+    <tr><td><strong>การนำไปใช้</strong></td><td>ผลทั้งหมดคือ<strong>สมมติฐานสำหรับการทดลองยืนยันในแล็บ</strong> ไม่ใช่ข้อสรุปเชิงสาเหตุ · ส่งต่อเป็นสูตรตั้งต้น + ลำดับความสำคัญของสิ่งที่ควรลองก่อน</td></tr>
+  </tbody>
+</table>
+
+<div class="box good">
+  <h4>สิ่งที่ต้องตัดสินใจร่วมกับอาจารย์ที่ปรึกษา</h4>
+  <p>เลือกทางเลือกในหัวข้อ 3.5 — ข้อเสนอคือ <strong>ทาง 1</strong> โดยเก็บทาง 3 ไว้เป็นภาคผนวกเชิงสำรวจ
+  และเปิดทาง 2 ไว้เป็นส่วนขยายถ้ามีเวลาเหลือหลังผลของทาง 1 ออกแล้ว</p>
+</div>
+
+<footer>
+  จัดทำจาก <code>DATA_PREPARATION.md</code> และ <code>notebooks/eda_htl_modification.ipynb</code> ·
+  ตัวเลขทั้งหมดคำนวณจาก <code>processed/prepared_v2/</code> โดยตรง ·
+  ค่าเชิงสถิติในรายงานนี้เป็นการเทียบภายในเปเปอร์ ยังไม่ใช่ผลจากแบบจำลอง และยังไม่มีช่วงความเชื่อมั่นแบบ bootstrap
+</footer>
+
+</body>
+</html>
