@@ -186,7 +186,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10_1002_smll_202504237_Sample1,Champion FF,71.0,,%,Table 2,%,71.0,,FF,champion,,,,71.0,
 10_1002_smll_202504237_Sample1,Champion PCE,15.11,,%,Table 2,%,15.11,,PCE,champion,,,,15.11,
 10_1002_smll_202504237_Sample1,AFM RMS,29.72,3.77,nm,Figure 2a,nm,29.72,,AFM RMS,,,,,29.72,
-10_1002_smll_202504237_Sample1,VBM,0.55,,eV,Figure 3b,eV,0.55,,VBM,,,,,0.55,
+10_1002_smll_202504237_Sample1,VBM,0.55,,eV,Figure 3b,eV,0.55,,VBM offset from EF,,,,,0.55,recheck §8.8b: เป็น E_F - E_VBM (บวก) คนละปริมาณกับ VBM อ้างอิงสุญญากาศ (audit ข้อ D)
 10_1002_smll_202504237_Sample1,Work Function,4.39,,eV,Figure 3a,eV,4.39,,Work Function,,,,,4.39,
 10_1002_smll_202504237_Sample1,Hole mobility,3.46,,cm2 V-1 s-1,Table S1,cm2 V-1 s-1,3.46,,mobility,,,,hole,3.46,
 10_1002_smll_202504237_Sample1,Carrier concentration,8.1e+18,,cm-3,Table S1,cm-3,8.1e+18,,Carrier concentration,,,,,8.1e+18,
@@ -197,7 +197,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10_1002_smll_202504237_Sample2,Champion FF,77.0,,%,Table 2,%,77.0,,FF,champion,,,,77.0,
 10_1002_smll_202504237_Sample2,Champion PCE,16.61,,%,Table 2,%,16.61,,PCE,champion,,,,16.61,
 10_1002_smll_202504237_Sample2,AFM RMS,29.75,3.29,nm,Figure 2b,nm,29.75,,AFM RMS,,,,,29.75,
-10_1002_smll_202504237_Sample2,VBM,0.56,,eV,Figure 3b,eV,0.56,,VBM,,,,,0.56,
+10_1002_smll_202504237_Sample2,VBM,0.56,,eV,Figure 3b,eV,0.56,,VBM offset from EF,,,,,0.56,recheck §8.8b: เป็น E_F - E_VBM (บวก) คนละปริมาณกับ VBM อ้างอิงสุญญากาศ (audit ข้อ D)
 10_1002_smll_202504237_Sample2,Work Function,4.57,,eV,Figure 3a,eV,4.57,,Work Function,,,,,4.57,
 10_1002_smll_202504237_Sample2,Hole mobility,43.2,,cm2 V-1 s-1,Table S1,cm2 V-1 s-1,43.2,,mobility,,,,hole,43.2,
 10_1002_smll_202504237_Sample2,Carrier concentration,1.51e+18,,cm-3,Table S1,cm-3,1.51e+18,,Carrier concentration,,,,,1.51e+18,
@@ -357,8 +357,8 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10_1016_j_solener_2025_113286_Sample1,VTFL,1.02,,V,,V,1.02,,VTFL,,,,,1.02,
 10_1016_j_solener_2025_113286_Sample1,Hole Trap Density,1.98e+16,,cm-3,,cm-3,1.98e+16,,Trap density,,,,hole,1.98e+16,
 10_1016_j_solener_2025_113286_Sample1,Grain size,430.0,,nm,,nm,430.0,,Grain size,,,,,430.0,
-10_1016_j_solener_2025_113286_Sample1,VBM,0.44,,eV,from Fig. 2d,eV,0.44,,VBM,,,,,0.44,
-10_1016_j_solener_2025_113286_Sample1,Bandgap,3.8,,eV,from Fig. 1b,eV,3.8,,Bandgap,,,,,3.8,
+10_1016_j_solener_2025_113286_Sample1,VBM,0.44,,eV,from Fig. 2d,eV,0.44,,VBM offset from EF,,,,,0.44,recheck §8.8b: เป็น E_F - E_VBM (บวก) คนละปริมาณกับ VBM อ้างอิงสุญญากาศ (audit ข้อ D)
+10_1016_j_solener_2025_113286_Sample1,Bandgap,3.8,,eV,from Fig. 1b,eV,3.8,,Bandgap,,,HTL,,3.8,recheck §8.8b: ค่า > 2.5 eV เป็นของ HTL ไม่ใช่ perovskite เติม layer ให้ (audit ข้อ J)
 10_1016_j_solener_2025_113286_Sample1,Contact angle,47.0,,degrees,"Water contact angle on pristine sp-NiOx/perovskite, Fig. 8b",degrees,47.0,,Contact angle,,,,,47.0,
 10_1016_j_solener_2025_113286_Sample2,Champion PCE,16.59,,%,,%,16.59,,PCE,champion,,,,16.59,
 10_1016_j_solener_2025_113286_Sample2,Average Voc,1.048,0.012,V,,V,1.048,,Voc,average,,,,1.048,
@@ -528,7 +528,7 @@ device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_
 10_31635_ccschem_025_202505977_Sample1,VTFL,0.15,,V,,V,0.15,,VTFL,,,,,0.15,
 10_31635_ccschem_025_202505977_Sample1,Trap density,3395000000000000.0,,cm-3,,cm-3,3395000000000000.0,,Trap density,,,,,3395000000000000.0,
 10_31635_ccschem_025_202505977_Sample1,Contact angle,21.44,,deg,Contact angle of perovskite precursor on NiOx (Figure S13a),deg,21.44,,Contact angle,,,,,21.44,
-10_31635_ccschem_025_202505977_Sample1,VBM,5.02,,eV,Valence band max from UPS (Figure S8),eV,5.02,,VBM,,,,,5.02,
+10_31635_ccschem_025_202505977_Sample1,VBM,5.02,,eV,Valence band max from UPS (Figure S8),eV,-5.02,,VBM,,,,,-5.02,recheck §8.8b: เครื่องหมายลบหายในต้นฉบับ แก้ +5.02 -> -5.02 (audit ข้อ C)
 10_31635_ccschem_025_202505977_Sample1,Work Function,4.52,,eV,From Figure S8,eV,4.52,,Work Function,,,,,4.52,
 10_31635_ccschem_025_202505977_Sample1,Grain size,,,nm,Not quantitatively reported,nm,,,Grain size,,,,,,
 10_31635_ccschem_025_202505977_Sample2,Champion Voc,1.19,,V,"Best device, Table S3",V,1.19,,Voc,champion,,,,1.19,

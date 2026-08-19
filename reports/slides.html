@@ -288,9 +288,10 @@
       <p style="font-size:9.6pt; margin-top:1mm">
         <b>แก้:</b> บังคับให้ทั้ง 4 ค่ามาจากชุดเดียวกันเสมอ → ส่วนต่างเหลือ <b class="g">0.503</b>
         และเพิ่มคอลัมน์กำกับว่าแถวนี้ใช้ชุดไหน</p>
-      <p style="font-size:9.2pt; color:var(--red); margin-top:1mm">
-        <b>ตรวจซ้ำแล้วพบว่ายังไม่จบ</b> — ส่วนต่างที่เหลือไม่ใช่แค่การปัดเศษ ยังมีการปนอีกชั้นระหว่าง
-        <b>ทิศทางการวัด</b> (reverse กับ forward scan) ใน 5 device · ดูรายงานการตรวจสอบย้อนกลับ ข้อ O</p>
+      <p style="font-size:9.2pt; color:var(--green); margin-top:1mm">
+        <b>ตรวจซ้ำแล้วพบว่ายังไม่จบ — และแก้เรียบร้อยแล้ว</b> ยังมีการปนอีกชั้นระหว่าง
+        <b>ทิศทางการวัด</b> (reverse กับ forward scan) ใน 5 device · เพิ่มทิศทางเข้าเป็นส่วนหนึ่งของคีย์ชุดค่า
+        และลดเกณฑ์ด่านตรวจจาก 1.0 เป็น 0.2 แล้ว</p>
     </div>
 
     <div class="col" style="flex:1; display:flex; flex-direction:column; gap:2.8mm">
@@ -361,7 +362,7 @@
         <img src="figures/fig3_slide.png" alt="การแปรผันภายในเปเปอร์">
         <figcaption>แถบเทา (ผลลัพธ์) ต่างกันครบทุกเปเปอร์ตามที่ควรเป็น = ยืนยันว่าวิธีนับไม่ผิด ·
           พารามิเตอร์ตัวเลข<b>ทุกตัวได้ 0</b> = ไม่มีเปเปอร์ไหนลองมากกว่า 1 ค่าเลยแม้แต่ฉบับเดียว
-          <span style="color:var(--muted)">(ความเร็วปั่นแก้จาก 1 เป็น 0 หลังตรวจไฟล์ต้นทาง — ดู audit_report ข้อ A)</span></figcaption>
+          <span style="color:var(--muted)">(ความเร็วปั่นแก้จาก 1 เป็น 0 หลังตรวจไฟล์ต้นทางและแก้ที่ pipeline แล้ว)</span></figcaption>
       </figure>
 
       <div class="tiles">
@@ -402,8 +403,8 @@
         <thead><tr><th>ตัวชี้วัด</th><th class="n">ดีขึ้นเฉลี่ย</th><th class="n">ดีขึ้นกี่เปเปอร์</th></tr></thead>
         <tbody>
           <tr><td><b>PCE</b> — ประสิทธิภาพรวม</td><td class="n"><b>+2.09 %</b></td><td class="n g">11/11</td></tr>
-          <tr><td>FF — ความสมบูรณ์ของกราฟ</td><td class="n">+2.62</td><td class="n g">11/11</td></tr>
-          <tr><td>Jsc — กระแส</td><td class="n">+0.72</td><td class="n g">11/11</td></tr>
+          <tr><td>FF — ความสมบูรณ์ของกราฟ</td><td class="n">+2.65</td><td class="n g">11/11</td></tr>
+          <tr><td>Jsc — กระแส</td><td class="n">+0.66</td><td class="n g">11/11</td></tr>
           <tr><td>Voc — แรงดัน</td><td class="n">+0.045</td><td class="n">9/11</td></tr>
           <tr class="hig"><td><b>จุดบกพร่องในฟิล์ม</b><br><span class="muted" style="font-size:8.6pt">ยิ่งลดยิ่งดี</span></td>
               <td class="n"><b>ลดลง</b></td><td class="n g">8/8</td></tr>

@@ -215,9 +215,11 @@
     <li><strong><code>layer_id</code> เป็น <code>'1.0'</code> กับ <code>'1'</code></strong> — การเชื่อมตารางได้ 0 แถวโดยไม่มี error แจ้ง เป็นบั๊กประเภทที่อันตรายที่สุดเพราะเงียบ</li>
     <li><strong>regex <code>contains("m2 V")</code> จับ <code>cm2 V-1 s-1</code> ผิด</strong> — รายงานว่ามี 7 เคสที่ต้องแก้ ทั้งที่จริงมี 3</li>
     <li><strong>ค่า JV ปนกันระหว่าง Champion กับ Average</strong> — การ pivot ด้วย max หยิบ Voc จากชุดหนึ่งและ FF จากอีกชุด ทำให้ <code>PCE ≠ Voc×Jsc×FF/100</code> คลาดสูงสุด 1.64 หลังบังคับให้เลือกจากชุดเดียวกันเหลือ 0.503
- <br><span style="color:var(--red)"><strong>อัปเดต 18 ส.ค. 2569:</strong> คำอธิบายเดิมที่ว่าส่วนต่างที่เหลือ “เป็นแค่การปัดเศษ” <strong>ไม่ถูกต้องทั้งหมด</strong> —
- การตรวจโค้ดพบว่ายังมีการปนกันอีกชั้นระหว่าง<em>ทิศทางการวัด</em> (reverse scan กับ forward scan) ใน 5 device
- และมี 1 เปเปอร์ที่ตัวเลขในต้นฉบับเองไม่สอดคล้องกัน · ดู <code>audit_report.pdf</code> ข้อค้นพบ O และ V</span></li>
+ <br><span style="color:var(--green)"><strong>อัปเดต 19 ส.ค. 2569 — แก้แล้ว:</strong> คำอธิบายเดิมที่ว่าส่วนต่างที่เหลือ “เป็นแค่การปัดเศษ” ไม่ถูกต้องทั้งหมด
+ การตรวจโค้ดพบว่ายังมีการปนกันอีกชั้นระหว่าง<em>ทิศทางการวัด</em> (reverse scan กับ forward scan) ใน 5 device ·
+ แก้แล้วโดยเพิ่มทิศทางเข้าเป็นส่วนหนึ่งของคีย์ชุดค่า และลดเกณฑ์ด่านตรวจจาก 1.0 เป็น 0.2 ·
+ เหลือ 2 เครื่องที่เกินเกณฑ์ ซึ่งอธิบายได้ทั้งคู่ (ตัวเลขในเปเปอร์เองไม่สอดคล้อง 1 ตัว และการปัดเศษหยาบ 1 ตัว)
+ · ดู <code>audit_report.pdf</code> ข้อค้นพบ O และ V</span></li>
     <li><strong><code>value_parsed</code> ไม่ตามการแก้หน่วย</strong> — การแก้ที่เปลี่ยน<em>ตัวเลข</em> (ความคล่องตัวโฮล m²→cm² ×10⁴) หายเงียบเพราะคำนวณจากค่าดิบ ตอนนี้ซิงก์แล้วและมี gate ดักไม่ให้เกิดซ้ำ</li>
     <li><strong>การเชื่อมตาราง layers ทำแถวพอง 352→356</strong> — เพราะชั้นที่ 7 บาง device มี 2 วัสดุ (PCBM + BCP) เปลี่ยนวิธีเป็น map ตรงแทน</li>
     <li><strong>ข้อมูลสังเคราะห์ผง NiO<sub>x</sub> รั่วเข้าไปเป็นตัวแปรต้น</strong> — เป็นสูตรเตรียมผงก่อนใช้งาน ไม่ใช่ขั้นตอนสร้างเซลล์ และมาจากเปเปอร์เดียว จึงบังคับกรองออก 3 ชั้น (กรองตอนดึง, gate ตอน export, ป้ายเตือนในผลลัพธ์)</li>
@@ -364,8 +366,8 @@
   <thead><tr><th>ตัวชี้วัด</th><th class="num">จำนวนเปเปอร์</th><th class="num">ค่ากลาง Δmean</th><th class="num">ค่ากลาง Δbest</th><th class="num">ทิศทางที่ดี</th><th class="num">sign test</th></tr></thead>
   <tbody>
     <tr><td><strong>PCE</strong> (%)</td><td class="num">11</td><td class="num"><strong>+2.09</strong></td><td class="num">+2.33</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
-    <tr><td>FF (จุด)</td><td class="num">11</td><td class="num">+2.62</td><td class="num">+4.53</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
-    <tr><td>Jsc (mA/cm²)</td><td class="num">11</td><td class="num">+0.72</td><td class="num">+0.90</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
+    <tr><td>FF (จุด)</td><td class="num">11</td><td class="num">+2.65</td><td class="num">+4.53</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
+    <tr><td>Jsc (mA/cm²)</td><td class="num">11</td><td class="num">+0.66</td><td class="num">+0.90</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
     <tr><td>Voc (V)</td><td class="num">11</td><td class="num">+0.045</td><td class="num">+0.050</td><td class="num">9/11</td><td class="num">p = 0.065</td></tr>
     <tr><td><strong>VTFL</strong> (V, ต่ำดีกว่า)</td><td class="num">8</td><td class="num"><strong>−0.145</strong></td><td class="num">−0.175</td><td class="num ok">8/8</td><td class="num">p = 0.008</td></tr>
     <tr><td>retention @25 °C (%)</td><td class="num">3</td><td class="num">+25</td><td class="num">+25</td><td class="num">3/3</td><td class="num muted">n เล็กเกินไป</td></tr>
@@ -437,8 +439,8 @@
   (ตัวแปรที่แปรภายในเปเปอร์มีอยู่จริง 2 กรณี แต่อยู่ในเปเปอร์ที่ไม่มี control อยู่แล้ว จึงไม่กระทบผล)</p>
 </div>
 
-<div class="box warn">
-  <h4>ข้อความที่ถอนคืนแล้ว (แก้ 18 ส.ค. 2569 หลังการตรวจสอบย้อนกลับ)</h4>
+<div class="box good">
+  <h4>ข้อความที่ถอนคืนแล้ว และแก้ที่ต้นทางเรียบร้อยแล้ว (19 ส.ค. 2569)</h4>
   <p>ฉบับก่อนหน้าของรายงานนี้ระบุไว้ตรงนี้ว่า <em>“ในทั้งชุดข้อมูลมีการเทียบเชิงตัวเลขภายในเปเปอร์อยู่กรณีเดียว —
   <code>solr_202400534</code> ต่างกันแค่ความเร็วปั่นจาก 5000 เป็น 1000 rpm แล้วได้ PCE เพิ่มจาก 20.37 เป็น 24.21”</em>
   <strong>ข้อความนั้นผิดและถอนคืนแล้ว</strong></p>
@@ -446,8 +448,10 @@
   ค่า 1000 ที่ปรากฏเกิดจากขั้นตอน 5000 rpm ของ Sample2 ถูกกรอกไว้ในช่อง <code>Descriptions</code> แทนช่อง <code>Parameter</code>
   ตัวสกัดจึงอ่านไม่เจอแล้วถอยไปหยิบค่าของขั้นแรกแทน</p>
   <p><strong>ผลที่ตามมา:</strong> <code>psk_spin_rpm</code> แปรผันภายในเปเปอร์ <strong>0 จาก 15</strong> ไม่ใช่ 1 จาก 15 —
-  ข้อสรุปหลักของบทที่ 2 (พารามิเตอร์เชิงตัวเลขทุกตัวถูกตรึงคงที่ทั้งเปเปอร์) จึง<strong>แข็งแรงขึ้น</strong> โดยไม่มีข้อยกเว้นเหลืออยู่เลย ·
-  รายละเอียดเต็มอยู่ในรายงานการตรวจสอบย้อนกลับ (<code>reports/audit_report.pdf</code>) ข้อค้นพบ A</p>
+  ข้อสรุปหลักของบทที่ 2 (พารามิเตอร์เชิงตัวเลขทุกตัวถูกตรึงคงที่ทั้งเปเปอร์) จึง<strong>แข็งแรงขึ้น</strong> โดยไม่มีข้อยกเว้นเหลืออยู่เลย</p>
+  <p><strong>สถานะ:</strong> แก้ที่ต้นทางแล้ว — เพิ่มขั้นตอนกู้ค่าจากช่อง <code>Descriptions</code> ใน
+  <code>recheck_comlumn_preapare.ipynb</code> §4.0b พร้อมด่านตรวจที่จะหยุดทำงานทันทีถ้ามีข้อมูลเชิงปริมาณตกค้างในช่องนั้นอีก ·
+  รายละเอียดเต็มในรายงานการตรวจสอบย้อนกลับ (<code>reports/audit_report.pdf</code>) ข้อค้นพบ A</p>
 </div>
 
 <!-- ============ 3. LIMITS ============ -->

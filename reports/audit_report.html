@@ -58,7 +58,76 @@
 <body>
 
 <h1>รายงานการตรวจสอบย้อนกลับชุดข้อมูล <code>prepared_v2</code></h1>
-<p class="muted" style="margin-bottom:1em">ตรวจเมื่อ 18 สิงหาคม 2569 · เทียบกับไฟล์ Excel ต้นทางทั้ง 44 ไฟล์ และตรวจความสมเหตุสมผลทางฟิสิกส์</p>
+<p class="muted" style="margin-bottom:1em">ตรวจเมื่อ 18 สิงหาคม 2569 · แก้ไขและรัน pipeline ใหม่ 19 สิงหาคม 2569 ·
+เทียบกับไฟล์ Excel ต้นทางทั้ง 44 ไฟล์ ตรวจความสมเหตุสมผลทางฟิสิกส์ และอ่านโค้ดในโน้ตบุ๊ก</p>
+
+<div class="box green">
+  <h4>สถานะการแก้ไข — ปิดแล้ว 13 จาก 20 รายการ</h4>
+  <p>รายการที่แก้ได้ด้วยหลักฐานที่มีอยู่แล้วถูก<b>แก้ที่ต้นทางใน <code>recheck_comlumn_preapare.ipynb</code> และรัน pipeline ใหม่ทั้งเส้นเรียบร้อยแล้ว</b>
+  ทุกการแก้มีด่านตรวจกำกับที่จะหยุดการทำงานทันทีถ้าปัญหาเดิมกลับมา · ส่วนที่เหลือ 7 รายการต้องเปิดเปเปอร์ต้นฉบับก่อนตัดสินใจ
+  จึงยังคงสถานะค้างไว้พร้อมเหตุผล</p>
+  <p><b>ผลต่อข้อสรุปหลักของงาน:</b> ไม่เปลี่ยน — ΔPCE ยังเป็น <b>+2.09% ดีขึ้น 11/11 เปเปอร์ (p = 0.001)</b>
+  และ VTFL ยังลดลง 8/8 · สิ่งที่เปลี่ยนคือรายละเอียด (ΔFF +2.62 เป็น +2.65, ΔJsc +0.72 เป็น +0.66)
+  และ<b>ข้อสรุปเรื่องพารามิเตอร์เชิงตัวเลขแข็งแรงขึ้น</b> เพราะตอนนี้เป็น 0/15 ทุกตัวโดยไม่มีข้อยกเว้น</p>
+</div>
+
+<h2>สรุปการแก้ไขที่ทำไปแล้ว</h2>
+
+<table>
+  <thead><tr><th style="width:6%">ข้อ</th><th style="width:30%">แก้อะไร</th><th style="width:26%">แก้ที่ไหน</th><th>ด่านตรวจที่เพิ่มไว้กันเกิดซ้ำ</th></tr></thead>
+  <tbody>
+    <tr class="ok"><td>A, B</td><td>กู้ค่า 12 แถวที่ถูกกรอกไว้ในช่อง <code>Descriptions</code></td>
+        <td>เพิ่ม §4.0b <code>DESC_RECOVER</code></td>
+        <td>สแกนทุกแถว ถ้าพบตัวเลขพร้อมหน่วยในช่อง <code>description</code> ที่ยังไม่เข้า <code>parameter</code> จะ <b>fail ทันที</b></td></tr>
+    <tr class="ok"><td>C</td><td>VBM <code>ccschem_Sample1</code> +5.02 เป็น −5.02</td><td>เพิ่ม §8.8b <code>SIGN_FIX</code></td>
+        <td>ด่านตรวจ §9.5 บังคับว่าระดับพลังงานอ้างอิงสุญญากาศต้องเป็นลบเสมอ</td></tr>
+    <tr class="ok"><td>D</td><td>แยกชื่อ VBM ที่เป็นคนละปริมาณ 3 แถว เป็น <code>VBM offset from EF</code></td><td>§8.8b</td><td>รวมอยู่ในด่านตรวจเครื่องหมายข้างต้น</td></tr>
+    <tr class="ok"><td>E</td><td>ย้าย <code>Rs</code> หน่วย Ω/sq 2 แถวออกไปเป็น <code>sheet_resistance_htl</code></td><td>§7 ส่วน mediator</td>
+        <td>กรองด้วยหน่วยโดยตรง ไม่ใช่ hard-code รายชื่อ device</td></tr>
+    <tr class="ok"><td>H</td><td><code>trap_density</code> ใช้ฝั่งโฮลอย่างเดียว · เพิ่ม <code>trap_density_electron</code> แยก</td><td>§7 ส่วน mediator</td>
+        <td>แยกด้วยคอลัมน์ <code>carrier</code> จึงรองรับเปเปอร์ใหม่อัตโนมัติ</td></tr>
+    <tr class="ok"><td>J</td><td>เติม <code>layer = HTL</code> ให้ค่าแถบพลังงานที่ไม่ระบุชั้นและสูงเกิน perovskite</td><td>§8.8b</td>
+        <td>ใช้เกณฑ์ &gt; 2.5 eV จึงดักเปเปอร์ใหม่ที่มีปัญหาเดียวกันได้</td></tr>
+    <tr class="ok"><td>N</td><td><code>psk_spin_rpm</code> เปลี่ยนจาก <code>max</code> เป็นขั้นสุดท้ายจริงตาม <code>step_order</code></td><td>§9</td>
+        <td>พิมพ์เตือนทุกครั้งที่ขั้นสุดท้ายไม่ใช่ค่าสูงสุด (ปัจจุบันไม่มี)</td></tr>
+    <tr class="ok"><td><b>O</b></td><td><b>คีย์ชุดค่า JV เปลี่ยนจาก variant เป็น (variant, ทิศทางสแกน)</b></td><td>§7</td>
+        <td>ลดเกณฑ์ด่านตรวจจาก 1.0 เป็น <b>0.2</b> พร้อมรายชื่อเครื่องที่อธิบายได้ 2 ตัว — เครื่องใหม่ที่เกินจะ fail</td></tr>
+    <tr class="ok"><td>P, Q</td><td>ย้ายด่านตรวจความสอดคล้องมาไว้ก่อน export และเปลี่ยนเป็นตรวจทุกแถวที่ค่าต่างกัน</td><td>เพิ่ม §9.5</td>
+        <td>บังคับว่าทุกแถวที่ <code>value_parsed</code> ต่างจาก <code>value_corrected</code> ต้องมี <code>value_note</code> อธิบาย</td></tr>
+    <tr class="ok"><td>R, S</td><td><code>split_param</code> ไม่ทิ้งข้อมูลเงียบอีกต่อไป</td><td>§4</td>
+        <td>ทุกเส้นทางที่ทำให้ข้อมูลหายติดธงใน <code>param_note</code> · หน่วยซ้ำไม่เขียนทับกันแล้ว</td></tr>
+    <tr class="ok"><td>U</td><td>เพิ่มการตรวจตามช่วงค่าที่เป็นไปได้ทางฟิสิกส์ 7 ปริมาณ</td><td>§9.5</td>
+        <td>ดักได้ทุก property โดยไม่ต้องรู้ชื่อล่วงหน้า — แทนตัวตรวจเดิมที่หาแค่ 3 ชื่อ</td></tr>
+  </tbody>
+</table>
+
+<h3>ค่าที่เปลี่ยนใน <code>target_table.csv</code> หลังแก้</h3>
+<table>
+  <thead><tr><th>คอลัมน์</th><th class="n">device ที่เปลี่ยน</th><th>รายละเอียด</th></tr></thead>
+  <tbody>
+    <tr><td><code>psk_spin_rpm</code></td><td class="n">2</td>
+        <td><code>solr_202400534_Sample2</code> 1000 เป็น 5000 · <code>acsami_5c15868_Sample1</code> ว่าง เป็น 4000</td></tr>
+    <tr><td><code>psk_anneal_C</code> · <code>htl_anneal_C</code> · <code>antisolvent_timing_s</code> · <code>antisolvent_drop_s</code> · <code>antisolvent_drop_frac</code></td>
+        <td class="n">1</td><td><code>acsami_5c15868_Sample1</code> จากว่างเป็น 100 · 200 · 30 · 30 · 1.00</td></tr>
+    <tr><td><code>voc</code> · <code>jsc</code> · <code>ff</code></td><td class="n">5</td>
+        <td>แก้การปนทิศทางสแกน — เช่น <code>jechem_Sample1</code> FF จาก 79.47 เป็น 78.58 (เดิมหยิบจาก FS ปนกับตัวอื่นที่มาจาก RS)</td></tr>
+    <tr><td><code>rs</code></td><td class="n">2</td><td>ค่าความต้านทานแผ่นถูกย้ายออก เหลือ 20 device (จาก 22)</td></tr>
+    <tr><td><code>trap_density</code></td><td class="n">3</td><td><code>nanoen</code> เปลี่ยนจากค่าเฉลี่ยโฮล+อิเล็กตรอน เป็นฝั่งโฮลอย่างเดียว</td></tr>
+    <tr><td class="muted">เพิ่มใหม่</td><td class="n">—</td><td><code>jv_scan</code> (บอกทิศทางที่เลือก) · <code>trap_density_electron</code></td></tr>
+  </tbody>
+</table>
+
+<div class="box amber">
+  <h4>7 รายการที่ยังค้าง — ทุกข้อต้องเปิดเปเปอร์ต้นฉบับก่อน</h4>
+  <p><b>F</b> ค่า <code>Defect density</code> ของ <code>solr_202200422</code> ที่บ่งชี้ความหนาฟิล์ม 31 nm ·
+  <b>G</b> การใช้ <code>trap_density</code> ข้ามเปเปอร์ (ประกาศข้อจำกัดแล้ว ใช้ <code>vtfl</code> แทน) ·
+  <b>I</b> <code>Rrec</code> ของ <code>acsami_4c14300</code> ที่สูงกว่าเปเปอร์อื่น 1,000 เท่า ·
+  <b>L</b> การตีความจังหวะหยด antisolvent ค่าบวก ·
+  <b>M</b> ชื่อคอลัมน์ <code>value_corrected</code> ที่สื่อความกว้างเกินจริง (ตอนนี้มีด่านตรวจบังคับให้ทุกความต่างมีคำอธิบายแล้ว) ·
+  <b>V</b> ตัวเลขของ <code>ccschem_Sample1</code> ที่เปเปอร์เองไม่สอดคล้อง ·
+  และการยืนยันจังหวะหยดค่าลบของ <code>acsami.5c16972</code></p>
+  <p>เปเปอร์ที่ต้องเปิด 4 ฉบับ: <code>solr_202200422</code> · <code>acsami_4c14300</code> · <code>acsami_5c15868</code> · <code>ccschem_025_202505977</code></p>
+</div>
 
 <p class="lead">รายงานนี้ตอบคำถาม 3 ข้อ: (1) ข้อผิดพลาดเรื่องหน่วย 27 รายการที่เคยประกาศว่าปิดแล้ว ปิดจริงหรือไม่
 (2) เทียบกับต้นทางแล้วมีรายการใดที่น่าสงสัย (3) ค่าจังหวะหยด antisolvent ที่เป็นบวก/ลบ เป็นการบันทึกก่อนจบและหลังเริ่มจริงหรือไม่
