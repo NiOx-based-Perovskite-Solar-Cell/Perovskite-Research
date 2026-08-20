@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<title>รายงานการตรวจสอบย้อนกลับ — prepared_v2</title>
+<title>รายงานการตรวจสอบย้อนกลับชุดข้อมูล</title>
 <style>
   :root{ --ink:#141310; --ink2:#3f3d38; --muted:#6f6d66; --line:#dedcd3; --tint:#f6f5ef;
          --blue:#2a78d6; --red:#c0392b; --orange:#d9730d; --amber:#b8860b; --green:#1baf7a; }
@@ -50,712 +50,219 @@
   .finding table{ margin:.5em 0 .6em; }
   .kv{ font-size:9.2pt; margin-bottom:.3em; }
   .kv b{ color:var(--ink2); }
+  .idname{ font-family:"SF Mono",Menlo,monospace; font-size:.86em; color:var(--ink); font-weight:700; }
+  .idgloss{ display:block; font-size:8.2pt; color:var(--muted); font-weight:400; margin-top:.1em; }
   .brk{ page-break-before:always; }
   .avoid{ page-break-inside:avoid; }
   footer{ margin-top:2em; padding-top:.7em; border-top:1px solid var(--line); font-size:8.4pt; color:var(--muted); }
 </style>
 </head>
-<body>
-
-<h1>รายงานการตรวจสอบย้อนกลับชุดข้อมูล <code>prepared_v2</code></h1>
-<p class="muted" style="margin-bottom:1em">ตรวจเมื่อ 18 สิงหาคม 2569 · แก้ไขและรัน pipeline ใหม่ 19 สิงหาคม 2569 ·
-เทียบกับไฟล์ Excel ต้นทางทั้ง 44 ไฟล์ ตรวจความสมเหตุสมผลทางฟิสิกส์ และอ่านโค้ดในโน้ตบุ๊ก</p>
-
-<div class="box green">
-  <h4>สถานะการแก้ไข — ปิดแล้ว 13 จาก 20 รายการ</h4>
-  <p>รายการที่แก้ได้ด้วยหลักฐานที่มีอยู่แล้วถูก<b>แก้ที่ต้นทางใน <code>recheck_comlumn_preapare.ipynb</code> และรัน pipeline ใหม่ทั้งเส้นเรียบร้อยแล้ว</b>
-  ทุกการแก้มีด่านตรวจกำกับที่จะหยุดการทำงานทันทีถ้าปัญหาเดิมกลับมา · ส่วนที่เหลือ 7 รายการต้องเปิดเปเปอร์ต้นฉบับก่อนตัดสินใจ
-  จึงยังคงสถานะค้างไว้พร้อมเหตุผล</p>
-  <p><b>ผลต่อข้อสรุปหลักของงาน:</b> ไม่เปลี่ยน — ΔPCE ยังเป็น <b>+2.09% ดีขึ้น 11/11 เปเปอร์ (p = 0.001)</b>
+<body> <h1>รายงานการตรวจสอบย้อนกลับชุดข้อมูล</h1>
+<p class="muted" style="margin-bottom:1em">สิงหาคม 2569 · ตรวจโดยเทียบกับไฟล์ Excel ต้นทางทั้ง 44 ไฟล์
+ตรวจความสมเหตุสมผลทางฟิสิกส์ และอ่านโค้ดในโน้ตบุ๊กทีละเซลล์ · แก้ที่ต้นทางแล้วรันกระบวนการเตรียมข้อมูลใหม่ทั้งเส้น</p> <div class="box green"> <h4>สถานะ — แก้แล้ว 17 จาก 20 รายการ</h4> <p>รายการที่มีหลักฐานเพียงพออยู่แล้วถูก<b>แก้ที่ต้นทางในโน้ตบุ๊กและรันกระบวนการเตรียมข้อมูลใหม่ทั้งเส้นเรียบร้อยแล้ว</b>
+  ทุกการแก้มีการตรวจกำกับที่จะหยุดการทำงานทันทีถ้าปัญหาเดิมกลับมา ·
+  เหลือค้างจริง <b>3 อย่าง</b> ที่ต้องเห็นเปเปอร์ต้นฉบับเท่านั้น และ<b>ไม่มีอันไหนบล็อกการเริ่มสร้างแบบจำลอง</b></p> <p><b>ผลต่อข้อสรุปหลักของงาน: ไม่เปลี่ยน</b> — ΔPCE ยังเป็น <b>+2.09% ดีขึ้น 11/11 เปเปอร์ (p = 0.001)</b>
   และ VTFL ยังลดลง 8/8 · สิ่งที่เปลี่ยนคือรายละเอียด (ΔFF +2.62 เป็น +2.65, ΔJsc +0.72 เป็น +0.66)
   และ<b>ข้อสรุปเรื่องพารามิเตอร์เชิงตัวเลขแข็งแรงขึ้น</b> เพราะตอนนี้เป็น 0/15 ทุกตัวโดยไม่มีข้อยกเว้น</p>
-</div>
-
-<h2>สรุปการแก้ไขที่ทำไปแล้ว</h2>
-
-<table>
-  <thead><tr><th style="width:6%">ข้อ</th><th style="width:30%">แก้อะไร</th><th style="width:26%">แก้ที่ไหน</th><th>ด่านตรวจที่เพิ่มไว้กันเกิดซ้ำ</th></tr></thead>
-  <tbody>
-    <tr class="ok"><td>A, B</td><td>กู้ค่า 12 แถวที่ถูกกรอกไว้ในช่อง <code>Descriptions</code></td>
-        <td>เพิ่ม §4.0b <code>DESC_RECOVER</code></td>
-        <td>สแกนทุกแถว ถ้าพบตัวเลขพร้อมหน่วยในช่อง <code>description</code> ที่ยังไม่เข้า <code>parameter</code> จะ <b>fail ทันที</b></td></tr>
-    <tr class="ok"><td>C</td><td>VBM <code>ccschem_Sample1</code> +5.02 เป็น −5.02</td><td>เพิ่ม §8.8b <code>SIGN_FIX</code></td>
-        <td>ด่านตรวจ §9.5 บังคับว่าระดับพลังงานอ้างอิงสุญญากาศต้องเป็นลบเสมอ</td></tr>
-    <tr class="ok"><td>D</td><td>แยกชื่อ VBM ที่เป็นคนละปริมาณ 3 แถว เป็น <code>VBM offset from EF</code></td><td>§8.8b</td><td>รวมอยู่ในด่านตรวจเครื่องหมายข้างต้น</td></tr>
-    <tr class="ok"><td>E</td><td>ย้าย <code>Rs</code> หน่วย Ω/sq 2 แถวออกไปเป็น <code>sheet_resistance_htl</code></td><td>§7 ส่วน mediator</td>
-        <td>กรองด้วยหน่วยโดยตรง ไม่ใช่ hard-code รายชื่อ device</td></tr>
-    <tr class="ok"><td>H</td><td><code>trap_density</code> ใช้ฝั่งโฮลอย่างเดียว · เพิ่ม <code>trap_density_electron</code> แยก</td><td>§7 ส่วน mediator</td>
-        <td>แยกด้วยคอลัมน์ <code>carrier</code> จึงรองรับเปเปอร์ใหม่อัตโนมัติ</td></tr>
-    <tr class="ok"><td>J</td><td>เติม <code>layer = HTL</code> ให้ค่าแถบพลังงานที่ไม่ระบุชั้นและสูงเกิน perovskite</td><td>§8.8b</td>
-        <td>ใช้เกณฑ์ &gt; 2.5 eV จึงดักเปเปอร์ใหม่ที่มีปัญหาเดียวกันได้</td></tr>
-    <tr class="ok"><td>N</td><td><code>psk_spin_rpm</code> เปลี่ยนจาก <code>max</code> เป็นขั้นสุดท้ายจริงตาม <code>step_order</code></td><td>§9</td>
-        <td>พิมพ์เตือนทุกครั้งที่ขั้นสุดท้ายไม่ใช่ค่าสูงสุด (ปัจจุบันไม่มี)</td></tr>
-    <tr class="ok"><td><b>O</b></td><td><b>คีย์ชุดค่า JV เปลี่ยนจาก variant เป็น (variant, ทิศทางสแกน)</b></td><td>§7</td>
-        <td>ลดเกณฑ์ด่านตรวจจาก 1.0 เป็น <b>0.2</b> พร้อมรายชื่อเครื่องที่อธิบายได้ 2 ตัว — เครื่องใหม่ที่เกินจะ fail</td></tr>
-    <tr class="ok"><td>P, Q</td><td>ย้ายด่านตรวจความสอดคล้องมาไว้ก่อน export และเปลี่ยนเป็นตรวจทุกแถวที่ค่าต่างกัน</td><td>เพิ่ม §9.5</td>
-        <td>บังคับว่าทุกแถวที่ <code>value_parsed</code> ต่างจาก <code>value_corrected</code> ต้องมี <code>value_note</code> อธิบาย</td></tr>
-    <tr class="ok"><td>R, S</td><td><code>split_param</code> ไม่ทิ้งข้อมูลเงียบอีกต่อไป</td><td>§4</td>
-        <td>ทุกเส้นทางที่ทำให้ข้อมูลหายติดธงใน <code>param_note</code> · หน่วยซ้ำไม่เขียนทับกันแล้ว</td></tr>
-    <tr class="ok"><td>U</td><td>เพิ่มการตรวจตามช่วงค่าที่เป็นไปได้ทางฟิสิกส์ 7 ปริมาณ</td><td>§9.5</td>
-        <td>ดักได้ทุก property โดยไม่ต้องรู้ชื่อล่วงหน้า — แทนตัวตรวจเดิมที่หาแค่ 3 ชื่อ</td></tr>
-  </tbody>
-</table>
-
-<h3>ค่าที่เปลี่ยนใน <code>target_table.csv</code> หลังแก้</h3>
-<table>
-  <thead><tr><th>คอลัมน์</th><th class="n">device ที่เปลี่ยน</th><th>รายละเอียด</th></tr></thead>
-  <tbody>
-    <tr><td><code>psk_spin_rpm</code></td><td class="n">2</td>
-        <td><code>solr_202400534_Sample2</code> 1000 เป็น 5000 · <code>acsami_5c15868_Sample1</code> ว่าง เป็น 4000</td></tr>
-    <tr><td><code>psk_anneal_C</code> · <code>htl_anneal_C</code> · <code>antisolvent_timing_s</code> · <code>antisolvent_drop_s</code> · <code>antisolvent_drop_frac</code></td>
-        <td class="n">1</td><td><code>acsami_5c15868_Sample1</code> จากว่างเป็น 100 · 200 · 30 · 30 · 1.00</td></tr>
-    <tr><td><code>voc</code> · <code>jsc</code> · <code>ff</code></td><td class="n">5</td>
-        <td>แก้การปนทิศทางสแกน — เช่น <code>jechem_Sample1</code> FF จาก 79.47 เป็น 78.58 (เดิมหยิบจาก FS ปนกับตัวอื่นที่มาจาก RS)</td></tr>
-    <tr><td><code>rs</code></td><td class="n">2</td><td>ค่าความต้านทานแผ่นถูกย้ายออก เหลือ 20 device (จาก 22)</td></tr>
-    <tr><td><code>trap_density</code></td><td class="n">3</td><td><code>nanoen</code> เปลี่ยนจากค่าเฉลี่ยโฮล+อิเล็กตรอน เป็นฝั่งโฮลอย่างเดียว</td></tr>
-    <tr><td class="muted">เพิ่มใหม่</td><td class="n">—</td><td><code>jv_scan</code> (บอกทิศทางที่เลือก) · <code>trap_density_electron</code></td></tr>
-  </tbody>
-</table>
-
-<div class="box amber">
-  <h4>7 รายการที่ยังค้าง — ทุกข้อต้องเปิดเปเปอร์ต้นฉบับก่อน</h4>
-  <p><b>F</b> ค่า <code>Defect density</code> ของ <code>solr_202200422</code> ที่บ่งชี้ความหนาฟิล์ม 31 nm ·
-  <b>G</b> การใช้ <code>trap_density</code> ข้ามเปเปอร์ (ประกาศข้อจำกัดแล้ว ใช้ <code>vtfl</code> แทน) ·
-  <b>I</b> <code>Rrec</code> ของ <code>acsami_4c14300</code> ที่สูงกว่าเปเปอร์อื่น 1,000 เท่า ·
-  <b>L</b> การตีความจังหวะหยด antisolvent ค่าบวก ·
-  <b>M</b> ชื่อคอลัมน์ <code>value_corrected</code> ที่สื่อความกว้างเกินจริง (ตอนนี้มีด่านตรวจบังคับให้ทุกความต่างมีคำอธิบายแล้ว) ·
-  <b>V</b> ตัวเลขของ <code>ccschem_Sample1</code> ที่เปเปอร์เองไม่สอดคล้อง ·
-  และการยืนยันจังหวะหยดค่าลบของ <code>acsami.5c16972</code></p>
-  <p>เปเปอร์ที่ต้องเปิด 4 ฉบับ: <code>solr_202200422</code> · <code>acsami_4c14300</code> · <code>acsami_5c15868</code> · <code>ccschem_025_202505977</code></p>
-</div>
-
-<p class="lead">รายงานนี้ตอบคำถาม 3 ข้อ: (1) ข้อผิดพลาดเรื่องหน่วย 27 รายการที่เคยประกาศว่าปิดแล้ว ปิดจริงหรือไม่
-(2) เทียบกับต้นทางแล้วมีรายการใดที่น่าสงสัย (3) ค่าจังหวะหยด antisolvent ที่เป็นบวก/ลบ เป็นการบันทึกก่อนจบและหลังเริ่มจริงหรือไม่
-ผลคือ <b>พบรายการที่ต้องแก้ 20 รายการ</b> โดยหนึ่งในนั้น<b>ทำให้ข้อความที่เคยเขียนไว้ในรายงานฉบับก่อนผิด</b> และต้องถอนคืน</p>
-
-<div class="box blue">
-  <h4>ขอบเขตและวิธีการตรวจ — อ่านก่อนตีความผลในรายงานนี้</h4>
-  <p><b>แหล่งที่ใช้ตรวจ 5 แหล่ง:</b> (1) ไฟล์ Excel ต้นทางทั้ง 44 ไฟล์ (2) ผลลัพธ์ใน <code>processed/prepared_v2/</code>
-  (3) ไฟล์ audit เดิม <code>processed/audit/unit_value_errors.csv</code> (4) กฎทางฟิสิกส์ที่ต้องเป็นจริงเสมอ
-  (5) โค้ดในโน้ตบุ๊ก <code>explore_reschema</code> และ <code>recheck_comlumn_preapare</code></p>
-  <p><b>ลำดับการตรวจ:</b> เริ่มจากเทียบผลลัพธ์กับต้นทางโดยตรงแบบกล่องดำ — วิธีนี้จับได้ว่า<b>ค่าใดผิด</b>
-  โดยไม่ต้องเชื่อโค้ด แล้วจึงเปิดโค้ดเพื่อยืนยัน<b>ว่าผิดเพราะอะไร</b> · ข้อค้นพบทุกข้อในรายงานนี้จับได้จากขั้นแรก
-  ส่วนขั้นที่สองใช้ยืนยันกลไกและเพิ่มข้อสังเกตเรื่องความเปราะของโค้ด (ในข้อค้นพบ A และหัวข้อ 3.2)</p>
-  <p><b>สิ่งที่ยังไม่ได้ตรวจ:</b> ตรรกะการคลีนใน <code>column_prepare.ipynb</code> ทั้ง 102 เซลล์ ยังไม่ได้อ่านทีละเซลล์ ·
-  แต่ผลลัพธ์ของมันถูกตรวจทางอ้อมแล้วผ่านการเทียบค่าปลายทางกับต้นทาง</p>
-</div>
-
-<h2>บทสรุปผู้บริหาร</h2>
-
-<table>
-  <thead><tr><th style="width:8%">ระดับ</th><th style="width:44%">สิ่งที่พบ</th><th class="n" style="width:12%">จำนวน</th><th>ผลกระทบ</th></tr></thead>
-  <tbody>
-    <tr class="bad"><td><span class="sev s1">ต้องแก้</span></td>
-        <td>ค่าที่สกัดผิดจากต้นทาง เพราะข้อมูลถูกกรอกไว้คนละคอลัมน์</td>
-        <td class="n">12 ค่า<br>(2 device)</td>
-        <td><b>ทำให้ข้ออ้างในรายงานเดิมผิด 1 ข้อ</b> และทำให้การนับตัวแปรคลาดเคลื่อน</td></tr>
-    <tr class="bad"><td><span class="sev s1">ต้องแก้</span></td>
-        <td>เครื่องหมายลบหายไปจากค่า VBM</td><td class="n">1 ค่า</td>
-        <td>ค่าผิดหลักฟิสิกส์ (พลังงานเป็นบวก) และผิดทิศเทียบกับตัวอย่างอื่นในเปเปอร์เดียวกัน</td></tr>
-    <tr><td><span class="sev s2">ควรแก้</span></td>
-        <td>ชื่อ property ชนกัน — ปริมาณทางฟิสิกส์คนละอย่างถูกเก็บใต้ชื่อเดียวกัน</td>
-        <td class="n">3 กรณี</td><td>ถ้านำไปใช้ตรงๆ จะเทียบข้ามปริมาณที่เทียบกันไม่ได้</td></tr>
-    <tr><td><span class="sev s3">ต้องตัดสินใจ</span></td>
-        <td>ค่าที่ตีความได้ 2 ทาง / ค่าที่เทียบข้ามเปเปอร์ไม่ได้</td>
-        <td class="n">4 กรณี</td><td>ยังไม่กระทบข้อสรุปหลัก แต่ต้องประกาศข้อจำกัดเมื่อรายงาน</td></tr>
-    <tr class="bad"><td><span class="sev s1">ต้องแก้</span></td>
-        <td>ค่า J–V ยังปนกันระหว่างทิศทางการวัด (reverse scan กับ forward scan)</td>
-        <td class="n">5 device</td>
-        <td><b>เป็นบั๊กชนิดเดียวกับที่เคยแก้ไปแล้ว แต่เหลืออีกชั้น</b> · ทำให้ค่าสูงเกินจริงอย่างเป็นระบบ</td></tr>
-    <tr><td><span class="sev s2">ควรแก้</span></td>
-        <td>ด่านตรวจตั้งเงื่อนไขแคบกว่าข้อความที่ประกาศ / แก้ค่าหลังด่านตรวจผ่าน</td>
-        <td class="n">2 จุด</td><td>ทำให้เข้าใจผิดว่าตรวจครบแล้ว</td></tr>
-    <tr><td><span class="sev s3">ความเสี่ยงแฝง</span></td>
-        <td>เส้นทางในโค้ดที่ทิ้งข้อมูลโดยไม่ติดธง — ยังไม่เกิดกับข้อมูลชุดนี้</td>
-        <td class="n">3 จุด</td><td>เป็นรูปแบบเดียวกับที่ทำให้เกิดข้อผิดพลาดจริงในข้อ A และ B</td></tr>
-    <tr class="ok"><td><span class="sev s4">ตรวจแล้วผ่าน</span></td>
-        <td>หน่วย 27 รายการที่เคยตั้งข้อสงสัย · ค่า mobility ที่ดูผิดปกติ · ความสอดคล้อง VTFL กับ trap density 6/7 เปเปอร์</td>
-        <td class="n">—</td><td>ไม่ต้องแก้ ยืนยันว่าถูกแล้ว</td></tr>
-  </tbody>
-</table>
-
-<div class="box red">
-  <h4>สิ่งที่ต้องถอนคืนทันที</h4>
-  <p>รายงานฉบับก่อน หัวข้อ 2.9 และสไลด์ เคยระบุว่า <i>“<code>solr_202400534</code> เป็นการเทียบเชิงตัวเลขภายในเปเปอร์กรณีเดียวในทั้งชุดข้อมูล —
-  ปั่น 5000 เทียบกับ 1000 rpm ได้ PCE 20.37 เทียบกับ 24.21”</i></p>
-  <p><b>ข้อความนี้ผิด</b> — ตรวจไฟล์ต้นทางแล้วพบว่า device ทั้งสองตัวใช้โปรแกรมปั่น<b>เหมือนกันทุกประการ</b> (1000 rpm แล้วตามด้วย 5000 rpm)
-  ค่า 1000 ที่ปรากฏใน <code>target_table</code> เกิดจากการที่ขั้นตอน 5000 rpm ของ Sample2 ถูกกรอกไว้ในช่อง <code>Descriptions</code>
-  แทนที่จะเป็นช่อง <code>Parameter</code> ตัวสกัดจึงอ่านไม่เจอ แล้วถอยไปหยิบค่าจากขั้นแรกแทน (รายละเอียดในข้อค้นพบ A)</p>
-  <p><b>ผลที่ตามมาในทางที่ดี:</b> เมื่อแก้แล้ว <code>psk_spin_rpm</code> แปรผันภายในเปเปอร์ <b>0 จาก 15</b> ไม่ใช่ 1 จาก 15
+</div> <div class="box red"> <h4>สิ่งที่ต้องถอนคืนทันที</h4> <p>รายงานฉบับก่อน หัวข้อ 2.9 และสไลด์ เคยระบุว่า <i>“<code>solr_202400534</code> เป็นการเทียบเชิงตัวเลขภายในเปเปอร์กรณีเดียวในทั้งชุดข้อมูล —
+  ปั่น 5000 เทียบกับ 1000 rpm ได้ PCE 20.37 เทียบกับ 24.21”</i></p> <p><b>ข้อความนี้ผิด</b> — ตรวจไฟล์ต้นทางแล้วพบว่าอุปกรณ์ทั้งสองตัวใช้โปรแกรมปั่น<b>เหมือนกันทุกประการ</b> (1000 rpm แล้วตามด้วย 5000 rpm)
+  ค่า 1000 ที่ปรากฏใน <code>target_table.csv</code> เกิดจากการที่ขั้นตอน 5000 rpm ของ Sample2 ถูกกรอกไว้ในช่อง “คำอธิบาย”
+  แทนที่จะเป็นช่อง “ค่าตัวเลข” ตัวสกัดจึงอ่านไม่เจอ แล้วถอยไปหยิบค่าจากขั้นแรกแทน (รายละเอียดในข้อค้นพบ A)</p> <p><b>ผลที่ตามมาในทางที่ดี:</b> เมื่อแก้แล้ว <code>psk_spin_rpm</code> แปรผันภายในเปเปอร์ <b>0 จาก 15</b> ไม่ใช่ 1 จาก 15
   แปลว่าข้อสรุปหลักของงาน (พารามิเตอร์เชิงตัวเลขทุกตัวถูกตรึงคงที่ทั้งเปเปอร์) <b>แข็งแรงขึ้น ไม่ใช่อ่อนลง</b> —
   ตอนนี้ไม่มีข้อยกเว้นเหลืออยู่เลยแม้แต่กรณีเดียว</p>
 </div>
 
-<!-- ============ ส่วนที่ 1 ============ -->
-<h2>ส่วนที่ 1 · ตรวจซ้ำข้อผิดพลาดเรื่องหน่วย 27 รายการ</h2>
-
-<p>ไฟล์ <code>processed/audit/unit_value_errors.csv</code> เคยตั้งข้อสงสัยไว้ 27 แถว แบ่งเป็น 3 กลุ่ม
-ตรวจสถานะปัจจุบันใน <code>prepared_v2/properties.csv</code> ทีละแถวแล้ว</p>
-
-<table>
-  <thead><tr><th style="width:26%">กลุ่ม</th><th class="n" style="width:8%">จำนวน</th><th>สถานะที่ตรวจพบ</th><th style="width:14%">สรุป</th></tr></thead>
-  <tbody>
-    <tr><td>Voc/Jsc ติดป้ายหน่วยเป็น <code>%</code></td><td class="n">12</td>
-        <td>แก้หน่วยเป็น <code>V</code> และ <code>mA cm-2</code> แล้วครบทุกแถว ตัวเลขไม่เปลี่ยน ซึ่งถูกต้อง
-        เพราะเป็นการติดป้ายผิด ไม่ใช่ค่าผิด · ทุกแถวมี <code>unit_fix_note</code> กำกับ</td>
-        <td><span class="sev s4">ปิดแล้ว</span></td></tr>
-    <tr><td>FF บันทึกเป็นเศษส่วน</td><td class="n">8</td>
-        <td>ค่าที่ใช้งานจริง (<code>value_parsed</code>) ถูกคูณ 100 แล้ว เช่น 0.76 เป็น 76.0 ครบทุกแถว
-        <b>แต่</b> คอลัมน์ <code>value_corrected</code> ยังคงเป็น 0.76 (ดูข้อค้นพบ M)</td>
-        <td><span class="sev s3">ปิดแต่มีเงื่อนไข</span></td></tr>
-    <tr><td>mobility หน่วย m²</td><td class="n">7</td>
-        <td>3 แถวของ <code>acsami.5c16972</code> แปลงหน่วย m² เป็น cm² (คูณ 10⁴) แล้วถูกต้อง ·
-        อีก 4 แถวเป็นการจับผิดพลาดของ regex เดิม หน่วยถูกอยู่แล้ว — <b>และตรวจซ้ำแล้วค่าก็ถูกด้วย</b> (ดูข้อค้นพบ K)</td>
-        <td><span class="sev s4">ปิดแล้ว</span></td></tr>
-  </tbody>
-</table>
-
-<div class="box green">
-  <h4>สรุปส่วนที่ 1</h4>
-  <p>คำกล่าวว่า “27 unit errors ปิดครบแล้ว” <b>เป็นความจริงในแง่ของหน่วย</b> ทุกแถวมีหน่วยที่ถูกต้องและตัวเลขที่ถูกต้อง
-  ไม่พบการแก้ที่ผิดพลาดหรือแก้ไม่ครบ · เหลือประเด็นเดียวคือความไม่สอดคล้องระหว่างคอลัมน์ <code>value_corrected</code>
-  กับ <code>value_parsed</code> ซึ่งเป็นปัญหาเชิงเอกสาร ไม่ใช่ค่าผิด</p>
-</div>
-
-<!-- ============ ส่วนที่ 2 ============ -->
-<h2 class="brk">ส่วนที่ 2 · เทียบกับต้นทางและตรวจความสมเหตุสมผลทางฟิสิกส์</h2>
-
-<p>วิธีตรวจ: กวาดช่วงค่าของทุก property หาค่าที่ผิดปกติ แล้วเปิดไฟล์ Excel ต้นทางของทุกรายการที่สงสัยเพื่อดูว่าค่าเดิมเป็นอย่างไร
-พร้อมตรวจความสอดคล้องภายในด้วยความสัมพันธ์ทางฟิสิกส์ที่ต้องเป็นจริงเสมอ</p>
-
-<div class="finding">
-  <h3><span class="sev s1">ต้องแก้</span> &nbsp;A · ค่าความเร็วปั่นของ <code>solr_202400534_Sample2</code> ผิด</h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_1002_solr_202400534_Sample2.xlsx</code> ชีต <code>Process</code> แถว LayerID 4</div>
-  <table>
-    <thead><tr><th>device</th><th>StepOrder</th><th>Descriptions</th><th>Parameter</th><th>Unit</th><th class="n">ค่าที่สกัดได้</th></tr></thead>
-    <tbody>
-      <tr><td>Sample1</td><td>1</td><td class="muted">(ว่าง)</td><td>1000</td><td>RPM</td><td class="n" rowspan="2">5000 ✓</td></tr>
-      <tr><td>Sample1</td><td>2</td><td class="muted">(ว่าง)</td><td>5000</td><td>RPM</td></tr>
-      <tr><td>Sample2</td><td>1</td><td class="muted">(ว่าง)</td><td>1000</td><td>RPM</td><td class="n" rowspan="2"><b style="color:var(--red)">1000 ✗</b></td></tr>
-      <tr class="bad"><td>Sample2</td><td>2</td><td><b>5000 RPM</b></td><td class="muted">(ว่าง)</td><td class="muted">(ว่าง)</td></tr>
-    </tbody>
-  </table>
-  <p><b>ทำไมถึงผิด — ตรวจถึงระดับโค้ดแล้ว:</b> ตัวแปลงชีตใน <code>explore_reschema.ipynb</code> เพียงเปลี่ยนชื่อคอลัมน์
-  <code>Descriptions</code> เป็น <code>description</code> และ <code>Parameter</code> เป็น <code>parameter</code>
-  โดย<b>ไม่มีขั้นตอนใดอ่านค่าจากช่อง <code>description</code> เลย</b> ข้อมูลที่กรอกไว้ในช่องนั้นจึงไม่เคยเข้าสู่ระบบ</p>
-  <p>จากนั้น <code>recheck_comlumn_preapare.ipynb</code> cell 36 คำนวณด้วย
-  <code>_knob(_pskp, "Spin coating", "Spin coating__RPM", "max")</code> — คือ<b>หยิบค่าสูงสุดจากแถวที่แปลงสำเร็จ</b>
-  ของ device นั้น สำหรับ Sample2 มีแถวที่แปลงสำเร็จเพียงแถวเดียวคือ 1000 rpm ค่าสูงสุดจึงเป็น 1000
-  ทั้งที่ต้นทางระบุชัดว่ามีขั้น 5000 rpm เท่ากับ Sample1 ทุกประการ</p>
-  <div class="box amber" style="margin:.5em 0">
-    <h4>ข้อสังเกตเพิ่มจากการอ่านโค้ด — สมมติฐานที่เปราะ</h4>
-    <p>คอมเมนต์ในโค้ดเขียนว่า <i>“step สุดท้าย = RPM สูงสุด”</i> ซึ่งเป็นการ<b>สมมติ</b> ไม่ใช่การอ่านลำดับขั้นจริง ·
-    ตรวจกับข้อมูลปัจจุบันแล้วสมมติฐานนี้<b>ยังเป็นจริงครบ 43 จาก 43 device</b> จึงไม่ทำให้เกิดค่าผิดในตอนนี้</p>
-    <p>แต่คอลัมน์ <code>psk_spin_last_s</code> ที่อยู่ในเซลล์เดียวกันกลับใช้ตรรกะคนละแบบ คือเรียงตาม
-    <code>step_order</code> แล้วหยิบแถวสุดท้ายจริง · <b>สองคอลัมน์ที่ควรมาจากขั้นตอนเดียวกันจึงใช้กติกาต่างกัน</b>
-    ถ้าอนาคตมีเปเปอร์ที่ปั่นเร็วก่อนแล้วปั่นช้าปิดท้าย ค่าทั้งสองจะมาจากคนละขั้นโดยไม่มีการเตือน
-    <b>ควรเปลี่ยน <code>psk_spin_rpm</code> ให้ใช้ตรรกะเรียงลำดับแบบเดียวกัน</b></p>
-  </div>
-  <p><b>ผลกระทบ:</b> ทำให้เกิดภาพลวงว่าเปเปอร์นี้ทดลองความเร็วปั่นสองค่า ทั้งที่ไม่ได้ทดลอง —
-  ความต่างของ PCE ระหว่างสองตัวอย่าง (20.37 กับ 24.21) จึงมาจากปัจจัยอื่น ไม่ใช่ความเร็วปั่น</p>
-  <p><b>ต้องทำ:</b> แก้ <code>psk_spin_rpm</code> ของ Sample2 เป็น 5000 · ถอนข้อความในรายงานหัวข้อ 2.9 และในสไลด์ ·
-  อัปเดตรูปกราฟการนับ ให้ <code>psk_spin_rpm</code> เป็น 0/15</p>
-</div>
-
-<div class="finding">
-  <h3><span class="sev s1">ต้องแก้</span> &nbsp;B · <code>acsami_5c15868_Sample1</code> ใช้รูปแบบการกรอกคนละแบบกับ Sample2/3 ทั้งชีต</h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_1021_acsami_5c15868_Sample1.xlsx</code> ชีต <code>Process</code> ทั้งชีต (11 แถว)</div>
-  <p>Sample1 กรอกค่าเชิงปริมาณไว้ในช่อง <code>Descriptions</code> ส่วน Sample2 และ Sample3 ของเปเปอร์เดียวกันกรอกในช่อง <code>Parameter</code>
-  ตามรูปแบบมาตรฐาน ตัวสกัดอ่านเฉพาะช่อง <code>Parameter</code> ค่าของ Sample1 จึงหายไปทั้งหมด</p>
-  <table>
-    <thead><tr><th style="width:8%">ชั้น</th><th style="width:30%">Sample1 (ต้นทาง)</th><th style="width:30%">Sample2 (ต้นทาง)</th><th>ค่าที่หายจาก Sample1</th></tr></thead>
-    <tbody>
-      <tr><td>4</td><td><code>Descriptions="2000 RPM"</code>, Param=10 sec</td><td><code>Param="2000, 10"</code>, Unit="RPM, sec"</td><td>ความเร็วปั่นขั้นที่ 1</td></tr>
-      <tr class="bad"><td>4</td><td><code>Descriptions="4000 RPM"</code>, Param=30 sec</td><td><code>Param="4000, 30"</code></td><td><code>psk_spin_rpm</code> = 4000</td></tr>
-      <tr class="bad"><td>4</td><td><code>Descriptions="added at 30 s"</code>, Param=150 µL</td><td><code>Param="150, 30"</code></td><td>จังหวะหยด antisolvent = 30 s</td></tr>
-      <tr class="bad"><td>4</td><td><code>Descriptions="100 C"</code>, Param=30 min</td><td><code>Param="100, 1800"</code></td><td><code>psk_anneal_C</code> = 100</td></tr>
-      <tr class="bad"><td>2</td><td><code>Descriptions="200 C"</code>, Param=10 hr</td><td>—</td><td><code>htl_anneal_C</code> = 200</td></tr>
-      <tr><td>1, 5, 6, 7, 8</td><td colspan="2" class="muted">อีก 6 แถว (Dry 60 C, spin ชั้น 5/6/7, evaporation)</td><td>ค่าพารามิเตอร์ของชั้นอื่น</td></tr>
-    </tbody>
-  </table>
-  <p><b>ทำไมถึงมั่นใจว่าเป็นค่าเดียวกับ Sample2:</b> ค่าที่ตัวสกัดอ่านได้จากช่องอื่นตรงกันหมด —
+<div class="box blue"> <h4>อ่านอย่างไร</h4> <p>รายงานนี้มีสองระดับ · <b>ส่วนที่ 1 “สรุปสิ่งที่แก้ทั้งหมด” กับ “ผลที่เปลี่ยนไป” เขียนให้อ่านเข้าใจโดยไม่ต้องดูโค้ด</b>
+  — ศัพท์เฉพาะที่เหลืออยู่เป็นศัพท์สายเซลล์แสงอาทิตย์ทั้งหมด (Voc, Jsc, FF, PCE, VTFL, HTL, antisolvent ฯลฯ)</p> <p>ส่วนหลังจากนั้นเป็นรายละเอียดทีละข้อ พร้อมโค้ดที่เป็นหลักฐาน สำหรับคนที่ต้องเข้าไปแก้หรือตรวจซ้ำ ·
+  กล่องพื้นเทาที่เป็นโค้ด<b>ข้ามได้</b> ข้อความรอบ ๆ อธิบายครบอยู่แล้ว</p>
+</div> <h2>สรุปสิ่งที่แก้ทั้งหมด</h2> <p class="lead">จัดกลุ่มตาม<b>ชนิดของปัญหา</b> เพราะแต่ละชนิดต้องแก้คนละวิธี และการป้องกันไม่ให้เกิดซ้ำก็ต่างกัน ·
+ทุกแถวแก้ที่โน้ตบุ๊กต้นทาง ไม่ใช่การแก้ไฟล์ผลลัพธ์ด้วยมือ</p> <h3>กลุ่มที่ 1 — ค่าผิดจากต้นทาง (ข้อมูลหายหรือถูกอ่านผิด)</h3>
+<table> <thead><tr><th style="width:6%">ข้อ</th><th style="width:34%">ปัญหา</th><th style="width:28%">วิธีแก้</th><th>การตรวจที่กันไม่ให้เกิดซ้ำ</th></tr></thead> <tbody> <tr class="ok"><td>A, B</td> <td>ค่า 12 แถวถูกกรอกไว้ในช่อง “คำอธิบาย” แทนช่อง “ค่าตัวเลข” ตัวสกัดจึงอ่านไม่เจอ —
+        ทำให้ <code>psk_spin_rpm</code> ของ <code>solr_202400534_Sample2</code> ผิดเป็น 1000 และค่าของ <code>acsami_5c15868_Sample1</code> หายทั้งชีต</td> <td>เพิ่มหัวข้อ 4.0b (ตารางกู้ค่า <code>DESC_RECOVER</code>) เติมค่าที่ยืนยันจากตัวอย่างอื่นในเปเปอร์เดียวกัน</td> <td>สแกนทุกแถว ถ้าพบตัวเลขพร้อมหน่วยในช่อง “คำอธิบาย” ที่ยังไม่เข้าช่อง “ค่าตัวเลข” จะ <b>หยุดการทำงานทันที</b></td></tr> <tr class="ok"><td>C</td> <td>เครื่องหมายลบหายจากค่า VBM ของ <code>ccschem_Sample1</code> (+5.02 ซึ่งผิดหลักฟิสิกส์)</td> <td>หัวข้อ 8.8b (ตารางแก้เครื่องหมาย <code>SIGN_FIX</code>) แก้เป็น −5.02</td> <td>การตรวจในหัวข้อ 9.5 บังคับว่าระดับพลังงานอ้างอิงสุญญากาศต้องเป็นลบเสมอ</td></tr> </tbody>
+</table> <h3>กลุ่มที่ 2 — ปริมาณคนละอย่างถูกเก็บรวมกันใต้ชื่อเดียว</h3>
+<table> <thead><tr><th style="width:6%">ข้อ</th><th style="width:34%">ปัญหา</th><th style="width:28%">วิธีแก้</th><th>การตรวจที่กันไม่ให้เกิดซ้ำ</th></tr></thead> <tbody> <tr class="ok"><td>D</td><td>ชื่อ VBM ใช้กับทั้งระดับพลังงานอ้างอิงสุญญากาศ (ลบ) และระยะจาก Fermi ถึงขอบแถบ (บวก)</td> <td>แยก 3 แถวออกเป็น “ระยะจาก Fermi ถึงขอบแถบเวเลนซ์”</td> <td>รวมอยู่ในการตรวจเครื่องหมายข้างต้น</td></tr> <tr class="ok"><td>E</td><td>Rs ของ <code>smll</code> 2 แถวเป็นความต้านทานแผ่นของฟิล์ม (Ω/sq) ต่างจากค่าอื่นราว 4,000 เท่า</td> <td>ย้ายไป <code>sheet_resistance_htl</code></td> <td>กรองด้วยหน่วยโดยตรง ไม่ได้ใส่รายชื่ออุปกรณ์ด้วยมือ</td></tr> <tr class="ok"><td>H</td><td><code>trap_density</code> เดิมเฉลี่ยฝั่งโฮลกับอิเล็กตรอนรวมกัน ทั้งที่วัดจากอุปกรณ์คนละชนิด</td> <td>ใช้ฝั่งโฮลอย่างเดียวให้ตรงชนิดกับเปเปอร์อื่น + เพิ่ม <code>trap_density_electron</code></td> <td>แยกด้วยคอลัมน์ <code>carrier</code> จึงรองรับเปเปอร์ใหม่อัตโนมัติ</td></tr> <tr class="ok"><td>J</td><td>Bandgap 3.80 eV ของ <code>solener</code> เป็นของ NiO<sub>x</sub> แต่ไม่ระบุชั้น</td> <td>เติม <code>layer = HTL</code></td> <td>ใช้เกณฑ์ &gt; 2.5 eV จึงดักเปเปอร์ใหม่ที่มีปัญหาเดียวกันได้</td></tr> <tr class="ok"><td>M</td><td>ชื่อ <code>value_corrected</code> สื่อว่าเป็นค่าที่แก้แล้วทุกชนิด ทั้งที่เก็บเฉพาะการแก้จากหน่วยผิด</td> <td>เปลี่ยนชื่อเป็น <code>value_after_unit_fix</code> ทั้ง 2 ไฟล์</td> <td>การตรวจบังคับว่าทุกแถวที่ <code>value_parsed</code> ต่างจากคอลัมน์นี้ต้องมี <code>value_note</code> อธิบาย</td></tr> </tbody>
+</table> <h3>กลุ่มที่ 3 — ตรรกะการเลือกค่าที่หยิบข้ามชุดกัน</h3>
+<table> <thead><tr><th style="width:6%">ข้อ</th><th style="width:34%">ปัญหา</th><th style="width:28%">วิธีแก้</th><th>การตรวจที่กันไม่ให้เกิดซ้ำ</th></tr></thead> <tbody> <tr class="ok"><td><b>O</b></td> <td><b>ค่า J–V ยังปนกันระหว่างทิศทางการวัด RS/FS ใน 5 อุปกรณ์</b> — เป็นบั๊กชนิดเดียวกับที่เคยแก้เรื่อง
+        Champion/Average แต่ลึกลงไปอีกชั้น เพราะทิศทางการวัดไม่ได้ถูกนับเป็นส่วนหนึ่งของ “ชุด”</td> <td>เปลี่ยนคีย์ของ “ชุดค่า” จากเดิมที่ดูแค่ champion/average เป็นดู<b>ทิศทางการวัดด้วย</b> (RS/FS) + เพิ่มคอลัมน์ <code>jv_scan</code></td> <td>ลดเกณฑ์การตรวจจาก 1.0 เป็น <b>0.2</b> พร้อมรายชื่อเครื่องที่อธิบายได้ 2 ตัว — เครื่องใหม่ที่เกินจะหยุดการทำงาน</td></tr> <tr class="ok"><td>N</td> <td><code>psk_spin_rpm</code> ใช้ <code>max</code> โดยสมมติว่าขั้นสุดท้าย = RPM สูงสุด ขณะที่ <code>psk_spin_last_s</code> ใช้ขั้นสุดท้ายจริง — สองคอลัมน์ที่ควรมาจากขั้นเดียวกันใช้คนละกติกา</td> <td>ใช้ <code>step_order</code> ทั้งคู่</td> <td>พิมพ์เตือนทุกครั้งที่ขั้นสุดท้ายไม่ใช่ค่าสูงสุด (ปัจจุบันไม่มี)</td></tr> </tbody>
+</table> <h3>กลุ่มที่ 4 — การตรวจสอบที่ตรวจไม่ครบ และเส้นทางที่ทิ้งข้อมูลเงียบ</h3>
+<table> <thead><tr><th style="width:6%">ข้อ</th><th style="width:34%">ปัญหา</th><th style="width:28%">วิธีแก้</th><th>ผลที่ได้</th></tr></thead> <tbody> <tr class="ok"><td>P, Q</td> <td>การตรวจในหัวข้อ 8.7 ตั้งเงื่อนไขที่ยกเว้นกรณี FF พอดี แล้วประกาศว่า “สอดคล้องทุกแถว” ·
+        และหัวข้อ 8.8 แก้ค่าหลังการตรวจผ่านไปแล้วโดยไม่ตรวจซ้ำ</td> <td>ย้ายการตรวจทั้งหมดมารวมที่หัวข้อ 9.5 ก่อนบันทึกผลลัพธ์ ซึ่งเป็นจุดที่ทุกการแก้เกิดครบแล้ว</td> <td>ตรวจทุกแถวที่สองคอลัมน์ต่างกัน (11 แถว) และบังคับให้มีคำอธิบายครบทุกแถว</td></tr> <tr class="ok"><td>R, S</td> <td>ฟังก์ชัน <code>split_param</code> คืนค่าว่างโดยไม่ติดธงเมื่อไม่มีหน่วย · ทิ้งค่าทั้งแถวเมื่อจำนวนไม่ตรง ·
+        เขียนทับกันเมื่อหน่วยซ้ำ</td> <td>ทุกเส้นทางที่ทำให้ข้อมูลหายต้องติดธงใน <code>param_note</code> · เก็บส่วนที่จับคู่ได้ · หน่วยซ้ำไม่ชนกัน</td> <td>ยังไม่เคยเกิดกับข้อมูลชุดนี้ แต่เป็นรูปแบบเดียวกับที่ทำให้เกิดข้อ A และ B</td></tr> <tr class="ok"><td>U</td> <td>ตัวตรวจหน่วยเดิมหาแค่ชื่อ <code>voc</code>, <code>jsc</code>, <code>mobility</code> —
+        อธิบายว่าทำไมข้อ C, D, E, J จึงหลุดรอดมาได้ทั้งหมด</td> <td>เปลี่ยนเป็นตรวจตาม<b>ช่วงค่าที่เป็นไปได้ทางฟิสิกส์</b> 7 ปริมาณ</td> <td>ดักได้ทุก property โดยไม่ต้องรู้ชื่อล่วงหน้า</td></tr> </tbody>
+</table> <h3>กลุ่มที่ 5 — ข้อจำกัดที่แปลงจากข้อความเตือน เป็นตัวเลขในไฟล์</h3>
+<p>สามข้อนี้เดิมถูก “แก้” ด้วยการเขียนเตือนไว้ในเอกสาร ซึ่งพึ่งพาว่าคนที่มาใช้ข้อมูลต่อจะอ่านเอกสารก่อน ·
+เปลี่ยนเป็นคำนวณตัวชี้วัดความน่าสงสัยติดไว้ในไฟล์เลย และสำหรับกรณีที่ตีความได้สองทาง ให้เก็บทั้งสองทางไว้แทนการเดา</p>
+<table> <thead><tr><th style="width:6%">ข้อ</th><th style="width:34%">ปัญหา</th><th style="width:28%">วิธีแก้</th><th>ผลที่ได้</th></tr></thead> <tbody> <tr class="ok"><td>G</td> <td><code>trap_density</code> ที่แต่ละเปเปอร์คำนวณมาให้ ใช้สมมติฐานต่างกัน จึงเทียบข้ามเปเปอร์ไม่ได้</td> <td>คำนวณย้อนความหนาฟิล์มจากคู่ (VTFL, trap density) ด้วยสูตร SCLC แล้วติดธงถ้าหลุดช่วง 250–900 nm</td> <td>คอลัมน์ <code>trap_implied_thickness_nm</code> และ <code>trap_scale_flag</code> ·
+        ติดธง <code>scale_suspect</code> 5 อุปกรณ์ (<code>adma</code> 179 nm, <code>solr_202200422</code> 31 nm)</td></tr> <tr class="ok"><td>F</td> <td>Defect density 2 แถวไม่เข้า <code>trap_density</code> เพราะชื่อไม่ตรง — หายเงียบโดยไม่มีบันทึกเหตุผล</td> <td>ดึงมาไว้ในคอลัมน์ของตัวเองพร้อมตัวเลขที่อธิบายว่าทำไมถึงไม่รวม</td> <td>คอลัมน์ <code>defect_density_reported</code> · เหตุผลการยกเว้น (ความหนาบ่งชี้ 31 nm) เป็นข้อมูลในไฟล์แล้ว</td></tr> <tr class="ok"><td>I</td> <td>Rrec ของ <code>acsami_4c14300</code> สูงกว่าเปเปอร์อื่นราว 1,000 เท่า</td> <td>ติดธงอัตโนมัติด้วยระยะห่างจากค่ากลางเกิน 2 อันดับของขนาด</td> <td>คอลัมน์ <code>rrec_scale_flag</code> · ธงเกิดจากเกณฑ์ จึงดักเปเปอร์ใหม่ที่มีปัญหาเดียวกันได้</td></tr> <tr class="ok"><td>L</td> <td>จุดอ้างอิงของจังหวะหยด antisolvent ค่าบวกถูกกำหนดจากเครื่องหมายของตัวเลขล้วน ๆ
+        ไม่เคยตรวจกับเปเปอร์ · ตีความได้ 2 ทาง ต่างกันได้ถึง 0.25</td> <td>เก็บทั้งสองการตีความไว้คู่กัน แทนการเดาแล้วเลือกทางเดียว</td> <td>คอลัมน์ <code>antisolvent_drop_frac_alt</code> และ <code>psk_spin_total_s</code> ·
+        ทดสอบความไวได้ทันทีโดยไม่ต้องรอเปเปอร์ (ดูด้านล่าง)</td></tr> </tbody>
+</table> <h2 class="brk">ผลที่เปลี่ยนไป</h2> <h3>ค่าที่เปลี่ยนใน <code>target_table.csv</code></h3>
+<table> <thead><tr><th style="width:26%">คอลัมน์</th><th class="n" style="width:12%">อุปกรณ์ที่เปลี่ยน</th><th>รายละเอียด</th></tr></thead> <tbody> <tr><td><span class="idname">psk_spin_rpm</span><span class="idgloss">ความเร็วปั่นเคลือบชั้นดูดแสง</span></td><td class="n">2</td> <td><code>solr_202400534_Sample2</code> 1000 เป็น <b>5000</b> · <code>acsami_5c15868_Sample1</code> ว่าง เป็น 4000</td></tr> <tr><td><span class="idname">psk_anneal_C</span> · <span class="idname">htl_anneal_C</span> · <span class="idname">antisolvent_timing_s</span> · <span class="idname">antisolvent_drop_s</span> · <span class="idname">antisolvent_drop_frac</span><span class="idgloss">อุณหภูมิอบชั้นดูดแสงและชั้น HTL · เวลาและสัดส่วนจังหวะหยด antisolvent</span></td><td class="n">1</td> <td><code>acsami_5c15868_Sample1</code> จากว่างเป็น 100 · 200 · 30 · 30 · 1.00</td></tr> <tr><td><span class="idname">voc</span> · <span class="idname">jsc</span> · <span class="idname">ff</span><span class="idgloss">แรงดัน · กระแส · ความสมบูรณ์ของกราฟ</span></td><td class="n">5</td> <td>แก้การปนทิศทางสแกน เช่น <code>jechem_Sample1</code> FF จาก 79.47 เป็น 78.58
+        (เดิมหยิบจาก FS ปนกับ Voc/Jsc/PCE ที่มาจาก RS)</td></tr> <tr><td><span class="idname">rs</span><span class="idgloss">ความต้านทานอนุกรม</span></td><td class="n">2</td><td>ค่าความต้านทานแผ่นถูกย้ายออก เหลือ 20 อุปกรณ์ (จาก 22)</td></tr> <tr><td><span class="idname">trap_density</span><span class="idgloss">ความหนาแน่นกับดักพาหะ</span></td><td class="n">3</td> <td><code>nanoen</code> เปลี่ยนจากค่าเฉลี่ยโฮล+อิเล็กตรอน เป็นฝั่งโฮลอย่างเดียว</td></tr> </tbody>
+</table> <h3>คอลัมน์ใหม่ 8 คอลัมน์ — <code>target_table.csv</code> จาก 44 × 35 เป็น 44 × 43</h3>
+<table> <thead><tr><th style="width:32%">คอลัมน์</th><th>ทำหน้าที่อะไร</th></tr></thead> <tbody> <tr><td><span class="idname">jv_scan</span><span class="idgloss">ทิศทางการวัดที่เลือกใช้</span></td><td>บอกว่าค่า J–V ของแถวนี้มาจากทิศทางการวัดไหน (RS 13 อุปกรณ์ · ไม่ระบุ 30)</td></tr> <tr><td><span class="idname">trap_density_electron</span><span class="idgloss">ความหนาแน่นกับดักฝั่งอิเล็กตรอน</span></td><td>ฝั่งอิเล็กตรอนที่แยกออกมา ไม่เฉลี่ยรวมกับฝั่งโฮลอีกต่อไป</td></tr> <tr><td><span class="idname">sheet_resistance_htl</span><span class="idgloss">ความต้านทานแผ่นของฟิล์ม HTL</span></td><td>ย้ายออกจากคอลัมน์ <code>rs</code> เพราะเป็นคนละปริมาณ</td></tr> <tr><td><span class="idname">defect_density_reported</span><span class="idgloss">ค่าความหนาแน่นจุดบกพร่องที่เปเปอร์รายงาน</span></td><td>ค่า Defect density ที่เดิมหายเงียบ เก็บไว้พร้อมเหตุผลที่ไม่รวมเข้า <code>trap_density</code></td></tr> <tr><td><span class="idname">trap_implied_thickness_nm</span><br><span class="idname">trap_scale_flag</span><span class="idgloss">ความหนาฟิล์มที่คำนวณย้อนได้ · ธงเตือนเรื่องสเกล</span></td> <td>ความหนาฟิล์มที่คู่ค่า (VTFL, trap density) บ่งชี้ และธงว่าเทียบข้ามเปเปอร์ได้หรือไม่</td></tr> <tr><td><span class="idname">rrec_scale_flag</span><span class="idgloss">ธงเตือนเรื่องสเกลของ Rrec</span></td><td>ธงว่าค่า Rrec หลุดสเกลจากกลุ่มหรือไม่</td></tr> <tr><td><span class="idname">antisolvent_drop_frac_alt</span><br><span class="idname">psk_spin_total_s</span><span class="idgloss">อีกการตีความของจังหวะหยด · ความยาวการปั่นทั้งโปรแกรม</span></td> <td>อีกการตีความของจังหวะหยด เก็บไว้ทดสอบความไว</td></tr> </tbody>
+</table> <div class="box green"> <h4>ข้อสรุปหลักไม่เปลี่ยน — และแข็งแรงขึ้นหนึ่งจุด</h4> <table> <thead><tr><th>ตัวชี้วัด</th><th class="n">ก่อนแก้</th><th class="n">หลังแก้</th><th class="n">ทิศทางที่ดี</th></tr></thead> <tbody> <tr><td><b>ΔPCE</b></td><td class="n">+2.09</td><td class="n"><b>+2.09</b></td><td class="n g">11/11 · p = 0.001</td></tr> <tr><td>ΔFF</td><td class="n">+2.62</td><td class="n">+2.65</td><td class="n g">11/11 · p = 0.001</td></tr> <tr><td>ΔJsc</td><td class="n">+0.72</td><td class="n">+0.66</td><td class="n g">11/11 · p = 0.001</td></tr> <tr><td>ΔVoc</td><td class="n">+0.045</td><td class="n">+0.045</td><td class="n">9/11 · p = 0.065</td></tr> <tr><td>ΔVTFL</td><td class="n">−0.145</td><td class="n">−0.145</td><td class="n g">8/8 · p = 0.008</td></tr> </tbody> </table> <p><b>จุดที่แข็งแรงขึ้น:</b> <code>psk_spin_rpm</code> แปรผันภายในเปเปอร์ <b>0 จาก 15</b> ไม่ใช่ 1 จาก 15 —
+  ตอนนี้พารามิเตอร์เชิงตัวเลข<b>ทุกตัวเป็น 0/15 โดยไม่มีข้อยกเว้นเหลืออยู่เลย</b>
+  ข้อสรุปที่ว่าทุกแล็บตรึงค่าไว้คงที่จึงไม่มีช่องให้โต้แย้ง</p>
+</div> <div class="box green"> <h4>ผลการทดสอบความไวของจังหวะหยด — การตีความไม่เปลี่ยนข้อสรุป</h4> <table> <thead><tr><th>ตัวแปร</th><th class="n">~ PCE</th><th class="n">~ Voc</th><th class="n">~ VTFL</th></tr></thead> <tbody> <tr><td>นับจากเริ่มปั่นขั้นสุดท้าย (ปัจจุบัน)</td><td class="n">+0.497</td><td class="n">+0.388</td><td class="n">+0.079</td></tr> <tr><td>นับจากเริ่มโปรแกรมทั้งหมด (ทางเลือก)</td><td class="n">+0.525</td><td class="n">+0.466</td><td class="n">−0.068</td></tr> </tbody> </table> <p>ทิศทางเหมือนกันทุกคู่ ขนาดต่างกันเล็กน้อย · และเนื่องจากจังหวะหยดแปรผันภายในเปเปอร์ <b>0/15</b>
+  ตัวแปรนี้ถูกตัดออกจากโมเดลหลักอยู่แล้ว การเลือกการตีความจึงไม่กระทบข้อสรุปใด ๆ ·
+  ถ้าเปิดเปเปอร์แล้วพบว่าอีกการตีความถูก แค่สลับคอลัมน์ก็จบ ไม่ต้องคำนวณใหม่</p>
+</div> <div class="box amber"> <h4>เหลือค้างจริง 3 อย่าง — ต้องเห็นเปเปอร์ต้นฉบับเท่านั้น</h4> <table> <thead><tr><th style="width:30%">เรื่อง</th><th style="width:26%">เปเปอร์ / ที่ต้องดู</th><th>กระทบอะไร</th></tr></thead> <tbody> <tr><td><b>V</b> ตัวเลข J–V ไม่คูณกันลงตัว 0.50</td><td><code>ccschem_025_202505977</code> Table S3</td> <td><b>เป็นข้อเดียวที่แตะผลจริง</b> — <code>ccschem_Sample1</code> เป็น control ในเปเปอร์ที่ใช้เทียบ
+          ถ้าค่าจริงเป็น 20.67 แทน 20.17 ΔPCE ของเปเปอร์นั้นเปลี่ยนจาก +5.11 เป็น +4.61 <b>ยังบวก ไม่กระทบ 11/11 และค่ากลาง +2.09</b></td></tr> <tr><td><b>F</b> คำตอบสุดท้ายของ Defect density</td><td><code>solr_202200422</code> Fig. 2c</td> <td>ไม่กระทบ — อยู่นอกโมเดลหลัก และตอนนี้ติดธงพร้อมเหตุผลในไฟล์แล้ว</td></tr> <tr><td><b>I</b> นิยาม Rrec · <b>L</b> จุดอ้างอิงจังหวะหยด</td> <td><code>acsami_4c14300</code> Table S2 · <code>acsami_5c15868</code> และ <code>acsami.5c16972</code></td> <td>ไม่กระทบ — <code>rrec</code> ไม่ได้ใช้ในโมเดลหลัก และจังหวะหยดถูกตัดออกเพราะ confound 0/15 อยู่แล้ว</td></tr> </tbody> </table> <p><b>สรุป: ไม่มีข้อไหนบล็อกการเริ่มสร้างแบบจำลอง</b> — ทั้ง 3 อย่างไปทยอยตรวจตอนเขียนระเบียบวิธีได้</p>
+</div> <div class="box blue"> <h4>ขอบเขตและวิธีการตรวจ — อ่านก่อนตีความผลในรายงานนี้</h4> <p><b>แหล่งที่ใช้ตรวจ 5 แหล่ง:</b> (1) ไฟล์ Excel ต้นทางทั้ง 44 ไฟล์ (2) ผลลัพธ์ใน <code>processed/prepared_v2/</code>
+  (3) ไฟล์บันทึกข้อสงสัยเดิม <code>audit/unit_value_errors.csv</code> (4) กฎทางฟิสิกส์ที่ต้องเป็นจริงเสมอ
+  (5) โค้ดในโน้ตบุ๊ก <code>explore_reschema</code> และ <code>recheck_comlumn_preapare</code></p> <p><b>ลำดับการตรวจ:</b> เริ่มจากเทียบผลลัพธ์กับต้นทางโดยตรงแบบกล่องดำ — วิธีนี้จับได้ว่า<b>ค่าใดผิด</b>
+  โดยไม่ต้องเชื่อโค้ด แล้วจึงเปิดโค้ดเพื่อยืนยัน<b>ว่าผิดเพราะอะไร</b> · ข้อค้นพบทุกข้อในรายงานนี้จับได้จากขั้นแรก
+  ส่วนขั้นที่สองใช้ยืนยันกลไกและเพิ่มข้อสังเกตเรื่องความเปราะของโค้ด (ในข้อค้นพบ A และหัวข้อ 3.2)</p> <p><b>สิ่งที่ยังไม่ได้ตรวจ:</b> ตรรกะการคลีนใน <code>column_prepare.ipynb</code> ทั้ง 102 เซลล์ ยังไม่ได้อ่านทีละเซลล์ ·
+  แต่ผลลัพธ์ของมันถูกตรวจทางอ้อมแล้วผ่านการเทียบค่าปลายทางกับต้นทาง</p>
+</div> <!-- ============ ส่วนที่ 1 ============ -->
+<h2>ส่วนที่ 1 · ตรวจซ้ำข้อผิดพลาดเรื่องหน่วย 27 รายการ</h2> <p>ไฟล์ <code>processed/audit/unit_value_errors.csv</code> เคยตั้งข้อสงสัยไว้ 27 แถว แบ่งเป็น 3 กลุ่ม
+ตรวจสถานะปัจจุบันใน <code>prepared_v2/properties.csv</code> ทีละแถวแล้ว</p> <table> <thead><tr><th style="width:26%">กลุ่ม</th><th class="n" style="width:8%">จำนวน</th><th>สถานะที่ตรวจพบ</th><th style="width:14%">สรุป</th></tr></thead> <tbody> <tr><td>Voc/Jsc ติดป้ายหน่วยเป็น <code>%</code></td><td class="n">12</td> <td>แก้หน่วยเป็น <code>V</code> และ <code>mA cm-2</code> แล้วครบทุกแถว ตัวเลขไม่เปลี่ยน ซึ่งถูกต้อง
+        เพราะเป็นการติดป้ายผิด ไม่ใช่ค่าผิด · ทุกแถวมี <code>unit_fix_note</code> กำกับ</td> <td><span class="sev s4">ปิดแล้ว</span></td></tr> <tr><td>FF บันทึกเป็นเศษส่วน</td><td class="n">8</td> <td>ค่าที่ใช้งานจริง (ค่าที่นำไปใช้จริง) ถูกคูณ 100 แล้ว เช่น 0.76 เป็น 76.0 ครบทุกแถว <b>แต่</b> คอลัมน์ ค่าหลังแก้หน่วย ยังคงเป็น 0.76 (ดูข้อค้นพบ M)</td> <td><span class="sev s3">ปิดแต่มีเงื่อนไข</span></td></tr> <tr><td>mobility หน่วย m²</td><td class="n">7</td> <td>3 แถวของ <code>acsami.5c16972</code> แปลงหน่วย m² เป็น cm² (คูณ 10⁴) แล้วถูกต้อง ·
+        อีก 4 แถวเป็นการจับผิดพลาดของ ตัวค้นหาข้อความ เดิม หน่วยถูกอยู่แล้ว — <b>และตรวจซ้ำแล้วค่าก็ถูกด้วย</b> (ดูข้อค้นพบ K)</td> <td><span class="sev s4">ปิดแล้ว</span></td></tr> </tbody>
+</table> <div class="box green"> <h4>สรุปส่วนที่ 1</h4> <p>คำกล่าวว่า “27 unit errors ปิดครบแล้ว” <b>เป็นความจริงในแง่ของหน่วย</b> ทุกแถวมีหน่วยที่ถูกต้องและตัวเลขที่ถูกต้อง
+  ไม่พบการแก้ที่ผิดพลาดหรือแก้ไม่ครบ · เหลือประเด็นเดียวคือความไม่สอดคล้องระหว่างคอลัมน์ ค่าหลังแก้หน่วย
+  กับ ค่าที่นำไปใช้จริง ซึ่งเป็นปัญหาเชิงเอกสาร ไม่ใช่ค่าผิด</p>
+</div> <!-- ============ ส่วนที่ 2 ============ -->
+<h2 class="brk">ส่วนที่ 2 · เทียบกับต้นทางและตรวจความสมเหตุสมผลทางฟิสิกส์</h2> <p>วิธีตรวจ: กวาดช่วงค่าของทุก property หาค่าที่ผิดปกติ แล้วเปิดไฟล์ Excel ต้นทางของทุกรายการที่สงสัยเพื่อดูว่าค่าเดิมเป็นอย่างไร
+พร้อมตรวจความสอดคล้องภายในด้วยความสัมพันธ์ทางฟิสิกส์ที่ต้องเป็นจริงเสมอ</p> <div class="finding"> <h3><span class="sev s1">ต้องแก้</span> &nbsp;A · ค่าความเร็วปั่นของ <code>solr_202400534_Sample2</code> ผิด</h3> <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_1002_solr_202400534_Sample2.xlsx</code> ชีต <code>Process</code> แถว LayerID 4</div> <table> <thead><tr><th>อุปกรณ์</th><th>ลำดับขั้น</th><th>ช่อง “คำอธิบาย”<br><span class="small muted">Descriptions</span></th><th>ช่อง “ค่าตัวเลข”<br><span class="small muted">Parameter</span></th><th>หน่วย</th><th class="n">ค่าที่สกัดได้</th></tr></thead> <tbody> <tr><td>Sample1</td><td>1</td><td class="muted">(ว่าง)</td><td>1000</td><td>RPM</td><td class="n" rowspan="2">5000 ✓</td></tr> <tr><td>Sample1</td><td>2</td><td class="muted">(ว่าง)</td><td>5000</td><td>RPM</td></tr> <tr><td>Sample2</td><td>1</td><td class="muted">(ว่าง)</td><td>1000</td><td>RPM</td><td class="n" rowspan="2"><b style="color:var(--red)">1000 ✗</b></td></tr> <tr class="bad"><td>Sample2</td><td>2</td><td><b>5000 RPM</b></td><td class="muted">(ว่าง)</td><td class="muted">(ว่าง)</td></tr> </tbody> </table> <p><b>ทำไมถึงผิด — ตรวจถึงระดับโค้ดแล้ว:</b> ตัวแปลงชีตใน โน้ตบุ๊ก <code>explore_reschema</code> เพียงเปลี่ยนชื่อคอลัมน์
+  ช่อง “คำอธิบาย” เป็น ช่อง “คำอธิบาย” และ ช่อง “ค่าตัวเลข” เป็น ช่อง “ค่าตัวเลข”
+  โดย<b>ไม่มีขั้นตอนใดอ่านค่าจากช่อง “คำอธิบาย” เลย</b> ข้อมูลที่กรอกไว้ในช่องนั้นจึงไม่เคยเข้าสู่ระบบ</p> <p>จากนั้น โน้ตบุ๊ก <code>recheck_comlumn_preapare</code> หัวข้อ 9 คำนวณด้วย <code>_knob(_pskp, "Spin coating", "Spin coating__RPM", "max")</code> — คือ<b>หยิบค่าสูงสุดจากแถวที่แปลงสำเร็จ</b>
+  ของอุปกรณ์นั้น สำหรับ Sample2 มีแถวที่แปลงสำเร็จเพียงแถวเดียวคือ 1000 rpm ค่าสูงสุดจึงเป็น 1000
+  ทั้งที่ต้นทางระบุชัดว่ามีขั้น 5000 rpm เท่ากับ Sample1 ทุกประการ</p> <div class="box amber" style="margin:.5em 0"> <h4>ข้อสังเกตเพิ่มจากการอ่านโค้ด — สมมติฐานที่เปราะ</h4> <p>คอมเมนต์ในโค้ดเขียนว่า <i>“step สุดท้าย = RPM สูงสุด”</i> ซึ่งเป็นการ<b>สมมติ</b> ไม่ใช่การอ่านลำดับขั้นจริง ·
+    ตรวจกับข้อมูลปัจจุบันแล้วสมมติฐานนี้<b>ยังเป็นจริงครบ 43 จาก 43 อุปกรณ์</b> จึงไม่ทำให้เกิดค่าผิดในตอนนี้</p> <p>แต่คอลัมน์ <code>psk_spin_last_s</code> ที่อยู่ในเซลล์เดียวกันกลับใช้ตรรกะคนละแบบ คือเรียงตาม
+    ลำดับขั้นตอน แล้วหยิบแถวสุดท้ายจริง · <b>สองคอลัมน์ที่ควรมาจากขั้นตอนเดียวกันจึงใช้กติกาต่างกัน</b>
+    ถ้าอนาคตมีเปเปอร์ที่ปั่นเร็วก่อนแล้วปั่นช้าปิดท้าย ค่าทั้งสองจะมาจากคนละขั้นโดยไม่มีการเตือน <b>ควรเปลี่ยน ความเร็วปั่นเคลือบชั้นดูดแสง ให้ใช้ตรรกะเรียงลำดับแบบเดียวกัน</b></p> </div> <p><b>ผลกระทบ:</b> ทำให้เกิดภาพลวงว่าเปเปอร์นี้ทดลองความเร็วปั่นสองค่า ทั้งที่ไม่ได้ทดลอง —
+  ความต่างของ PCE ระหว่างสองตัวอย่าง (20.37 กับ 24.21) จึงมาจากปัจจัยอื่น ไม่ใช่ความเร็วปั่น</p> <p><b>ต้องทำ:</b> แก้ <code>psk_spin_rpm</code> ของ Sample2 เป็น 5000 · ถอนข้อความในรายงานหัวข้อ 2.9 และในสไลด์ ·
+  อัปเดตรูปกราฟการนับ ให้ ความเร็วปั่นเคลือบชั้นดูดแสง เป็น 0/15</p>
+</div> <div class="finding"> <h3><span class="sev s1">ต้องแก้</span> &nbsp;B · <code>acsami_5c15868_Sample1</code> ใช้รูปแบบการกรอกคนละแบบกับ Sample2/3 ทั้งชีต</h3> <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_1021_acsami_5c15868_Sample1.xlsx</code> ชีต <code>Process</code> ทั้งชีต (11 แถว)</div> <p>Sample1 กรอกค่าเชิงปริมาณไว้ในช่อง “คำอธิบาย” ส่วน Sample2 และ Sample3 ของเปเปอร์เดียวกันกรอกในช่อง “ค่าตัวเลข”
+  ตามรูปแบบมาตรฐาน ตัวสกัดอ่านเฉพาะช่อง “ค่าตัวเลข” ค่าของ Sample1 จึงหายไปทั้งหมด</p> <table> <thead><tr><th style="width:8%">ชั้น</th><th style="width:30%">Sample1 (ต้นทาง)</th><th style="width:30%">Sample2 (ต้นทาง)</th><th>ค่าที่หายจาก Sample1</th></tr></thead> <tbody> <tr><td>4</td><td>คำอธิบาย “2000 RPM” · ค่าตัวเลข 10 วินาที</td><td>ค่าตัวเลข “2000, 10” หน่วย “RPM, sec”</td><td>ความเร็วปั่นขั้นที่ 1</td></tr> <tr class="bad"><td>4</td><td>คำอธิบาย “4000 RPM” · ค่าตัวเลข 30 วินาที</td><td>ค่าตัวเลข “4000, 30”</td><td>ความเร็วปั่นเคลือบชั้นดูดแสง = 4000</td></tr> <tr class="bad"><td>4</td><td>คำอธิบาย “added at 30 s” · ค่าตัวเลข 150 µL</td><td>ค่าตัวเลข “150, 30”</td><td>จังหวะหยด antisolvent = 30 s</td></tr> <tr class="bad"><td>4</td><td>คำอธิบาย “100 C” · ค่าตัวเลข 30 นาที</td><td>ค่าตัวเลข “100, 1800”</td><td>อุณหภูมิอบชั้นดูดแสง = 100</td></tr> <tr class="bad"><td>2</td><td>คำอธิบาย “200 C” · ค่าตัวเลข 10 ชั่วโมง</td><td>—</td><td>อุณหภูมิอบชั้น HTL = 200</td></tr> <tr><td>1, 5, 6, 7, 8</td><td colspan="2" class="muted">อีก 6 แถว (Dry 60 C, spin ชั้น 5/6/7, evaporation)</td><td>ค่าพารามิเตอร์ของชั้นอื่น</td></tr> </tbody> </table> <p><b>ทำไมถึงมั่นใจว่าเป็นค่าเดียวกับ Sample2:</b> ค่าที่ตัวสกัดอ่านได้จากช่องอื่นตรงกันหมด —
   เวลาปั่น 10 และ 30 วินาที เท่ากัน, เวลาอบ 30 นาที = 1800 วินาที เท่ากัน, ปริมาณ antisolvent 150 µL เท่ากัน,
-  จังหวะหยด 30 วินาที เท่ากัน · ต่างกันเฉพาะช่องที่ตัวสกัดอ่านไม่ถึงเท่านั้น</p>
-  <p><b>ผลกระทบ:</b> ทำให้ <code>psk_spin_rpm</code> และ <code>psk_anneal_C</code> ของเปเปอร์นี้ดูเหมือนแปรผันภายในตัวเอง
-  ทั้งที่ความจริงคือค่าว่างเทียบกับค่าจริง · และทำให้ <code>htl_anneal_C</code> ของ Sample1 หายไปทั้งที่มีข้อมูล</p>
-  <p><b>ต้องทำ:</b> เติมค่าที่กู้คืนได้ทั้ง 5 ค่าให้ Sample1 พร้อมคอลัมน์กำกับว่าเป็นค่าที่กู้จากช่อง <code>Descriptions</code>
-  · เพิ่มขั้นตอนใน pipeline ให้อ่านช่อง <code>Descriptions</code> เป็นทางสำรองเมื่อ <code>Parameter</code> ว่าง</p>
-</div>
-
-<div class="finding">
-  <h3><span class="sev s1">ต้องแก้</span> &nbsp;C · เครื่องหมายลบหายจากค่า VBM ของ <code>ccschem_Sample1</code></h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_31635_ccschem_025_202505977_Sample1.xlsx</code> ชีต <code>Properties</code>
-  · Remarks ระบุ “Valence band max from UPS (Figure S8)”</div>
-  <table>
-    <thead><tr><th>device</th><th>วัสดุที่วัด</th><th class="n">ค่าในไฟล์</th><th class="n">ควรเป็น</th></tr></thead>
-    <tbody>
-      <tr class="bad"><td>Sample1 (control, NiO<sub>x</sub> เปล่า)</td><td>NiO<sub>x</sub></td><td class="n" style="color:var(--red)"><b>+5.02</b></td><td class="n"><b>−5.02</b></td></tr>
-      <tr><td>Sample2 (เคลือบ 2PACz)</td><td>NiO<sub>x</sub>/2PACz</td><td class="n">−5.53</td><td class="n">ถูกแล้ว</td></tr>
-      <tr><td>Sample3 (เคลือบ 2Br-4PADMAc)</td><td>NiO<sub>x</sub>/2Br-4PADMAc</td><td class="n">−5.63</td><td class="n">ถูกแล้ว</td></tr>
-    </tbody>
-  </table>
-  <p><b>ทำไมถึงน่าจะผิด — หลักฐาน 3 ชั้น:</b></p>
-  <ol>
-    <li><b>ผิดหลักฟิสิกส์</b> — ระดับพลังงานที่อ้างอิงกับสุญญากาศต้องเป็นค่าลบเสมอ ค่าบวก 5.02 eV แปลว่าอิเล็กตรอนหลุดออกเองได้ ซึ่งเป็นไปไม่ได้</li>
-    <li><b>ขัดกับตัวอย่างอื่นในเปเปอร์เดียวกัน</b> — Sample2 และ Sample3 มาจากรูปเดียวกัน (Figure S8) และเป็นค่าลบทั้งคู่</li>
-    <li><b>ค่า −5.02 สมเหตุสมผลทางเคมี</b> — ให้ลำดับ NiO<sub>x</sub> เปล่า −5.02 แล้วลึกลงเมื่อเคลือบ SAM (−5.53, −5.63)
-      ซึ่งเป็นทิศทางมาตรฐานที่ SAM ทำกับ NiO<sub>x</sub> และเป็นเหตุผลที่เปเปอร์อ้างว่าการเคลือบช่วยให้ดึงโฮลได้ดีขึ้น</li>
-  </ol>
-  <p><b>ต้องทำ:</b> แก้เป็น −5.02 · ตั้ง gate ตรวจว่าค่า VBM/Fermi level/Work function ที่อ้างอิงสุญญากาศต้องเป็นลบเสมอ</p>
-</div>
-
-<div class="finding">
-  <h3><span class="sev s2">ควรแก้</span> &nbsp;D · ชื่อ <code>VBM</code> ถูกใช้กับปริมาณคนละอย่าง 2 ชนิด</h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>smll_202504237</code> (Figure 3b), <code>solener_2025_113286</code> (Fig. 2d)</div>
-  <table>
-    <thead><tr><th>device</th><th class="n">ค่า</th><th>ปริมาณที่แท้จริง</th></tr></thead>
-    <tbody>
-      <tr><td>ccschem, admi, jechem, acsami.5c16972 (11 ค่า)</td><td class="n">−5.05 ถึง −5.72</td><td>ระดับ VBM อ้างอิงสุญญากาศ</td></tr>
-      <tr class="bad"><td>smll_Sample1 / Sample2</td><td class="n">+0.55 / +0.56</td><td rowspan="2">ระยะจากระดับ Fermi ถึงขอบแถบเวเลนซ์ (E<sub>F</sub> − E<sub>VBM</sub>) ซึ่งเป็นค่าบวกตามนิยาม — <b>คนละปริมาณกับข้างบน</b></td></tr>
-      <tr class="bad"><td>solener_Sample1</td><td class="n">+0.44</td></tr>
-    </tbody>
-  </table>
-  <p><b>หลักฐาน:</b> ค่า 0.4–0.6 eV เป็นช่วงมาตรฐานของระยะ Fermi ถึงขอบแถบในการวัด UPS ·
+  จังหวะหยด 30 วินาที เท่ากัน · ต่างกันเฉพาะช่องที่ตัวสกัดอ่านไม่ถึงเท่านั้น</p> <p><b>ผลกระทบ:</b> ทำให้ ความเร็วปั่นเคลือบชั้นดูดแสง และ อุณหภูมิอบชั้นดูดแสง ของเปเปอร์นี้ดูเหมือนแปรผันภายในตัวเอง
+  ทั้งที่ความจริงคือค่าว่างเทียบกับค่าจริง · และทำให้ อุณหภูมิอบชั้น HTL ของ Sample1 หายไปทั้งที่มีข้อมูล</p> <p><b>ต้องทำ:</b> เติมค่าที่กู้คืนได้ทั้ง 5 ค่าให้ Sample1 พร้อมคอลัมน์กำกับว่าเป็นค่าที่กู้จากช่อง “คำอธิบาย”
+  · เพิ่มขั้นตอนใน กระบวนการเตรียมข้อมูล ให้อ่านช่อง “คำอธิบาย” เป็นทางสำรองเมื่อ ช่อง “ค่าตัวเลข” ว่าง</p>
+</div> <div class="finding"> <h3><span class="sev s1">ต้องแก้</span> &nbsp;C · เครื่องหมายลบหายจากค่า VBM ของ <code>ccschem_Sample1</code></h3> <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_31635_ccschem_025_202505977_Sample1.xlsx</code> ชีต Properties
+  · Remarks ระบุ “Valence band max from UPS (Figure S8)”</div> <table> <thead><tr><th>device</th><th>วัสดุที่วัด</th><th class="n">ค่าในไฟล์</th><th class="n">ควรเป็น</th></tr></thead> <tbody> <tr class="bad"><td>Sample1 (control, NiO<sub>x</sub> เปล่า)</td><td>NiO<sub>x</sub></td><td class="n" style="color:var(--red)"><b>+5.02</b></td><td class="n"><b>−5.02</b></td></tr> <tr><td>Sample2 (เคลือบ 2PACz)</td><td>NiO<sub>x</sub>/2PACz</td><td class="n">−5.53</td><td class="n">ถูกแล้ว</td></tr> <tr><td>Sample3 (เคลือบ 2Br-4PADMAc)</td><td>NiO<sub>x</sub>/2Br-4PADMAc</td><td class="n">−5.63</td><td class="n">ถูกแล้ว</td></tr> </tbody> </table> <p><b>ทำไมถึงน่าจะผิด — หลักฐาน 3 ชั้น:</b></p> <ol> <li><b>ผิดหลักฟิสิกส์</b> — ระดับพลังงานที่อ้างอิงกับสุญญากาศต้องเป็นค่าลบเสมอ ค่าบวก 5.02 eV แปลว่าอิเล็กตรอนหลุดออกเองได้ ซึ่งเป็นไปไม่ได้</li> <li><b>ขัดกับตัวอย่างอื่นในเปเปอร์เดียวกัน</b> — Sample2 และ Sample3 มาจากรูปเดียวกัน (Figure S8) และเป็นค่าลบทั้งคู่</li> <li><b>ค่า −5.02 สมเหตุสมผลทางเคมี</b> — ให้ลำดับ NiO<sub>x</sub> เปล่า −5.02 แล้วลึกลงเมื่อเคลือบ SAM (−5.53, −5.63)
+      ซึ่งเป็นทิศทางมาตรฐานที่ SAM ทำกับ NiO<sub>x</sub> และเป็นเหตุผลที่เปเปอร์อ้างว่าการเคลือบช่วยให้ดึงโฮลได้ดีขึ้น</li> </ol> <p><b>ต้องทำ:</b> แก้เป็น −5.02 · ตั้ง การตรวจสอบ ตรวจว่าค่า VBM/Fermi level/Work function ที่อ้างอิงสุญญากาศต้องเป็นลบเสมอ</p>
+</div> <div class="finding"> <h3><span class="sev s2">ควรแก้</span> &nbsp;D · ชื่อ VBM ถูกใช้กับปริมาณคนละอย่าง 2 ชนิด</h3> <div class="kv"><b>ต้นทาง:</b> <code>smll_202504237</code> (Figure 3b), <code>solener_2025_113286</code> (Fig. 2d)</div> <table> <thead><tr><th>device</th><th class="n">ค่า</th><th>ปริมาณที่แท้จริง</th></tr></thead> <tbody> <tr><td>ccschem, admi, jechem, acsami.5c16972 (11 ค่า)</td><td class="n">−5.05 ถึง −5.72</td><td>ระดับ VBM อ้างอิงสุญญากาศ</td></tr> <tr class="bad"><td>smll_Sample1 / Sample2</td><td class="n">+0.55 / +0.56</td><td rowspan="2">ระยะจากระดับ Fermi ถึงขอบแถบเวเลนซ์ (E<sub>F</sub> − E<sub>VBM</sub>) ซึ่งเป็นค่าบวกตามนิยาม — <b>คนละปริมาณกับข้างบน</b></td></tr> <tr class="bad"><td>solener_Sample1</td><td class="n">+0.44</td></tr> </tbody> </table> <p><b>หลักฐาน:</b> ค่า 0.4–0.6 eV เป็นช่วงมาตรฐานของระยะ Fermi ถึงขอบแถบในการวัด UPS ·
   สำหรับ smll สามารถประกอบกลับเป็นค่าสัมบูรณ์ได้: work function 4.39 + 0.55 = <b>−4.94 eV</b> ซึ่งเข้าช่วงปกติพอดี
-  แสดงว่าค่าที่บันทึกถูกต้อง แต่<b>ชื่อ property กำกวม</b></p>
-  <p><b>ต้องทำ:</b> แยกเป็นสองชื่อ เช่น <code>VBM_vacuum</code> กับ <code>VBM_offset_from_EF</code>
+  แสดงว่าค่าที่บันทึกถูกต้อง แต่<b>ชื่อ property กำกวม</b></p> <p><b>ต้องทำ:</b> แยกเป็นสองชื่อ เช่น <code>VBM_vacuum</code> กับ <code>VBM_offset_from_EF</code>
   · ห้ามนำมาเฉลี่ยหรือเปรียบเทียบข้ามกันเด็ดขาด</p>
-</div>
-
-<div class="finding">
-  <h3><span class="sev s2">ควรแก้</span> &nbsp;E · <code>Rs</code> ของ <code>smll_202504237</code> เป็นความต้านทานแผ่นของฟิล์ม ไม่ใช่ความต้านทานอนุกรมของเซลล์</h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_1002_smll_202504237_Sample1-2.xlsx</code> ชีต <code>Properties</code> · Remarks “Table S1”</div>
-  <table>
-    <thead><tr><th>device</th><th class="n">ค่า</th><th>หน่วยในต้นทาง</th><th>บริบทในต้นทาง</th></tr></thead>
-    <tbody>
-      <tr><td colspan="4" class="muted">— เปเปอร์อื่น 20 ค่า —</td></tr>
-      <tr><td>ทุกเปเปอร์อื่น</td><td class="n">0.53 – 42.11</td><td><code>Ω</code>, <code>Ω cm²</code>, <code>Ohm/cm2</code></td><td>ระบุว่ามาจาก EIS หรือ Table ของค่า J–V</td></tr>
-      <tr class="bad"><td>smll_Sample1</td><td class="n">124,000</td><td><code>Ω/sq</code></td><td rowspan="2">อยู่ใน Table S1 ร่วมกับ Hole mobility, Carrier concentration, Conductivity — เป็นชุดการวัด Hall ของ<b>ฟิล์ม NiO<sub>x</sub></b></td></tr>
-      <tr class="bad"><td>smll_Sample2</td><td class="n">53,400</td><td><code>Ω/sq</code></td></tr>
-    </tbody>
-  </table>
-  <p><b>ทำไมถึงมั่นใจ:</b> หน่วย <code>Ω/sq</code> (โอห์มต่อตาราง) เป็นหน่วยของความต้านทานแผ่นซึ่งใช้กับฟิล์มบาง ไม่ใช่ของอุปกรณ์ ·
-  และค่าถูกรายงานคู่กับ mobility, carrier concentration, conductivity ซึ่งเป็นชุดผลการวัด Hall มาตรฐาน</p>
-  <p><b>ผลกระทบ:</b> คอลัมน์ <code>rs</code> ใน <code>target_table</code> มี 2 จาก 22 ค่าที่เป็นปริมาณคนละอย่าง ต่างจากค่าอื่นราว 4,000 เท่า
-  ถ้าใช้เป็นตัวแปรหรือคำนวณสถิติจะเพี้ยนทันที</p>
-  <p><b>ต้องทำ:</b> ย้าย 2 ค่านี้ออกจาก <code>rs</code> ไปเป็น <code>sheet_resistance_htl</code> ·
+</div> <div class="finding"> <h3><span class="sev s2">ควรแก้</span> &nbsp;E · Rs ของ <code>smll_202504237</code> เป็นความต้านทานแผ่นของฟิล์ม ไม่ใช่ความต้านทานอนุกรมของเซลล์</h3> <div class="kv"><b>ต้นทาง:</b> <code>Raw Data/10_1002_smll_202504237_Sample1-2.xlsx</code> ชีต Properties · Remarks “Table S1”</div> <table> <thead><tr><th>device</th><th class="n">ค่า</th><th>หน่วยในต้นทาง</th><th>บริบทในต้นทาง</th></tr></thead> <tbody> <tr><td colspan="4" class="muted">— เปเปอร์อื่น 20 ค่า —</td></tr> <tr><td>ทุกเปเปอร์อื่น</td><td class="n">0.53 – 42.11</td><td><code>Ω</code>, <code>Ω cm²</code>, <code>Ohm/cm2</code></td><td>ระบุว่ามาจาก EIS หรือ Table ของค่า J–V</td></tr> <tr class="bad"><td>smll_Sample1</td><td class="n">124,000</td><td><code>Ω/sq</code></td><td rowspan="2">อยู่ใน Table S1 ร่วมกับ Hole mobility, Carrier concentration, Conductivity — เป็นชุดการวัด Hall ของ<b>ฟิล์ม NiO<sub>x</sub></b></td></tr> <tr class="bad"><td>smll_Sample2</td><td class="n">53,400</td><td><code>Ω/sq</code></td></tr> </tbody> </table> <p><b>ทำไมถึงมั่นใจ:</b> หน่วย <code>Ω/sq</code> (โอห์มต่อตาราง) เป็นหน่วยของความต้านทานแผ่นซึ่งใช้กับฟิล์มบาง ไม่ใช่ของอุปกรณ์ ·
+  และค่าถูกรายงานคู่กับ mobility, carrier concentration, conductivity ซึ่งเป็นชุดผลการวัด Hall มาตรฐาน</p> <p><b>ผลกระทบ:</b> คอลัมน์ <code>rs</code> ใน <code>target_table.csv</code> มี 2 จาก 22 ค่าที่เป็นปริมาณคนละอย่าง ต่างจากค่าอื่นราว 4,000 เท่า
+  ถ้าใช้เป็นตัวแปรหรือคำนวณสถิติจะเพี้ยนทันที</p> <p><b>ต้องทำ:</b> ย้าย 2 ค่านี้ออกจาก <code>rs</code> ไปเป็น <code>sheet_resistance_htl</code> ·
   และเนื่องจากค่าที่เหลือยังปนหน่วย <code>Ω</code> กับ <code>Ω cm²</code> ซึ่งต่างกันด้วยพื้นที่เซลล์ ให้ประกาศข้อจำกัดนี้ทุกครั้งที่ใช้</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s2">ควรแก้</span> &nbsp;F · <code>Defect density</code> ไม่ถูกรวมเข้า <code>trap_density</code> เพราะชื่อไม่ตรง</h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>solr_202200422_Sample1-2</code> ชีต <code>Properties</code> · Remarks “Fig. 2c”</div>
-  <p>ใน <code>properties.csv</code> มีชื่อ 3 แบบที่หมายถึงความหนาแน่นกับดัก: <code>Trap density</code> (18 แถว),
-  <code>Hole/Electron Trap Density</code> (8 แถว) และ <code>Defect density</code> (2 แถว)
-  ตัวสร้าง <code>target_table</code> จับเฉพาะสองแบบแรก ค่าของ <code>solr_202200422</code> จึงหายไปเงียบๆ</p>
-  <p><b>แต่ก่อนจะเติมกลับ ต้องตรวจก่อน:</b> ค่าที่รายงานคือ 2.70×10¹⁸ และ 1.97×10¹⁸ cm⁻³ ซึ่งสูงกว่าทุกเปเปอร์อื่น
+</div> <div class="finding avoid"> <h3><span class="sev s2">ควรแก้</span> &nbsp;F · Defect density ไม่ถูกรวมเข้า ความหนาแน่นกับดักพาหะ เพราะชื่อไม่ตรง</h3> <div class="kv"><b>ต้นทาง:</b> <code>solr_202200422_Sample1-2</code> ชีต Properties · Remarks “Fig. 2c”</div> <p>ใน ตารางค่าที่วัดได้ มีชื่อ 3 แบบที่หมายถึงความหนาแน่นกับดัก: Trap density (18 แถว),
+  Hole/Electron Trap Density (8 แถว) และ Defect density (2 แถว)
+  ตัวสร้าง ตารางหลัก จับเฉพาะสองแบบแรก ค่าของ <code>solr_202200422</code> จึงหายไปเงียบๆ</p> <p><b>แต่ก่อนจะเติมกลับ ต้องตรวจก่อน:</b> ค่าที่รายงานคือ 2.70×10¹⁸ และ 1.97×10¹⁸ cm⁻³ ซึ่งสูงกว่าทุกเปเปอร์อื่น
   (ช่วง 10¹⁵–10¹⁷) ราว 100–1000 เท่า · เมื่อคำนวณย้อนด้วยสูตร SCLC จากค่า VTFL ที่เปเปอร์เดียวกันรายงาน (0.75 V)
-  จะได้ความหนาฟิล์มที่บ่งชี้เพียง <b>31 นาโนเมตร</b> ซึ่งเป็นไปไม่ได้สำหรับชั้นดูดแสง (ปกติ 300–800 nm)</p>
-  <p><b>ต้องทำ:</b> <b>อย่าเติมกลับ</b> จนกว่าจะเปิดเปเปอร์ต้นฉบับตรวจว่า Fig. 2c คำนวณด้วยสมมติฐานใด ·
+  จะได้ความหนาฟิล์มที่บ่งชี้เพียง <b>31 นาโนเมตร</b> ซึ่งเป็นไปไม่ได้สำหรับชั้นดูดแสง (ปกติ 300–800 nm)</p> <p><b>ต้องทำ:</b> <b>อย่าเติมกลับ</b> จนกว่าจะเปิดเปเปอร์ต้นฉบับตรวจว่า Fig. 2c คำนวณด้วยสมมติฐานใด ·
   บันทึกเป็นข้อยกเว้นที่มีเหตุผล ไม่ใช่ข้อมูลตกหล่น</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;G · ค่า trap density เทียบข้ามเปเปอร์ไม่ได้</h3>
-  <p>ทดสอบความสอดคล้องภายในด้วยสูตร SCLC ที่ต้องเป็นจริงเสมอ
-  <code>N<sub>t</sub> = 2·ε·ε₀·V<sub>TFL</sub> / (e·L²)</code> โดยคำนวณย้อนหาความหนาฟิล์ม <code>L</code> ที่คู่ค่า
-  (VTFL, trap density) ของแต่ละเปเปอร์บ่งชี้ ถ้าได้ความหนาที่สมเหตุสมผล แปลว่าคู่ค่านั้นสอดคล้องกันเอง</p>
-  <table>
-    <thead><tr><th>เปเปอร์</th><th class="n">ความหนาที่บ่งชี้</th><th>ประเมิน</th></tr></thead>
-    <tbody>
-      <tr class="ok"><td>science_ade9637</td><td class="n">795 nm</td><td rowspan="6">อยู่ในช่วงจริงของฟิล์ม perovskite (300–800 nm) = คู่ค่าสอดคล้องกันเอง</td></tr>
-      <tr class="ok"><td>jechem_2021</td><td class="n">619 nm</td></tr>
-      <tr class="ok"><td>d3lf00258f</td><td class="n">517–556 nm</td></tr>
-      <tr class="ok"><td>solener_113286</td><td class="n">426 nm</td></tr>
-      <tr class="ok"><td>ccschem</td><td class="n">387–408 nm</td></tr>
-      <tr class="ok"><td>nanoen_106285</td><td class="n">380–500 nm</td></tr>
-      <tr class="bad"><td><b>adma_202507730</b></td><td class="n"><b>179 nm</b></td><td>บางผิดปกติ โดยเฉพาะเมื่อเป็นเซลล์ประสิทธิภาพสูงสุดในชุด (26.5%) ซึ่งปกติใช้ฟิล์มหนากว่านี้</td></tr>
-    </tbody>
-  </table>
-  <p><b>ตีความ:</b> ค่าของ adma น่าจะคำนวณด้วยค่าคงที่ไดอิเล็กทริกหรือความหนาที่ต่างจากเปเปอร์อื่น
-  ไม่ใช่การกรอกผิด (ทั้ง 4 ตัวอย่างในเปเปอร์นั้นให้ค่าความหนาที่บ่งชี้เท่ากันเป๊ะที่ 179 nm = ใช้สมมติฐานเดียวกันทั้งเปเปอร์)</p>
-  <p><b>ต้องทำ:</b> ใช้ <code>trap_density</code> เทียบ<b>ภายในเปเปอร์เท่านั้น</b> · สำหรับการเทียบข้ามเปเปอร์ให้ใช้ <code>vtfl</code>
-  ซึ่งเป็นค่าที่วัดตรงจากกราฟ ไม่ผ่านสมมติฐาน — ตรงกับที่ pipeline เลือกใช้อยู่แล้ว จึงเป็นการยืนยันว่าตัดสินใจถูก</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;H · trap density ของอิเล็กตรอนกับโฮลถูกเฉลี่ยรวมกัน</h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>nanoen.2021.106285</code> ทั้ง 3 ตัวอย่าง รายงานทั้งสองค่าแยกกัน</div>
-  <table>
-    <thead><tr><th>device</th><th class="n">Hole trap</th><th class="n">Electron trap</th><th class="n">ค่าใน target_table</th></tr></thead>
-    <tbody>
-      <tr><td>Sample1</td><td class="n">3.00×10¹⁵</td><td class="n">4.10×10¹⁵</td><td class="n">3.55×10¹⁵ (ค่าเฉลี่ย)</td></tr>
-      <tr><td>Sample2</td><td class="n">1.50×10¹⁵</td><td class="n">2.69×10¹⁵</td><td class="n">2.10×10¹⁵ (ค่าเฉลี่ย)</td></tr>
-      <tr><td>Sample3</td><td class="n">0.99×10¹⁵</td><td class="n">2.27×10¹⁵</td><td class="n">1.63×10¹⁵ (ค่าเฉลี่ย)</td></tr>
-    </tbody>
-  </table>
-  <p><b>ประเด็น:</b> กับดักของอิเล็กตรอนและของโฮลเป็นคนละปริมาณ วัดจากอุปกรณ์คนละชนิด (electron-only กับ hole-only device)
-  การเฉลี่ยรวมกันไม่มีความหมายทางฟิสิกส์ · และเปเปอร์อื่นทั้งหมดรายงานเฉพาะฝั่งโฮล ทำให้ค่าของ nanoen เทียบกับเปเปอร์อื่นไม่ตรงชนิด</p>
-  <p><b>ต้องทำ:</b> เลือกใช้เฉพาะฝั่งโฮลให้ตรงกับเปเปอร์อื่น (ค่าจะเปลี่ยนเป็น 3.00, 1.50, 0.99 ×10¹⁵)
+</div> <div class="finding avoid"> <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;G · ค่า trap density เทียบข้ามเปเปอร์ไม่ได้</h3> <p>ทดสอบความสอดคล้องภายในด้วยสูตร SCLC ที่ต้องเป็นจริงเสมอ <code>N<sub>t</sub> = 2·ε·ε₀·V<sub>TFL</sub> / (e·L²)</code> โดยคำนวณย้อนหาความหนาฟิล์ม <code>L</code> ที่คู่ค่า
+  (VTFL, trap density) ของแต่ละเปเปอร์บ่งชี้ ถ้าได้ความหนาที่สมเหตุสมผล แปลว่าคู่ค่านั้นสอดคล้องกันเอง</p> <table> <thead><tr><th>เปเปอร์</th><th class="n">ความหนาที่บ่งชี้</th><th>ประเมิน</th></tr></thead> <tbody> <tr class="ok"><td>science_ade9637</td><td class="n">795 nm</td><td rowspan="6">อยู่ในช่วงจริงของฟิล์ม perovskite (300–800 nm) = คู่ค่าสอดคล้องกันเอง</td></tr> <tr class="ok"><td>jechem_2021</td><td class="n">619 nm</td></tr> <tr class="ok"><td>d3lf00258f</td><td class="n">517–556 nm</td></tr> <tr class="ok"><td>solener_113286</td><td class="n">426 nm</td></tr> <tr class="ok"><td>ccschem</td><td class="n">387–408 nm</td></tr> <tr class="ok"><td>nanoen_106285</td><td class="n">380–500 nm</td></tr> <tr class="bad"><td><b>adma_202507730</b></td><td class="n"><b>179 nm</b></td><td>บางผิดปกติ โดยเฉพาะเมื่อเป็นเซลล์ประสิทธิภาพสูงสุดในชุด (26.5%) ซึ่งปกติใช้ฟิล์มหนากว่านี้</td></tr> </tbody> </table> <p><b>ตีความ:</b> ค่าของ adma น่าจะคำนวณด้วยค่าคงที่ไดอิเล็กทริกหรือความหนาที่ต่างจากเปเปอร์อื่น
+  ไม่ใช่การกรอกผิด (ทั้ง 4 ตัวอย่างในเปเปอร์นั้นให้ค่าความหนาที่บ่งชี้เท่ากันเป๊ะที่ 179 nm = ใช้สมมติฐานเดียวกันทั้งเปเปอร์)</p> <p><b>ต้องทำ:</b> ใช้ ความหนาแน่นกับดักพาหะ เทียบ<b>ภายในเปเปอร์เท่านั้น</b> · สำหรับการเทียบข้ามเปเปอร์ให้ใช้ <code>vtfl</code> ซึ่งเป็นค่าที่วัดตรงจากกราฟ ไม่ผ่านสมมติฐาน — ตรงกับที่ กระบวนการเตรียมข้อมูล เลือกใช้อยู่แล้ว จึงเป็นการยืนยันว่าตัดสินใจถูก</p>
+</div> <div class="finding avoid"> <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;H · trap density ของอิเล็กตรอนกับโฮลถูกเฉลี่ยรวมกัน</h3> <div class="kv"><b>ต้นทาง:</b> <code>nanoen.2021.106285</code> ทั้ง 3 ตัวอย่าง รายงานทั้งสองค่าแยกกัน</div> <table> <thead><tr><th>อุปกรณ์</th><th class="n">Hole trap</th><th class="n">Electron trap</th><th class="n">ค่าในตารางหลัก</th></tr></thead> <tbody> <tr><td>Sample1</td><td class="n">3.00×10¹⁵</td><td class="n">4.10×10¹⁵</td><td class="n">3.55×10¹⁵ (ค่าเฉลี่ย)</td></tr> <tr><td>Sample2</td><td class="n">1.50×10¹⁵</td><td class="n">2.69×10¹⁵</td><td class="n">2.10×10¹⁵ (ค่าเฉลี่ย)</td></tr> <tr><td>Sample3</td><td class="n">0.99×10¹⁵</td><td class="n">2.27×10¹⁵</td><td class="n">1.63×10¹⁵ (ค่าเฉลี่ย)</td></tr> </tbody> </table> <p><b>ประเด็น:</b> กับดักของอิเล็กตรอนและของโฮลเป็นคนละปริมาณ วัดจากอุปกรณ์คนละชนิด (อุปกรณ์แบบ electron-only กับ hole-only)
+  การเฉลี่ยรวมกันไม่มีความหมายทางฟิสิกส์ · และเปเปอร์อื่นทั้งหมดรายงานเฉพาะฝั่งโฮล ทำให้ค่าของ nanoen เทียบกับเปเปอร์อื่นไม่ตรงชนิด</p> <p><b>ต้องทำ:</b> เลือกใช้เฉพาะฝั่งโฮลให้ตรงกับเปเปอร์อื่น (ค่าจะเปลี่ยนเป็น 3.00, 1.50, 0.99 ×10¹⁵)
   หรือแยกเป็นสองคอลัมน์ · ไม่ควรใช้ค่าเฉลี่ยต่อไป</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;I · <code>Rrec</code> ของ <code>acsami_4c14300</code> สูงกว่าเปเปอร์อื่นราว 1,000 เท่า</h3>
-  <div class="kv"><b>ต้นทาง:</b> ชีต <code>Properties</code> · Remarks “from EIS low-freq (Table S2)”</div>
-  <p>ค่าของเปเปอร์อื่นอยู่ในช่วง 372 ถึง 87,084 Ω ส่วน <code>acsami_4c14300</code> รายงาน 2.15×10⁷ และ 1.70×10⁸ Ω</p>
-  <p><b>ข้อสังเกตที่ทำให้ยังสรุปไม่ได้:</b> เปเปอร์นี้มีค่า VTFL ต่ำที่สุดในชุดข้อมูล (0.09 V) ซึ่งแปลว่าฟิล์มมีกับดักน้อยมากจริง
+</div> <div class="finding avoid"> <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;I · Rrec ของ <code>acsami_4c14300</code> สูงกว่าเปเปอร์อื่นราว 1,000 เท่า</h3> <div class="kv"><b>ต้นทาง:</b> ชีต Properties · Remarks “from EIS low-freq (Table S2)”</div> <p>ค่าของเปเปอร์อื่นอยู่ในช่วง 372 ถึง 87,084 Ω ส่วน <code>acsami_4c14300</code> รายงาน 2.15×10⁷ และ 1.70×10⁸ Ω</p> <p><b>ข้อสังเกตที่ทำให้ยังสรุปไม่ได้:</b> เปเปอร์นี้มีค่า VTFL ต่ำที่สุดในชุดข้อมูล (0.09 V) ซึ่งแปลว่าฟิล์มมีกับดักน้อยมากจริง
   ค่า Rrec ที่สูงมากจึงสอดคล้องกันในเชิงทิศทาง แต่ขนาดที่ต่างกันถึงพันเท่าชี้ว่าน่าจะอ่านจากจุดคนละแบบบนกราฟ Nyquist
-  หรือใช้หน่วยที่ไม่ได้ปรับด้วยพื้นที่</p>
-  <p><b>ต้องทำ:</b> เปิด Table S2 ของเปเปอร์ตรวจว่านิยามตรงกับเปเปอร์อื่นหรือไม่ ·
-  ระหว่างนี้อย่าใช้ <code>rrec</code> ข้ามเปเปอร์ (ปัจจุบันมีเพียง 15 ค่า ยังไม่ได้ใช้ในโมเดลหลักอยู่แล้ว)</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;J · <code>Bandgap</code> ของ <code>solener_113286</code> ไม่ระบุว่าเป็นของชั้นไหน</h3>
-  <div class="kv"><b>ต้นทาง:</b> ชีต <code>Properties</code> ชื่อ “Bandgap” ค่า 3.80 eV Remarks “from Fig. 1b”</div>
-  <p>ค่า 3.80 eV คือแถบพลังงานของ NiO<sub>x</sub> ไม่ใช่ของ perovskite (ซึ่งอยู่ราว 1.55–1.65 eV)
-  แต่ชื่อ property ไม่ได้ระบุชั้น ทำให้คอลัมน์ <code>layer</code> เป็นค่าว่าง</p>
-  <p><b>เทียบกับตัวอย่างที่ทำถูก:</b> <code>admi.202500231</code> ตั้งชื่อแยกชัดเจนเป็น
-  “PSK optical band gap” (1.605–1.616 eV) และ “HTL optical band gap” (3.85 eV) ทำให้ระบบแยกชั้นได้อัตโนมัติ</p>
-  <p><b>ต้องทำ:</b> เติมค่า <code>layer = HTL</code> ให้แถวนี้ · เพิ่ม gate ตรวจว่าค่าแถบพลังงานที่ไม่ระบุชั้น
+  หรือใช้หน่วยที่ไม่ได้ปรับด้วยพื้นที่</p> <p><b>ต้องทำ:</b> เปิด Table S2 ของเปเปอร์ตรวจว่านิยามตรงกับเปเปอร์อื่นหรือไม่ ·
+  ระหว่างนี้อย่าใช้ คอลัมน์ Rrec ข้ามเปเปอร์ (ปัจจุบันมีเพียง 15 ค่า ยังไม่ได้ใช้ในโมเดลหลักอยู่แล้ว)</p>
+</div> <div class="finding avoid"> <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;J · Bandgap ของ <code>solener_113286</code> ไม่ระบุว่าเป็นของชั้นไหน</h3> <div class="kv"><b>ต้นทาง:</b> ชีต Properties ชื่อ “Bandgap” ค่า 3.80 eV Remarks “from Fig. 1b”</div> <p>ค่า 3.80 eV คือแถบพลังงานของ NiO<sub>x</sub> ไม่ใช่ของ perovskite (ซึ่งอยู่ราว 1.55–1.65 eV)
+  แต่ชื่อ property ไม่ได้ระบุชั้น ทำให้คอลัมน์ <code>layer</code> เป็นค่าว่าง</p> <p><b>เทียบกับตัวอย่างที่ทำถูก:</b> <code>admi.202500231</code> ตั้งชื่อแยกชัดเจนเป็น
+  “PSK optical band gap” (1.605–1.616 eV) และ “HTL optical band gap” (3.85 eV) ทำให้ระบบแยกชั้นได้อัตโนมัติ</p> <p><b>ต้องทำ:</b> เติมค่า <code>layer = HTL</code> ให้แถวนี้ · เพิ่มการตรวจว่าค่าแถบพลังงานที่ไม่ระบุชั้น
   ถ้าเกิน 2.5 eV ให้ติดธงเตือน</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s4">ตรวจแล้วผ่าน</span> &nbsp;K · ค่า mobility ที่ต่างกัน 7 อันดับของขนาด — ไม่ใช่ความผิดพลาด</h3>
-  <p>ค่าอยู่ระหว่าง 8.3×10⁻⁷ ถึง 43.2 cm² V⁻¹ s⁻¹ ซึ่งเมื่อดูผิวเผินเหมือนมีค่าที่ผิดหน่วย
-  แต่ตรวจแล้วพบว่าเป็น<b>การวัดคนละวัสดุ</b> และแต่ละชุดสอดคล้องกันเองอย่างสมบูรณ์</p>
-  <table>
-    <thead><tr><th>device</th><th class="n">mobility</th><th class="n">carrier conc.</th><th class="n">conductivity ที่รายงาน</th><th class="n">σ = n·e·μ ที่คำนวณได้</th></tr></thead>
-    <tbody>
-      <tr class="ok"><td>smll_Sample1</td><td class="n">3.46</td><td class="n">8.10×10¹⁸</td><td class="n">4.49 S/cm</td><td class="n">4.49 ✓</td></tr>
-      <tr class="ok"><td>smll_Sample2</td><td class="n">43.2</td><td class="n">1.51×10¹⁸</td><td class="n">10.4 S/cm</td><td class="n">10.45 ✓</td></tr>
-    </tbody>
-  </table>
-  <p><b>สรุป:</b> ค่าของ smll เป็นการวัด Hall ของ<b>ฟิล์ม NiO<sub>x</sub></b> (Table S1) ตรวจสอบไขว้ด้วยสมการ σ = n·e·μ แล้ว<b>ตรงทั้งสองตัวอย่าง</b>
-  ส่วนค่าของเปเปอร์อื่นเป็นความคล่องตัวของพาหะในชั้นดูดแสงจากการวัด SCLC ซึ่งเป็นคนละปริมาณ</p>
-  <p><b>ต้องทำ:</b> ไม่ต้องแก้ค่า แต่ควรแยกชื่อให้ชัดว่าเป็นของชั้นไหน เช่นเดียวกับกรณี Rs ในข้อ E</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;M · <code>value_corrected</code> กับ <code>value_parsed</code> ไม่ตรงกัน 11 แถว</h3>
-  <table>
-    <thead><tr><th>กรณี</th><th class="n">จำนวน</th><th class="n">value_corrected</th><th class="n">value_parsed</th><th>ตัวไหนถูก</th></tr></thead>
-    <tbody>
-      <tr><td>FF ที่บันทึกเป็นเศษส่วน</td><td class="n">8</td><td class="n">0.76</td><td class="n">76.0</td><td><code>value_parsed</code> ถูก</td></tr>
-      <tr><td>แถบพลังงานที่แก้ตามข้อมูลเสริม</td><td class="n">3</td><td class="n">1.62</td><td class="n">1.605–1.616</td><td><code>value_parsed</code> ถูก</td></tr>
-    </tbody>
-  </table>
-  <p><b>ประเด็น:</b> ไม่ใช่ค่าผิด — <code>value_parsed</code> ซึ่งเป็นคอลัมน์ที่ใช้งานจริงถูกต้องทุกแถว
-  แต่ชื่อคอลัมน์ <code>value_corrected</code> สื่อว่าเป็น “ค่าที่แก้แล้ว” ทั้งที่ในความจริงเก็บเฉพาะการแก้ที่เกี่ยวกับหน่วยเท่านั้น
-  ส่วนการแก้ประเภทอื่นไม่ถูกบันทึกลงคอลัมน์นี้ · เป็นกับดักสำหรับคนที่มาอ่านข้อมูลต่อ</p>
-  <p><b>ต้องทำ:</b> เปลี่ยนชื่อเป็น <code>value_after_unit_fix</code> หรือซิงก์ให้ตรงกับ <code>value_parsed</code> ทุกกรณี
+</div> <div class="finding avoid"> <h3><span class="sev s4">ตรวจแล้วผ่าน</span> &nbsp;K · ค่า mobility ที่ต่างกัน 7 อันดับของขนาด — ไม่ใช่ความผิดพลาด</h3> <p>ค่าอยู่ระหว่าง 8.3×10⁻⁷ ถึง 43.2 cm² V⁻¹ s⁻¹ ซึ่งเมื่อดูผิวเผินเหมือนมีค่าที่ผิดหน่วย
+  แต่ตรวจแล้วพบว่าเป็น<b>การวัดคนละวัสดุ</b> และแต่ละชุดสอดคล้องกันเองอย่างสมบูรณ์</p> <table> <thead><tr><th>device</th><th class="n">mobility</th><th class="n">carrier conc.</th><th class="n">conductivity ที่รายงาน</th><th class="n">σ = n·e·μ ที่คำนวณได้</th></tr></thead> <tbody> <tr class="ok"><td>smll_Sample1</td><td class="n">3.46</td><td class="n">8.10×10¹⁸</td><td class="n">4.49 S/cm</td><td class="n">4.49 ✓</td></tr> <tr class="ok"><td>smll_Sample2</td><td class="n">43.2</td><td class="n">1.51×10¹⁸</td><td class="n">10.4 S/cm</td><td class="n">10.45 ✓</td></tr> </tbody> </table> <p><b>สรุป:</b> ค่าของ smll เป็นการวัด Hall ของ<b>ฟิล์ม NiO<sub>x</sub></b> (Table S1) ตรวจสอบไขว้ด้วยสมการ σ = n·e·μ แล้ว<b>ตรงทั้งสองตัวอย่าง</b>
+  ส่วนค่าของเปเปอร์อื่นเป็นความคล่องตัวของพาหะในชั้นดูดแสงจากการวัด SCLC ซึ่งเป็นคนละปริมาณ</p> <p><b>ต้องทำ:</b> ไม่ต้องแก้ค่า แต่ควรแยกชื่อให้ชัดว่าเป็นของชั้นไหน เช่นเดียวกับกรณี Rs ในข้อ E</p>
+</div> <div class="finding avoid"> <h3><span class="sev s3">ต้องตัดสินใจ</span> &nbsp;M · ค่าหลังแก้หน่วย กับ ค่าที่นำไปใช้จริง ไม่ตรงกัน 11 แถว</h3> <table> <thead><tr><th>กรณี</th><th class="n">จำนวน</th><th class="n">ค่าหลังแก้หน่วย</th><th class="n">ค่าที่นำไปใช้จริง</th><th>ตัวไหนถูก</th></tr></thead> <tbody> <tr><td>FF ที่บันทึกเป็นเศษส่วน</td><td class="n">8</td><td class="n">0.76</td><td class="n">76.0</td><td>ค่าที่นำไปใช้จริง ถูก</td></tr> <tr><td>แถบพลังงานที่แก้ตามข้อมูลเสริม</td><td class="n">3</td><td class="n">1.62</td><td class="n">1.605–1.616</td><td>ค่าที่นำไปใช้จริง ถูก</td></tr> </tbody> </table> <p><b>ประเด็น:</b> ไม่ใช่ค่าผิด — ค่าที่นำไปใช้จริง ซึ่งเป็นคอลัมน์ที่ใช้งานจริงถูกต้องทุกแถว
+  แต่ชื่อคอลัมน์ ค่าหลังแก้หน่วย สื่อว่าเป็น “ค่าที่แก้แล้ว” ทั้งที่ในความจริงเก็บเฉพาะการแก้ที่เกี่ยวกับหน่วยเท่านั้น
+  ส่วนการแก้ประเภทอื่นไม่ถูกบันทึกลงคอลัมน์นี้ · เป็นกับดักสำหรับคนที่มาอ่านข้อมูลต่อ</p> <p><b>ต้องทำ:</b> เปลี่ยนชื่อเป็น ค่าหลังแก้หน่วย หรือซิงก์ให้ตรงกับ ค่าที่นำไปใช้จริง ทุกกรณี
   · ระหว่างนี้เอกสารระบุไว้แล้วว่า “ใช้ <code>value_parsed</code> เสมอ” ซึ่งยังถูกต้อง</p>
-</div>
-
-<!-- ============ ส่วนที่ 3 ============ -->
-<h2 class="brk">ส่วนที่ 3 · ตรวจจังหวะหยด antisolvent — ค่าบวกและค่าลบหมายถึงอะไรจริงๆ</h2>
-
-<p class="lead">คำถาม: ค่าลบหมายถึง “ก่อนปั่นจบ” และค่าบวกหมายถึง “หลังเริ่มปั่น” จริงหรือไม่ ·
-ผลตรวจคือ <b>ค่าลบยืนยันได้และไม่กำกวม</b> ส่วน <b>ค่าบวกกำกวมและกระทบ 9 จาก 11 เปเปอร์</b></p>
-
-<h3>3.1 ค่าลบ — มีเพียง 2 เปเปอร์ ยืนยันได้ 1</h3>
-
-<table>
-  <thead><tr><th>เปเปอร์</th><th class="n">ค่าที่บันทึก</th><th class="n">ปั่นขั้นสุดท้าย</th><th>สถานะการยืนยัน</th></tr></thead>
-  <tbody>
-    <tr class="ok"><td><code>admi.202500231</code> (4 device)</td><td class="n">−10</td><td class="n">35 s</td>
-        <td><b>ยืนยันแล้ว</b> — ข้อมูลเสริมของเปเปอร์เขียนตรงตัวว่า <i>“At 10 s before the end … 0.25 ml chlorobenzene”</i></td></tr>
-    <tr><td><code>acsami.5c16972</code> (2 device)</td><td class="n">−5</td><td class="n">40 s</td>
-        <td><span class="sev s3">ยังไม่ยืนยัน</span> — ยังไม่ได้เปิดเปเปอร์ต้นฉบับตรวจ</td></tr>
-  </tbody>
-</table>
-
-<div class="box green">
-  <h4>ข้อดีของค่าลบ: ไม่กำกวม</h4>
-  <p>“ก่อนจบ 10 วินาที” ยึดจุดอ้างอิงที่<b>จุดสิ้นสุด</b> ซึ่งเป็นจุดเดียวกันไม่ว่าจะนับจากขั้นสุดท้ายหรือนับจากทั้งโปรแกรม
+</div> <!-- ============ ส่วนที่ 3 ============ -->
+<h2 class="brk">ส่วนที่ 3 · ตรวจจังหวะหยด antisolvent — ค่าบวกและค่าลบหมายถึงอะไรจริงๆ</h2> <p class="lead">คำถาม: ค่าลบหมายถึง “ก่อนปั่นจบ” และค่าบวกหมายถึง “หลังเริ่มปั่น” จริงหรือไม่ ·
+ผลตรวจคือ <b>ค่าลบยืนยันได้และไม่กำกวม</b> ส่วน <b>ค่าบวกกำกวมและกระทบ 9 จาก 11 เปเปอร์</b></p> <h3>3.1 ค่าลบ — มีเพียง 2 เปเปอร์ ยืนยันได้ 1</h3> <table> <thead><tr><th>เปเปอร์</th><th class="n">ค่าที่บันทึก</th><th class="n">ปั่นขั้นสุดท้าย</th><th>สถานะการยืนยัน</th></tr></thead> <tbody> <tr class="ok"><td><code>admi.202500231</code> (4 อุปกรณ์)</td><td class="n">−10</td><td class="n">35 s</td> <td><b>ยืนยันแล้ว</b> — ข้อมูลเสริมของเปเปอร์เขียนตรงตัวว่า <i>“At 10 s before the end … 0.25 ml chlorobenzene”</i></td></tr> <tr><td><code>acsami.5c16972</code> (2 อุปกรณ์)</td><td class="n">−5</td><td class="n">40 s</td> <td><span class="sev s3">ยังไม่ยืนยัน</span> — ยังไม่ได้เปิดเปเปอร์ต้นฉบับตรวจ</td></tr> </tbody>
+</table> <div class="box green"> <h4>ข้อดีของค่าลบ: ไม่กำกวม</h4> <p>“ก่อนจบ 10 วินาที” ยึดจุดอ้างอิงที่<b>จุดสิ้นสุด</b> ซึ่งเป็นจุดเดียวกันไม่ว่าจะนับจากขั้นสุดท้ายหรือนับจากทั้งโปรแกรม
   จึงแปลงเป็นเวลาสัมบูรณ์ได้ค่าเดียวเสมอ · ต่างจากค่าบวกที่ยึดจุดเริ่ม ซึ่งมีได้สองจุด (ดูหัวข้อถัดไป)</p>
-</div>
-
-<h3>3.2 ค่าบวก — กำกวม เพราะ “เริ่มปั่น” มีได้ 2 จุด</h3>
-
-<p>โปรแกรมปั่นเคลือบ perovskite เกือบทุกเปเปอร์มี 2 ขั้น เช่น ปั่นช้า 10 วินาที แล้วปั่นเร็ว 30 วินาที
+</div> <h3>3.2 ค่าบวก — กำกวม เพราะ “เริ่มปั่น” มีได้ 2 จุด</h3> <p>โปรแกรมปั่นเคลือบ perovskite เกือบทุกเปเปอร์มี 2 ขั้น เช่น ปั่นช้า 10 วินาที แล้วปั่นเร็ว 30 วินาที
 เมื่อเปเปอร์เขียนว่า “หยดที่วินาทีที่ 30” จึงตีความได้ 2 แบบ — นับจากเริ่มขั้นสุดท้าย หรือนับจากเริ่มทั้งโปรแกรม
-ปัจจุบัน pipeline ใช้แบบแรก</p>
-
-<div class="box amber">
-  <h4>ยืนยันจากโค้ด: จุดอ้างอิงเป็นกฎที่โค้ดตั้งเอง ไม่ได้อ่านจากต้นทาง</h4>
-  <p><code>recheck_comlumn_preapare.ipynb</code> cell 20 กำหนดจุดอ้างอิงด้วยบรรทัดเดียว:
-  <code>np.where(t &lt; 0, "before_end", "after_start")</code> — คือ<b>ตัดสินจากเครื่องหมายของตัวเลขล้วนๆ</b>
-  ไม่มีการอ่านข้อความในต้นทางหรือตรวจกับเปเปอร์ประกอบเลย</p>
-  <p>แปลว่าคำว่า “after_start” ที่ปรากฏใน 26 แถวของข้อมูล <b>ไม่ใช่ข้อเท็จจริงที่ตรวจสอบแล้ว</b>
+ปัจจุบัน กระบวนการเตรียมข้อมูล ใช้แบบแรก</p> <div class="box amber"> <h4>ยืนยันจากโค้ด: จุดอ้างอิงเป็นกฎที่โค้ดตั้งเอง ไม่ได้อ่านจากต้นทาง</h4> <p>โน้ตบุ๊ก <code>recheck_comlumn_preapare</code> หัวข้อ 6.1 กำหนดจุดอ้างอิงด้วยบรรทัดเดียว: <code>np.where(t &lt; 0, "before_end", "after_start")</code> — คือ<b>ตัดสินจากเครื่องหมายของตัวเลขล้วนๆ</b>
+  ไม่มีการอ่านข้อความในต้นทางหรือตรวจกับเปเปอร์ประกอบเลย</p> <p>แปลว่าคำว่า “after_start” ที่ปรากฏใน 26 แถวของข้อมูล <b>ไม่ใช่ข้อเท็จจริงที่ตรวจสอบแล้ว</b>
   แต่เป็นค่าเริ่มต้นที่โค้ดใส่ให้ทุกค่าที่ไม่ติดลบ · การตีความว่า “นับจากเริ่มขั้นสุดท้าย”
   จึงไม่เคยถูกตรวจกับเปเปอร์ต้นฉบับแม้แต่ฉบับเดียว</p>
-</div>
-
-<table>
-  <thead><tr><th>เปเปอร์</th><th class="n">เวลาที่บันทึก</th><th class="n">ปั่นขั้นสุดท้าย</th><th class="n">ปั่นรวม</th>
-      <th class="n">สัดส่วน<br>(ตีความปัจจุบัน)</th><th class="n">สัดส่วน<br>(อีกการตีความ)</th><th class="n">ต่างกัน</th></tr></thead>
-  <tbody>
-    <tr class="bad"><td><code>acsami_5c15868</code></td><td class="n">30 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n"><b>1.000</b></td><td class="n">0.750</td><td class="n">0.250</td></tr>
-    <tr class="bad"><td><code>solr_202200422</code></td><td class="n">25 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.833</td><td class="n">0.625</td><td class="n">0.208</td></tr>
-    <tr><td><code>acsami.5c16972</code></td><td class="n">−5</td><td class="n">40 s</td><td class="n">50 s</td><td class="n">0.875</td><td class="n">0.700</td><td class="n">0.175</td></tr>
-    <tr><td><code>heliyon_2024</code></td><td class="n">20 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.667</td><td class="n">0.500</td><td class="n">0.167</td></tr>
-    <tr><td><code>d3lf00258f</code></td><td class="n">10 s</td><td class="n">20 s</td><td class="n">30 s</td><td class="n">0.500</td><td class="n">0.333</td><td class="n">0.167</td></tr>
-    <tr><td><code>admi.202500231</code></td><td class="n">−10</td><td class="n">35 s</td><td class="n">45 s</td><td class="n">0.714</td><td class="n">0.556</td><td class="n">0.158</td></tr>
-    <tr><td><code>smll_202504237</code></td><td class="n">15 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.500</td><td class="n">0.375</td><td class="n">0.125</td></tr>
-    <tr><td><code>solener_113286</code></td><td class="n">15 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.500</td><td class="n">0.375</td><td class="n">0.125</td></tr>
-    <tr><td><code>jechem_2021</code></td><td class="n">8 s</td><td class="n">40 s</td><td class="n">50 s</td><td class="n">0.200</td><td class="n">0.160</td><td class="n">0.040</td></tr>
-    <tr class="ok"><td><code>acsami_4c14300</code></td><td class="n">15 s</td><td class="n">50 s</td><td class="n">50 s</td><td class="n">0.300</td><td class="n">0.300</td><td class="n">0.000</td></tr>
-    <tr class="ok"><td><code>ccschem</code></td><td class="n">30 s</td><td class="n">40 s</td><td class="n">40 s</td><td class="n">0.750</td><td class="n">0.750</td><td class="n">0.000</td></tr>
-  </tbody>
-</table>
-
-<div class="box amber">
-  <h4>สัญญาณที่ชี้ว่าการตีความปัจจุบันน่าจะผิดอย่างน้อย 1 เปเปอร์</h4>
-  <p><code>acsami_5c15868</code> ได้สัดส่วน <b>1.000 พอดี</b> แปลว่าหยด antisolvent ที่วินาทีสุดท้ายของการปั่นพอดี
-  ซึ่ง<b>ขัดกับกลไก</b> — ต้องหยดก่อนจบพอสมควรเพื่อให้สารมีเวลาบังคับให้ผลึกก่อตัวและให้ตัวทำละลายระเหยขณะยังปั่นอยู่</p>
-  <p>ถ้าตีความว่านับจากเริ่มทั้งโปรแกรม (ปั่น 2000 rpm 10 วินาที แล้ว 4000 rpm 30 วินาที รวม 40 วินาที)
+</div> <table> <thead><tr><th>เปเปอร์</th><th class="n">เวลาที่บันทึก</th><th class="n">ปั่นขั้นสุดท้าย</th><th class="n">ปั่นรวม</th> <th class="n">สัดส่วน<br>(ตีความปัจจุบัน)</th><th class="n">สัดส่วน<br>(อีกการตีความ)</th><th class="n">ต่างกัน</th></tr></thead> <tbody> <tr class="bad"><td><code>acsami_5c15868</code></td><td class="n">30 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n"><b>1.000</b></td><td class="n">0.750</td><td class="n">0.250</td></tr> <tr class="bad"><td><code>solr_202200422</code></td><td class="n">25 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.833</td><td class="n">0.625</td><td class="n">0.208</td></tr> <tr><td><code>acsami.5c16972</code></td><td class="n">−5</td><td class="n">40 s</td><td class="n">50 s</td><td class="n">0.875</td><td class="n">0.700</td><td class="n">0.175</td></tr> <tr><td><code>heliyon_2024</code></td><td class="n">20 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.667</td><td class="n">0.500</td><td class="n">0.167</td></tr> <tr><td><code>d3lf00258f</code></td><td class="n">10 s</td><td class="n">20 s</td><td class="n">30 s</td><td class="n">0.500</td><td class="n">0.333</td><td class="n">0.167</td></tr> <tr><td><code>admi.202500231</code></td><td class="n">−10</td><td class="n">35 s</td><td class="n">45 s</td><td class="n">0.714</td><td class="n">0.556</td><td class="n">0.158</td></tr> <tr><td><code>smll_202504237</code></td><td class="n">15 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.500</td><td class="n">0.375</td><td class="n">0.125</td></tr> <tr><td><code>solener_113286</code></td><td class="n">15 s</td><td class="n">30 s</td><td class="n">40 s</td><td class="n">0.500</td><td class="n">0.375</td><td class="n">0.125</td></tr> <tr><td><code>jechem_2021</code></td><td class="n">8 s</td><td class="n">40 s</td><td class="n">50 s</td><td class="n">0.200</td><td class="n">0.160</td><td class="n">0.040</td></tr> <tr class="ok"><td><code>acsami_4c14300</code></td><td class="n">15 s</td><td class="n">50 s</td><td class="n">50 s</td><td class="n">0.300</td><td class="n">0.300</td><td class="n">0.000</td></tr> <tr class="ok"><td><code>ccschem</code></td><td class="n">30 s</td><td class="n">40 s</td><td class="n">40 s</td><td class="n">0.750</td><td class="n">0.750</td><td class="n">0.000</td></tr> </tbody>
+</table> <div class="box amber"> <h4>สัญญาณที่ชี้ว่าการตีความปัจจุบันน่าจะผิดอย่างน้อย 1 เปเปอร์</h4> <p><code>acsami_5c15868</code> ได้สัดส่วน <b>1.000 พอดี</b> แปลว่าหยด antisolvent ที่วินาทีสุดท้ายของการปั่นพอดี
+  ซึ่ง<b>ขัดกับกลไก</b> — ต้องหยดก่อนจบพอสมควรเพื่อให้สารมีเวลาบังคับให้ผลึกก่อตัวและให้ตัวทำละลายระเหยขณะยังปั่นอยู่</p> <p>ถ้าตีความว่านับจากเริ่มทั้งโปรแกรม (ปั่น 2000 rpm 10 วินาที แล้ว 4000 rpm 30 วินาที รวม 40 วินาที)
   จะได้ 30/40 = <b>0.75</b> คือหยดเมื่อเหลือเวลาอีก 10 วินาที ซึ่งสมเหตุสมผลกว่ามาก
   และตรงกับข้อความในต้นทางของ Sample1 ที่เขียนว่า <i>“added at 30 s”</i> โดยไม่ระบุว่านับจากขั้นไหน</p>
-</div>
-
-<div class="box green">
-  <h4>ข่าวดี: ข้อสรุปเชิงทิศทางไม่เปลี่ยน</h4>
-  <p>คำนวณสหสัมพันธ์กับ PCE ใหม่ภายใต้ทั้งสองการตีความแล้ว ผลใกล้เคียงกันมาก จึงไม่กระทบข้อสรุปที่เคยรายงาน</p>
-  <table>
-    <thead><tr><th>ตัวแปร</th><th class="n">สหสัมพันธ์กับ PCE</th><th class="n">n</th></tr></thead>
-    <tbody>
-      <tr><td>เวลาดิบตามที่เปเปอร์เขียน</td><td class="n">+0.439</td><td class="n">32</td></tr>
-      <tr><td>เวลาที่แปลงเข้าแกนเดียวกันแล้ว</td><td class="n">+0.469</td><td class="n">32</td></tr>
-      <tr><td>สัดส่วน — ตีความปัจจุบัน</td><td class="n">+0.520</td><td class="n">30</td></tr>
-      <tr><td>สัดส่วน — อีกการตีความ</td><td class="n">+0.542</td><td class="n">30</td></tr>
-    </tbody>
-  </table>
-  <p class="small">หมายเหตุ: ตัวเลขเหล่านี้เป็นความสัมพันธ์ระหว่างเปเปอร์ทั้งหมด (เพราะจังหวะหยดคงที่ภายในเปเปอร์ 0/15)
+</div> <div class="box green"> <h4>ข่าวดี: ข้อสรุปเชิงทิศทางไม่เปลี่ยน</h4> <p>คำนวณสหสัมพันธ์กับ PCE ใหม่ภายใต้ทั้งสองการตีความแล้ว ผลใกล้เคียงกันมาก จึงไม่กระทบข้อสรุปที่เคยรายงาน</p> <table> <thead><tr><th>ตัวแปร</th><th class="n">สหสัมพันธ์กับ PCE</th><th class="n">n</th></tr></thead> <tbody> <tr><td>เวลาดิบตามที่เปเปอร์เขียน</td><td class="n">+0.439</td><td class="n">32</td></tr> <tr><td>เวลาที่แปลงเข้าแกนเดียวกันแล้ว</td><td class="n">+0.469</td><td class="n">32</td></tr> <tr><td>สัดส่วน — ตีความปัจจุบัน</td><td class="n">+0.520</td><td class="n">30</td></tr> <tr><td>สัดส่วน — อีกการตีความ</td><td class="n">+0.542</td><td class="n">30</td></tr> </tbody> </table> <p class="small">หมายเหตุ: ตัวเลขเหล่านี้เป็นความสัมพันธ์ระหว่างเปเปอร์ทั้งหมด (เพราะจังหวะหยดคงที่ภายในเปเปอร์ 0/15)
   จึงใช้เป็นหลักฐานเชิงกลไกไม่ได้อยู่แล้ว — ตรงนี้ใช้เพียงเพื่อแสดงว่าการเลือกการตีความไม่เปลี่ยนภาพรวม</p>
-</div>
-
-<h3>3.3 ค่าที่หายไปและกู้คืนได้</h3>
-<table>
-  <thead><tr><th>device</th><th>สิ่งที่พบในต้นทาง</th><th>สถานะปัจจุบัน</th><th>ควรทำ</th></tr></thead>
-  <tbody>
-    <tr class="bad"><td><code>acsami_5c15868_Sample1</code></td>
-        <td><code>Descriptions = "added at 30 s"</code></td><td>เวลาหยดเป็นค่าว่าง</td>
-        <td>กู้เป็น 30 s ให้ตรงกับ Sample2/3 ของเปเปอร์เดียวกัน</td></tr>
-    <tr class="bad"><td><code>acsami.5c16972_Sample1</code></td>
-        <td>มีเฉพาะ <code>160 uL</code> ไม่มีเวลา ขณะที่ Sample2/3 มี <code>160, -5</code></td>
-        <td>เวลาหยดเป็นค่าว่าง</td>
-        <td>ตรวจเปเปอร์ก่อน — ทั้งสามตัวอย่างมีขั้นตอนปั่นและอบเหมือนกันทุกประการ จึงน่าจะเป็นการกรอกตกหล่น</td></tr>
-    <tr><td><code>adma_202507730</code> (5 device)</td><td>มีเฉพาะปริมาณ 300 µL</td><td>ไม่มีเวลาทั้ง 5 ตัว</td><td>ตรวจเปเปอร์ว่ามีระบุหรือไม่</td></tr>
-    <tr><td><code>nanoen.2021.106285</code> (3 device)</td><td>มีเฉพาะชนิดสาร (EA) ไม่มีพารามิเตอร์เลย</td><td>ว่างทั้งหมด</td><td>ตรวจเปเปอร์</td></tr>
-  </tbody>
-</table>
-
-<!-- ============ ส่วนที่ 4 ============ -->
-<h2 class="brk">ส่วนที่ 4 · ตรวจตรรกะในโน้ตบุ๊กทีละเซลล์</h2>
-
-<p class="lead">ส่วนที่ 1–3 ตรวจแบบกล่องดำ คือเทียบผลลัพธ์กับต้นทางโดยไม่เชื่อโค้ด · ส่วนนี้เปิดโค้ดใน
-<code>column_prepare.ipynb</code> และ <code>recheck_comlumn_preapare.ipynb</code> อ่านเซลล์ที่เกี่ยวข้องโดยตรง
+</div> <h3>3.3 ค่าที่หายไปและกู้คืนได้</h3>
+<table> <thead><tr><th>device</th><th>สิ่งที่พบในต้นทาง</th><th>สถานะปัจจุบัน</th><th>ควรทำ</th></tr></thead> <tbody> <tr class="bad"><td><code>acsami_5c15868_Sample1</code></td> <td>คำอธิบายเขียนว่า “added at 30 s”</td><td>เวลาหยดเป็นค่าว่าง</td> <td>กู้เป็น 30 s ให้ตรงกับ Sample2/3 ของเปเปอร์เดียวกัน</td></tr> <tr class="bad"><td><code>acsami.5c16972_Sample1</code></td> <td>มีเฉพาะ <code>160 uL</code> ไม่มีเวลา ขณะที่ Sample2/3 มี <code>160, -5</code></td> <td>เวลาหยดเป็นค่าว่าง</td> <td>ตรวจเปเปอร์ก่อน — ทั้งสามตัวอย่างมีขั้นตอนปั่นและอบเหมือนกันทุกประการ จึงน่าจะเป็นการกรอกตกหล่น</td></tr> <tr><td><code>adma_202507730</code> (5 อุปกรณ์)</td><td>มีเฉพาะปริมาณ 300 µL</td><td>ไม่มีเวลาทั้ง 5 ตัว</td><td>ตรวจเปเปอร์ว่ามีระบุหรือไม่</td></tr> <tr><td><code>nanoen.2021.106285</code> (3 อุปกรณ์)</td><td>มีเฉพาะชนิดสาร (EA) ไม่มีพารามิเตอร์เลย</td><td>ว่างทั้งหมด</td><td>ตรวจเปเปอร์</td></tr> </tbody>
+</table> <!-- ============ ส่วนที่ 4 ============ -->
+<h2 class="brk">ส่วนที่ 4 · ตรวจตรรกะในโน้ตบุ๊กทีละเซลล์</h2> <p class="lead">ส่วนที่ 1–3 ตรวจแบบกล่องดำ คือเทียบผลลัพธ์กับต้นทางโดยไม่เชื่อโค้ด · ส่วนนี้เปิดโค้ดใน
+โน้ตบุ๊ก <code>column_prepare</code> และ โน้ตบุ๊ก <code>recheck_comlumn_preapare</code> อ่านเซลล์ที่เกี่ยวข้องโดยตรง
 เพื่อยืนยันกลไกของข้อค้นพบเดิม และหาข้อบกพร่องที่การเทียบค่าปลายทาง<b>มองไม่เห็น</b> ·
-ผลคือพบเพิ่มอีก 6 รายการ ซึ่ง<b>หนึ่งในนั้นเป็นบั๊กชนิดเดียวกับที่เคยแก้ไปแล้ว แต่ยังเหลืออีกชั้นหนึ่ง</b></p>
-
-<div class="finding">
-  <h3><span class="sev s1">ต้องแก้</span> &nbsp;O · การแก้บั๊ก “ค่า JV ปนกันคนละชุด” ยังไม่ครบ — เหลือการปนระหว่างทิศทางการวัด</h3>
-  <div class="kv"><b>โค้ด:</b> <code>recheck_comlumn_preapare.ipynb</code> cell 22 (§7)</div>
-  <p>โค้ดจัดกลุ่มชุดค่าด้วยการหาคำว่า Champion หรือ Average ในชื่อ property เท่านั้น:</p>
-  <p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
+ผลคือพบเพิ่มอีก 6 รายการ ซึ่ง<b>หนึ่งในนั้นเป็นบั๊กชนิดเดียวกับที่เคยแก้ไปแล้ว แต่ยังเหลืออีกชั้นหนึ่ง</b></p> <div class="finding"> <h3><span class="sev s1">ต้องแก้</span> &nbsp;O · การแก้บั๊ก “ค่า JV ปนกันคนละชุด” ยังไม่ครบ — เหลือการปนระหว่างทิศทางการวัด</h3> <div class="kv"><b>โค้ด:</b> โน้ตบุ๊ก <code>recheck_comlumn_preapare</code> หัวข้อ 7 (หัวข้อ 7)</div> <p>โค้ดจัดกลุ่มชุดค่าด้วยการหาคำว่า Champion หรือ Average ในชื่อ property เท่านั้น:</p> <p class="small muted" style="margin:.3em 0 0">โค้ดจริงที่เป็นหลักฐาน — ข้ามได้ถ้าไม่ได้ดูแลโค้ด</p>
+<p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
     _jv["variant"] = np.where(_p.str.contains("hampion"), "champion",<br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;np.where(_p.str.contains("verage"), "average", "plain"))<br>
     piv[v] = ... .pivot_table(index="device_id", columns="base_property",<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values="value_parsed", <b>aggfunc="max"</b>)
-  </p>
-  <p><b>ปัญหา:</b> เปเปอร์จำนวนมากรายงานค่า J–V สองทิศทางคือ reverse scan (RS) และ forward scan (FS)
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values="value_parsed", <b>aggfunc="max"</b>) </p> <p><b>ปัญหา:</b> เปเปอร์จำนวนมากรายงานค่า J–V สองทิศทางคือ reverse scan (RS) และ forward scan (FS)
   ซึ่ง<b>เป็นการวัดคนละครั้งของเซลล์เดียวกัน</b> และให้ค่าไม่เท่ากัน · โค้ด<b>ไม่ได้นับทิศทางการวัดเป็นส่วนหนึ่งของ “ชุด”</b>
-  ทั้ง RS และ FS จึงตกอยู่ใน variant เดียวกัน แล้ว <code>aggfunc="max"</code> เลือกค่าสูงสุดของแต่ละ property<b>อย่างอิสระ</b>
-  — ซึ่งคือกลไกเดียวกับบั๊กเดิมที่ทำให้ Champion ปนกับ Average เป๊ะๆ เพียงแต่ลึกลงไปอีกชั้น</p>
-
-  <table>
-    <thead><tr><th>device</th><th class="n">FF จาก</th><th class="n">Jsc จาก</th><th class="n">Voc จาก</th><th class="n">PCE จาก</th>
-        <th class="n">ค่าคลาดจากสูตร<br>ปัจจุบัน</th><th class="n">ถ้าคุมทิศทาง</th></tr></thead>
-    <tbody>
-      <tr class="bad"><td><code>jechem_2021_Sample1</code></td><td class="n">FS</td><td class="n">RS</td><td class="n">RS</td><td class="n">RS</td><td class="n"><b>0.244</b></td><td class="n g">0.002</td></tr>
-      <tr class="bad"><td><code>jechem_2021_Sample2</code></td><td class="n">RS</td><td class="n">FS</td><td class="n">FS</td><td class="n">RS</td><td class="n"><b>0.214</b></td><td class="n g">0.010</td></tr>
-      <tr class="bad"><td><code>acsami.5c16972_Sample2</code></td><td class="n">RS</td><td class="n">RS</td><td class="n">FS</td><td class="n">RS</td><td class="n">0.036</td><td class="n">0.149</td></tr>
-      <tr class="bad"><td><code>adma_202507730_Sample5</code></td><td class="n">RS</td><td class="n">FS</td><td class="n">RS</td><td class="n">RS</td><td class="n">0.016</td><td class="n">0.013</td></tr>
-      <tr class="bad"><td><code>acsami_4c14300_Sample1</code></td><td class="n">RS</td><td class="n">FS</td><td class="n">RS</td><td class="n">RS</td><td class="n">0.000</td><td class="n">0.011</td></tr>
-    </tbody>
-  </table>
-
-  <p><b>หลักฐานว่าเป็นปัญหาจริง ไม่ใช่แค่ความกังวลเชิงทฤษฎี:</b> สองแถวแรก เมื่อบังคับให้ใช้ทิศทางเดียวกัน
+  ทั้ง RS และ FS จึงตกอยู่ใน variant เดียวกัน แล้ว คำสั่งหยิบค่าสูงสุด เลือกค่าสูงสุดของแต่ละ property<b>อย่างอิสระ</b>
+  — ซึ่งคือกลไกเดียวกับบั๊กเดิมที่ทำให้ Champion ปนกับ Average เป๊ะๆ เพียงแต่ลึกลงไปอีกชั้น</p> <table> <thead><tr><th>device</th><th class="n">FF จาก</th><th class="n">Jsc จาก</th><th class="n">Voc จาก</th><th class="n">PCE จาก</th> <th class="n">ค่าคลาดจากสูตร<br>ปัจจุบัน</th><th class="n">ถ้าคุมทิศทาง</th></tr></thead> <tbody> <tr class="bad"><td><code>jechem_2021_Sample1</code></td><td class="n">FS</td><td class="n">RS</td><td class="n">RS</td><td class="n">RS</td><td class="n"><b>0.244</b></td><td class="n g">0.002</td></tr> <tr class="bad"><td><code>jechem_2021_Sample2</code></td><td class="n">RS</td><td class="n">FS</td><td class="n">FS</td><td class="n">RS</td><td class="n"><b>0.214</b></td><td class="n g">0.010</td></tr> <tr class="bad"><td><code>acsami.5c16972_Sample2</code></td><td class="n">RS</td><td class="n">RS</td><td class="n">FS</td><td class="n">RS</td><td class="n">0.036</td><td class="n">0.149</td></tr> <tr class="bad"><td><code>adma_202507730_Sample5</code></td><td class="n">RS</td><td class="n">FS</td><td class="n">RS</td><td class="n">RS</td><td class="n">0.016</td><td class="n">0.013</td></tr> <tr class="bad"><td><code>acsami_4c14300_Sample1</code></td><td class="n">RS</td><td class="n">FS</td><td class="n">RS</td><td class="n">RS</td><td class="n">0.000</td><td class="n">0.011</td></tr> </tbody> </table> <p><b>หลักฐานว่าเป็นปัญหาจริง ไม่ใช่แค่ความกังวลเชิงทฤษฎี:</b> สองแถวแรก เมื่อบังคับให้ใช้ทิศทางเดียวกัน
   ค่าคลาดจากสมการ <code>PCE = Voc×Jsc×FF/100</code> ลดจาก 0.244 และ 0.214 เหลือ <b>0.002 และ 0.010</b>
-  คือเกือบพอดีเป๊ะ — พิสูจน์ว่าส่วนต่างที่เหลืออยู่<b>ไม่ใช่การปัดเศษอย่างที่เคยสรุปไว้</b> แต่เป็นการปนทิศทางการวัด</p>
-
-  <div class="box amber" style="margin:.5em 0">
-    <h4>ผลข้างเคียงที่ต้องระวังเป็นพิเศษ</h4>
-    <p>การใช้ <code>max</code> ข้ามทิศทางทำให้ค่าที่ได้<b>สูงกว่าความจริงอย่างเป็นระบบ</b> เพราะเป็นการเลือกทิศทางที่ดีที่สุด
-    ของแต่ละตัวชี้วัดแยกกัน · กระทบ 12 device ที่รายงานสองทิศทาง โดย 5 device ปนจริง</p>
-    <p>จุดที่ต้องระวังที่สุดคือ <code>adma_202507730_Sample5</code> ซึ่งมี <b>PCE 26.50 เป็นค่าสูงสุดของทั้งชุดข้อมูล</b>
-    และถูกใช้อ้างอิงในรายงาน — ค่านี้มาจากการเลือกข้ามทิศทาง ถ้าคุมทิศทางจะเป็น 26.30</p>
-  </div>
-
-  <p><b>ต้องทำ:</b> เพิ่มทิศทางการวัดเข้าเป็นส่วนหนึ่งของคีย์ชุดค่า ให้กลายเป็น
-  <code>(variant, scan)</code> เช่น champion-RS, champion-FS, plain-RS แล้วเลือกชุดที่ครบทั้ง 4 ค่าเหมือนเดิม ·
+  คือเกือบพอดีเป๊ะ — พิสูจน์ว่าส่วนต่างที่เหลืออยู่<b>ไม่ใช่การปัดเศษอย่างที่เคยสรุปไว้</b> แต่เป็นการปนทิศทางการวัด</p> <div class="box amber" style="margin:.5em 0"> <h4>ผลข้างเคียงที่ต้องระวังเป็นพิเศษ</h4> <p>การใช้ ค่าสูงสุด ข้ามทิศทางทำให้ค่าที่ได้<b>สูงกว่าความจริงอย่างเป็นระบบ</b> เพราะเป็นการเลือกทิศทางที่ดีที่สุด
+    ของแต่ละตัวชี้วัดแยกกัน · กระทบ 12 อุปกรณ์ ที่รายงานสองทิศทาง โดย 5 อุปกรณ์ ปนจริง</p> <p>จุดที่ต้องระวังที่สุดคือ <code>adma_202507730_Sample5</code> ซึ่งมี <b>PCE 26.50 เป็นค่าสูงสุดของทั้งชุดข้อมูล</b>
+    และถูกใช้อ้างอิงในรายงาน — ค่านี้มาจากการเลือกข้ามทิศทาง ถ้าคุมทิศทางจะเป็น 26.30</p> </div> <p><b>ต้องทำ:</b> เพิ่มทิศทางการวัดเข้าเป็นส่วนหนึ่งของคีย์ชุดค่า ให้กลายเป็น
+  (ชุดค่า, ทิศทางการวัด) เช่น champion-RS, champion-FS, plain-RS แล้วเลือกชุดที่ครบทั้ง 4 ค่าเหมือนเดิม ·
   ตั้งเกณฑ์ตรวจให้เข้มขึ้นจาก 1.0 เป็น <b>0.2</b> ซึ่งเป็นระดับที่การปัดเศษจริงทำได้</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s2">ควรแก้</span> &nbsp;P · ด่านตรวจ §8.7 ตั้งเงื่อนไขที่<u>ยกเว้น</u>กรณีที่ทำให้เกิดปัญหาพอดี</h3>
-  <div class="kv"><b>โค้ด:</b> <code>recheck_comlumn_preapare.ipynb</code> cell 30 (§8.7)</div>
-  <p>เงื่อนไขที่ใช้หาแถวที่ต้องซิงก์ และที่ใช้เป็นด่านตรวจ เป็นเงื่อนไขเดียวกัน คือ:</p>
-  <p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
+</div> <div class="finding avoid"> <h3><span class="sev s2">ควรแก้</span> &nbsp;P · การตรวจในหัวข้อ 8.7 ตั้งเงื่อนไขที่<u>ยกเว้น</u>กรณีที่ทำให้เกิดปัญหาพอดี</h3> <div class="kv"><b>โค้ด:</b> โน้ตบุ๊ก <code>recheck_comlumn_preapare</code> หัวข้อ 8.7 (หัวข้อ 8.7)</div> <p>เงื่อนไขที่ใช้หาแถวที่ต้องซิงก์ และที่ใช้เป็นการตรวจสอบ เป็นเงื่อนไขเดียวกัน คือ:</p> <p class="small muted" style="margin:.3em 0 0">โค้ดจริงที่เป็นหลักฐาน — ข้ามได้ถ้าไม่ได้ดูแลโค้ด</p>
+<p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
     _need = (_vc.notna() &amp; _v.notna() &amp; <b>~np.isclose(_vc, _v)</b><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp; _vp.notna() &amp; ~np.isclose(_vp, _vc))
-  </p>
-  <p><b>ปัญหา:</b> เงื่อนไข <code>~isclose(value_corrected, value)</code> บังคับว่าแถวนั้นต้องมีการแก้ตัวเลขที่เกี่ยวกับหน่วยมาก่อน
-  แต่แถว FF ทั้ง 8 แถวมี <code>value_corrected</code> เท่ากับค่าดิบ (ทั้งคู่เป็น 0.76) เพราะการคูณ 100 ไปเกิดกับ
-  <code>value_parsed</code> เท่านั้น · แถว FF จึง<b>ไม่เข้าเงื่อนไขตั้งแต่ต้น</b> ทั้งที่เป็นกรณีที่ค่าสองคอลัมน์ไม่ตรงกันจริง</p>
-  <p>ผลคือด่านตรวจผ่าน แล้วพิมพ์ข้อความว่า <i>“gate ผ่าน: value_parsed สอดคล้องกับ value_corrected ทุกแถว”</i>
-  ซึ่ง<b>ไม่เป็นความจริง</b> — ตรวจข้อมูลจริงแล้วมี 11 แถวที่ไม่ตรงกัน · ด่านตรวจไม่ได้ผิด แต่<b>ข้อความที่มันประกาศกว้างเกินกว่าที่มันตรวจ</b>
-  ซึ่งอันตรายกว่าไม่มีด่านตรวจ เพราะทำให้เข้าใจผิดว่าตรวจครบแล้ว</p>
-  <p><b>ต้องทำ:</b> แก้ข้อความให้ตรงกับสิ่งที่ตรวจจริง (“ไม่มีการแก้หน่วยที่ตกค้าง”) หรือขยายเงื่อนไขให้ครอบคลุมทุกกรณีที่สองคอลัมน์ต่างกัน</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s2">ควรแก้</span> &nbsp;Q · การแก้ค่าใน §8.8 เกิด<u>หลัง</u>ด่านตรวจ §8.7 จึงไม่มีอะไรตรวจซ้ำ</h3>
-  <div class="kv"><b>โค้ด:</b> cell 30 (§8.7 ด่านตรวจ) รันก่อน cell 32 (§8.8 แก้ค่า)</div>
-  <p>§8.8 แก้ค่าแถบพลังงานของ 3 device ตามข้อมูลเสริมของเปเปอร์ โดยเขียนลง <code>value_parsed</code> อย่างเดียว
-  ไม่แตะ <code>value_corrected</code> · การแก้นี้จึง<b>สร้างแถวที่สองคอลัมน์ไม่ตรงกันเพิ่มอีก 3 แถว</b>
-  หลังจากด่านตรวจของ §8.7 ผ่านไปแล้ว และไม่มีการตรวจซ้ำอีกเลยจนจบ pipeline</p>
-  <p><b>ทำไมถึงสำคัญ:</b> รูปแบบนี้ทำให้ด่านตรวจกลายเป็นพิธีกรรม — ผ่านที่จุดหนึ่งแล้วมีการแก้ค่าตามมาทีหลังโดยไม่ตรวจใหม่
-  ถ้าอนาคตมีการเพิ่ม §8.10 หรือ §8.11 ที่แก้ค่าอีก ปัญหาจะสะสมโดยไม่มีสัญญาณเตือน</p>
-  <p><b>ต้องทำ:</b> ย้ายด่านตรวจความสอดคล้องทั้งหมดไปไว้<b>ก่อนขั้นตอน export ใน §10</b> ซึ่งเป็นจุดสุดท้ายจริง
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp; _vp.notna() &amp; ~np.isclose(_vp, _vc)) </p> <p><b>ปัญหา:</b> เงื่อนไข <code>~isclose(value_after_unit_fix, value)</code> บังคับว่าแถวนั้นต้องมีการแก้ตัวเลขที่เกี่ยวกับหน่วยมาก่อน
+  แต่แถว FF ทั้ง 8 แถวมี ค่าหลังแก้หน่วย เท่ากับค่าดิบ (ทั้งคู่เป็น 0.76) เพราะการคูณ 100 ไปเกิดกับ
+  ค่าที่นำไปใช้จริง เท่านั้น · แถว FF จึง<b>ไม่เข้าเงื่อนไขตั้งแต่ต้น</b> ทั้งที่เป็นกรณีที่ค่าสองคอลัมน์ไม่ตรงกันจริง</p> <p>ผลคือการตรวจสอบผ่าน แล้วพิมพ์ข้อความว่า <i>“การตรวจสอบ ผ่าน: ค่าที่นำไปใช้จริง สอดคล้องกับ ค่าหลังแก้หน่วย ทุกแถว”</i>
+  ซึ่ง<b>ไม่เป็นความจริง</b> — ตรวจข้อมูลจริงแล้วมี 11 แถวที่ไม่ตรงกัน · การตรวจสอบไม่ได้ผิด แต่<b>ข้อความที่มันประกาศกว้างเกินกว่าที่มันตรวจ</b>
+  ซึ่งอันตรายกว่าไม่มีการตรวจสอบ เพราะทำให้เข้าใจผิดว่าตรวจครบแล้ว</p> <p><b>ต้องทำ:</b> แก้ข้อความให้ตรงกับสิ่งที่ตรวจจริง (“ไม่มีการแก้หน่วยที่ตกค้าง”) หรือขยายเงื่อนไขให้ครอบคลุมทุกกรณีที่สองคอลัมน์ต่างกัน</p>
+</div> <div class="finding avoid"> <h3><span class="sev s2">ควรแก้</span> &nbsp;Q · การแก้ค่าใน หัวข้อ 8.8 เกิด<u>หลัง</u>การตรวจสอบในหัวข้อ 8.7 จึงไม่มีอะไรตรวจซ้ำ</h3> <div class="kv"><b>โค้ด:</b> ขั้นตอนตรวจความสอดคล้อง (หัวข้อ 8.7) รันก่อนขั้นตอนแก้ค่าในหัวข้อ 8.8</div> <p>หัวข้อ 8.8 แก้ค่าแถบพลังงานของ 3 อุปกรณ์ ตามข้อมูลเสริมของเปเปอร์ โดยเขียนลง ค่าที่นำไปใช้จริง อย่างเดียว
+  ไม่แตะ ค่าหลังแก้หน่วย · การแก้นี้จึง<b>สร้างแถวที่สองคอลัมน์ไม่ตรงกันเพิ่มอีก 3 แถว</b>
+  หลังจากการตรวจสอบของ หัวข้อ 8.7 ผ่านไปแล้ว และไม่มีการตรวจซ้ำอีกเลยจนจบ กระบวนการเตรียมข้อมูล</p> <p><b>ทำไมถึงสำคัญ:</b> รูปแบบนี้ทำให้การตรวจสอบกลายเป็นพิธีกรรม — ผ่านที่จุดหนึ่งแล้วมีการแก้ค่าตามมาทีหลังโดยไม่ตรวจใหม่
+  ถ้าอนาคตมีการเพิ่ม หัวข้อ 8.10 หรือ หัวข้อ 8.11 ที่แก้ค่าอีก ปัญหาจะสะสมโดยไม่มีสัญญาณเตือน</p> <p><b>ต้องทำ:</b> ย้ายการตรวจสอบความสอดคล้องทั้งหมดไปไว้<b>ก่อนขั้นตอนบันทึกผลลัพธ์ในหัวข้อ 10</b> ซึ่งเป็นจุดสุดท้ายจริง
   หรือรันซ้ำอีกครั้งหลังการแก้ค่าทุกครั้ง</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ความเสี่ยงแฝง</span> &nbsp;R · <code>split_param</code> ทิ้งข้อมูลเงียบเมื่อไม่มีหน่วย</h3>
-  <div class="kv"><b>โค้ด:</b> <code>recheck_comlumn_preapare.ipynb</code> cell 12 (§4)</div>
-  <p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
-    us = [...] if pd.notna(unit) else []<br>
-    <b>if not us:</b><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<b>return {}, ""</b> &nbsp;&nbsp;&nbsp;# คืนค่าว่าง พร้อม note ว่าง = ไม่ติดธง
-  </p>
-  <p><b>ปัญหา:</b> ถ้าแถวใดมีค่าใน <code>parameter</code> แต่ช่อง <code>unit</code> ว่าง ฟังก์ชันจะคืนค่าว่าง
+</div> <div class="finding avoid"> <h3><span class="sev s3">ความเสี่ยงแฝง</span> &nbsp;R · <code>split_param</code> ทิ้งข้อมูลเงียบเมื่อไม่มีหน่วย</h3> <div class="kv"><b>โค้ด:</b> โน้ตบุ๊ก <code>recheck_comlumn_preapare</code> หัวข้อ 4 (หัวข้อ 4)</div> <p class="small muted" style="margin:.3em 0 0">โค้ดจริงที่เป็นหลักฐาน — ข้ามได้ถ้าไม่ได้ดูแลโค้ด</p>
+<p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
+    us = [...] if pd.notna(unit) else []<br> <b>if not us:</b><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>return {}, ""</b> &nbsp;&nbsp;&nbsp;# คืนค่าว่าง พร้อม note ว่าง = ไม่ติดธง </p> <p><b>ปัญหา:</b> ถ้าแถวใดมีค่าใน ช่อง “ค่าตัวเลข” แต่ช่อง หน่วย ว่าง ฟังก์ชันจะคืนค่าว่าง
   พร้อมข้อความกำกับที่ว่างเปล่าด้วย — คือ<b>ทิ้งข้อมูลโดยไม่ติดธงใดๆ</b> · เทียบกับกรณีจำนวนไม่ตรงกัน
-  ที่โค้ดยังใส่ข้อความเตือนไว้ใน <code>param_note</code></p>
-  <p><b>สถานะปัจจุบัน:</b> <span class="g">ยังไม่เกิดขึ้น</span> — ตรวจทั้ง 702 แถวแล้วไม่มีแถวไหนที่มี parameter แต่ไม่มี unit
+  ที่โค้ดยังใส่ข้อความเตือนไว้ใน <code>param_note</code></p> <p><b>สถานะปัจจุบัน:</b> <span class="g">ยังไม่เกิดขึ้น</span> — ตรวจทั้ง 702 แถวแล้วไม่มีแถวไหนที่มี parameter แต่ไม่มี unit
   จึงเป็นความเสี่ยงแฝง ไม่ใช่บั๊กที่ทำงานอยู่ · แต่เป็นรูปแบบเดียวกับที่ทำให้เกิดข้อค้นพบ A และ B
-  คือ<b>ข้อมูลหายโดยไม่มีสัญญาณ</b></p>
-  <p><b>ต้องทำ:</b> เปลี่ยนให้คืนข้อความเตือน เช่น <code>"มี parameter แต่ไม่มี unit"</code> แทนสตริงว่าง</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ความเสี่ยงแฝง</span> &nbsp;S · เมื่อจำนวนค่ากับจำนวนหน่วยไม่ตรง โค้ดทิ้งทั้งแถว</h3>
-  <p>ในฟังก์ชันเดียวกัน เมื่อ <code>len(ps) != len(us)</code> โค้ดคืน <code>{}</code> คือทิ้งค่าทั้งหมดของแถวนั้น
-  แทนที่จะเก็บส่วนที่จับคู่ได้ · ปัจจุบันไม่มีแถวใดติดธงนี้ (ทั้ง 11 แถวที่เคยติดถูกแก้หมดใน §4.0) จึงยังไม่กระทบข้อมูล</p>
-  <p>และในกรณีที่หน่วยซ้ำกันในแถวเดียว เช่น <code>parameter="100, 200"</code> กับ <code>unit="sec, sec"</code>
-  บรรทัด <code>out[u] = value</code> จะเขียนทับ เหลือเฉพาะค่าสุดท้าย · ตรวจแล้วปัจจุบัน<span class="g">ไม่มีแถวแบบนี้</span></p>
-  <p><b>ต้องทำ:</b> เก็บส่วนที่จับคู่ได้พร้อมติดธง และเปลี่ยนคีย์ให้ไม่ชนกันเมื่อหน่วยซ้ำ</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ตัดสินใจ</span> &nbsp;U · ตัวตรวจหน่วยผิดครอบคลุมแค่ 3 ปริมาณ</h3>
-  <div class="kv"><b>โค้ด:</b> <code>column_prepare.ipynb</code> cell 65 (§I explore)</div>
-  <p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
-    for k, b in [("voc", "Voc"), ("jsc", "Jsc"), ("mobility", "mobility")]: ...
-  </p>
-  <p>ตัวตรวจหาเฉพาะ 3 คำนี้ในชื่อ property · ปริมาณอื่นทั้งหมด — VBM, Rs, Rrec, Trap density, Bandgap, Conductivity —
-  <b>ไม่เคยถูกตรวจเรื่องหน่วยเลย</b> ซึ่งอธิบายว่าทำไมข้อค้นพบ C, D, E, J ในส่วนที่ 2 จึงหลุดรอดมาได้ทั้งหมด</p>
-  <p><b>ต้องทำ:</b> เพิ่มการตรวจแบบอิงช่วงค่าที่เป็นไปได้ทางฟิสิกส์แทนการไล่ชื่อ เช่น
+  คือ<b>ข้อมูลหายโดยไม่มีสัญญาณ</b></p> <p><b>ต้องทำ:</b> เปลี่ยนให้คืนข้อความเตือน เช่น <code>"มี parameter แต่ไม่มี unit"</code> แทนสตริงว่าง</p>
+</div> <div class="finding avoid"> <h3><span class="sev s3">ความเสี่ยงแฝง</span> &nbsp;S · เมื่อจำนวนค่ากับจำนวนหน่วยไม่ตรง โค้ดทิ้งทั้งแถว</h3> <p>ในฟังก์ชัน <code>split_param</code> เดียวกัน เมื่อ <code>len(ps) != len(us)</code> โค้ดคืน <code>{}</code> คือทิ้งค่าทั้งหมดของแถวนั้น
+  แทนที่จะเก็บส่วนที่จับคู่ได้ · ปัจจุบันไม่มีแถวใดติดธงนี้ (ทั้ง 11 แถวที่เคยติดถูกแก้หมดใน หัวข้อ 4.0) จึงยังไม่กระทบข้อมูล</p> <p>และในกรณีที่หน่วยซ้ำกันในแถวเดียว เช่น <code>parameter="100, 200"</code> กับ <code>unit="sec, sec"</code> บรรทัด <code>out[u] = value</code> จะเขียนทับ เหลือเฉพาะค่าสุดท้าย · ตรวจแล้วปัจจุบัน<span class="g">ไม่มีแถวแบบนี้</span></p> <p><b>ต้องทำ:</b> เก็บส่วนที่จับคู่ได้พร้อมติดธง และเปลี่ยนคีย์ให้ไม่ชนกันเมื่อหน่วยซ้ำ</p>
+</div> <div class="finding avoid"> <h3><span class="sev s3">ตัดสินใจ</span> &nbsp;U · ตัวตรวจหน่วยผิดครอบคลุมแค่ 3 ปริมาณ</h3> <div class="kv"><b>โค้ด:</b> โน้ตบุ๊ก <code>column_prepare</code> หัวข้อ I (หมวด I)</div> <p class="small muted" style="margin:.3em 0 0">โค้ดจริงที่เป็นหลักฐาน — ข้ามได้ถ้าไม่ได้ดูแลโค้ด</p>
+<p style="background:var(--tint); padding:.5em .8em; border-radius:5px; font-family:Menlo,monospace; font-size:8.6pt">
+    for k, b in [("voc", "Voc"), ("jsc", "Jsc"), ("mobility", "mobility")]: ... </p> <p>ตัวตรวจหาเฉพาะ 3 คำนี้ในชื่อ property · ปริมาณอื่นทั้งหมด — VBM, Rs, Rrec, Trap density, Bandgap, Conductivity — <b>ไม่เคยถูกตรวจเรื่องหน่วยเลย</b> ซึ่งอธิบายว่าทำไมข้อค้นพบ C, D, E, J ในส่วนที่ 2 จึงหลุดรอดมาได้ทั้งหมด</p> <p><b>ต้องทำ:</b> เพิ่มการตรวจแบบอิงช่วงค่าที่เป็นไปได้ทางฟิสิกส์แทนการไล่ชื่อ เช่น
   ระดับพลังงานอ้างอิงสุญญากาศต้องอยู่ในช่วง −7 ถึง −3 eV · ความต้านทานอนุกรมของเซลล์ต้องต่ำกว่า 100 Ω·cm² ·
   ความหนาแน่นกับดักต้องอยู่ในช่วง 10¹⁴–10¹⁸ cm⁻³ — วิธีนี้ดักได้ทุกปริมาณโดยไม่ต้องรู้ชื่อล่วงหน้า</p>
-</div>
-
-<div class="finding avoid">
-  <h3><span class="sev s3">ตัดสินใจ</span> &nbsp;V · ตัวเลขในเปเปอร์เองไม่สอดคล้องกัน 1 กรณี</h3>
-  <div class="kv"><b>ต้นทาง:</b> <code>ccschem_025_202505977_Sample1</code> ชีต <code>Properties</code> · Remarks “Best device, Table S3”</div>
-  <table>
-    <thead><tr><th class="n">Voc</th><th class="n">Jsc</th><th class="n">FF</th><th class="n">PCE ที่เปเปอร์รายงาน</th><th class="n">PCE ที่คำนวณได้</th><th class="n">ต่างกัน</th></tr></thead>
-    <tbody><tr class="bad"><td class="n">1.15</td><td class="n">23.53</td><td class="n">76.40</td><td class="n">20.17</td><td class="n">20.67</td><td class="n"><b>0.50 (2.4%)</b></td></tr></tbody>
-  </table>
-  <p><b>ทำไมถึงไม่ใช่ความผิดของเรา:</b> ทั้ง 4 ค่ามาจากแถวเดียวกันในตารางเดียวกันของเปเปอร์ (Champion, Table S3)
-  ไม่มีการปนชุดหรือปนทิศทาง · กรอกตรงตามต้นฉบับทุกตัว · ตรวจแล้วเป็นค่าเดียวในชุดข้อมูลที่มีลักษณะนี้</p>
-  <p><b>ทำไมถึงไม่ใช่การปัดเศษ:</b> ถ้าปัดจาก Voc 1.145–1.155 ค่าคำนวณจะแกว่งได้ราว ±0.09 เท่านั้น
-  ไม่พอจะอธิบายส่วนต่าง 0.50 · เปเปอร์เองน่าจะพิมพ์ค่าใดค่าหนึ่งผิด</p>
-  <p><b>ต้องทำ:</b> เปิด Table S3 ของเปเปอร์ตรวจ · ค่านี้เป็นตัวที่ทำให้ <code>max_err</code> ของทั้งชุดข้อมูลอยู่ที่ 0.503
+</div> <div class="finding avoid"> <h3><span class="sev s3">ตัดสินใจ</span> &nbsp;V · ตัวเลขในเปเปอร์เองไม่สอดคล้องกัน 1 กรณี</h3> <div class="kv"><b>ต้นทาง:</b> <code>ccschem_025_202505977_Sample1</code> ชีต Properties · หมายเหตุในไฟล์ระบุว่า “Best device, Table S3”</div> <table> <thead><tr><th class="n">Voc</th><th class="n">Jsc</th><th class="n">FF</th><th class="n">PCE ที่เปเปอร์รายงาน</th><th class="n">PCE ที่คำนวณได้</th><th class="n">ต่างกัน</th></tr></thead> <tbody><tr class="bad"><td class="n">1.15</td><td class="n">23.53</td><td class="n">76.40</td><td class="n">20.17</td><td class="n">20.67</td><td class="n"><b>0.50 (2.4%)</b></td></tr></tbody> </table> <p><b>ทำไมถึงไม่ใช่ความผิดของเรา:</b> ทั้ง 4 ค่ามาจากแถวเดียวกันในตารางเดียวกันของเปเปอร์ (Champion, Table S3)
+  ไม่มีการปนชุดหรือปนทิศทาง · กรอกตรงตามต้นฉบับทุกตัว · ตรวจแล้วเป็นค่าเดียวในชุดข้อมูลที่มีลักษณะนี้</p> <p><b>ทำไมถึงไม่ใช่การปัดเศษ:</b> ถ้าปัดจาก Voc 1.145–1.155 ค่าคำนวณจะแกว่งได้ราว ±0.09 เท่านั้น
+  ไม่พอจะอธิบายส่วนต่าง 0.50 · เปเปอร์เองน่าจะพิมพ์ค่าใดค่าหนึ่งผิด</p> <p><b>ต้องทำ:</b> เปิด Table S3 ของเปเปอร์ตรวจ · ค่านี้เป็นตัวที่ทำให้ ค่าคลาดสูงสุด ของทั้งชุดข้อมูลอยู่ที่ 0.503
   ซึ่งเคยถูกอธิบายว่าเป็น “การปัดเศษ” — คำอธิบายนั้นต้องแก้</p>
-</div>
-
-<!-- ============ สรุป ============ -->
-<h2 class="brk">สรุปรายการที่ต้องดำเนินการ</h2>
-
-<table>
-  <thead><tr><th style="width:6%">ข้อ</th><th style="width:9%">ระดับ</th><th style="width:30%">รายการ</th><th>สิ่งที่ต้องทำ</th></tr></thead>
-  <tbody>
-    <tr class="bad"><td>A</td><td><span class="sev s1">ต้องแก้</span></td><td>ความเร็วปั่น <code>solr_202400534_Sample2</code></td>
-        <td>แก้เป็น 5000 rpm · <b>ถอนข้อความในรายงานหัวข้อ 2.9 และในสไลด์</b> · อัปเดตกราฟการนับเป็น 0/15</td></tr>
-    <tr class="bad"><td>B</td><td><span class="sev s1">ต้องแก้</span></td><td><code>acsami_5c15868_Sample1</code> 11 ค่าหาย</td>
-        <td>กู้ค่าจากช่อง <code>Descriptions</code> · เพิ่มการอ่านช่องสำรองใน pipeline</td></tr>
-    <tr class="bad"><td>C</td><td><span class="sev s1">ต้องแก้</span></td><td>VBM ของ <code>ccschem_Sample1</code></td>
-        <td>แก้ +5.02 เป็น −5.02 · เพิ่ม gate ว่าระดับพลังงานอ้างอิงสุญญากาศต้องเป็นลบ</td></tr>
-    <tr><td>D</td><td><span class="sev s2">ควรแก้</span></td><td>ชื่อ VBM ชนกัน 2 ปริมาณ</td><td>แยกชื่อคอลัมน์ ห้ามเทียบข้ามกัน</td></tr>
-    <tr><td>E</td><td><span class="sev s2">ควรแก้</span></td><td><code>Rs</code> ของ smll เป็นความต้านทานแผ่น</td><td>ย้ายออกจากคอลัมน์ <code>rs</code></td></tr>
-    <tr><td>F</td><td><span class="sev s2">ควรแก้</span></td><td><code>Defect density</code> ไม่เข้า <code>trap_density</code></td><td>อย่าเพิ่งเติมกลับ — ค่าไม่สอดคล้องกับ VTFL ต้องตรวจเปเปอร์ก่อน</td></tr>
-    <tr><td>G</td><td><span class="sev s3">ตัดสินใจ</span></td><td>trap density เทียบข้ามเปเปอร์ไม่ได้</td><td>ใช้เทียบภายในเปเปอร์เท่านั้น · ใช้ <code>vtfl</code> สำหรับข้ามเปเปอร์</td></tr>
-    <tr><td>H</td><td><span class="sev s3">ตัดสินใจ</span></td><td>เฉลี่ย trap ของอิเล็กตรอนกับโฮล</td><td>เลือกเฉพาะฝั่งโฮลให้ตรงกับเปเปอร์อื่น</td></tr>
-    <tr><td>I</td><td><span class="sev s3">ตัดสินใจ</span></td><td><code>Rrec</code> ของ acsami_4c14300</td><td>ตรวจ Table S2 ของเปเปอร์ · ระหว่างนี้ห้ามใช้ข้ามเปเปอร์</td></tr>
-    <tr><td>J</td><td><span class="sev s3">ตัดสินใจ</span></td><td><code>Bandgap</code> ไม่ระบุชั้น</td><td>เติม <code>layer = HTL</code> · เพิ่ม gate เตือนถ้าเกิน 2.5 eV</td></tr>
-    <tr class="ok"><td>K</td><td><span class="sev s4">ผ่าน</span></td><td>mobility ต่างกัน 7 อันดับ</td><td>ไม่ต้องแก้ค่า — ตรวจไขว้ด้วย σ = n·e·μ แล้วตรง · ควรแยกชื่อตามชั้น</td></tr>
-    <tr><td>L</td><td><span class="sev s3">ตัดสินใจ</span></td><td>จังหวะหยดค่าบวกกำกวม 2 การตีความ</td>
-        <td>เปิดเปเปอร์ <code>acsami_5c15868</code> และ <code>solr_202200422</code> เพื่อชี้ขาด · ข้อสรุปเชิงทิศทางไม่เปลี่ยน</td></tr>
-    <tr><td>M</td><td><span class="sev s3">ตัดสินใจ</span></td><td><code>value_corrected</code> ไม่ตรง <code>value_parsed</code></td><td>เปลี่ยนชื่อคอลัมน์ให้สื่อความถูกต้อง</td></tr>
-    <tr><td>N</td><td><span class="sev s2">ควรแก้</span></td><td><code>psk_spin_rpm</code> ใช้ <code>max</code> แต่ <code>psk_spin_last_s</code> ใช้ขั้นสุดท้ายจริง</td>
-        <td>เปลี่ยนให้ใช้ตรรกะเดียวกัน (เรียงตาม <code>step_order</code>) · ตอนนี้ยังไม่ทำให้ค่าผิด (สมมติฐานเป็นจริง 43/43) แต่เป็นความเสี่ยงที่ไม่มีการเตือน</td></tr>
-    <tr class="bad"><td>O</td><td><span class="sev s1">ต้องแก้</span></td><td>ค่า JV ยังปนระหว่างทิศทางการวัด RS/FS — 5 จาก 12 device</td>
-        <td>เพิ่มทิศทางเข้าเป็นส่วนหนึ่งของคีย์ชุดค่า · ลดเกณฑ์ตรวจจาก 1.0 เป็น 0.2 · <b>ตรวจ PCE 26.50 ที่เคยอ้างเป็นค่าสูงสุดของชุดข้อมูล</b></td></tr>
-    <tr><td>P</td><td><span class="sev s2">ควรแก้</span></td><td>ด่านตรวจ §8.7 ยกเว้นกรณี FF ที่ทำให้เกิดปัญหาพอดี แล้วประกาศว่าตรวจครบ</td>
-        <td>แก้ข้อความให้ตรงกับสิ่งที่ตรวจจริง หรือขยายเงื่อนไข</td></tr>
-    <tr><td>Q</td><td><span class="sev s2">ควรแก้</span></td><td>§8.8 แก้ค่าหลังด่านตรวจ §8.7 ผ่านไปแล้ว ไม่มีการตรวจซ้ำ</td>
-        <td>ย้ายด่านตรวจไปไว้ก่อน export ใน §10</td></tr>
-    <tr><td>R</td><td><span class="sev s3">ความเสี่ยงแฝง</span></td><td><code>split_param</code> ทิ้งข้อมูลเงียบเมื่อไม่มีหน่วย (ยังไม่เกิด 0/702 แถว)</td>
-        <td>ให้คืนข้อความเตือนแทนสตริงว่าง</td></tr>
-    <tr><td>S</td><td><span class="sev s3">ความเสี่ยงแฝง</span></td><td>จำนวนค่ากับหน่วยไม่ตรง ทิ้งทั้งแถว · หน่วยซ้ำถูกเขียนทับ (ยังไม่เกิด)</td>
-        <td>เก็บส่วนที่จับคู่ได้พร้อมติดธง</td></tr>
-    <tr><td>U</td><td><span class="sev s3">ตัดสินใจ</span></td><td>ตัวตรวจหน่วยครอบคลุมแค่ Voc, Jsc, mobility — อธิบายว่าทำไมข้อ C D E J หลุดรอด</td>
-        <td>เปลี่ยนเป็นการตรวจแบบอิงช่วงค่าทางฟิสิกส์แทนการไล่ชื่อ</td></tr>
-    <tr><td>V</td><td><span class="sev s3">ตัดสินใจ</span></td><td>ตัวเลขของ <code>ccschem_Sample1</code> ในเปเปอร์เองไม่สอดคล้อง 0.50</td>
-        <td>เปิด Table S3 ตรวจ · แก้คำอธิบายที่เคยบอกว่า <code>max_err</code> 0.503 เป็นการปัดเศษ</td></tr>
-  </tbody>
-</table>
-
-<h3>ลำดับที่ควรทำ</h3>
-<ol>
-  <li><b>ทำทันที</b> — ข้อ A และ O เพราะกระทบข้อความที่เผยแพร่ไปแล้ว · ข้อ A ทำให้ข้ออ้างเรื่องความเร็วปั่นผิด
-      ข้อ O ทำให้ค่า PCE สูงสุด 26.50 และคำอธิบายเรื่องการปัดเศษต้องตรวจใหม่</li>
-  <li><b>ทำในรอบแก้ข้อมูลถัดไป</b> — ข้อ B, C, D, E เป็นการแก้ที่ชัดเจน มีหลักฐานครบ ไม่ต้องเปิดเปเปอร์เพิ่ม</li>
-  <li><b>ต้องเปิดเปเปอร์ต้นฉบับก่อนตัดสินใจ</b> — ข้อ F, I, L (3 เปเปอร์: <code>solr_202200422</code>, <code>acsami_4c14300</code>, <code>acsami_5c15868</code>)</li>
-  <li><b>ปรับเอกสารและ gate</b> — ข้อ G, H, J, M, N, P, Q, R, S, U</li>
-  <li><b>ตรวจเพิ่มกับต้นฉบับ</b> — ข้อ V (Table S3 ของ <code>ccschem</code>)</li>
-</ol>
-
-<div class="box blue">
-  <h4>ข้อสังเกตเชิงระบบ — รากของปัญหา 2 ข้อใหญ่เป็นเรื่องเดียวกัน</h4>
-  <p>ทั้งข้อ A และ B เกิดจากสาเหตุเดียวกัน คือ<b>ผู้กรอกข้อมูลใช้ช่อง <code>Descriptions</code> แทนช่อง <code>Parameter</code></b>
-  ในบางไฟล์ แล้วตัวสกัดอ่านเฉพาะช่องหลัง ทำให้ข้อมูลหายเงียบโดยไม่มีการแจ้งเตือน</p>
-  <p>กวาดทั้ง 44 ไฟล์แล้วพบรูปแบบนี้ <b>13 แถว ใน 2 ไฟล์</b> คือ <code>acsami_5c15868_Sample1</code> (11 แถว)
-  และ <code>solr_202400534_Sample2</code> (1 แถว) กับอีก 1 แถวที่เป็นข้อความบรรยายเฉยๆ</p>
-  <p><b>ป้องกันไม่ให้เกิดซ้ำ:</b> เพิ่ม gate ที่ตรวจว่า ถ้าแถวใดมี <code>ProcessType</code> แต่ <code>Parameter</code> ว่าง
-  ขณะที่ <code>Descriptions</code> มีตัวเลขพร้อมหน่วย ให้หยุดการทำงานทันทีและรายงานแถวนั้น —
+</div> <!-- ============ สรุป ============ -->
+<h2 class="brk">สรุปรายการที่ต้องดำเนินการ</h2> <table> <thead><tr><th style="width:6%">ข้อ</th><th style="width:9%">ระดับ</th><th style="width:30%">รายการ</th><th>สิ่งที่ต้องทำ</th></tr></thead> <tbody> <tr class="bad"><td>A</td><td><span class="sev s1">ต้องแก้</span></td><td>ความเร็วปั่น <code>solr_202400534_Sample2</code></td> <td>แก้เป็น 5000 rpm · <b>ถอนข้อความในรายงานหัวข้อ 2.9 และในสไลด์</b> · อัปเดตกราฟการนับเป็น 0/15</td></tr> <tr class="bad"><td>B</td><td><span class="sev s1">ต้องแก้</span></td><td><code>acsami_5c15868_Sample1</code> 11 ค่าหาย</td> <td>กู้ค่าจากช่อง “คำอธิบาย” · เพิ่มการอ่านช่องสำรองใน กระบวนการเตรียมข้อมูล</td></tr> <tr class="bad"><td>C</td><td><span class="sev s1">ต้องแก้</span></td><td>VBM ของ <code>ccschem_Sample1</code></td> <td>แก้ +5.02 เป็น −5.02 · เพิ่ม การตรวจสอบ ว่าระดับพลังงานอ้างอิงสุญญากาศต้องเป็นลบ</td></tr> <tr><td>D</td><td><span class="sev s2">ควรแก้</span></td><td>ชื่อ VBM ชนกัน 2 ปริมาณ</td><td>แยกชื่อคอลัมน์ ห้ามเทียบข้ามกัน</td></tr> <tr><td>E</td><td><span class="sev s2">ควรแก้</span></td><td>Rs ของ smll เป็นความต้านทานแผ่น</td><td>ย้ายออกจากคอลัมน์ <code>rs</code></td></tr> <tr><td>F</td><td><span class="sev s2">ควรแก้</span></td><td>Defect density ไม่เข้า <code>trap_density</code></td><td>อย่าเพิ่งเติมกลับ — ค่าไม่สอดคล้องกับ VTFL ต้องตรวจเปเปอร์ก่อน</td></tr> <tr><td>G</td><td><span class="sev s3">ตัดสินใจ</span></td><td>trap density เทียบข้ามเปเปอร์ไม่ได้</td><td>ใช้เทียบภายในเปเปอร์เท่านั้น · ใช้ <code>vtfl</code> สำหรับข้ามเปเปอร์</td></tr> <tr><td>H</td><td><span class="sev s3">ตัดสินใจ</span></td><td>เฉลี่ย trap ของอิเล็กตรอนกับโฮล</td><td>เลือกเฉพาะฝั่งโฮลให้ตรงกับเปเปอร์อื่น</td></tr> <tr><td>I</td><td><span class="sev s3">ตัดสินใจ</span></td><td>Rrec ของ acsami_4c14300</td><td>ตรวจ Table S2 ของเปเปอร์ · ระหว่างนี้ห้ามใช้ข้ามเปเปอร์</td></tr> <tr><td>J</td><td><span class="sev s3">ตัดสินใจ</span></td><td>Bandgap ไม่ระบุชั้น</td><td>เติม <code>layer = HTL</code> · เพิ่ม การตรวจสอบ เตือนถ้าเกิน 2.5 eV</td></tr> <tr class="ok"><td>K</td><td><span class="sev s4">ผ่าน</span></td><td>mobility ต่างกัน 7 อันดับ</td><td>ไม่ต้องแก้ค่า — ตรวจไขว้ด้วย σ = n·e·μ แล้วตรง · ควรแยกชื่อตามชั้น</td></tr> <tr><td>L</td><td><span class="sev s3">ตัดสินใจ</span></td><td>จังหวะหยดค่าบวกกำกวม 2 การตีความ</td> <td>เปิดเปเปอร์ <code>acsami_5c15868</code> และ <code>solr_202200422</code> เพื่อชี้ขาด · ข้อสรุปเชิงทิศทางไม่เปลี่ยน</td></tr> <tr><td>M</td><td><span class="sev s3">ตัดสินใจ</span></td><td>ค่าหลังแก้หน่วย ไม่ตรง ค่าที่นำไปใช้จริง</td><td>เปลี่ยนชื่อคอลัมน์ให้สื่อความถูกต้อง</td></tr> <tr><td>N</td><td><span class="sev s2">ควรแก้</span></td><td>ความเร็วปั่นเคลือบชั้นดูดแสง ใช้ ค่าสูงสุด แต่ ความยาวการปั่นขั้นสุดท้าย ใช้ขั้นสุดท้ายจริง</td> <td>เปลี่ยนให้ใช้ตรรกะเดียวกัน (เรียงตาม <code>step_order</code>) · ตอนนี้ยังไม่ทำให้ค่าผิด (สมมติฐานเป็นจริง 43/43) แต่เป็นความเสี่ยงที่ไม่มีการเตือน</td></tr> <tr class="bad"><td>O</td><td><span class="sev s1">ต้องแก้</span></td><td>ค่า JV ยังปนระหว่างทิศทางการวัด RS/FS — 5 จาก 12 อุปกรณ์</td> <td>เพิ่มทิศทางเข้าเป็นส่วนหนึ่งของคีย์ชุดค่า · ลดเกณฑ์ตรวจจาก 1.0 เป็น 0.2 · <b>ตรวจ PCE 26.50 ที่เคยอ้างเป็นค่าสูงสุดของชุดข้อมูล</b></td></tr> <tr><td>P</td><td><span class="sev s2">ควรแก้</span></td><td>การตรวจสอบในหัวข้อ 8.7 ยกเว้นกรณี FF ที่ทำให้เกิดปัญหาพอดี แล้วประกาศว่าตรวจครบ</td> <td>แก้ข้อความให้ตรงกับสิ่งที่ตรวจจริง หรือขยายเงื่อนไข</td></tr> <tr><td>Q</td><td><span class="sev s2">ควรแก้</span></td><td>หัวข้อ 8.8 แก้ค่าหลังการตรวจสอบในหัวข้อ 8.7 ผ่านไปแล้ว ไม่มีการตรวจซ้ำ</td> <td>ย้ายการตรวจไปไว้ก่อนบันทึกผลลัพธ์ในหัวข้อ 10</td></tr> <tr><td>R</td><td><span class="sev s3">ความเสี่ยงแฝง</span></td><td><code>split_param</code> ทิ้งข้อมูลเงียบเมื่อไม่มีหน่วย (ยังไม่เกิด 0/702 แถว)</td> <td>ให้คืนข้อความเตือนแทนสตริงว่าง</td></tr> <tr><td>S</td><td><span class="sev s3">ความเสี่ยงแฝง</span></td><td>จำนวนค่ากับหน่วยไม่ตรง ทิ้งทั้งแถว · หน่วยซ้ำถูกเขียนทับ (ยังไม่เกิด)</td> <td>เก็บส่วนที่จับคู่ได้พร้อมติดธง</td></tr> <tr><td>U</td><td><span class="sev s3">ตัดสินใจ</span></td><td>ตัวตรวจหน่วยครอบคลุมแค่ Voc, Jsc, mobility — อธิบายว่าทำไมข้อ C D E J หลุดรอด</td> <td>เปลี่ยนเป็นการตรวจแบบอิงช่วงค่าทางฟิสิกส์แทนการไล่ชื่อ</td></tr> <tr><td>V</td><td><span class="sev s3">ตัดสินใจ</span></td><td>ตัวเลขของ <code>ccschem_Sample1</code> ในเปเปอร์เองไม่สอดคล้อง 0.50</td> <td>เปิด Table S3 ตรวจ · แก้คำอธิบายที่เคยบอกว่า ค่าคลาดสูงสุด 0.503 เป็นการปัดเศษ</td></tr> </tbody>
+</table> <h3>ลำดับที่ควรทำ</h3>
+<ol> <li><b>ทำทันที</b> — ข้อ A และ O เพราะกระทบข้อความที่เผยแพร่ไปแล้ว · ข้อ A ทำให้ข้ออ้างเรื่องความเร็วปั่นผิด
+      ข้อ O ทำให้ค่า PCE สูงสุด 26.50 และคำอธิบายเรื่องการปัดเศษต้องตรวจใหม่</li> <li><b>ทำในรอบแก้ข้อมูลถัดไป</b> — ข้อ B, C, D, E เป็นการแก้ที่ชัดเจน มีหลักฐานครบ ไม่ต้องเปิดเปเปอร์เพิ่ม</li> <li><b>ต้องเปิดเปเปอร์ต้นฉบับก่อนตัดสินใจ</b> — ข้อ F, I, L (3 เปเปอร์: <code>solr_202200422</code>, <code>acsami_4c14300</code>, <code>acsami_5c15868</code>)</li> <li><b>ปรับเอกสารและ การตรวจสอบ</b> — ข้อ G, H, J, M, N, P, Q, R, S, U</li> <li><b>ตรวจเพิ่มกับต้นฉบับ</b> — ข้อ V (Table S3 ของ <code>ccschem</code>)</li>
+</ol> <div class="box blue"> <h4>ข้อสังเกตเชิงระบบ — รากของปัญหา 2 ข้อใหญ่เป็นเรื่องเดียวกัน</h4> <p>ทั้งข้อ A และ B เกิดจากสาเหตุเดียวกัน คือ<b>ผู้กรอกข้อมูลใช้ช่อง “คำอธิบาย” แทนช่อง “ค่าตัวเลข”</b>
+  ในบางไฟล์ แล้วตัวสกัดอ่านเฉพาะช่องหลัง ทำให้ข้อมูลหายเงียบโดยไม่มีการแจ้งเตือน</p> <p>กวาดทั้ง 44 ไฟล์แล้วพบรูปแบบนี้ <b>13 แถว ใน 2 ไฟล์</b> คือ <code>acsami_5c15868_Sample1</code> (11 แถว)
+  และ <code>solr_202400534_Sample2</code> (1 แถว) กับอีก 1 แถวที่เป็นข้อความบรรยายเฉยๆ</p> <p><b>ป้องกันไม่ให้เกิดซ้ำ:</b> เพิ่ม การตรวจสอบ ที่ตรวจว่า ถ้าแถวใดมี <code>ProcessType</code> แต่ ช่อง “ค่าตัวเลข” ว่าง
+  ขณะที่ ช่อง “คำอธิบาย” มีตัวเลขพร้อมหน่วย ให้หยุดการทำงานทันทีและรายงานแถวนั้น —
   ตรวจง่ายและดักได้ทั้งสองกรณีที่พบในรอบนี้</p>
-</div>
-
-<footer>
+</div> <footer>
   ตรวจสอบด้วยการเปิดไฟล์ Excel ต้นทางโดยตรงทุกรายการที่ระบุ · การตรวจความสมเหตุสมผลใช้สูตร SCLC
   (N<sub>t</sub> = 2εε₀V<sub>TFL</sub>/eL², ε<sub>r</sub> = 32) และสมการ σ = n·e·μ ·
-  ข้อมูลอ้างอิง <code>processed/prepared_v2/</code> และ <code>processed/audit/unit_value_errors.csv</code>
-</footer>
-
-</body>
+  ข้อมูลอ้างอิง ชุดข้อมูลสุดท้าย และ ไฟล์บันทึกหน่วยที่เคยตั้งข้อสงสัย
+</footer> </body>
 </html>

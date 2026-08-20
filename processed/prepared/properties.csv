@@ -1,4 +1,4 @@
-device_id,property,value,error,unit,remarks,unit_corrected,value_corrected,unit_fix_note,base_property,stat,scan,layer,carrier,value_parsed,value_note
+device_id,property,value,error,unit,remarks,unit_corrected,value_after_unit_fix,unit_fix_note,base_property,stat,scan,layer,carrier,value_parsed,value_note
 10.1002admi.202500231_Sample1,Voc,1.02,0.01,V,AM 1.5G,V,1.02,,Voc,,,,,1.02,
 10.1002admi.202500231_Sample1,Jsc,20.97,1.13,mA cm-2,AM 1.5G,mA cm-2,20.97,,Jsc,,,,,20.97,
 10.1002admi.202500231_Sample1,FF,0.76,0.005,,AM 1.5G,,0.76,,FF,,,,,76.0,FF scale: fraction -> % (x100)
