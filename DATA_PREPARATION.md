@@ -513,7 +513,7 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 | ข้อ | ปัญหา | แก้เป็น |
 |---|---|---|
 | D | ชื่อ `VBM` ใช้กับ 2 ปริมาณ | แยก 3 แถวเป็น `VBM offset from EF` |
-| E | `Rs` ของ `smll` 2 แถวเป็นความต้านทานแผ่น (Ω/sq) | ย้ายไป `sheet_resistance_htl` — `rs` เหลือ 20 device |
+| E | `Rs` ของ `smll` 2 แถวเป็นความต้านทานแผ่น (Ω/sq) | ย้ายไป `sheet_resistance_htl` (2 device) — `rs` เหลือ 20 device |
 | H | `trap_density` เฉลี่ยฝั่งโฮลกับอิเล็กตรอนรวมกัน | ใช้ฝั่งโฮลอย่างเดียว + `trap_density_electron` |
 | J | `Bandgap` 3.80 eV ของ `solener` ไม่ระบุชั้น | เติม `layer = HTL` (เกณฑ์ > 2.5 eV) |
 | M | ชื่อ `value_corrected` สื่อกว้างเกินจริง | เปลี่ยนเป็น `value_after_unit_fix` |
@@ -544,7 +544,7 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 
 ### ผลที่เปลี่ยนไป
 
-`target_table` จาก 44×35 เป็น **44×43** · ค่าที่เปลี่ยน: `psk_spin_rpm` 2 device · knob ของ `acsami_5c15868_Sample1` 5 คอลัมน์ ·
+`target_table` จาก 44×35 เป็น **44×44** · ค่าที่เปลี่ยน: `psk_spin_rpm` 2 device · knob ของ `acsami_5c15868_Sample1` 5 คอลัมน์ ·
 `voc`/`jsc`/`ff` 5 device (แก้การปนทิศทางสแกน) · `rs` เหลือ 20 device · `trap_density` ของ `nanoen` 3 device
 
 | ตัวชี้วัด | ก่อนแก้ | หลังแก้ | ทิศทางที่ดี |
