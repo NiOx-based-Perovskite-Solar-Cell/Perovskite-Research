@@ -228,10 +228,41 @@
   </ul>
 </div>
 
+<div class="box good">
+  <h4>อัปเดต ก.ย. 2569 — ปิดรายการค้างจากการตรวจสอบย้อนกลับ</h4>
+  <p>รายงานการตรวจสอบย้อนกลับ (<code>audit_report.pdf</code>) ปิดไป 17 จาก 20 รายการ เหลือค้าง 3 รายการที่ระบุว่า
+  “ต้องเห็นเปเปอร์ต้นฉบับ” · รอบนี้ไล่ปิดต่อจนเหลือเฉพาะสิ่งที่ต้องใช้เปเปอร์ที่ยังเปิดไม่ได้จริง ๆ</p>
+  <table>
+    <thead><tr><th style="width:26%">ทำอะไร</th><th>ผล</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ด่านตรวจ 20 รายการ อ่านจากไฟล์บนดิสก์</strong></td>
+          <td>ตรวจซ้ำทุกการแก้จากไฟล์ผลลัพธ์จริง ไม่เชื่อโน้ตบุ๊กต้นทาง — ผ่าน 18 ค้าง 1 ไม่มีรายการใดหาย ·
+          ถ้ารันกระบวนการใหม่แล้วการแก้หลุด ด่านนี้จะหยุดทำงานทันที</td></tr>
+      <tr><td><strong>จังหวะหยด antisolvent</strong> (รายการค้างเดิม)</td>
+          <td>เดิมตีความได้ 2 ทางและเลือกไว้ทางหนึ่งโดยไม่เคยตรวจ · พบว่าทางที่ใช้อยู่บังคับให้เปเปอร์หนึ่ง
+          หยดสารตอน<em>วินาทีที่หยุดปั่นพอดี</em> ซึ่งเป็นไปไม่ได้ทางกายภาพ (ฟิล์มไม่มีเวลาตกผลึก) ·
+          สลับไปใช้อีกการตีความ ซึ่งไม่มีเคสแบบนี้เลย และ<strong>เปเปอร์ฉบับที่ 2 ยืนยันถ้อยคำนี้ตรง ๆ</strong> ·
+          เปลี่ยนชื่อคอลัมน์ให้บอกวิธีคิดในตัวเอง เพื่อไม่ให้ความหมายเปลี่ยนเงียบ ๆ อีก</td></tr>
+      <tr><td><strong>ชื่อค่าที่ไม่บอกว่าวัดจากชั้นไหน</strong></td>
+          <td>ค่าความคล่องตัวของพาหะต่างกันได้ถึง 8 อันดับของขนาดเพราะเป็นคนละชั้น ·
+          เติมชั้นให้เฉพาะแถวที่<strong>มีหลักฐานในต้นฉบับ</strong> (ระบุโครงสร้างอุปกรณ์ที่ไม่มีชั้นดูดแสง = วัดจากชั้นนำโฮลแน่นอน)
+          ที่เหลือติดธงว่า “ยังไม่ทราบชั้น” ไม่เดา · มีการตรวจบังคับว่าทุกแถวต้องมีชั้นหรือมีธง</td></tr>
+      <tr><td><strong>อ่านตรรกะการคลีนทั้ง 102 เซลล์</strong> (สิ่งที่ audit ระบุว่ายังไม่ได้ทำ)</td>
+          <td>โครงสร้างแข็งแรง (มีด่านตรวจปิดท้ายทุกช่วง คอลัมน์ดิบไม่เคยถูกแก้ เขียนดิสก์จุดเดียวแล้วอ่านกลับมาเทียบ)
+          · พบ 5 ประเด็น สำคัญที่สุดคือ<strong>ตัวแตกชื่อค่าอ่านแค่ “ชื่อ” ไม่เคยอ่านช่องหมายเหตุ</strong>
+          ทั้งที่ 45 แถวมีชั้นระบุอยู่ในนั้นแล้ว — นี่คือ<strong>รากเดียว</strong>ของข้อผิดพลาด 4 ข้อที่ audit เคยเจอแยกกัน ·
+          และพบว่า<strong>ชุดข้อมูลกลางทาง (<code>prepared/</code>) ยังมีบั๊กที่ถูกปะให้ทีหลัง</strong> จึงต้องใช้ชุดสุดท้ายเท่านั้น</td></tr>
+    </tbody>
+  </table>
+  <p><strong>ผลต่อข้อสรุปหลัก: ไม่เปลี่ยน</strong> — ΔPCE ยังเป็น +2.09% ดีขึ้น 11/11 เปเปอร์ (p = 0.001)
+  และ VTFL ยังลดลง 8/8 · สิ่งที่เปลี่ยนคือ<strong>ความครอบคลุมเพิ่มขึ้น</strong>:
+  ความต้านทาน recombination 15 → 16 อุปกรณ์ · retention 14 → 16 อุปกรณ์ ทำให้เทียบเสถียรภาพได้ 3 → 4 เปเปอร์
+  (ยังเป็นข้อสังเกต ไม่ใช่ผลหลัก เพราะ n เล็ก)</p>
+</div>
+
 <h3 class="brk">1.3 การตรวจย้อนกับเปเปอร์ต้นฉบับ (ground-truth validation)</h3>
 
-<p>เลือกเปเปอร์ตัวอย่าง 1 ฉบับ (<em>Tirado et al., Adv. Mater. Interfaces</em> 2025, open access)
-แล้วเปิดทั้งตัวเปเปอร์และไฟล์ Supporting Information ไล่เทียบทุกค่าที่สกัดมา</p>
+<p>ตรวจไปแล้ว <strong>2 เปเปอร์</strong> โดยเปิดทั้งตัวเปเปอร์และไฟล์ Supporting Information ไล่เทียบทุกค่าที่สกัดมา — ฉบับแรก <em>Tirado et al., Adv. Mater. Interfaces</em> 2025 (open access) และฉบับที่สอง <em>Du et al., CCS Chem.</em> 2026, 8, 1964–1974 (diamond open access) <strong>ตรงทั้งคู่ 30/30 ค่า</strong> · รายละเอียดของฉบับที่สองอยู่ท้ายหัวข้อนี้</p>
 
 <table>
   <thead><tr><th>สิ่งที่เทียบ</th><th style="width:26%">แหล่งในเปเปอร์</th><th class="num" style="width:14%">ผล</th></tr></thead>
@@ -256,6 +287,41 @@
   การตรวจสอบจึงต้องไปถึงระดับ “ค่านี้เป็นไปได้ทางฟิสิกส์ไหม” ไม่ใช่แค่ “ตรงกับต้นฉบับไหม”</p>
 </div>
 
+<div class="box key">
+  <h4>เปเปอร์ฉบับที่ 2 — <em>Du et al., CCS Chem.</em> 2026 (ตรวจ ก.ย. 2569)</h4>
+  <p>เลือกฉบับนี้เพราะเป็นเปเปอร์ที่ค้างข้อสงสัยไว้: ตัวเลข J–V ของอุปกรณ์ควบคุมไม่คูณกันลงตัว
+  <strong>ผลตรวจ: ค่าที่เราสกัดมาตรงกับเปเปอร์ทุกตัว 30/30</strong>
+  (ขั้นตอนการผลิต 14 ค่า · สูตรเคมี · VTFL กับความหนาแน่นกับดัก 3 คู่ · ระดับพลังงาน 3 ค่า · เสถียรภาพ 6 ค่า · J–V ทั้ง 3 อุปกรณ์)
+  แต่การไล่ทีละบรรทัดทำให้เจอ<strong>ค่าที่ตกหล่นหรือกรอกผิดเพิ่มอีก 4 จุด</strong> ซึ่งแก้ที่ต้นทางแล้วทั้งหมด</p>
+  <table>
+    <thead><tr><th style="width:30%">เจออะไร</th><th>หลักฐานในเปเปอร์</th><th style="width:22%">แก้เป็น</th></tr></thead>
+    <tbody>
+      <tr><td>ค่า <em>work function</em> ของอุปกรณ์ควบคุมกรอกเป็น 4.52 eV</td>
+          <td>เปเปอร์ระบุ “…with a WF of <strong>4.75</strong> eV”</td><td>แก้เป็น 4.75</td></tr>
+      <tr><td>ปริมาณเดียวกันถูกเรียก 2 ชื่อในเปเปอร์เดียว (<code>WF</code> กับ <code>Work Function</code>)</td>
+          <td>ตัวอย่างที่ 1 ใช้ชื่อเต็ม ตัวอย่างที่ 2–3 ใช้ตัวย่อ</td>
+          <td>ยุบเป็นชื่อเดียว — <strong>สำคัญเพราะด่านตรวจช่วงค่าไล่ตามชื่อ แถวที่ใช้ตัวย่อจึงเคยหลุดการตรวจ</strong></td></tr>
+      <tr><td>ความต้านทาน recombination ของอุปกรณ์ควบคุม<strong>หายไปทั้งค่า</strong></td>
+          <td>เปเปอร์ระบุ “from <strong>179</strong> to 372 and 488 Ω”</td>
+          <td>เติม 179 Ω → คอลัมน์นี้จาก 15 เป็น <strong>16</strong> อุปกรณ์</td></tr>
+      <tr><td>เงื่อนไขทดสอบเสถียรภาพของ 2 อุปกรณ์ไม่ได้กรอกอุณหภูมิ</td>
+          <td>เปเปอร์ระบุว่าเก็บที่ <strong>อุณหภูมิห้อง</strong> ทั้งสามตัวในการทดสอบเดียวกัน</td>
+          <td>เติม 25 °C → retention จาก 14 เป็น <strong>16</strong> อุปกรณ์ และเทียบได้ 3 → <strong>4 เปเปอร์</strong></td></tr>
+    </tbody>
+  </table>
+  <p><strong>ปิดข้อสงสัยเดิมได้</strong> — เนื้อความของเปเปอร์เขียน Voc 1.15 · Jsc 23.53 · FF 76.40 · PCE 20.17
+  ซึ่ง<strong>ตรงกับไฟล์ของเราทุกตัว</strong> แต่คูณกันแล้วได้ 20.67 ไม่ใช่ 20.17 ·
+  อีกสองอุปกรณ์ในเปเปอร์เดียวกันคูณลงตัวปกติ แปลว่า<strong>ความไม่สอดคล้องอยู่ในตัวเปเปอร์เอง</strong>
+  (ผิดซ้ำทั้งในตารางเสริมและในเนื้อความ) ไม่ใช่ความผิดพลาดของการสกัดข้อมูล ·
+  เราเก็บค่า 20.17 ตามต้นฉบับและประกาศข้อจำกัดนี้ไว้ · ทดสอบแล้วว่าไม่ว่าใช้ค่าไหน ผลหลักไม่เปลี่ยน</p>
+  <p><strong>บทเรียนที่ได้เพิ่ม — การเติมข้อมูลจริงเผยบั๊กในกติกาของเราเอง</strong>
+  พอเติมค่า 179 Ω เข้าไป ตัวตรวจ “ค่านี้หลุดสเกลจากกลุ่มไหม” กลับติดธงค่า 179
+  ทั้งที่ค่า 372 และ 488 ซึ่งมาจาก<em>รูปเดียวกันของเปเปอร์เดียวกัน</em>ไม่ติด ·
+  สาเหตุคือตัวตรวจวัดระยะห่างเป็น<strong>รายอุปกรณ์</strong> ทั้งที่ปัญหาสเกลเกิดจากนิยามและหน่วยที่<strong>เปเปอร์</strong>เลือกใช้
+  จึงเป็นคุณสมบัติของเปเปอร์ ไม่ใช่ของอุปกรณ์ · แก้เป็นวัดที่ระดับเปเปอร์ พร้อมการตรวจที่จะหยุดทำงานทันที
+  ถ้าธงไม่เท่ากันภายในเปเปอร์เดียว</p>
+</div>
+
 <h3>1.4 ผลลัพธ์ — ชุดข้อมูลสุดท้าย 10 ตาราง</h3>
 <p class="small muted">ชื่อไฟล์เป็นชื่อจริงบนดิสก์ อยู่ในโฟลเดอร์ <code>processed/prepared_v2/</code> ใช้อ้างอิงเวลาเปิดไฟล์หรือคุยกับคนที่มาทำต่อ</p>
 
@@ -263,7 +329,7 @@
   <thead><tr><th style="width:23%">ไฟล์</th><th class="num" style="width:12%">ขนาด</th><th>บทบาท</th></tr></thead>
   <tbody>
     <tr><td><span class="idname">target_table.csv</span><span class="idgloss">ตารางหลัก</span></td><td class="num">44 × 44</td><td><strong>ตารางหลักสำหรับสร้างแบบจำลอง</strong> — 1 แถว = 1 อุปกรณ์ ฝังการตัดสินใจทุกข้อไว้แล้ว (เลือกค่า J–V จากชุดเดียวกัน, เติม 0 ให้ไอออนที่ไม่อยู่ในสูตร, แยกจุดอ้างอิงเวลาของ antisolvent)</td></tr>
-    <tr><td><span class="idname">process.csv</span><span class="idgloss">ขั้นตอนการผลิต</span></td><td class="num">702 × 71</td><td>ทุกขั้นตอนการผลิตแยกตามชั้น + พารามิเตอร์ที่แตกเป็นคอลัมน์ 53 ตัว + ร่องรอยการแก้ทุกครั้ง</td></tr>
+    <tr><td><span class="idname">process.csv</span><span class="idgloss">ขั้นตอนการผลิต</span></td><td class="num">702 × 72</td><td>ทุกขั้นตอนการผลิตแยกตามชั้น + พารามิเตอร์ที่แตกเป็นคอลัมน์ 53 ตัว + ร่องรอยการแก้ทุกครั้ง</td></tr>
     <tr><td><span class="idname">properties.csv</span><span class="idgloss">ค่าที่วัดได้</span></td><td class="num">563 × 16</td><td>ค่าที่เปเปอร์รายงาน แยกชื่อค่าที่วัดออกจากเงื่อนไขการวัด พร้อมตัวเลขที่แปลงแล้ว</td></tr>
     <tr><td><span class="idname">materials.csv</span><span class="idgloss">สารตั้งต้น</span></td><td class="num">543 × 13</td><td>สารตั้งต้นรายชั้น + ระบบตัวทำละลาย</td></tr>
     <tr><td><span class="idname">layers.csv</span><span class="idgloss">ชั้นของเซลล์</span></td><td class="num">352 × 11</td><td>วัสดุรายชั้น + ความหนา + ชนิดชั้น (หลัก/เคลือบ/additive)</td></tr>
@@ -287,9 +353,9 @@
   <tbody>
     <tr><td>ผลลัพธ์ (Y)</td><td><code>voc</code> <code>jsc</code> <code>ff</code> <code>pce</code><span class="idgloss">แรงดัน · กระแส · ความสมบูรณ์ของกราฟ · ประสิทธิภาพรวม — สี่ค่านี้เลือกจากชุดเดียวกันเสมอ</span></td><td class="num">43 · 42</td></tr>
     <tr><td>ตัวแปรคั่นกลาง</td><td><code>vtfl</code><span class="idgloss">แรงดันที่ใช้เติมกับดักให้เต็ม — ตัวแทนความหนาแน่นกับดักพาหะ</span></td><td class="num">28</td></tr>
-    <tr><td></td><td><code>trap_density</code> · <code>rs</code> · <code>rrec</code><span class="idgloss">ความหนาแน่นกับดัก · ความต้านทานอนุกรม · ความต้านทาน recombination</span></td><td class="num">22 · 22 · 15</td></tr>
-    <tr><td>เสถียรภาพ</td><td><code>retention_25c</code> · <code>degradation_rate</code><span class="idgloss">ประสิทธิภาพที่เหลือหลังทดสอบที่ ~25 °C · อัตราการเสื่อมต่อชั่วโมง</span></td><td class="num">14</td></tr>
-    <tr><td>พารามิเตอร์การผลิต</td><td><code>psk_spin_rpm</code> <code>psk_anneal_C</code> <code>psk_anneal_time_s</code> <code>antisolvent_vol_uL</code> <code>antisolvent_drop_frac</code> <code>htl_anneal_C</code> ฯลฯ<span class="idgloss">ความเร็วปั่น · อุณหภูมิและเวลาอบ · ปริมาณและจังหวะหยด antisolvent (10 คอลัมน์)</span></td><td class="num">30–43</td></tr>
+    <tr><td></td><td><code>trap_density</code> · <code>rs</code> · <code>rrec</code><span class="idgloss">ความหนาแน่นกับดัก · ความต้านทานอนุกรม · ความต้านทาน recombination</span></td><td class="num">22 · 20 · 16</td></tr>
+    <tr><td>เสถียรภาพ</td><td><code>retention_25c</code> · <code>degradation_rate</code><span class="idgloss">ประสิทธิภาพที่เหลือหลังทดสอบที่ ~25 °C · อัตราการเสื่อมต่อชั่วโมง</span></td><td class="num">16</td></tr>
+    <tr><td>พารามิเตอร์การผลิต</td><td><code>psk_spin_rpm</code> <code>psk_anneal_C</code> <code>psk_anneal_time_s</code> <code>antisolvent_vol_uL</code> <code>antisolvent_drop_frac</code> <code>htl_anneal_C</code> ฯลฯ<span class="idgloss">ความเร็วปั่น · อุณหภูมิและเวลาอบ · ปริมาณและจังหวะหยด antisolvent (11 คอลัมน์)</span></td><td class="num">31–44</td></tr>
     <tr><td>ตัวควบคุม</td><td><code>a_Cs</code> <code>a_FA</code> <code>x_Br</code> · <code>etl_family</code><span class="idgloss">สัดส่วน Cs, FA และ Br ในสูตรเคมี · ชนิดวัสดุชั้น ETL</span></td><td class="num">44</td></tr>
     <tr><td>การดัดแปลงผิว</td><td><code>coat_htl</code> · <code>htl_mod_kind</code> · <code>coat_psk</code><span class="idgloss">มีการเคลือบผิว HTL หรือไม่ · เคลือบทับหรือผสมในน้ำหมึก · มีการเคลือบผิวชั้นดูดแสงหรือไม่</span></td><td class="num">44</td></tr>
   </tbody>
@@ -373,7 +439,7 @@
     <tr><td>Jsc (mA/cm²)</td><td class="num">11</td><td class="num">+0.66</td><td class="num">+0.90</td><td class="num ok">11/11</td><td class="num">p = 0.001</td></tr>
     <tr><td>Voc (V)</td><td class="num">11</td><td class="num">+0.045</td><td class="num">+0.050</td><td class="num">9/11</td><td class="num">p = 0.065</td></tr>
     <tr><td><strong>VTFL</strong> (V, ต่ำดีกว่า)</td><td class="num">8</td><td class="num"><strong>−0.145</strong></td><td class="num">−0.175</td><td class="num ok">8/8</td><td class="num">p = 0.008</td></tr>
-    <tr><td>retention @25 °C (%)</td><td class="num">3</td><td class="num">+25</td><td class="num">+25</td><td class="num">3/3</td><td class="num muted">n เล็กเกินไป</td></tr>
+    <tr><td>retention @25 °C (%)</td><td class="num">4</td><td class="num">+21.9</td><td class="num">+21.9</td><td class="num">4/4</td><td class="num muted">n เล็กเกินไป</td></tr>
   </tbody>
 </table>
 

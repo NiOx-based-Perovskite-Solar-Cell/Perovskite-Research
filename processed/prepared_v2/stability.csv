@@ -56,8 +56,8 @@ device_id,environment,encapsulation,temperature_c,humidity_pct,time_hr,retention
 10_1126_science_ade9637_Sample2,N2/ISOS-L-2I,Y,85,,1200.0,74,,,,85.0,,,,,,74.0,,,light/operational
 10_1126_science_ade9637_Sample2,N2/ISOS-L-2I (with top passivation),Y,65,,500.0,96,,,,65.0,,,,,,96.0,,,light/operational
 10_31635_ccschem_025_202505977_Sample1,N2/ISOS-D-2,N,65.0,,1000.0,59,,,,65.0,,,,,,59.0,,,dark storage
-10_31635_ccschem_025_202505977_Sample1,N2,N,,,1000.0,82,,,,,,,,,,82.0,,,inert (N2)
+10_31635_ccschem_025_202505977_Sample1,N2,N,,,1000.0,82,,,,25.0,recheck §4.0c: เปเปอร์ระบุว่าเป็นการเก็บที่ room temperature เงื่อนไขเดียวกับ Sample3 -> 25 C,,,,,82.0,,,inert (N2)
 10_31635_ccschem_025_202505977_Sample2,N2/ISOS-D-2,N,65.0,,1000.0,76,,,,65.0,,,,,,76.0,,,dark storage
-10_31635_ccschem_025_202505977_Sample2,N2,N,,,1000.0,90,,,,,,,,,,90.0,,,inert (N2)
+10_31635_ccschem_025_202505977_Sample2,N2,N,,,1000.0,90,,,,25.0,recheck §4.0c: เปเปอร์ระบุว่าเป็นการเก็บที่ room temperature เงื่อนไขเดียวกับ Sample3 -> 25 C,,,,,90.0,,,inert (N2)
 10_31635_ccschem_025_202505977_Sample3,N2/ISOS-D-2,N,65,,1000.0,81,,,,65.0,,,,,,81.0,,,dark storage
 10_31635_ccschem_025_202505977_Sample3,N2,N,25,,1000.0,93,,,,25.0,,,,,,93.0,,,inert (N2)

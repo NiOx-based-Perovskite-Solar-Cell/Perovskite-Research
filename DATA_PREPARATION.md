@@ -17,12 +17,14 @@ processed/prepared/                   — ตารางคลีนแล้�
    │  recheck_comlumn_preapare.ipynb  — ตรวจซ้ำ + แตก process knob + สร้าง target table
    ▼
 processed/prepared_v2/                — ชุดสุดท้ายสำหรับ modeling (10 ไฟล์)
-   │  explore_prepared_v2.ipynb       — EDA ชุดสุดท้าย (อ่านอย่างเดียว)
+   │  explore_prepared_v2.ipynb       — EDA ชุดสุดท้าย (อ่านอย่างเดียว) — ทำตอนยังเป็น 44×35
+   │  explore_prepared_v3.ipynb       — ด่านตรวจ audit 20 ข้อ + EDA คอลัมน์ใหม่ + ทะเบียนสิ่งที่เหลือ
    ▼
    ต่อไป: RandomForest + SHAP, LeaveOneGroupOut(paper)
 ```
 
 notebook เสริม: `after_col_prepare.ipynb` (ยุบเป็น device-level 44×39 เพื่อดูภาพรวม), `eda_prepare.ipynb` (EDA ชุด prepared), `column_audit.ipynb`
+notebook ตอบคำถามวิจัย: `eda_htl_modification.ipynb` (Δ treated−control ภายใน paper — ผลหลัก ΔPCE +2.09 11/11)
 
 ---
 
@@ -243,24 +245,34 @@ coat = layers[layers.layer_id.isin([3, 5, 7])].merge(
 | 4 | แตก `parameter`+`unit` (คั่น comma จับคู่ตามตำแหน่ง) → **53 knob columns** ชื่อ `process_type__unit` |
 | 6 | รวมหน่วยเวลา → `*__time_s` (sec+min×60+hr×3600) |
 | 6.1 | AntiSolvent: รวม ml+uL → `vol_uL` / เวลาหยดมี **2 จุดอ้างอิง** (ลบ = ก่อนจบ spin, บวก = หลังเริ่ม) เก็บ `timing_ref` กำกับ |
-| 7 | Y แบบ **variant-consistent**: เลือก Voc/Jsc/FF/PCE จากชุดเดียวกัน (champion 23 > plain 16 > average 4) แก้บั๊ก max ปน Champion/Average — `pce = voc×jsc×ff/100` เหลือ err ≤ 0.503 (rounding) จากเดิม 1.64 |
+| 7 | Y แบบ **variant-consistent**: เลือก Voc/Jsc/FF/PCE จากชุดเดียวกัน (champion 23 > plain 16 > average 4) แก้บั๊ก max ปน Champion/Average — `pce = voc×jsc×ff/100` เหลือ err ≤ 0.503 จากเดิม 1.64 · **หมายเหตุ**: 0.503 ที่เหลือ **ไม่ใช่การปัดเศษ** (คำอธิบายเดิมผิด) — เป็นความไม่สอดคล้องในตัวเปเปอร์ `ccschem` เอง ดู audit ข้อ V |
 | 8 | stability index: `degradation_rate` (%/hr), `retention_25c` (Y เสถียร, 14 dev) |
 | 8.5 | **export `psk_composition`** (เดิมคำนวณใน column_prepare แต่ไม่เคยเขียนดิสก์) — ไอออนที่ไม่อยู่ในสูตร = 0 จริง ไม่ใช่ missing |
-| 8.7 | ปิดช่องโหว่ **`value_parsed` ไม่ตาม `value_corrected`** — `column_prepare` §3.2 คำนวณ `value_parsed = to_numeric(value)` จากค่าดิบ ไม่เคยอ่าน `value_corrected` การแก้ที่เปลี่ยน**ตัวเลข** จึงหายเงียบ (hole mobility m²→cm² ×1e4, 3 แถว) ตอนนี้ซิงก์แล้ว + gate กันซ้ำ |
+| 8.7 | ปิดช่องโหว่ **`value_parsed` ไม่ตาม `value_after_unit_fix`** (คอลัมน์นี้เดิมชื่อ `value_corrected` — เปลี่ยนใน audit ข้อ M) — `column_prepare` §3.2 คำนวณ `value_parsed = to_numeric(value)` จากค่าดิบ ไม่เคยอ่านคอลัมน์ที่แก้แล้ว การแก้ที่เปลี่ยน**ตัวเลข** จึงหายเงียบ (hole mobility m²→cm² ×1e4, 3 แถว) ตอนนี้ซิงก์แล้ว · **ด่านตรวจย้ายไป §9.5** (audit ข้อ P, Q) |
 | 8.6 | `material_family` NaN จัดการตามบทบาท: PSK→มี composition แทน, L1/L2/L8 variance=0 ไม่ใช้, materials→มี `type` ครอบ — ดึงเฉพาะ **`etl_family`** (L6: PCBM 24 / C60 18 / BCP 2, ข้าม 9/5 paper) เข้า target_table |
 | 9 | X ระดับ device: `psk_spin_rpm`, `psk_anneal_C`, `psk_anneal_time_s`, `antisolvent_vol_uL/timing_s`, `htl_anneal_C` → merge เข้า `target_table` |
 | 10 | export + gate จากไฟล์บนดิสก์ (layers ไม่พอง, 44 unique, pce consistency) |
 
 **บั๊กที่แก้รอบตรวจ**: layers merge บน (device_id, layer_id) ทำแถวพอง 352→356 (เคส layer 7 มี PCBM+BCP สองแถว) → เปลี่ยนเป็น map ตรงจาก layer_id
 
-## ขั้น 4 — `explore_prepared_v2`: EDA ชุดสุดท้าย
+## ขั้น 4 — `explore_prepared_v2` → `explore_prepared_v3`: EDA ชุดสุดท้าย
+
+`explore_prepared_v2` ทำตอน `target_table` ยังเป็น 44×35 · **ตัวเลขในนั้นเป็นชุดก่อน audit**
+`explore_prepared_v3` คือชุดที่ถูกต้อง ณ ปัจจุบัน (+ ด่านตรวจ audit 20 ข้อ + EDA คอลัมน์ใหม่ 9 ตัว)
 
 - **confound ระดับ paper ใหญ่จริง**: variance PCE ระหว่าง paper ~3 เท่าของใน paper → LOPO จำเป็น
 - coverage 3 ชั้น: JV+knob+composition (40-44) / mediator+antisolvent (20-35) / stability (13-14)
 - missing เป็นระดับ paper (**MNAR**) — ห้าม impute ข้าม paper
-- คู่ knob-Y เด่น (naive spearman ยังไม่คุม paper — เป็น candidate เข้า LOPO เท่านั้น):
-  `htl_anneal_C~ff` −0.74, `htl_anneal_C~voc` −0.64, `psk_spin_rpm~vtfl` +0.57, `antisolvent_timing~voc` +0.52, `psk_anneal_C~vtfl` −0.38
-- sanity ผ่าน: x_Br↑ → Voc↑ (ตาม bandgap physics)
+- คู่ knob-Y เด่น (naive spearman ยังไม่คุม paper — เป็น candidate เข้า LOPO เท่านั้น) **ค่าหลัง audit**:
+  `htl_anneal_C~ff` −0.73, `htl_anneal_C~voc` −0.65, `psk_spin_rpm~vtfl` **+0.63** (เดิมรายงาน +0.57),
+  `htl_anneal_C~pce` −0.56, `antisolvent_drop_frac_of_total~pce` +0.53, `psk_spin_last_s~vtfl` **−0.53** (v3 เพิ่งเห็น),
+  `antisolvent_timing~voc` +0.52, `psk_anneal_C~vtfl` −0.38
+- sanity ทาง bandgap **ผ่านครึ่งเดียว** (ตรวจซ้ำ 2026-08-30 บนข้อมูลหลัง audit):
+  `x_Br ~ jsc` **−0.76** = Br มาก bandgap กว้าง ดูดแสงช่วงแคบลง Jsc ตก — **ตรงตำราเป๊ะ**
+  `x_Br ~ voc` **−0.20** (paper-level −0.22) — **ไม่ใช่ +** อย่างที่เคยเขียนไว้ · ไม่ใช่ข้อมูลผิด แต่เป็นเพราะ
+  3 เปเปอร์ที่ใช้ไอโอไดด์ล้วน (`adma`, `acsami_4c14300`, `science`) เป็นงานคุณภาพสูงที่ได้ Voc สูงอยู่แล้ว (1.11–1.18 V)
+  → **คุณภาพแล็บกลบผลของ bandgap** ซึ่งเป็น confound แบบเดียวกับที่ทั้งรายงานเตือนไว้
+  ⚠️ อย่าใช้สหสัมพันธ์ข้ามเปเปอร์เป็น sanity check ทางฟิสิกส์ — ใช้ได้เฉพาะกับตัวที่สัญญาณแรงพอจะทะลุ confound (เช่น Jsc)
 
 ---
 
@@ -268,14 +280,14 @@ coat = layers[layers.layer_id.isin([3, 5, 7])].merge(
 
 | ไฟล์ | ขนาด | หมายเหตุ |
 |---|---|---|
-| `target_table.csv` | 44×35 | **ตารางหลักสำหรับ modeling**: Y (jv_variant กำกับ) + mediator + stability + X knob + composition + etl_family |
-| `process.csv` | 702×71 | ทุก process ราย layer + 53 knob columns + param_fixed/param_note |
+| `target_table.csv` | 44×44 | **ตารางหลักสำหรับ modeling**: Y (jv_variant + jv_scan กำกับ) + mediator + ธงสเกล + stability + X knob + composition + etl_family |
+| `process.csv` | 702×72 | ทุก process ราย layer + 53 knob columns + param_fixed/param_recovered/param_note |
 | `layers.csv` | 352×11 | + layer_kind |
-| `devices.csv` | 44×11 | + ธงเคลือบ/anneal |
+| `devices.csv` | 44×13 | + ธงเคลือบ/anneal |
 | `psk_composition.csv` | 44×11 | a/x site ครบ + comp_source + cross_check |
 | `device_layer_flags.csv` | 44×10 | ธงแยกไฟล์ |
 | `materials.csv` | 543×13 | + solvent_1/2/ratio/system |
-| `properties.csv` | 563×16 | base_property + value_parsed |
+| `properties.csv` | 564×16 | base_property + value_parsed (+1 แถว Rrec ที่เติมจากเปเปอร์) |
 | `stability.csv` | 62×20 | parsed + stress_group |
 | `vendors.csv` | 644×8 | + purity_parsed |
 
@@ -295,31 +307,37 @@ ML ต้องการ 1 แถว = 1 device แต่ข้อมูลด�
 ธงสถาปัตยกรรม (เคลือบ/anneal) ระดับ device ที่ notebook อื่น (เช่น `after_col_prepare`) join ได้โดยไม่ต้องลาก `devices.csv` ทั้งตาราง — ข้อมูล**ซ้ำโดยตั้งใจ**กับใน `devices.csv` และ `target_table.csv` (ไม่มีคอลัมน์ที่มีเฉพาะไฟล์นี้) ถ้าอยากเข้มงวดลบได้โดยไม่เสียข้อมูล แต่เก็บไว้เพราะต้นทุนศูนย์
 **อิทธิพล**: ต่ำสุดใน 3 ตัว — สะดวก ไม่ใช่จำเป็น
 
-### `target_table.csv` (44×35) — 1 แถว = 1 device ⭐ ตารางหลัก modeling
+### `target_table.csv` (44×44) — 1 แถว = 1 device ⭐ ตารางหลัก modeling
 - **key**: `device_id` / paper แยกได้จาก `device_id.rsplit("_Sample", 1)[0]` (ใช้เป็น group ใน LOPO)
 - **ธง layer** (10): `is_coated`, `n_coating_layers`, `coat_htl/psk/etl`, `anneal_htl/psk` + `htl_mod_kind`/`psk_mod_kind` (coating/additive — ดูหัวข้อชั้นเคลือบผิว) — ⚠️ `is_coated`/`coat_etl` True ทั้ง 44 (ทุก device มี L7) variance 0 ใช้เป็น feature ไม่ได้ ตัวที่มี variance คือ `coat_htl` (26) กับ `coat_psk` (22)
-- **Y** (5): `pce voc jsc ff` (43 dev) + `jv_variant` บอกที่มา (champion 23 / plain 16 / average 4) — 4 ค่ามาจากชุดเดียวกันเสมอ
-- **mediator** (4): `vtfl` (28) ตัวหลัก, `trap_density` (22), `rs` (22), `rrec` (15)
-- **stability** (2): `retention_25c` (14), `degradation_rate` (14)
-- **X knob** (10): `psk_spin_rpm` (43), `psk_anneal_C` (40), `psk_anneal_time_s` (41), `antisolvent_vol_uL` (35), `htl_anneal_C` (41), `psk_spin_last_s` (42) + จังหวะหยด antisolvent 4 คอลัมน์ (ดูด้านล่าง)
+- **Y** (6): `voc jsc ff` (43 dev) · `pce` (42 — `nanoen_Sample1` ไม่รายงาน PCE ใช้ voc×jsc×ff/100 แทน) + `jv_variant` (champion 23 / plain 16 / average 4) + **`jv_scan`** (RS 13 / ไม่ระบุ 30) — 4 ค่ามาจากชุด**และทิศทางสแกน**เดียวกันเสมอ (audit ข้อ O)
+- **mediator** (4): `vtfl` (28) ตัวหลัก, `trap_density` (22 — ฝั่งโฮลเท่านั้น), `rs` (**20** — ย้ายความต้านทานแผ่น 2 ค่าออกไป `sheet_resistance_htl`), `rrec` (**16** — เติม ccschem control 179 Ω จากเปเปอร์)
+- **ธงสเกล + ค่าที่กันไว้** (6, จาก audit): `trap_density_electron` (3), `sheet_resistance_htl` (2), `defect_density_reported` (2), `trap_implied_thickness_nm` (21), `trap_scale_flag` (ok 16 / scale_suspect 5 / no_vtfl 3), `rrec_scale_flag` (ok 13 / scale_suspect 2) — **ไม่ใช่ feature** เป็นตัวบอกว่าค่าไหนเทียบข้ามเปเปอร์ได้
+- **stability** (2): `retention_25c` (**16**), `degradation_rate` (**16**) — เติมอุณหภูมิ RT ของ ccschem Sample1/2 จากเปเปอร์ ทำให้เทียบ retention ได้ 3 → **4 เปเปอร์**
+- **X knob** (11): `psk_spin_rpm` (44), `psk_anneal_C` (42), `psk_anneal_time_s` (42), `antisolvent_vol_uL` (35), `htl_anneal_C` (42), `psk_spin_last_s` (42), `psk_spin_total_s` (42) + จังหวะหยด antisolvent 5 คอลัมน์ (ดูด้านล่าง)
 
-**จังหวะหยด antisolvent — ใช้ `antisolvent_drop_frac` เป็นตัวหลัก**
+**จังหวะหยด antisolvent — เก็บไว้ 2 การตีความ ยังไม่ชี้ขาด (audit ข้อ L)**
 
-ค่าดิบมี 2 จุดอ้างอิงที่รวมสเกลตรง ๆ ไม่ได้ (`antisolvent_timing_s` + `antisolvent_timing_ref`): บวก = วินาทีหลังเริ่ม spin ขั้นสุดท้าย, ลบ = วินาทีก่อนจบ recheck §9 แปลงรวมด้วยความยาว spin ขั้นสุดท้าย (`psk_spin_last_s`):
+ค่าดิบมี 2 จุดอ้างอิงที่รวมสเกลตรง ๆ ไม่ได้ (`antisolvent_timing_s` + `antisolvent_timing_ref`): บวก = วินาทีหลังเริ่ม spin, ลบ = วินาทีก่อนจบ · recheck §9 แปลงรวมด้วยความยาว spin
 
 | คอลัมน์ | ความหมาย | n |
 |---|---|---|
-| `antisolvent_timing_s` | ค่าดิบตามที่ paper เขียน (ยังมี 2 จุดอ้างอิง) | 32 |
-| `antisolvent_timing_ref` | `after_start` 26 / `before_end` 6 | 32 |
-| `psk_spin_last_s` | ความยาว spin ขั้นสุดท้ายของชั้น PSK | 42 |
-| **`antisolvent_drop_s`** | **วินาทีนับจากเริ่ม spin ขั้นสุดท้าย — แกนเดียวกันหมด** | 32 |
-| **`antisolvent_drop_frac`** | `drop_s / psk_spin_last_s` (0-1) เทียบข้ามสูตรที่ spin ไม่เท่ากันได้ | 30 |
+| `antisolvent_timing_s` | ค่าดิบตามที่ paper เขียน (ยังมี 2 จุดอ้างอิง) | 33 |
+| `antisolvent_timing_ref` | `after_start` 27 / `before_end` 6 | 33 |
+| `psk_spin_last_s` · `psk_spin_total_s` | ความยาว spin ขั้นสุดท้าย · ทั้งโปรแกรม | 42 · 42 |
+| **`antisolvent_drop_s`** | **วินาทีนับจากเริ่ม spin ขั้นสุดท้าย — แกนเดียวกันหมด** | 33 |
+| **`antisolvent_drop_frac_of_total`** ⭐ | `drop_s / psk_spin_total_s` — "เริ่มปั่น" = เริ่มโปรแกรมทั้งหมด — **ตัวหลัก** | 31 |
+| `antisolvent_drop_frac_of_last` | `drop_s / psk_spin_last_s` — "เริ่มปั่น" = เริ่มขั้นสุดท้าย — ทางเลือก | 31 |
 
 แปลง 6 device ที่เป็น `before_end`: admi spin 35 s, timing −10 → หยดวินาทีที่ **25** · acsami.5c16972 spin 40 s, timing −5 → **35** มี gate assert ว่าจุดหยดต้องอยู่ใน `0 < t ≤ spin duration` ทุกตัว
 `drop_frac` ว่าง 2 device (`solr_202400534`) เพราะไม่มี spin duration — ค่าบวกอยู่แล้วจึงใช้ `drop_s` ได้ปกติ
 
-**ผลของการรวมสเกล** (naive spearman, ยังไม่คุม paper — ทิศทางเท่านั้น): `drop_frac ~ pce` **+0.52** (p=0.003) ดีกว่าค่าดิบ `timing_s ~ pce` +0.44 (p=0.012) สอดคล้องกับกลไก: จังหวะหยดที่สำคัญคือ*สัดส่วน*ของช่วง spin (หน้าต่างตกผลึก) ไม่ใช่วินาทีสัมบูรณ์
-⚠️ อย่าใส่ทั้ง `timing_s` และ `drop_s`/`drop_frac` พร้อมกัน — เป็นข้อมูลเดียวกัน จะทำให้ SHAP กระจายเครดิตมั่ว
+⚠️ **`explore_prepared_v3` §2 พบว่าการตีความแบบ `drop_frac` เป็นไปไม่ได้ทางฟิสิกส์กับ 1 เปเปอร์**:
+`acsami_5c15868` ได้ `drop_frac = 1.00` = หยด antisolvent ตอนวินาทีที่หยุดปั่นพอดี ซึ่งฟิล์มไม่มีเวลาตกผลึก ·
+`drop_frac_alt` ให้ 0.75 และไม่มีเปเปอร์ไหนแตะ 1.00 เลย → **แนะนำสลับให้ `_alt` เป็นตัวหลัก** (ยังต้องยืนยันด้วยเปเปอร์)
+
+**ผลของการรวมสเกล** (naive spearman, ยังไม่คุม paper — ทิศทางเท่านั้น): `drop_frac ~ pce` **+0.50** · `drop_frac_alt ~ pce` **+0.53** · ค่าดิบ `timing_s ~ pce` +0.43 — ทั้งคู่ดีกว่าค่าดิบ สอดคล้องกับกลไก: จังหวะหยดที่สำคัญคือ*สัดส่วน*ของช่วง spin (หน้าต่างตกผลึก) ไม่ใช่วินาทีสัมบูรณ์
+⚠️ อย่าใส่ทั้ง `timing_s` และ `drop_s`/`drop_frac`/`drop_frac_alt` พร้อมกัน — เป็นข้อมูลเดียวกัน จะทำให้ SHAP กระจายเครดิตมั่ว
 - **X ควบคุม** (4): `a_Cs a_FA x_Br` (44 — ไอออนไม่อยู่ในสูตร = 0 จริง) + `etl_family` (44, categorical: PCBM/C60/BCP — ชนิด ETL กระทบรอยต่อ/การเก็บอิเล็กตรอน ต้องคุมเหมือน composition; ⚠️ BCP มีแค่ 2 dev จาก paper เดียว ถ้า SHAP ชี้ BCP อย่าเชื่อ)
 - ⚠️ `pce` ขาด 1 dev ที่ variant ไม่รายงาน ใช้ voc×jsc×ff/100 แทนได้
 
@@ -350,10 +368,10 @@ proc = pd.read_csv("processed/prepared_v2/process.csv")
 proc = proc[(proc.source_sheet == "Process") & proc.process_type.notna()]   # ตัดชีตสังเคราะห์ + placeholder
 ```
 
-### `properties.csv` (563×16) — 1 แถว = 1 ค่าที่ paper รายงาน
+### `properties.csv` (564×16) — 1 แถว = 1 ค่าที่ paper รายงาน
 - **key**: `device_id` + `base_property` + `stat/scan/layer/carrier` (แตกมาจากชื่อ property เต็ม)
-- ใช้ `value_parsed` เสมอ (ไม่ใช่ `value` ดิบ) / `unit_corrected/value_corrected/unit_fix_note` = ร่องรอยแก้ unit
-- **สถานะ 27 unit errors จาก `audit/unit_value_errors.csv` — ปิดครบแล้ว**: Voc/Jsc ติดป้าย `%` 12 แถว (แก้ป้าย unit ตัวเลขไม่เปลี่ยน) · FF เศษส่วน 8 แถว (×100 ตั้งแต่ column_prepare ช่วง 3) · hole mobility m² 3 แถว (×1e4 — `value_corrected` ถูกมาตลอด แต่ `value_parsed` เพิ่งซิงก์ใน recheck §8.7) · 4 แถวที่เหลือเป็น false positive ของ regex เก่าที่แมตช์ `cm2 V-1 s-1` (หน่วยถูกอยู่แล้ว)
+- ใช้ `value_parsed` เสมอ (ไม่ใช่ `value` ดิบ) / `unit_corrected/value_after_unit_fix/unit_fix_note` = ร่องรอยแก้ unit (คอลัมน์นี้เดิมชื่อ `value_corrected` — เปลี่ยนใน audit ข้อ M) · ทุกแถวที่ `value_parsed` ต่างจากคอลัมน์นี้ต้องมี `value_note` อธิบาย (11 แถว)
+- **สถานะ 27 unit errors จาก `audit/unit_value_errors.csv` — ปิดครบแล้ว**: Voc/Jsc ติดป้าย `%` 12 แถว (แก้ป้าย unit ตัวเลขไม่เปลี่ยน) · FF เศษส่วน 8 แถว (×100 ตั้งแต่ column_prepare ช่วง 3) · hole mobility m² 3 แถว (×1e4 — `value_after_unit_fix` ถูกมาตลอด แต่ `value_parsed` เพิ่งซิงก์ใน recheck §8.7) · 4 แถวที่เหลือเป็น false positive ของ regex เก่าที่แมตช์ `cm2 V-1 s-1` (หน่วยถูกอยู่แล้ว)
 - ⚠️ ถ้าเพิ่มการแก้ที่**เปลี่ยนตัวเลข** ในอนาคต ต้องซิงก์เข้า `value_parsed` ด้วย — recheck §8.7 มี gate assert ไว้ให้ fail ทันทีถ้าลืม
 - ⚠️ device เดียวมีหลายแถวต่อ property (Champion/Average/scan) — pivot เองต้องเลือก variant ให้ตรงกัน (target_table ทำให้แล้ว)
 
@@ -463,13 +481,13 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 | `psk_spin_rpm` | 1 |
 | `a_Cs` / `a_FA` / `x_Br` | 1 |
 | `psk_anneal_C` · `psk_anneal_time_s` · `psk_spin_last_s` · `htl_anneal_C` | **0** ⛔ |
-| `antisolvent_vol_uL` · `antisolvent_drop_s` · `antisolvent_drop_frac` | **0** ⛔ |
+| `antisolvent_vol_uL` · `antisolvent_drop_s` · `antisolvent_drop_frac_of_total` | **0** ⛔ |
 | `coat_psk` · `coat_etl` · `psk_mod_kind` · `etl_family` · `anneal_htl` · `anneal_psk` | **0** ⛔ |
 | *(เทียบ)* `pce` · `voc` · `vtfl` | **15 / 15 / 11** — Y แปรครบทุก paper ตามที่ควรเป็น |
 
 **แปลว่า**: ในแต่ละ paper นักวิจัยเปลี่ยน**สารที่ใช้ดัดแปลง HTL** (EMIMI 1/2/4%, SAM มี/ไม่มี ...) แต่ **ไม่เปลี่ยน process knob เชิงตัวเลขเลย** — spin RPM, อุณหภูมิ/เวลา anneal, ปริมาณและจังหวะ antisolvent ตั้งค่าเดียวแล้วใช้กับทุก device ในเปเปอร์นั้น
 
-**ผลต่อ modeling**: knob ที่แปรค่า 0 paper คือ **confound 100% กับ paper identity** ใต้ LeaveOneGroupOut โมเดลแยกไม่ออกว่าเป็นผลของ knob หรือของ "ห้องแล็บไหนทำ" → correlation แรง ๆ ที่เห็นก่อนหน้า (`htl_anneal_C ~ ff` −0.74, `antisolvent_drop_frac ~ pce` +0.52) เป็น **between-paper ล้วน** = paper fingerprint ไม่ใช่ความสัมพันธ์เชิงกลไก
+**ผลต่อ modeling**: knob ที่แปรค่า 0 paper คือ **confound 100% กับ paper identity** ใต้ LeaveOneGroupOut โมเดลแยกไม่ออกว่าเป็นผลของ knob หรือของ "ห้องแล็บไหนทำ" → correlation แรง ๆ ที่เห็นก่อนหน้า (`htl_anneal_C ~ ff` −0.73, `antisolvent_drop_frac_of_total ~ pce` +0.53) เป็น **between-paper ล้วน** = paper fingerprint ไม่ใช่ความสัมพันธ์เชิงกลไก
 
 **สิ่งที่เหลือใช้ได้จริงใต้ LOPO**: `coat_htl` / `htl_mod_kind` (การดัดแปลงผิว HTL) — 10-11 paper มี contrast ภายในตัวเอง (control vs treated) เป็น within-paper comparison ที่แท้จริง
 
@@ -483,7 +501,7 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 ## ค้าง / ระวัง
 
 1. ~~**`100108000`**~~ — **ปิดแล้ว 2026-08-04** ด้วย Supporting Information (`100 °C for 30 min` = 1800 s) พร้อมแก้ Sample2/4 ที่ผิดด้วย ไม่เหลือแถวติดธง `param_note` ในทั้ง dataset
-2. ~~`antisolvent_timing_s` มี 2 จุดอ้างอิง~~ — **แก้แล้ว** ดู `antisolvent_drop_s` / `antisolvent_drop_frac` ในหัวข้อ target_table
+2. ~~`antisolvent_timing_s` มี 2 จุดอ้างอิง~~ — **แก้แล้ว** ดู `antisolvent_drop_s` / `antisolvent_drop_frac_of_total` ในหัวข้อ target_table
 6. ~~`a_Cs = 0.333` ของ `10_1002_solr_202200422`~~ — **ปิดแล้ว 2026-08-04** เปิด SI ของเปเปอร์ ([Yang et al., Solar RRL 2022](https://onlinelibrary.wiley.com/doi/10.1002/solr.202200422)) พบว่า**เปเปอร์เขียน `0.7 M CsI` จริง** (Raw Excel เรากรอกตรงต้นฉบับ ไม่ใช่ความผิดการกรอก) แต่หลักฐานฟิสิกส์ 4 ชั้นชี้ว่า**เปเปอร์เองพิมพ์ผิดจาก 0.07**: (1) 0.07 ให้สูตรมาตรฐาน Cs05FA81MA14 + A/B=0.97 stoichiometric / 0.7 ให้ A เกิน B 39% (2) precursor ตัวอื่นตรง recipe Saliba คลาสสิก ×1.18 ซึ่ง CsI effective ~0.07-0.09 (3) PL peak ~770 nm ใน SI Fig S12 = bandgap มาตรฐาน ขัดกับ Cs 33% ที่ต้อง blue-shift (4) เปเปอร์เรียกเองว่า "CsFAMA triple cation" — user ยืนยันแก้เป็น 0.07 (recheck §8.9) → a_Cs=0.048, a_FA=0.81, a_MA=0.143 ตอนนี้ a_Cs สูงสุดทั้ง dataset = 0.15 (สมเหตุผล)
    - **บทเรียนสำคัญ**: raw Excel กรอกถูกทุกตัวในเคสนี้ — บางครั้งต้นฉบับ (เปเปอร์) คือตัวที่ผิด การ validate ต้องเช็คถึงระดับความสมเหตุผลทางฟิสิกส์ ไม่ใช่แค่เทียบกับต้นทาง
 7. หมายเหตุเล็ก (ไม่ใช่บั๊ก แต่ควรรู้ตอนใช้):
@@ -495,6 +513,29 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 5. **โมเดลถัดไป**: RandomForest + SHAP, LeaveOneGroupOut(paper) 15 fold, เทรน voc/jsc/ff แยกแล้วคูณเป็น pce, รายงาน mean±SD + bootstrap — ผลทั้งหมด = hypothesis สำหรับ wet-lab validation
 
 **ปิดไปแล้ว** (เคยอยู่ในรายการนี้): `100108000` + outlier annealing (ปิดด้วย SI) · antisolvent 2 จุดอ้างอิง · 27 unit errors ปิดครบ (ดู `properties.csv`) · psk_composition export แล้ว · layers แถวพอง · Champion/Average ปน · `coat_*` นับ additive · NiOx synthesis รั่วเข้า feature
+
+## ตรวจกับเปเปอร์ต้นฉบับ — 2 ฉบับ
+
+| เปเปอร์ | เข้าถึงได้ยังไง | ผล |
+|---|---|---|
+| `10.1002admi.202500231` (Tirado et al.) | open access | **30/30 ค่าตรง** + SI แก้ 3 จุด (เวลาอบ / พลาสมา / Tauc Eg) |
+| `10.31635/ccschem.025.202505977` (Du et al.) | diamond OA | **30/30 ค่าตรง** + เจอเพิ่ม 4 จุด (`recheck §4.0c`) และ 1 บั๊กของกติกาเราเอง |
+
+**สิ่งที่เจอจาก `ccschem` (แก้แล้วทั้งหมด)**
+
+| # | เจออะไร | หลักฐาน | ผล |
+|---|---|---|---|
+| 1 | `Work Function` ของ Sample1 กรอก 4.52 | *"the VB edge of NiOx was located at −5.02 eV, with a WF of **4.75** eV"* | แก้เป็น 4.75 |
+| 2 | ชื่อ `WF` กับ `Work Function` อยู่ในเปเปอร์เดียวกัน | Sample1 ชื่อเต็ม / Sample2-3 ตัวย่อ | ยุบชื่อ — **สำคัญเพราะด่านตรวจช่วงค่า §9.5 ไล่ตามชื่อ แถว `WF` เคยหลุดการตรวจ** |
+| 3 | `Rrec` ของ Sample1 หายทั้งค่า | *"from **179** to 372 (2PACz) and 488 Ω"* | เติม 179 Ω · `rrec` 15 → **16** |
+| 4 | retention ของ Sample1/2 ไม่ได้กรอกอุณหภูมิ | *"…at **room temperature** under N₂ … **90%** and **82%**"* | เติม 25 °C · `retention_25c` 14 → **16** · เทียบ retention ได้ 3 → **4 เปเปอร์** |
+| 5 | **กติกา `rrec_scale_flag` ผิดความหมาย** | 179 ติดธง แต่ 372/488 จากรูปเดียวกันไม่ติด | เปลี่ยนจากรายอุปกรณ์ → **รายเปเปอร์** + assert ว่าธงต้องเท่ากันทั้งเปเปอร์ |
+
+> ข้อ 5 โผล่มาเพราะ**เติมข้อมูลจริงเข้าไป** — สเกลเป็นคุณสมบัติของ*นิยามที่เปเปอร์ใช้* ไม่ใช่ของอุปกรณ์
+> กติกาเดิมจึงแบ่งเปเปอร์เดียวออกเป็นสองฝั่งได้ · บทเรียน: ธงที่วัด "ระยะจากค่ากลาง" ต้องวัดที่ระดับของสาเหตุ
+
+**ผลต่อการวิเคราะห์**: `ΔPCE +2.09 · 11/11 · p=0.001` และ `ΔVTFL −0.145 · 8/8` **ไม่เปลี่ยน** ·
+ที่เปลี่ยนคือ `Δretention_25c` จาก 3/3 เป็น **4/4** (median +25 → +21.87, p=0.125 — n ยังเล็ก ใช้เป็นข้อสังเกตเท่านั้น)
 
 ## การตรวจสอบย้อนกลับ — แก้แล้ว 17 จาก 20 รายการ
 
@@ -540,7 +581,7 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 | G | `trap_density` เทียบข้ามเปเปอร์ไม่ได้ | `trap_implied_thickness_nm`, `trap_scale_flag` — คำนวณย้อนความหนาฟิล์มจากคู่ (VTFL, trap density) ติดธงถ้าหลุด 250–900 nm (ติดธง 5 device) |
 | F | `Defect density` 2 แถวหายเงียบเพราะชื่อไม่ตรง | `defect_density_reported` พร้อมเหตุผลที่ไม่รวม (ความหนาบ่งชี้ 31 nm) |
 | I | `Rrec` ของ `acsami_4c14300` สูงกว่าเปเปอร์อื่น 1,000 เท่า | `rrec_scale_flag` (เกณฑ์ห่างค่ากลางเกิน 2 อันดับของขนาด) |
-| L | จุดอ้างอิงจังหวะหยดค่าบวกตีความได้ 2 ทาง ต่างกันถึง 0.25 | `antisolvent_drop_frac_alt`, `psk_spin_total_s` — เก็บทั้งสองทางไว้ |
+| L | จุดอ้างอิงจังหวะหยดค่าบวกตีความได้ 2 ทาง ต่างกันถึง 0.25 | เก็บทั้งสองทาง ตั้งชื่อตามตัวหาร `antisolvent_drop_frac_of_total` (ตัวหลัก) / `_of_last` · เลิกใช้ชื่อ `antisolvent_drop_frac` ที่ไม่บอกตัวหาร |
 
 ### ผลที่เปลี่ยนไป
 
@@ -561,11 +602,22 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 **ทดสอบความไวของจังหวะหยด**: สหสัมพันธ์กับ PCE +0.497 (ตีความปัจจุบัน) เทียบ +0.525 (ทางเลือก) ทิศทางเหมือนกัน
 และตัวแปรนี้ถูกตัดจากโมเดลอยู่แล้ว (0/15) → การเลือกการตีความไม่กระทบข้อสรุปใด ๆ
 
-### เหลือค้าง 3 อย่าง — ไม่มีอันไหนบล็อกการเริ่มโมเดล
+### เหลือค้าง — ไม่มีอันไหนบล็อกการเริ่มโมเดล
 
-- **V** ตัวเลข JV ของ `ccschem_Sample1` ไม่คูณกันลงตัว 0.50 (Table S3) — **ข้อเดียวที่แตะผลจริง** แต่ถ้าแก้เป็น 20.67 ΔPCE ของเปเปอร์นั้นเปลี่ยนจาก +5.11 เป็น +4.61 ยังบวก ไม่กระทบ 11/11
-- **F** คำตอบสุดท้ายของ `Defect density` (`solr_202200422` Fig. 2c) — อยู่นอกโมเดลหลัก ติดธงพร้อมเหตุผลในไฟล์แล้ว
-- **I, L** นิยาม `Rrec` (`acsami_4c14300` Table S2) และจุดอ้างอิงจังหวะหยด (`acsami_5c15868`, `acsami.5c16972`) — อยู่นอกโมเดลหลักทั้งคู่
+ตรวจซ้ำและปิดเพิ่มใน `explore_prepared_v3.ipynb` · ทะเบียนเต็มอยู่ที่ `processed/audit/audit_v3_backlog.csv`
+
+| ข้อ | เรื่อง | ต้องใช้ | สถานะหลัง v3 |
+|---|---|---|---|
+| **V** | JV ของ `ccschem_Sample1` ไม่คูณกันลงตัว 0.50 | ~~Table S3~~ **อ่านเปเปอร์แล้ว** | ✅ **ปิด** — เนื้อความเปเปอร์เขียน 1.15 / 23.53 / 76.40 / **20.17** ตรงกับไฟล์เรา 100% ความไม่สอดคล้องอยู่ใน**ตัวเปเปอร์เอง** (ซ้ำทั้ง Table S3 และเนื้อความ) · เก็บ 20.17 ตามต้นฉบับ · v3 §3 พิสูจน์แล้วว่าไม่ใช่การปัดเศษ และ ΔPCE 11/11 ไม่เปลี่ยนไม่ว่าใช้ค่าไหน |
+| **L** | จุดอ้างอิงจังหวะหยด antisolvent | `acsami_5c15868` | **แก้แล้ว + มีหลักฐานถ้อยคำ** — ccschem เขียน *"dropped at 30 s after the start of **the spinning process**"* = นับจากเริ่มโปรแกรมทั้งหมด ตรงกับนิยาม `_of_total` ที่สลับมาเป็นตัวหลักแล้ว · เหลือยืนยันกับ `acsami_5c15868` ซึ่งเป็นเปเปอร์เดียวที่ตัวเลขต่างกันจริง |
+| **F** | คำตอบสุดท้ายของ `Defect density` | `solr_202200422` Fig. 2c | อยู่นอก feature set (v3 §4 ยืนยัน) · ติดธง `scale_suspect` พร้อมเหตุผลในไฟล์ |
+| **I** | นิยาม `Rrec` | `acsami_4c14300` Table S2 | **แคบลง** — ccschem ยืนยันหน่วยเป็น `Ω` ธรรมดา (179 / 372 / 488) ห่างจาก `acsami_4c14300` ราว 10⁵ เท่า · และการเติมค่า 179 เผยบั๊ก: กติกาธงเดิมวัด**รายอุปกรณ์** ทำให้ 179 ติดธงขณะที่ 372/488 จากรูปเดียวกันไม่ติด → เปลี่ยนเป็น**รายเปเปอร์** + assert |
+| **W1** | **30 device ไม่ระบุทิศทางการวัด J–V** (พบใหม่ใน v3 §5) | เปเปอร์ 9 ฉบับ (เหลือ 27 device) | การแก้ข้อ O คุมได้เฉพาะเปเปอร์ที่ระบุทิศทาง → **ห้ามตีความ FF/hysteresis ข้ามเปเปอร์** · ccschem 3 device ยืนยันแล้วว่าเปเปอร์**ไม่ระบุจริง** ไม่ใช่ข้อมูลตกหล่น |
+| **K** | ชื่อ `mobility` ไม่แยกตามชั้น | เปเปอร์ `smll` · `jechem` · `solr_202200422` | **แก้บางส่วน** — recheck §8.8b เติม `layer=HTL` ให้ 3 แถวที่ `remarks` ระบุ stack ไม่มี perovskite (`ITO/NiOx/Ag` = hole-only device) · อีก 6 แถวติดธงว่ายังชี้ชั้นไม่ได้ · gate บังคับว่าทุกแถว mobility ต้องมี layer หรือมีธง — **ห้ามเทียบ mobility ข้ามเปเปอร์** |
+| **X1** | `processed/prepared/` ยังมีบั๊กที่ recheck ปะให้ทีหลัง | — | **อ่าน 102 เซลล์ครบแล้ว** (v3 §8) — mobility 3 แถวยังผิด ×10⁴, `Rs` ยังปนความต้านทานแผ่น, VBM ยังเซ็นบวก, JV ยังปนชุด/ทิศทาง → **ห้ามใช้ `prepared/` เป็นแหล่งข้อมูล ใช้ `prepared_v2/` เท่านั้น** |
+| **X2** | `after_col_prepare.ipynb` (44×39) สร้างจาก `prepared/` + `aggfunc="max"` ต่อ `base_property` | — | เป็นบั๊ก Champion/Average ตัวเดิมที่ recheck §7 แก้ไปแล้ว → **ห้ามอ้างตัวเลขจากโน้ตบุ๊กนั้น** |
+| **X3** | `decompose()` อ่านแค่**ชื่อ** property รู้จัก prefix แค่ `HTL`/`PSK`/`PVK` ไม่เคยอ่าน `remarks` | — | **รากเดียวของ audit ข้อ D, E, J, K ทั้งสี่** · 65 แถวใน 8 property ที่ค่าขึ้นกับชั้น ระบุชั้นได้แค่ 4 แถว **ทั้งที่ 45 แถวมี `remarks` บอกชั้นไว้แล้ว** → แก้ที่รากคือให้ `decompose()` อ่าน `remarks` ไม่ใช่ไล่ปะทีละเคสที่ recheck |
+| **X4/X5** | `is_num` ถูกนิยามซ้ำแบบหลวมที่เซลล์ 36 (`float()` รับ `"nan"`/`"inf"`) · `classify_material_format` นิยาม 2 ครั้งคนละกติกา | — | ความเสี่ยงแฝง — ตรวจแล้วยังไม่กระทบข้อมูลชุดนี้ (0 แถวต่าง) · ลบนิยามซ้ำตอนแตะ `column_prepare` ครั้งถัดไป |
 
 **ตัดสินใจว่าไม่ทำ** (อย่าเปิดใหม่โดยไม่มีเหตุผลใหม่): ดึงพารามิเตอร์การเคลือบ L3/L5/L7 เป็น feature — ไม่แปรผันภายใน paper จะกลายเป็น paper fingerprint (เหตุผลเต็มในหัวข้อชั้นเคลือบผิว)
 
@@ -574,7 +626,7 @@ SI §1.2 (Device fabrication) **ไม่มีขั้นอบฟิล์ม
 
 # หลังการเตรียมข้อมูล — ข้อมูลตอบอะไรได้ ทางเลือก และแผนที่จะไปต่อ
 
-> เขียน 2026-08-04 หลังการเตรียมข้อมูลเสร็จสมบูรณ์ (target_table 44×35 ผ่าน ground-truth validation กับเปเปอร์จริง 30/30 ค่า) — ส่วนนี้คือ "แล้วยังไงต่อ" สำหรับขั้น modeling และการคุยกับอาจารย์ที่ปรึกษา
+> เขียน 2026-08-04 หลังการเตรียมข้อมูลเสร็จสมบูรณ์ (target_table 44×44 หลัง audit · ผ่าน ground-truth validation กับเปเปอร์จริง 30/30 ค่า) — ส่วนนี้คือ "แล้วยังไงต่อ" สำหรับขั้น modeling และการคุยกับอาจารย์ที่ปรึกษา
 
 ## 1. สถานะข้อมูลโดยสรุป
 
