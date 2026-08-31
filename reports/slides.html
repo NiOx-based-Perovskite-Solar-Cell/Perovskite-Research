@@ -112,10 +112,10 @@
   <p class="sub" style="margin-bottom:4mm">เตรียมข้อมูลเสร็จแล้ว · ยังไม่เริ่มสร้างแบบจำลอง · เจอข้อจำกัดที่ทำให้ต้องปรับคำถามวิจัย</p>
 
   <div class="tiles" style="margin-bottom:4mm">
-    <div class="tile"><div class="v">44</div><div class="k">devices (เซลล์) จากไฟล์ Excel 44 ไฟล์</div></div>
-    <div class="tile"><div class="v">15</div><div class="k">เปเปอร์ = 15 แล็บ ทั้งหมดเป็นชนิด p-i-n NiO<sub>x</sub></div></div>
+    <div class="tile"><div class="v">95</div><div class="k">devices (เซลล์) จากไฟล์ Excel 44 ไฟล์</div></div>
+    <div class="tile"><div class="v">31</div><div class="k">เปเปอร์ = 15 แล็บ ทั้งหมดเป็นชนิด p-i-n NiO<sub>x</sub></div></div>
     <div class="tile"><div class="v">2–5</div><div class="k">devices ต่อ 1 เปเปอร์ (เฉลี่ยราว 3 ตัว)</div></div>
-    <div class="tile"><div class="v g">60/60</div><div class="k">ค่าที่ตรวจย้อนกับเปเปอร์ต้นฉบับแล้วตรง (2 เปเปอร์ ฉบับละ 30)</div></div>
+    <div class="tile"><div class="v g">22</div><div class="k">เปเปอร์ที่มีการเทียบ A/B ในแล็บเดียวกัน (จาก 31)</div></div>
   </div>
 
   <div class="body" style="gap:7mm">
@@ -217,11 +217,11 @@
   <div class="stack" style="margin-bottom:1.6mm">
     <div class="ly"><div class="i">ชั้น 1</div><div class="n">Anode</div><div class="m">ขั้วโปร่งแสง<br>ITO / FTO</div></div>
     <div class="ly"><div class="i">ชั้น 2</div><div class="n">HTL</div><div class="m">ส่งประจุบวก<br>NiO<sub>x</sub></div></div>
-    <div class="ly hl"><div class="i">ชั้น 3</div><div class="n">เคลือบผิว HTL</div><div class="m"><b>ตัวแปรหลักของงานนี้</b><br>มี 26/44 device</div></div>
+    <div class="ly hl"><div class="i">ชั้น 3</div><div class="n">เคลือบผิว HTL</div><div class="m"><b>ตัวแปรหลักของงานนี้</b><br>มี 53/95 device</div></div>
     <div class="ly psk"><div class="i">ชั้น 4</div><div class="n">Perovskite</div><div class="m">ชั้นดูดแสง<br>สูตร ABX₃</div></div>
-    <div class="ly hl2"><div class="i">ชั้น 5</div><div class="n">เคลือบผิว PSK</div><div class="m">PEAI เป็นหลัก<br>22/44 device</div></div>
+    <div class="ly hl2"><div class="i">ชั้น 5</div><div class="n">เคลือบผิว PSK</div><div class="m">PEAI เป็นหลัก<br>41/95 device</div></div>
     <div class="ly"><div class="i">ชั้น 6</div><div class="n">ETL</div><div class="m">ส่งประจุลบ<br>C60 / PCBM</div></div>
-    <div class="ly hl2"><div class="i">ชั้น 7</div><div class="n">บัฟเฟอร์</div><div class="m">BCP<br>มีครบ 44/44</div></div>
+    <div class="ly hl2"><div class="i">ชั้น 7</div><div class="n">บัฟเฟอร์</div><div class="m">BCP<br>มี 88/95</div></div>
     <div class="ly"><div class="i">ชั้น 8</div><div class="n">Cathode</div><div class="m">ขั้วโลหะ<br>Ag / Au / Cu</div></div>
   </div>
   <p style="font-size:9.2pt; color:var(--muted); margin-bottom:3.5mm">
@@ -250,7 +250,7 @@
         <p><b>ทางที่ 2</b> — คำนวณย้อนจากสารที่ชั่งจริง เช่นเปเปอร์บอก “PbI₂ 324 mg”
         → หารด้วยน้ำหนักโมเลกุล = จำนวนโมล → รวมไอออนทุกตัว → ได้สัดส่วนกลับมา</p>
         <p style="color:var(--ink2)">สองทางนี้<b>ไม่ได้ใช้ข้อมูลชุดเดียวกัน</b> ถ้าผลออกมาตรงกันแปลว่าเชื่อได้
-        → <b>ตรงกัน 13 จาก 15 เปเปอร์</b> และได้สูตรครบทั้ง 44 device</p>
+        → <b>เทียบได้ 16 เปเปอร์ ตรงกัน 6</b> และได้สูตรครบทั้ง 95 device</p>
         <p style="color:var(--ink2)">สำคัญเพราะสูตรเคมีมีผลต่อประสิทธิภาพโดยตรง ต้องใส่เข้าโมเดลเป็น<b>ตัวควบคุม</b>
         ไม่งั้นผลของสิ่งที่เราสนใจจะปนกับผลของสูตรเคมี</p>
       </div>
@@ -402,25 +402,25 @@
       <table style="font-size:9.5pt">
         <thead><tr><th>ตัวชี้วัด</th><th class="n">ดีขึ้นเฉลี่ย</th><th class="n">ดีขึ้นกี่เปเปอร์</th></tr></thead>
         <tbody>
-          <tr><td><b>PCE</b> — ประสิทธิภาพรวม</td><td class="n"><b>+2.09 %</b></td><td class="n g">11/11</td></tr>
-          <tr><td>FF — ความสมบูรณ์ของกราฟ</td><td class="n">+2.65</td><td class="n g">11/11</td></tr>
-          <tr><td>Jsc — กระแส</td><td class="n">+0.66</td><td class="n g">11/11</td></tr>
-          <tr><td>Voc — แรงดัน</td><td class="n">+0.045</td><td class="n">9/11</td></tr>
+          <tr><td><b>PCE</b> — ประสิทธิภาพรวม</td><td class="n"><b>+1.99 %</b></td><td class="n g">21/22</td></tr>
+          <tr><td>FF — ความสมบูรณ์ของกราฟ</td><td class="n">+1.96</td><td class="n g">20/22</td></tr>
+          <tr><td>Jsc — กระแส</td><td class="n">+0.62</td><td class="n g">20/22</td></tr>
+          <tr><td>Voc — แรงดัน</td><td class="n">+0.048</td><td class="n g">18/22</td></tr>
           <tr class="hig"><td><b>จุดบกพร่องในฟิล์ม</b><br><span class="muted" style="font-size:8.6pt">ยิ่งลดยิ่งดี</span></td>
-              <td class="n"><b>ลดลง</b></td><td class="n g">8/8</td></tr>
+              <td class="n"><b>ลดลง</b></td><td class="n g">13/13</td></tr>
         </tbody>
       </table>
 
       <div class="box good">
         <h4>อ่านตารางนี้อย่างไร</h4>
-        <p>ถ้าการเคลือบผิวไม่มีผลจริง โอกาสที่ผลจะเป็นบวก<b>ครบทั้ง 11 เปเปอร์</b>โดยบังเอิญ ≈ <b>0.1%</b>
+        <p>ถ้าการเคลือบผิวไม่มีผลจริง โอกาสที่ผลจะเป็นบวก<b>ครบ 21 จาก 22 เปเปอร์</b>โดยบังเอิญ ≈ <b>0.1%</b>
         (เหมือนโยนเหรียญ 11 ครั้งออกหัวหมด)</p>
         <p>และเห็น<b>สาเหตุ</b>ด้วย: จุดบกพร่องลดลงทุกเปเปอร์ที่วัด → ประจุไหลดีขึ้น → FF ขึ้น → PCE ขึ้น</p>
       </div>
 
       <div class="box warn">
         <h4>ข้อควรระวังที่ต้องพูดเสมอ</h4>
-        <p>เปเปอร์มักตีพิมพ์เฉพาะการทดลองที่สำเร็จ ผล 11/11 จึงอาจสวยเกินจริง —
+        <p>เปเปอร์มักตีพิมพ์เฉพาะการทดลองที่สำเร็จ ผล 21/22 จึงอาจสวยเกินจริง —
         แต่ข้อมูลเราเองมีคำตอบ: CsI 20 mg/mL และ EMIMI 4% <b>แย่กว่าไม่ทำเลย</b> · <b>ปริมาณต้องพอดี</b></p>
       </div>
     </div>
