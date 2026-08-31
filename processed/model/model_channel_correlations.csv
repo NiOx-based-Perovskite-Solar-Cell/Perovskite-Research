@@ -1,0 +1,10 @@
+﻿คู่,rho,n_paper
+Δff ↔ Δjsc,-0.02,22
+Δff ↔ Δvoc,-0.25,22
+Δjsc ↔ Δvoc,0.57,22
+Δvtfl ↔ Δff,0.35,13
+Δvtfl ↔ Δjsc,0.21,13
+Δvtfl ↔ Δvoc,-0.08,13
+Δcontact_angle ↔ Δjsc,0.65,11
+Δcontact_angle ↔ Δff,-0.1,11
+Δgrain_size ↔ Δjsc,0.4,4
