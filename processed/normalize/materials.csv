@@ -47,6 +47,246 @@ device_id,layer_id,material,type,solvent,amount,unit
 10.1002admi.202500231_Sample4,6.0,C60,Solution,CB,,
 10.1002admi.202500231_Sample4,7.0,BCP,Solution,ethanol,,
 10.1002admi.202500231_Sample4,8.0,Ag,,,,
+10.1007_s10854-017-8094-9_Sample1,1.0,ITO,,,,
+10.1007_s10854-017-8094-9_Sample1,2.0,NiOx NPs,Nanoparticles,Deionized water,2.0,wt%
+10.1007_s10854-017-8094-9_Sample1,3.0,,,,,
+10.1007_s10854-017-8094-9_Sample1,4.0,Cs0.08(MA0.17FA0.83)0.92Pb(I0.83Br0.17)3,Precursor,DMF:DMSO (1:4 v/v),,
+10.1007_s10854-017-8094-9_Sample1,4.0,PbI2,Precursor,DMF:DMSO (1:4 v/v),1.1,M
+10.1007_s10854-017-8094-9_Sample1,4.0,PbBr2,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample1,4.0,FAI,Precursor,DMF:DMSO (1:4 v/v),1.0,M
+10.1007_s10854-017-8094-9_Sample1,4.0,MABr,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample1,4.0,CsI,Additive,DMSO,1.5,M
+10.1007_s10854-017-8094-9_Sample1,5.0,,,,,
+10.1007_s10854-017-8094-9_Sample1,6.0,PC60BM,Solution,Chlorobenzene,20.0,mg mL-1
+10.1007_s10854-017-8094-9_Sample1,7.0,,,,,
+10.1007_s10854-017-8094-9_Sample1,8.0,Ag,,,,
+10.1007_s10854-017-8094-9_Sample2,1.0,ITO,,,,
+10.1007_s10854-017-8094-9_Sample2,2.0,NiOx NPs,Nanoparticles,Deionized water,2.0,wt%
+10.1007_s10854-017-8094-9_Sample2,3.0,,,,,
+10.1007_s10854-017-8094-9_Sample2,4.0,Cs0.08(MA0.17FA0.83)0.92Pb(I0.83Br0.17)3,Precursor,DMF:DMSO (1:4 v/v),,
+10.1007_s10854-017-8094-9_Sample2,4.0,PbI2,Precursor,DMF:DMSO (1:4 v/v),1.1,M
+10.1007_s10854-017-8094-9_Sample2,4.0,PbBr2,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample2,4.0,FAI,Precursor,DMF:DMSO (1:4 v/v),1.0,M
+10.1007_s10854-017-8094-9_Sample2,4.0,MABr,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample2,4.0,CsI,Additive,DMSO,1.5,M
+10.1007_s10854-017-8094-9_Sample2,5.0,,,,,
+10.1007_s10854-017-8094-9_Sample2,6.0,PC60BM,Solution,Chlorobenzene,20.0,mg mL-1
+10.1007_s10854-017-8094-9_Sample2,7.0,,,,,
+10.1007_s10854-017-8094-9_Sample2,8.0,Ag,,,,
+10.1007_s10854-017-8094-9_Sample3,1.0,ITO,,,,
+10.1007_s10854-017-8094-9_Sample3,2.0,NiOx NPs,Nanoparticles,Deionized water,2.0,wt%
+10.1007_s10854-017-8094-9_Sample3,3.0,,,,,
+10.1007_s10854-017-8094-9_Sample3,4.0,Cs0.08(MA0.17FA0.83)0.92Pb(I0.83Br0.17)3,Precursor,DMF:DMSO (1:4 v/v),,
+10.1007_s10854-017-8094-9_Sample3,4.0,PbI2,Precursor,DMF:DMSO (1:4 v/v),1.1,M
+10.1007_s10854-017-8094-9_Sample3,4.0,PbBr2,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample3,4.0,FAI,Precursor,DMF:DMSO (1:4 v/v),1.0,M
+10.1007_s10854-017-8094-9_Sample3,4.0,MABr,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample3,4.0,CsI,Additive,DMSO,1.5,M
+10.1007_s10854-017-8094-9_Sample3,5.0,,,,,
+10.1007_s10854-017-8094-9_Sample3,6.0,PC60BM,Solution,Chlorobenzene,20.0,mg mL-1
+10.1007_s10854-017-8094-9_Sample3,7.0,,,,,
+10.1007_s10854-017-8094-9_Sample3,8.0,Ag,,,,
+10.1007_s10854-017-8094-9_Sample4,1.0,ITO,,,,
+10.1007_s10854-017-8094-9_Sample4,2.0,NiOx (sputtered),Thin film (sputtered),,,
+10.1007_s10854-017-8094-9_Sample4,3.0,,,,,
+10.1007_s10854-017-8094-9_Sample4,4.0,Cs0.08(MA0.17FA0.83)0.92Pb(I0.83Br0.17)3,Precursor,DMF:DMSO (1:4 v/v),,
+10.1007_s10854-017-8094-9_Sample4,4.0,PbI2,Precursor,DMF:DMSO (1:4 v/v),1.1,M
+10.1007_s10854-017-8094-9_Sample4,4.0,PbBr2,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample4,4.0,FAI,Precursor,DMF:DMSO (1:4 v/v),1.0,M
+10.1007_s10854-017-8094-9_Sample4,4.0,MABr,Precursor,DMF:DMSO (1:4 v/v),0.2,M
+10.1007_s10854-017-8094-9_Sample4,4.0,CsI,Additive,DMSO,1.5,M
+10.1007_s10854-017-8094-9_Sample4,5.0,,,,,
+10.1007_s10854-017-8094-9_Sample4,6.0,PC60BM,Solution,Chlorobenzene,20.0,mg mL-1
+10.1007_s10854-017-8094-9_Sample4,7.0,,,,,
+10.1007_s10854-017-8094-9_Sample4,8.0,Ag,,,,
+10.1016.jpowsour.2020.228738_Sample1,1.0,ITO,,,,
+10.1016.jpowsour.2020.228738_Sample1,2.0,NiOx NPs,Nanoparticles,Ethanol,2.5,
+10.1016.jpowsour.2020.228738_Sample1,3.0,,,,,
+10.1016.jpowsour.2020.228738_Sample1,4.0,PbI2,Precursor,DMF/DMSO (2:1 v/v),570.0,mg
+10.1016.jpowsour.2020.228738_Sample1,4.0,PbBr2,Precursor,DMF/DMSO (2:1 v/v),80.0,mg
+10.1016.jpowsour.2020.228738_Sample1,4.0,FAI,Precursor,DMF/DMSO (2:1 v/v),19.0,mg
+10.1016.jpowsour.2020.228738_Sample1,4.0,MABr,Precursor,DMF/DMSO (2:1 v/v),12.0,mg
+10.1016.jpowsour.2020.228738_Sample1,4.0,CsI,Precursor,DMF/DMSO (2:1 v/v),66.0,mg
+10.1016.jpowsour.2020.228738_Sample1,5.0,,,,,
+10.1016.jpowsour.2020.228738_Sample1,6.0,PCBM,Solution,DCB (anhydrous),20.0,mg mL-1
+10.1016.jpowsour.2020.228738_Sample1,7.0,ZnO NPs,Nanoparticles,2-propanol,2.5,
+10.1016.jpowsour.2020.228738_Sample1,8.0,Ag,,,100.0,nm
+10.1016.jpowsour.2020.228738_Sample2,1.0,ITO,,,,
+10.1016.jpowsour.2020.228738_Sample2,2.0,NiOx NPs,Nanoparticles,Ethanol,2.5,
+10.1016.jpowsour.2020.228738_Sample2,3.0,BN,Nanoparticles,IPA,0.5,mg mL-1
+10.1016.jpowsour.2020.228738_Sample2,4.0,PbI2,Precursor,DMF/DMSO (2:1 v/v),570.0,mg
+10.1016.jpowsour.2020.228738_Sample2,4.0,PbBr2,Precursor,DMF/DMSO (2:1 v/v),80.0,mg
+10.1016.jpowsour.2020.228738_Sample2,4.0,FAI,Precursor,DMF/DMSO (2:1 v/v),19.0,mg
+10.1016.jpowsour.2020.228738_Sample2,4.0,MABr,Precursor,DMF/DMSO (2:1 v/v),12.0,mg
+10.1016.jpowsour.2020.228738_Sample2,4.0,CsI,Precursor,DMF/DMSO (2:1 v/v),66.0,mg
+10.1016.jpowsour.2020.228738_Sample2,5.0,,,,,
+10.1016.jpowsour.2020.228738_Sample2,6.0,PCBM,Solution,DCB (anhydrous),20.0,mg mL-1
+10.1016.jpowsour.2020.228738_Sample2,7.0,ZnO NPs,Nanoparticles,2-propanol,2.5,
+10.1016.jpowsour.2020.228738_Sample2,8.0,Ag,,,,
+10.1016_j.apsusc.2021.149973_Sample1,1.0,ITO,,,,
+10.1016_j.apsusc.2021.149973_Sample1,2.0,NiOx,Nanoparticles,Ethanol,,
+10.1016_j.apsusc.2021.149973_Sample1,3.0,,,,,
+10.1016_j.apsusc.2021.149973_Sample1,4.0,PbI2,Precursor,DMF:DMSO (8:2 v/v),568.0,mg
+10.1016_j.apsusc.2021.149973_Sample1,4.0,FAI,Precursor,DMF:DMSO (8:2 v/v),187.0,mg
+10.1016_j.apsusc.2021.149973_Sample1,4.0,CsI,Precursor,DMF:DMSO (8:2 v/v),66.0,mg
+10.1016_j.apsusc.2021.149973_Sample1,4.0,PbBr2,Precursor,DMF:DMSO (8:2 v/v),80.0,mg
+10.1016_j.apsusc.2021.149973_Sample1,4.0,MABr,Precursor,DMF:DMSO (8:2 v/v),12.0,mg
+10.1016_j.apsusc.2021.149973_Sample1,5.0,,,,,
+10.1016_j.apsusc.2021.149973_Sample1,6.0,PCBM,Solution,DCB (anhydrous),,
+10.1016_j.apsusc.2021.149973_Sample1,7.0,ZnO NPs,Nanoparticles,2-propanol,,
+10.1016_j.apsusc.2021.149973_Sample1,8.0,Ag,,,,
+10.1016_j.apsusc.2021.149973_Sample2,1.0,ITO,,,,
+10.1016_j.apsusc.2021.149973_Sample2,2.0,NiOx NPs,Nanoparticles,Ethanol,,
+10.1016_j.apsusc.2021.149973_Sample2,3.0,TSPA,Solution,IPA,1.0,vol%
+10.1016_j.apsusc.2021.149973_Sample2,4.0,PbI2,Precursor,DMF:DMSO (8:2 v/v),568.0,mg
+10.1016_j.apsusc.2021.149973_Sample2,4.0,FAI,Precursor,DMF:DMSO (8:2 v/v),187.0,mg
+10.1016_j.apsusc.2021.149973_Sample2,4.0,CsI,Precursor,DMF:DMSO (8:2 v/v),66.0,mg
+10.1016_j.apsusc.2021.149973_Sample2,4.0,PbBr2,Precursor,DMF:DMSO (8:2 v/v),80.0,mg
+10.1016_j.apsusc.2021.149973_Sample2,4.0,MABr,Precursor,DMF:DMSO (8:2 v/v),12.0,mg
+10.1016_j.apsusc.2021.149973_Sample2,5.0,,,,,
+10.1016_j.apsusc.2021.149973_Sample2,6.0,PCBM,Solution,DCB (anhydrous),,
+10.1016_j.apsusc.2021.149973_Sample2,7.0,ZnO NPs,Nanoparticles,2-propanol,,
+10.1016_j.apsusc.2021.149973_Sample2,8.0,Ag,,,,
+10.1016_j.joule.2022.06.026_Sample1,1.0,FTO,Substrate,,,
+10.1016_j.joule.2022.06.026_Sample1,2.0,NiOx,,,,
+10.1016_j.joule.2022.06.026_Sample1,3.0,,,,,
+10.1016_j.joule.2022.06.026_Sample1,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.14,M
+10.1016_j.joule.2022.06.026_Sample1,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.33,M
+10.1016_j.joule.2022.06.026_Sample1,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.1,M
+10.1016_j.joule.2022.06.026_Sample1,4.0,MACl,Additive,DMF:DMSO (4:1 v/v),0.2,M
+10.1016_j.joule.2022.06.026_Sample1,4.0,L-α-Phosphatidylcholine,Additive,DMF:DMSO (4:1 v/v),0.06,mg/ml
+10.1016_j.joule.2022.06.026_Sample1,4.0,BMIMBF4,Additive,DMF:DMSO (4:1 v/v),0.33,mg/ml
+10.1016_j.joule.2022.06.026_Sample1,5.0,,,,,
+10.1016_j.joule.2022.06.026_Sample1,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/ml
+10.1016_j.joule.2022.06.026_Sample1,7.0,BCP,Solution,IPA,,
+10.1016_j.joule.2022.06.026_Sample1,8.0,Ag,,,,
+10.1016_j.joule.2022.06.026_Sample2,1.0,FTO,Substrate,,,
+10.1016_j.joule.2022.06.026_Sample2,2.0,NiOx,,,,
+10.1016_j.joule.2022.06.026_Sample2,3.0,Ar plasma,,,,
+10.1016_j.joule.2022.06.026_Sample2,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.14,M
+10.1016_j.joule.2022.06.026_Sample2,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.33,M
+10.1016_j.joule.2022.06.026_Sample2,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.1,M
+10.1016_j.joule.2022.06.026_Sample2,4.0,MACl,Additive,DMF:DMSO (4:1 v/v),0.2,M
+10.1016_j.joule.2022.06.026_Sample2,4.0,L-α-Phosphatidylcholine,Additive,DMF:DMSO (4:1 v/v),0.06,mg/ml
+10.1016_j.joule.2022.06.026_Sample2,4.0,BMIMBF4,Additive,DMF:DMSO (4:1 v/v),0.33,mg/ml
+10.1016_j.joule.2022.06.026_Sample2,5.0,,,,,
+10.1016_j.joule.2022.06.026_Sample2,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/ml
+10.1016_j.joule.2022.06.026_Sample2,7.0,BCP,Solution,IPA,,
+10.1016_j.joule.2022.06.026_Sample2,8.0,Ag,,,,
+10.1016_j.joule.2022.06.026_Sample3,1.0,FTO,Substrate,,,
+10.1016_j.joule.2022.06.026_Sample3,2.0,NiOx,,,,
+10.1016_j.joule.2022.06.026_Sample3,3.0,HNO3,,,0.015,M
+10.1016_j.joule.2022.06.026_Sample3,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.14,M
+10.1016_j.joule.2022.06.026_Sample3,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.33,M
+10.1016_j.joule.2022.06.026_Sample3,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.1,M
+10.1016_j.joule.2022.06.026_Sample3,4.0,MACl,Additive,DMF:DMSO (4:1 v/v),0.2,M
+10.1016_j.joule.2022.06.026_Sample3,4.0,L-α-Phosphatidylcholine,Additive,DMF:DMSO (4:1 v/v),0.06,mg/ml
+10.1016_j.joule.2022.06.026_Sample3,4.0,BMIMBF4,Additive,DMF:DMSO (4:1 v/v),0.33,mg/ml
+10.1016_j.joule.2022.06.026_Sample3,5.0,,,,,
+10.1016_j.joule.2022.06.026_Sample3,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/ml
+10.1016_j.joule.2022.06.026_Sample3,7.0,BCP,Solution,IPA,,
+10.1016_j.joule.2022.06.026_Sample3,8.0,Ag,,,,
+10.1016_j.joule.2022.06.026_Sample4,1.0,ITO/PET + MgF2,,,,
+10.1016_j.joule.2022.06.026_Sample4,2.0,NiOx,,,,
+10.1016_j.joule.2022.06.026_Sample4,3.0,HNO3,Brønsted acid treatment,,0.015,"M (dilute, ~0.015 M)"
+10.1016_j.joule.2022.06.026_Sample4,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.14,M
+10.1016_j.joule.2022.06.026_Sample4,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.33,M
+10.1016_j.joule.2022.06.026_Sample4,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.1,M
+10.1016_j.joule.2022.06.026_Sample4,4.0,MACl,Additive,DMF:DMSO (4:1 v/v),0.2,M
+10.1016_j.joule.2022.06.026_Sample4,4.0,L-α-Phosphatidylcholine,Additive,DMF:DMSO (4:1 v/v),0.06,mg/ml
+10.1016_j.joule.2022.06.026_Sample4,4.0,BMIMBF4,Additive,DMF:DMSO (4:1 v/v),0.33,mg/ml
+10.1016_j.joule.2022.06.026_Sample4,5.0,,,,,
+10.1016_j.joule.2022.06.026_Sample4,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/ml
+10.1016_j.joule.2022.06.026_Sample4,7.0,BCP,Solution,IPA,,
+10.1016_j.joule.2022.06.026_Sample4,8.0,Ag,,,,
+10.1016_j.solener.2024.112888_Sample1,1.0,FTO,,,,
+10.1016_j.solener.2024.112888_Sample1,2.0,NiOx,Precursor,Ethanol,0.1,mM
+10.1016_j.solener.2024.112888_Sample1,3.0,,,,,
+10.1016_j.solener.2024.112888_Sample1,4.0,Cs0.08(MA0.17FA0.83)0.92Pb(I0.83Br0.17)3,Precursor,DMF:DMSO (1:4 v:v),,
+10.1016_j.solener.2024.112888_Sample1,4.0,PbI2,Precursor,DMF:DMSO (1:4 v:v),1.1,M
+10.1016_j.solener.2024.112888_Sample1,4.0,PbBr2,Precursor,DMF:DMSO (1:4 v:v),0.2,M
+10.1016_j.solener.2024.112888_Sample1,4.0,FAI,Precursor,DMF:DMSO (1:4 v:v),1.0,M
+10.1016_j.solener.2024.112888_Sample1,4.0,MABr,Precursor,DMF:DMSO (1:4 v:v),0.2,M
+10.1016_j.solener.2024.112888_Sample1,4.0,CsI,Additive,DMSO,1.5,M
+10.1016_j.solener.2024.112888_Sample1,5.0,,,,,
+10.1016_j.solener.2024.112888_Sample1,6.0,PCBM,Solution,CB,20.0,mg mL-1
+10.1016_j.solener.2024.112888_Sample1,7.0,BCP,Solution,Methanol,0.5,mg mL-1
+10.1016_j.solener.2024.112888_Sample1,8.0,Ag,,,,
+10.1016_j.solener.2024.112888_Sample2,1.0,FTO,,,,
+10.1016_j.solener.2024.112888_Sample2,2.0,La:NiOx,Precursor,Ethanol,0.1,mM
+10.1016_j.solener.2024.112888_Sample2,2.0,Ni(NO3)2·6H2O,Precursor,Ethanol,,
+10.1016_j.solener.2024.112888_Sample2,2.0,La(NO3)2·6H2O,Dopant,Ethanol,3.0,mol%
+10.1016_j.solener.2024.112888_Sample2,3.0,,,,,
+10.1016_j.solener.2024.112888_Sample2,4.0,Cs0.08(MA0.17FA0.83)0.92Pb(I0.83Br0.17)3,Precursor,DMF:DMSO (1:4 v:v),,
+10.1016_j.solener.2024.112888_Sample2,4.0,PbI2,Precursor,DMF:DMSO (1:4 v:v),1.1,M
+10.1016_j.solener.2024.112888_Sample2,4.0,PbBr2,Precursor,DMF:DMSO (1:4 v:v),0.2,M
+10.1016_j.solener.2024.112888_Sample2,4.0,FAI,Precursor,DMF:DMSO (1:4 v:v),1.0,M
+10.1016_j.solener.2024.112888_Sample2,4.0,MABr,Precursor,DMF:DMSO (1:4 v:v),0.2,M
+10.1016_j.solener.2024.112888_Sample2,4.0,CsI,Additive,DMSO,1.5,M
+10.1016_j.solener.2024.112888_Sample2,5.0,,,,,
+10.1016_j.solener.2024.112888_Sample2,6.0,PCBM,Solution,CB,20.0,mg mL-1
+10.1016_j.solener.2024.112888_Sample2,7.0,BCP,Solution,Methanol,0.5,mg mL-1
+10.1016_j.solener.2024.112888_Sample2,8.0,Ag,,,,
+10.1016_j.solmat.2025.113858_Sample1,1.0,ITO,,,,
+10.1016_j.solmat.2025.113858_Sample1,2.0,NiOx,Thin film,,,
+10.1016_j.solmat.2025.113858_Sample1,3.0,,,,,
+10.1016_j.solmat.2025.113858_Sample1,4.0,Rb0.05Cs0.05MA0.05FA0.85Pb(I0.95Br0.05)3,Precursor,DMF:DMSO (4:1 v/v),1.5,M
+10.1016_j.solmat.2025.113858_Sample1,4.0,RbI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample1,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample1,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),0.85,mol ratio
+10.1016_j.solmat.2025.113858_Sample1,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample1,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),0.95,mol ratio
+10.1016_j.solmat.2025.113858_Sample1,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample1,5.0,,,,,
+10.1016_j.solmat.2025.113858_Sample1,6.0,LiF,,,,
+10.1016_j.solmat.2025.113858_Sample1,6.0,C60,,,,
+10.1016_j.solmat.2025.113858_Sample1,7.0,BCP,,,,
+10.1016_j.solmat.2025.113858_Sample1,8.0,Ag,,,,
+10.1016_j.solmat.2025.113858_Sample2,1.0,ITO,,,,
+10.1016_j.solmat.2025.113858_Sample2,2.0,NiOx,Thin film (sputtered),,,
+10.1016_j.solmat.2025.113858_Sample2,3.0,PMMA,Solution,Chlorobenzene,0.05,mg mL-1
+10.1016_j.solmat.2025.113858_Sample2,4.0,Rb0.05Cs0.05MA0.05FA0.85Pb(I0.95Br0.05)3,Precursor,DMF:DMSO (4:1 v/v),1.5,M
+10.1016_j.solmat.2025.113858_Sample2,4.0,RbI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample2,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample2,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),0.85,mol ratio
+10.1016_j.solmat.2025.113858_Sample2,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample2,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),0.95,mol ratio
+10.1016_j.solmat.2025.113858_Sample2,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample2,5.0,,,,,
+10.1016_j.solmat.2025.113858_Sample2,6.0,LiF,,,,
+10.1016_j.solmat.2025.113858_Sample2,6.0,C60,,,,
+10.1016_j.solmat.2025.113858_Sample2,7.0,BCP,,,,
+10.1016_j.solmat.2025.113858_Sample2,8.0,Ag,,,,
+10.1016_j.solmat.2025.113858_Sample3,1.0,ITO,,,,
+10.1016_j.solmat.2025.113858_Sample3,2.0,NiOx,Thin film (sputtered),,,
+10.1016_j.solmat.2025.113858_Sample3,3.0,PMMA,Solution,Chlorobenzene,0.1,mg mL-1
+10.1016_j.solmat.2025.113858_Sample3,4.0,Rb0.05Cs0.05MA0.05FA0.85Pb(I0.95Br0.05)3,Precursor,DMF:DMSO (4:1 v/v),1.5,M
+10.1016_j.solmat.2025.113858_Sample3,4.0,RbI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample3,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample3,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),0.85,mol ratio
+10.1016_j.solmat.2025.113858_Sample3,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample3,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),0.95,mol ratio
+10.1016_j.solmat.2025.113858_Sample3,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample3,5.0,,,,,
+10.1016_j.solmat.2025.113858_Sample3,6.0,LiF,,,,
+10.1016_j.solmat.2025.113858_Sample3,6.0,C60,,,,
+10.1016_j.solmat.2025.113858_Sample3,7.0,BCP,,,,
+10.1016_j.solmat.2025.113858_Sample3,8.0,Ag,,,,
+10.1016_j.solmat.2025.113858_Sample4,1.0,ITO,,,,
+10.1016_j.solmat.2025.113858_Sample4,2.0,NiOx,Thin film (sputtered),,,
+10.1016_j.solmat.2025.113858_Sample4,3.0,PMMA,Solution,Chlorobenzene,0.2,mg mL-1
+10.1016_j.solmat.2025.113858_Sample4,4.0,Rb0.05Cs0.05MA0.05FA0.85Pb(I0.95Br0.05)3,Precursor,DMF:DMSO (4:1 v/v),1.5,M
+10.1016_j.solmat.2025.113858_Sample4,4.0,RbI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample4,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample4,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),0.85,mol ratio
+10.1016_j.solmat.2025.113858_Sample4,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample4,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),0.95,mol ratio
+10.1016_j.solmat.2025.113858_Sample4,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),0.05,mol ratio
+10.1016_j.solmat.2025.113858_Sample4,5.0,,,,,
+10.1016_j.solmat.2025.113858_Sample4,6.0,LiF,,,,
+10.1016_j.solmat.2025.113858_Sample4,6.0,C60,,,,
+10.1016_j.solmat.2025.113858_Sample4,7.0,BCP,,,,
+10.1016_j.solmat.2025.113858_Sample4,8.0,Ag,,,,
 10.1016j.jechem.2021.11.029_Sample1,1.0,ITO,,,,
 10.1016j.jechem.2021.11.029_Sample1,2.0,NiOx,Nanoparticles,Water/IPA (3:1),20.0,mg/mL
 10.1016j.jechem.2021.11.029_Sample1,3.0,,,,,
@@ -111,44 +351,368 @@ device_id,layer_id,material,type,solvent,amount,unit
 10.1016j.nanoen.2021.106285_Sample3,7.0,BCP,Solution,IPA,2.5,mg/mL
 10.1016j.nanoen.2021.106285_Sample3,7.0,SnO2,Solution,,,
 10.1016j.nanoen.2021.106285_Sample3,8.0,Ag,,,,
-10.1021_acsami.5c16972_Sample1,1.0,ITO,,,,
-10.1021_acsami.5c16972_Sample1,2.0,NiOx,Solution,H2O,20.0,mg mL-1
-10.1021_acsami.5c16972_Sample1,3.0,,,,,
-10.1021_acsami.5c16972_Sample1,3.0,,,,,
-10.1021_acsami.5c16972_Sample1,4.0,PbI2,Solution,DMF/DMSO (4/1 V/V),548.6,mg
-10.1021_acsami.5c16972_Sample1,4.0,CsI,Solution,DMF/DMSO (4/1 V/V),18.2,mg
-10.1021_acsami.5c16972_Sample1,4.0,PbBr2,Solution,DMF/DMSO (4/1 V/V),77.05,mg
-10.1021_acsami.5c16972_Sample1,4.0,MAI,Solution,DMF/DMSO (4/1 V/V),35.6,mg
-10.1021_acsami.5c16972_Sample1,4.0,FAI,Solution,DMF/DMSO (4/1 V/V),190.2,mg
-10.1021_acsami.5c16972_Sample1,5.0,,,,,
-10.1021_acsami.5c16972_Sample1,6.0,PCBM,Solution,CB,20.0,mg mL-1
-10.1021_acsami.5c16972_Sample1,7.0,BCP,Solution,ethanol,5.0,mg mL-1
-10.1021_acsami.5c16972_Sample1,8.0,Ag,,,,
-10.1021_acsami.5c16972_Sample2,1.0,ITO,,,,
-10.1021_acsami.5c16972_Sample2,2.0,NiOx,Solution,H2O,20.0,mg mL-1
-10.1021_acsami.5c16972_Sample2,3.0,Me-4PACz,Solution,ethyl alcohol,0.5,mg mL-1
-10.1021_acsami.5c16972_Sample2,4.0,PbI2,Solution,DMF/DMSO (4/1 V/V),548.6,mg
-10.1021_acsami.5c16972_Sample2,4.0,CsI,Solution,DMF/DMSO (4/1 V/V),18.2,mg
-10.1021_acsami.5c16972_Sample2,4.0,PbBr2,Solution,DMF/DMSO (4/1 V/V),77.05,mg
-10.1021_acsami.5c16972_Sample2,4.0,MAI,Solution,DMF/DMSO (4/1 V/V),35.6,mg
-10.1021_acsami.5c16972_Sample2,4.0,FAI,Solution,DMF/DMSO (4/1 V/V),190.2,mg
-10.1021_acsami.5c16972_Sample2,5.0,,,,,
-10.1021_acsami.5c16972_Sample2,6.0,PCBM,Solution,CB,20.0,mg mL-1
-10.1021_acsami.5c16972_Sample2,7.0,BCP,Solution,ethanol,5.0,mg mL-1
-10.1021_acsami.5c16972_Sample2,8.0,Ag,,,,
-10.1021_acsami.5c16972_Sample3,1.0,ITO,,,,
-10.1021_acsami.5c16972_Sample3,2.0,NiOx,Solution,H2O,20.0,mg mL-1
-10.1021_acsami.5c16972_Sample3,3.0,Me-4PACz,Solution,ethyl alcohol,0.5,mg mL-1
-10.1021_acsami.5c16972_Sample3,3.0,PCPTFB,Solution,H2O,0.3,mg mL-1
-10.1021_acsami.5c16972_Sample3,4.0,PbI2,Solution,DMF/DMSO (4/1 V/V),548.6,mg
-10.1021_acsami.5c16972_Sample3,4.0,CsI,Solution,DMF/DMSO (4/1 V/V),18.2,mg
-10.1021_acsami.5c16972_Sample3,4.0,PbBr2,Solution,DMF/DMSO (4/1 V/V),77.05,mg
-10.1021_acsami.5c16972_Sample3,4.0,MAI,Solution,DMF/DMSO (4/1 V/V),35.6,mg
-10.1021_acsami.5c16972_Sample3,4.0,FAI,Solution,DMF/DMSO (4/1 V/V),190.2,mg
-10.1021_acsami.5c16972_Sample3,5.0,,,,,
-10.1021_acsami.5c16972_Sample3,6.0,PCBM,Solution,CB,20.0,mg mL-1
-10.1021_acsami.5c16972_Sample3,7.0,BCP,Solution,ethanol,5.0,mg mL-1
-10.1021_acsami.5c16972_Sample3,8.0,Ag,,,,
+10.1021_acsaem.2c03434_Sample1,1.0,FTO,,,,
+10.1021_acsaem.2c03434_Sample1,2.0,Ni(CH3COO)2·4H2O,Precursor,Ethanol,0.2,mol L-1
+10.1021_acsaem.2c03434_Sample1,2.0,Cu(CH3COO)2·H2O,Dopant,Ethanol,5.0,mol% (Cu/Ni)
+10.1021_acsaem.2c03434_Sample1,2.0,MEA,Additive,Ethanol,0.2,mol L-1
+10.1021_acsaem.2c03434_Sample1,3.0,,,,,
+10.1021_acsaem.2c03434_Sample1,4.0,CsFAMA triple-cation perovskite,Precursor,DMF:DMSO (4:1 v/v),,
+10.1021_acsaem.2c03434_Sample1,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.45,M
+10.1021_acsaem.2c03434_Sample1,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.15,M
+10.1021_acsaem.2c03434_Sample1,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),0.21,M
+10.1021_acsaem.2c03434_Sample1,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),0.21,M
+10.1021_acsaem.2c03434_Sample1,4.0,MACl,Additive,DMF:DMSO (4:1 v/v),0.45,M
+10.1021_acsaem.2c03434_Sample1,4.0,CsI,Additive,DMSO,2.0,M
+10.1021_acsaem.2c03434_Sample1,5.0,,,,,
+10.1021_acsaem.2c03434_Sample1,6.0,PCBM,Solution,CB,20.0,mmol L-1
+10.1021_acsaem.2c03434_Sample1,7.0,BCP,Solution,IPA,1.0,mg mL-1
+10.1021_acsaem.2c03434_Sample1,8.0,Ag,,,,
+10.1021_acsaem.2c03434_Sample2,1.0,FTO,,,,
+10.1021_acsaem.2c03434_Sample2,2.0,Ni(CH3COO)2·4H2O,Precursor,Ethanol,0.2,mol L-1
+10.1021_acsaem.2c03434_Sample2,2.0,Cu(CH3COO)2·H2O,Dopant,Ethanol,5.0,mol%
+10.1021_acsaem.2c03434_Sample2,2.0,MEA,Additive,Ethanol,0.2,mol L-1
+10.1021_acsaem.2c03434_Sample2,3.0,DMAP,Solution,IPA,20.0,mg mL-1
+10.1021_acsaem.2c03434_Sample2,4.0,CsFAMA triple-cation perovskite,Precursor,DMF:DMSO (4:1 v/v),,
+10.1021_acsaem.2c03434_Sample2,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.45,M
+10.1021_acsaem.2c03434_Sample2,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.15,M
+10.1021_acsaem.2c03434_Sample2,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),0.21,M
+10.1021_acsaem.2c03434_Sample2,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),0.21,M
+10.1021_acsaem.2c03434_Sample2,4.0,MACl,Additive,DMF:DMSO (4:1 v/v),0.45,M
+10.1021_acsaem.2c03434_Sample2,4.0,CsI,Additive,DMSO,2.0,M
+10.1021_acsaem.2c03434_Sample2,5.0,,,,,
+10.1021_acsaem.2c03434_Sample2,6.0,PCBM,Solution,CB,20.0,mmol L-1
+10.1021_acsaem.2c03434_Sample2,7.0,BCP,Solution,IPA,1.0,mg mL-1
+10.1021_acsaem.2c03434_Sample2,8.0,Ag,,,,
+10.1021_acsaem.4c02471_Sample1,1.0,ITO-PET,,,,
+10.1021_acsaem.4c02471_Sample1,2.0,NiOx NPs,Nanoparticles,H2O:IPA (4:1),1.0,
+10.1021_acsaem.4c02471_Sample1,3.0,,,,,
+10.1021_acsaem.4c02471_Sample1,4.0,Cs0.1(FA0.83MA0.17)0.9Pb(I0.85Br0.15)3,Precursor,DMF:2ME:NMP (0.45:0.48:0.07),1.1,M
+10.1021_acsaem.4c02471_Sample1,4.0,MACl,Additive,DMF:2ME:NMP (0.45:0.48:0.07),5.0,mol%
+10.1021_acsaem.4c02471_Sample1,5.0,,,,,
+10.1021_acsaem.4c02471_Sample1,6.0,SnO2,Nanoparticles,Anhydrous ethanol,1.6,
+10.1021_acsaem.4c02471_Sample1,7.0,BCP,,,,
+10.1021_acsaem.4c02471_Sample1,8.0,Ag,,,,
+10.1021_acsaem.4c02471_Sample2,1.0,ITO-PET,,,,
+10.1021_acsaem.4c02471_Sample2,2.0,NiOx NPs,Nanoparticles,H2O:IPA (4:1),1.0,
+10.1021_acsaem.4c02471_Sample2,3.0,BMIMBF4,Solution,IPA,2.5,mg mL-1
+10.1021_acsaem.4c02471_Sample2,4.0,Cs0.1(FA0.83MA0.17)0.9Pb(I0.85Br0.15)3,Precursor,DMF:2ME:NMP (0.45:0.48:0.07),1.1,M
+10.1021_acsaem.4c02471_Sample2,4.0,MACl,Additive,DMF:2ME:NMP (0.45:0.48:0.07),5.0,mol%
+10.1021_acsaem.4c02471_Sample2,5.0,,,,,
+10.1021_acsaem.4c02471_Sample2,6.0,SnO2,Nanoparticles,Anhydrous ethanol,1.6,
+10.1021_acsaem.4c02471_Sample2,7.0,BCP,,,,
+10.1021_acsaem.4c02471_Sample2,8.0,Ag,,,,
+10.1021_acsaem.4c02471_Sample3,1.0,ITO-PET,,,,
+10.1021_acsaem.4c02471_Sample3,2.0,NiOx NPs,Nanoparticles,H2O:IPA (4:1),1.0,
+10.1021_acsaem.4c02471_Sample3,3.0,BMIMBr,Solution,IPA,2.5,mg mL-1
+10.1021_acsaem.4c02471_Sample3,4.0,Cs0.1(FA0.83MA0.17)0.9Pb(I0.85Br0.15)3,Precursor,DMF:2ME:NMP (0.45:0.48:0.07),1.1,M
+10.1021_acsaem.4c02471_Sample3,4.0,MACl,Additive,DMF:2ME:NMP (0.45:0.48:0.07),5.0,mol%
+10.1021_acsaem.4c02471_Sample3,5.0,,,,,
+10.1021_acsaem.4c02471_Sample3,6.0,SnO2,Nanoparticles,Anhydrous ethanol,1.6,
+10.1021_acsaem.4c02471_Sample3,7.0,BCP,,,,
+10.1021_acsaem.4c02471_Sample3,8.0,Ag,,,,
+10.1021_acsaem.4c02471_Sample4,1.0,ITO-PET,,,,
+10.1021_acsaem.4c02471_Sample4,2.0,NiOx NPs,Nanoparticles,H2O:IPA (4:1),1.0,
+10.1021_acsaem.4c02471_Sample4,3.0,BMIMGly,Solution,IPA,2.5,mg mL-1
+10.1021_acsaem.4c02471_Sample4,4.0,Cs0.1(FA0.83MA0.17)0.9Pb(I0.85Br0.15)3,Precursor,DMF:2ME:NMP (0.45:0.48:0.07),1.1,M
+10.1021_acsaem.4c02471_Sample4,4.0,MACl,Additive,DMF:2ME:NMP (0.45:0.48:0.07),5.0,mol%
+10.1021_acsaem.4c02471_Sample4,5.0,,,,,
+10.1021_acsaem.4c02471_Sample4,6.0,SnO2,Nanoparticles,Anhydrous ethanol,1.6,
+10.1021_acsaem.4c02471_Sample4,7.0,BCP,,,,
+10.1021_acsaem.4c02471_Sample4,8.0,Ag,,,,
+10.1021_acsaem.4c02471_Sample5,1.0,ITO-PET,,,,
+10.1021_acsaem.4c02471_Sample5,2.0,NiOx NPs,Nanoparticles,H2O:IPA (4:1),1.0,
+10.1021_acsaem.4c02471_Sample5,3.0,BMIMPF6,Solution,IPA,2.5,mg mL-1
+10.1021_acsaem.4c02471_Sample5,4.0,Cs0.1(FA0.83MA0.17)0.9Pb(I0.85Br0.15)3,Precursor,DMF:2ME:NMP (0.45:0.48:0.07),1.1,M
+10.1021_acsaem.4c02471_Sample5,4.0,MACl,Additive,DMF:2ME:NMP (0.45:0.48:0.07),5.0,mol%
+10.1021_acsaem.4c02471_Sample5,5.0,,,,,
+10.1021_acsaem.4c02471_Sample5,6.0,SnO2,Nanoparticles,Anhydrous ethanol,1.6,
+10.1021_acsaem.4c02471_Sample5,7.0,BCP,,,,
+10.1021_acsaem.4c02471_Sample5,8.0,Ag,,,,
+10.1021_acsami.3c02156_Sample1,1.0,ITO,,,,
+10.1021_acsami.3c02156_Sample1,2.0,NiOx NPs,Nanoparticles,DI water,20.0,mg mL-1
+10.1021_acsami.3c02156_Sample1,3.0,,,,,
+10.1021_acsami.3c02156_Sample1,4.0,CsI,Precursor,DMF/DMSO (4:1 v:v),18.2,mg
+10.1021_acsami.3c02156_Sample1,4.0,FAI,Precursor,DMF/DMSO (4:1 v:v),172.0,mg
+10.1021_acsami.3c02156_Sample1,4.0,MABr,Precursor,DMF/DMSO (4:1 v:v),22.4,mg
+10.1021_acsami.3c02156_Sample1,4.0,PbI2,Precursor,DMF/DMSO (4:1 v:v),507.1,mg
+10.1021_acsami.3c02156_Sample1,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v:v),73.4,mg
+10.1021_acsami.3c02156_Sample1,5.0,PEAI,Solution,IPA,1.0,mg mL-1
+10.1021_acsami.3c02156_Sample1,6.0,PCBM,Solution,CB,20.0,mg mL-1
+10.1021_acsami.3c02156_Sample1,7.0,BCP,Solution,,,
+10.1021_acsami.3c02156_Sample1,8.0,Ag,,,,
+10.1021_acsami.3c02156_Sample2,1.0,ITO,,,,
+10.1021_acsami.3c02156_Sample2,2.0,NiOx NPs,Nanoparticles,DI water,20,mg mL-1
+10.1021_acsami.3c02156_Sample2,3.0,Ethanolamine,Solution,Ethanol,1:50,v:v
+10.1021_acsami.3c02156_Sample2,4.0,CsI,Precursor,DMF/DMSO (4:1 v:v),18.2,mg
+10.1021_acsami.3c02156_Sample2,4.0,FAI,Precursor,DMF/DMSO (4:1 v:v),172,mg
+10.1021_acsami.3c02156_Sample2,4.0,MABr,Precursor,DMF/DMSO (4:1 v:v),22.4,mg
+10.1021_acsami.3c02156_Sample2,4.0,PbI2,Precursor,DMF/DMSO (4:1 v:v),507.1,mg
+10.1021_acsami.3c02156_Sample2,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v:v),73.4,mg
+10.1021_acsami.3c02156_Sample2,5.0,PEAI,Solution,IPA,1,mg mL-1
+10.1021_acsami.3c02156_Sample2,6.0,PCBM,Solution,CB,20,mg mL-1
+10.1021_acsami.3c02156_Sample2,7.0,BCP,Solution,,,
+10.1021_acsami.3c02156_Sample2,8.0,Ag,,,,
+10.1021_acsami.3c02156_Sample3,1.0,ITO,,,,
+10.1021_acsami.3c02156_Sample3,2.0,NiOx NPs,Nanoparticles,DI water,20.0,mg mL-1
+10.1021_acsami.3c02156_Sample3,3.0,2PACz,Solution,IPA,0.5,mg mL-1
+10.1021_acsami.3c02156_Sample3,4.0,CsI,Precursor,DMF/DMSO (4:1 v:v),18.2,mg
+10.1021_acsami.3c02156_Sample3,4.0,FAI,Precursor,DMF/DMSO (4:1 v:v),172.0,mg
+10.1021_acsami.3c02156_Sample3,4.0,MABr,Precursor,DMF/DMSO (4:1 v:v),22.4,mg
+10.1021_acsami.3c02156_Sample3,4.0,PbI2,Precursor,DMF/DMSO (4:1 v:v),507.1,mg
+10.1021_acsami.3c02156_Sample3,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v:v),73.4,mg
+10.1021_acsami.3c02156_Sample3,5.0,PEAI,Solution,IPA,1.0,mg mL-1
+10.1021_acsami.3c02156_Sample3,6.0,PCBM,Solution,CB,20.0,mg mL-1
+10.1021_acsami.3c02156_Sample3,7.0,BCP,Solution,,,
+10.1021_acsami.3c02156_Sample3,8.0,Ag,,,,
+10.1021_acsami.3c02156_Sample4,1.0,ITO,,,,
+10.1021_acsami.3c02156_Sample4,2.0,NiOx NPs,Nanoparticles,DI water,20,mg mL-1
+10.1021_acsami.3c02156_Sample4,3.0,Ethanolamine,Solution,Ethanol,1:50,v:v
+10.1021_acsami.3c02156_Sample4,3.0,2PACz,Solution,IPA,0.5,mg mL-1
+10.1021_acsami.3c02156_Sample4,4.0,CsI,Precursor,DMF/DMSO (4:1 v:v),18.2,mg
+10.1021_acsami.3c02156_Sample4,4.0,FAI,Precursor,DMF/DMSO (4:1 v:v),172,mg
+10.1021_acsami.3c02156_Sample4,4.0,MABr,Precursor,DMF/DMSO (4:1 v:v),22.4,mg
+10.1021_acsami.3c02156_Sample4,4.0,PbI2,Precursor,DMF/DMSO (4:1 v:v),507.1,mg
+10.1021_acsami.3c02156_Sample4,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v:v),73.4,mg
+10.1021_acsami.3c02156_Sample4,5.0,PEAI,Solution,IPA,1,mg mL-1
+10.1021_acsami.3c02156_Sample4,6.0,PCBM,Solution,CB,20,mg mL-1
+10.1021_acsami.3c02156_Sample4,7.0,BCP,Solution,,,
+10.1021_acsami.3c02156_Sample4,8.0,Ag,,,,
+10.1021_acsenergylett.3c00697_Sample1,1.0,ITO,,,,
+10.1021_acsenergylett.3c00697_Sample1,2.0,NiOx NPs,Nanoparticles,DI water,5.0,mg mL-1
+10.1021_acsenergylett.3c00697_Sample1,2.0,Me-4PACz,Solution,Anhydrous EtOH,1.0,mmol L-1
+10.1021_acsenergylett.3c00697_Sample1,3.0,,,,,
+10.1021_acsenergylett.3c00697_Sample1,4.0,Cs0.1FA0.9PbI2.855Br0.145,Precursor,DMF:NMP (9:1 v/v),1.2,M
+10.1021_acsenergylett.3c00697_Sample1,4.0,FAI,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample1,4.0,CsI,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample1,4.0,PbI2,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample1,4.0,PbBr2,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample1,4.0,MACl,Additive,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample1,5.0,FACl,Solution,Anhydrous IPA,0.5,mg mL-1
+10.1021_acsenergylett.3c00697_Sample1,6.0,LiF,Thin film,,,
+10.1021_acsenergylett.3c00697_Sample1,6.0,C60,Thin film,,,
+10.1021_acsenergylett.3c00697_Sample1,6.0,BCP,Thin film,,,
+10.1021_acsenergylett.3c00697_Sample1,7.0,,,,,
+10.1021_acsenergylett.3c00697_Sample1,8.0,Cu,,,,
+10.1021_acsenergylett.3c00697_Sample2,1.0,ITO,,,,
+10.1021_acsenergylett.3c00697_Sample2,2.0,NiOx NPs,Nanoparticles,DI water,5.0,mg mL-1
+10.1021_acsenergylett.3c00697_Sample2,2.0,Me-4PACz,Solution,Anhydrous EtOH,1.0,mmol L-1
+10.1021_acsenergylett.3c00697_Sample2,3.0,,,,,
+10.1021_acsenergylett.3c00697_Sample2,4.0,Cs0.1FA0.9PbI2.855Br0.145,Precursor,DMF:NMP (9:1 v/v),1.2,M
+10.1021_acsenergylett.3c00697_Sample2,4.0,FAI,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample2,4.0,CsI,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample2,4.0,PbI2,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample2,4.0,PbBr2,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample2,4.0,MACl,Additive,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample2,5.0,FACl,Solution,Anhydrous IPA,0.5,mg mL-1
+10.1021_acsenergylett.3c00697_Sample2,5.0,TEACl,Solution,Anhydrous IPA,1.0,mg mL-1
+10.1021_acsenergylett.3c00697_Sample2,6.0,LiF,Thin film,,,
+10.1021_acsenergylett.3c00697_Sample2,6.0,C60,Thin film,,,
+10.1021_acsenergylett.3c00697_Sample2,6.0,BCP,Thin film,,,
+10.1021_acsenergylett.3c00697_Sample2,7.0,,,,,
+10.1021_acsenergylett.3c00697_Sample2,8.0,Cu,,,,
+10.1021_acsenergylett.3c00697_Sample3,1.0,ITO,,,,
+10.1021_acsenergylett.3c00697_Sample3,2.0,NiOx NPs,Nanoparticles,DI water,5.0,mg mL-1
+10.1021_acsenergylett.3c00697_Sample3,2.0,Me-4PACz,Solution,Anhydrous EtOH,1.0,mmol L-1
+10.1021_acsenergylett.3c00697_Sample3,3.0,TEACl,Solution,Anhydrous IPA,1.0,mg mL-1
+10.1021_acsenergylett.3c00697_Sample3,4.0,Cs0.1FA0.9PbI2.855Br0.145,Precursor,DMF:NMP (9:1 v/v),1.2,M
+10.1021_acsenergylett.3c00697_Sample3,4.0,FAI,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample3,4.0,CsI,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample3,4.0,PbI2,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample3,4.0,PbBr2,Precursor,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample3,4.0,MACl,Additive,DMF:NMP (9:1 v/v),,
+10.1021_acsenergylett.3c00697_Sample3,5.0,FACl,Solution,Anhydrous IPA,0.5,mg mL-1
+10.1021_acsenergylett.3c00697_Sample3,5.0,TEACl,Solution,Anhydrous IPA,1.0,mg mL-1
+10.1021_acsenergylett.3c00697_Sample3,6.0,LiF,,,,
+10.1021_acsenergylett.3c00697_Sample3,6.0,C60,,,,
+10.1021_acsenergylett.3c00697_Sample3,6.0,BCP,,,,
+10.1021_acsenergylett.3c00697_Sample3,7.0,,,,,
+10.1021_acsenergylett.3c00697_Sample3,8.0,Cu,,,,
+10.1038_s41598-023-32697-z_Sample1,1.0,FTO,,,,
+10.1038_s41598-023-32697-z_Sample1,2.0,NiOx,Precursor,Ethylene glycol + ethylenediamine,,
+10.1038_s41598-023-32697-z_Sample1,2.0,Nickel nitrate,Precursor,Ethylene glycol,0.291,g mL-1
+10.1038_s41598-023-32697-z_Sample1,2.0,Ethylenediamine,Additive,,0.067,
+10.1038_s41598-023-32697-z_Sample1,3.0,,,,,
+10.1038_s41598-023-32697-z_Sample1,4.0,Cs0.05FA0.81MA0.14PbBr0.14I2.86,Precursor,DMSO:DMF (1:4 v/v),1.0,M
+10.1038_s41598-023-32697-z_Sample1,4.0,PbI2,Precursor,DMSO:DMF (1:4 v/v),461.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample1,4.0,FAI,Precursor,DMSO:DMF (1:4 v/v),139.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample1,4.0,CsI,Precursor,DMSO:DMF (1:4 v/v),12.8,mg mL-1
+10.1038_s41598-023-32697-z_Sample1,4.0,MABr,Precursor,DMSO:DMF (1:4 v/v),15.7,mg mL-1
+10.1038_s41598-023-32697-z_Sample1,5.0,,,,,
+10.1038_s41598-023-32697-z_Sample1,6.0,C60,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample1,7.0,BCP,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample1,8.0,Ag,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample2,1.0,FTO,,,,
+10.1038_s41598-023-32697-z_Sample2,2.0,NiOx,Precursor,Ethylene glycol + ethylenediamine,,
+10.1038_s41598-023-32697-z_Sample2,2.0,Nickel nitrate,Precursor,Ethylene glycol,0.291,g mL-1
+10.1038_s41598-023-32697-z_Sample2,2.0,Ethylenediamine,Additive,,0.067,
+10.1038_s41598-023-32697-z_Sample2,3.0,CsPbI3 PeQDs,Nanoparticles,Octane,,
+10.1038_s41598-023-32697-z_Sample2,4.0,Cs0.05FA0.81MA0.14PbBr0.14I2.86,Precursor,DMSO:DMF (1:4 v/v),1.0,M
+10.1038_s41598-023-32697-z_Sample2,4.0,PbI2,Precursor,DMSO:DMF (1:4 v/v),461.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample2,4.0,FAI,Precursor,DMSO:DMF (1:4 v/v),139.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample2,4.0,CsI,Precursor,DMSO:DMF (1:4 v/v),12.8,mg mL-1
+10.1038_s41598-023-32697-z_Sample2,4.0,MABr,Precursor,DMSO:DMF (1:4 v/v),15.7,mg mL-1
+10.1038_s41598-023-32697-z_Sample2,5.0,,,,,
+10.1038_s41598-023-32697-z_Sample2,6.0,C60,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample2,7.0,BCP,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample2,8.0,Ag,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample3,1.0,FTO,,,,
+10.1038_s41598-023-32697-z_Sample3,2.0,NiOx,Precursor,Ethylene glycol + ethylenediamine,,
+10.1038_s41598-023-32697-z_Sample3,2.0,Nickel nitrate,Precursor,Ethylene glycol,0.291,g mL-1
+10.1038_s41598-023-32697-z_Sample3,2.0,Ethylenediamine,Additive,,0.067,
+10.1038_s41598-023-32697-z_Sample3,3.0,CsPbI3 PeQDs,Nanoparticles,Octane,,
+10.1038_s41598-023-32697-z_Sample3,4.0,Cs0.05FA0.81MA0.14PbBr0.14I2.86,Precursor,DMSO:DMF (1:4 v/v),1.0,M
+10.1038_s41598-023-32697-z_Sample3,4.0,PbI2,Precursor,DMSO:DMF (1:4 v/v),461.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample3,4.0,FAI,Precursor,DMSO:DMF (1:4 v/v),139.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample3,4.0,CsI,Precursor,DMSO:DMF (1:4 v/v),12.8,mg mL-1
+10.1038_s41598-023-32697-z_Sample3,4.0,MABr,Precursor,DMSO:DMF (1:4 v/v),15.7,mg mL-1
+10.1038_s41598-023-32697-z_Sample3,5.0,MACl,Solution,Ethyl acetate,5.0,mg per 5 mL
+10.1038_s41598-023-32697-z_Sample3,6.0,C60,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample3,7.0,BCP,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample3,8.0,Ag,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample4,1.0,FTO,,,,
+10.1038_s41598-023-32697-z_Sample4,2.0,NiOx,Precursor,Ethylene glycol + ethylenediamine,,
+10.1038_s41598-023-32697-z_Sample4,2.0,Nickel nitrate,Precursor,Ethylene glycol,0.291,g mL-1
+10.1038_s41598-023-32697-z_Sample4,2.0,Ethylenediamine,Additive,,0.067,
+10.1038_s41598-023-32697-z_Sample4,3.0,CsPbI3 PeQDs,Nanoparticles,Octane,,
+10.1038_s41598-023-32697-z_Sample4,4.0,Cs0.05FA0.81MA0.14PbBr0.14I2.86,Precursor,DMSO:DMF (1:4 v/v),1.0,M
+10.1038_s41598-023-32697-z_Sample4,4.0,PbI2,Precursor,DMSO:DMF (1:4 v/v),461.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample4,4.0,FAI,Precursor,DMSO:DMF (1:4 v/v),139.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample4,4.0,CsI,Precursor,DMSO:DMF (1:4 v/v),12.8,mg mL-1
+10.1038_s41598-023-32697-z_Sample4,4.0,MABr,Precursor,DMSO:DMF (1:4 v/v),15.7,mg mL-1
+10.1038_s41598-023-32697-z_Sample4,5.0,MABr,Solution,Ethyl acetate,5.0,mg per 5 mL
+10.1038_s41598-023-32697-z_Sample4,6.0,C60,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample4,7.0,BCP,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample4,8.0,Ag,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample5,1.0,FTO,,,,
+10.1038_s41598-023-32697-z_Sample5,2.0,NiOx,Precursor,Ethylene glycol + ethylenediamine,,
+10.1038_s41598-023-32697-z_Sample5,2.0,Nickel nitrate,Precursor,Ethylene glycol,0.291,g mL-1
+10.1038_s41598-023-32697-z_Sample5,2.0,Ethylenediamine,Additive,,0.067,
+10.1038_s41598-023-32697-z_Sample5,3.0,CsPbI3 PeQDs,Nanoparticles,Octane,,
+10.1038_s41598-023-32697-z_Sample5,4.0,Cs0.05FA0.81MA0.14PbBr0.14I2.86,Precursor,DMSO:DMF (1:4 v/v),1.0,M
+10.1038_s41598-023-32697-z_Sample5,4.0,PbI2,Precursor,DMSO:DMF (1:4 v/v),461.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample5,4.0,FAI,Precursor,DMSO:DMF (1:4 v/v),139.0,mg mL-1
+10.1038_s41598-023-32697-z_Sample5,4.0,CsI,Precursor,DMSO:DMF (1:4 v/v),12.8,mg mL-1
+10.1038_s41598-023-32697-z_Sample5,4.0,MABr,Precursor,DMSO:DMF (1:4 v/v),15.7,mg mL-1
+10.1038_s41598-023-32697-z_Sample5,5.0,MAI,Solution,Ethyl acetate,5.0,mg per 5 mL
+10.1038_s41598-023-32697-z_Sample5,6.0,C60,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample5,7.0,BCP,Evaporation material,,,
+10.1038_s41598-023-32697-z_Sample5,8.0,Ag,Evaporation material,,,
+10_1002_adfm_202102452_Sample1,1.0,ITO,Substrate,,,
+10_1002_adfm_202102452_Sample1,2.0,NiOx NPs,Nanoparticles,H2O,20.0,mg/mL
+10_1002_adfm_202102452_Sample1,3.0,,,,,
+10_1002_adfm_202102452_Sample1,4.0,PbI2,Precursor,DMF/DMSO (4:1 v/v),1.1,M
+10_1002_adfm_202102452_Sample1,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v/v),0.18,M
+10_1002_adfm_202102452_Sample1,4.0,FAI,Precursor,DMF/DMSO (4:1 v/v),0.97,M
+10_1002_adfm_202102452_Sample1,4.0,MABr,Precursor,DMF/DMSO (4:1 v/v),0.17,M
+10_1002_adfm_202102452_Sample1,4.0,CsI,Precursor,DMF/DMSO (4:1 v/v),0.06,M
+10_1002_adfm_202102452_Sample1,5.0,PEAI,Treatment,IPA,0.6,mg/mL
+10_1002_adfm_202102452_Sample1,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/mL
+10_1002_adfm_202102452_Sample1,7.0,BCP,Solution,IPA,,
+10_1002_adfm_202102452_Sample1,8.0,Ag,,,,
+10_1002_adfm_202102452_Sample2,1.0,ITO,Substrate,,,
+10_1002_adfm_202102452_Sample2,2.0,Ni(NO3)2·6H2O,Precursor,H2O,0.5,
+10_1002_adfm_202102452_Sample2,2.0,NaOH,,H2O,10.0,mol/L
+10_1002_adfm_202102452_Sample2,2.0,Sm(NO3)3·6H2O,Dopant,H2O,0.5,
+10_1002_adfm_202102452_Sample2,2.0,NiOx NPs,Nanoparticles (synthesized),H2O,20.0,mg/mL
+10_1002_adfm_202102452_Sample2,3.0,,,,,
+10_1002_adfm_202102452_Sample2,4.0,PbI2,Precursor,DMF/DMSO (4:1 v/v),1.1,M
+10_1002_adfm_202102452_Sample2,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v/v),0.18,M
+10_1002_adfm_202102452_Sample2,4.0,FAI,Precursor,DMF/DMSO (4:1 v/v),0.97,M
+10_1002_adfm_202102452_Sample2,4.0,MABr,Precursor,DMF/DMSO (4:1 v/v),0.17,M
+10_1002_adfm_202102452_Sample2,4.0,CsI,Precursor,DMF/DMSO (4:1 v/v),0.06,M
+10_1002_adfm_202102452_Sample2,5.0,PEAI,Treatment,IPA,0.6,mg/mL
+10_1002_adfm_202102452_Sample2,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/mL
+10_1002_adfm_202102452_Sample2,7.0,BCP,Solution,IPA,,
+10_1002_adfm_202102452_Sample2,8.0,Ag,,,,
+10_1002_adfm_202102452_Sample3,1.0,ITO,Substrate,,,
+10_1002_adfm_202102452_Sample3,2.0,Ni(NO3)2·6H2O,Precursor,H2O,0.5,
+10_1002_adfm_202102452_Sample3,2.0,NaOH,,H2O,10.0,mol/L
+10_1002_adfm_202102452_Sample3,2.0,Sm(NO3)3·6H2O,Dopant,H2O,1.0,
+10_1002_adfm_202102452_Sample3,2.0,NiOx NPs,Nanoparticles,H2O,20.0,mg/mL
+10_1002_adfm_202102452_Sample3,3.0,,,,,
+10_1002_adfm_202102452_Sample3,4.0,PbI2,Precursor,DMF/DMSO (4:1 v/v),1.1,M
+10_1002_adfm_202102452_Sample3,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v/v),0.18,M
+10_1002_adfm_202102452_Sample3,4.0,FAI,Precursor,DMF/DMSO (4:1 v/v),0.97,M
+10_1002_adfm_202102452_Sample3,4.0,MABr,Precursor,DMF/DMSO (4:1 v/v),0.17,M
+10_1002_adfm_202102452_Sample3,4.0,CsI,Precursor,DMF/DMSO (4:1 v/v),0.06,M
+10_1002_adfm_202102452_Sample3,5.0,PEAI,Treatment,IPA,0.6,mg/mL
+10_1002_adfm_202102452_Sample3,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/mL
+10_1002_adfm_202102452_Sample3,7.0,BCP,Solution,IPA,,
+10_1002_adfm_202102452_Sample3,8.0,Ag,,,,
+10_1002_adfm_202102452_Sample4,1.0,ITO,Substrate,,,
+10_1002_adfm_202102452_Sample4,2.0,Ni(NO3)2·6H2O,Precursor,H2O,0.5,
+10_1002_adfm_202102452_Sample4,2.0,NaOH,,H2O,10.0,mol/L
+10_1002_adfm_202102452_Sample4,2.0,Sm(NO3)3·6H2O,Dopant,H2O,2.0,
+10_1002_adfm_202102452_Sample4,2.0,NiOx NPs,Nanoparticles,H2O,20.0,mg/mL
+10_1002_adfm_202102452_Sample4,3.0,,,,,
+10_1002_adfm_202102452_Sample4,4.0,PbI2,Precursor,DMF/DMSO (4:1 v/v),1.1,M
+10_1002_adfm_202102452_Sample4,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v/v),0.18,M
+10_1002_adfm_202102452_Sample4,4.0,FAI,Precursor,DMF/DMSO (4:1 v/v),0.97,M
+10_1002_adfm_202102452_Sample4,4.0,MABr,Precursor,DMF/DMSO (4:1 v/v),0.17,M
+10_1002_adfm_202102452_Sample4,4.0,CsI,Precursor,DMF/DMSO (4:1 v/v),0.06,M
+10_1002_adfm_202102452_Sample4,5.0,PEAI,Treatment,IPA,0.6,mg/mL
+10_1002_adfm_202102452_Sample4,6.0,PC61BM,Solution,Chlorobenzene,20.0,mg/mL
+10_1002_adfm_202102452_Sample4,7.0,BCP,Solution,IPA,,
+10_1002_adfm_202102452_Sample4,8.0,Ag,,,,
+10_1002_adfm_202214774_Sample1,1.0,FTO,Substrate,,,
+10_1002_adfm_202214774_Sample1,2.0,Nickel acetylacetonate,,Acetonitrile + Ethanol,2.0,
+10_1002_adfm_202214774_Sample1,3.0,,,,,
+10_1002_adfm_202214774_Sample1,4.0,CsI,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),18.0,mg in 1 mL
+10_1002_adfm_202214774_Sample1,4.0,FAI,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),233.0,mg in 1 mL
+10_1002_adfm_202214774_Sample1,4.0,MAPbBr3,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),50.0,mg in 1 mL
+10_1002_adfm_202214774_Sample1,4.0,PbI2,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),705.0,mg in 1 mL
+10_1002_adfm_202214774_Sample1,4.0,MACl,Additive,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),10.0,mg in 1 mL
+10_1002_adfm_202214774_Sample1,5.0,BzMIMBr,PSK treatment,IPA,5.0,mM
+10_1002_adfm_202214774_Sample1,6.0,C60,ETL,,,
+10_1002_adfm_202214774_Sample1,7.0,BCP,ETL buffer,,,
+10_1002_adfm_202214774_Sample1,8.0,Cu,,,,
+10_1002_adfm_202214774_Sample2,1.0,FTO,Substrate,,,
+10_1002_adfm_202214774_Sample2,2.0,Nickel acetylacetonate,Precursor,Acetonitrile + Ethanol,2.0,
+10_1002_adfm_202214774_Sample2,3.0,Urea,,IPA,2.0,mg/mL
+10_1002_adfm_202214774_Sample2,4.0,CsI,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),18.0,mg in 1 mL
+10_1002_adfm_202214774_Sample2,4.0,FAI,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),233.0,mg in 1 mL
+10_1002_adfm_202214774_Sample2,4.0,MAPbBr3,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),50.0,mg in 1 mL
+10_1002_adfm_202214774_Sample2,4.0,PbI2,Precursor,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),705.0,mg in 1 mL
+10_1002_adfm_202214774_Sample2,4.0,MACl,Additive,DMF/DMSO/NMP (5.5:0.9:0.1 v/v/v),10.0,mg in 1 mL
+10_1002_adfm_202214774_Sample2,5.0,BzMIMBr,,IPA,5.0,mM
+10_1002_adfm_202214774_Sample2,6.0,C60,,,,
+10_1002_adfm_202214774_Sample2,7.0,BCP,ETL buffer,,,
+10_1002_adfm_202214774_Sample2,8.0,Cu,,,,
+10_1002_aenm_202405016_Sample1,1.0,FTO,Substrate,,,
+10_1002_aenm_202405016_Sample1,2.0,NiOx,Nanoparticles,Deionized water,20.0,mg/mL
+10_1002_aenm_202405016_Sample1,3.0,MeO-4PACz,SAM solution,Anhydrous ethanol,0.3,mg/mL
+10_1002_aenm_202405016_Sample1,4.0,FAI,Precursor,DMF:DMSO (5:1 v/v),219.3,mg
+10_1002_aenm_202405016_Sample1,4.0,MAI,Precursor,DMF:DMSO (5:1 v/v),23.8,mg
+10_1002_aenm_202405016_Sample1,4.0,CsI,Precursor,DMF:DMSO (5:1 v/v),19.5,mg
+10_1002_aenm_202405016_Sample1,4.0,PbI2,Precursor,DMF:DMSO (5:1 v/v),760.7,mg
+10_1002_aenm_202405016_Sample1,5.0,PDADI2,,IPA,0.5,mg/mL
+10_1002_aenm_202405016_Sample1,6.0,C60,,,,
+10_1002_aenm_202405016_Sample1,7.0,SnOx,ETL buffer,,,
+10_1002_aenm_202405016_Sample1,8.0,Ag,,,,
+10_1002_aenm_202405016_Sample2,1.0,FTO,Substrate,,,
+10_1002_aenm_202405016_Sample2,2.0,NiOx,Nanoparticles,Deionized water,20.0,mg/mL
+10_1002_aenm_202405016_Sample2,3.0,RbCl,NiOx post-treatment dopant,Ammonia water,2.0,mg/mL
+10_1002_aenm_202405016_Sample2,3.0,MeO-4PACz,SAM solution,Anhydrous ethanol,0.3,mg/mL
+10_1002_aenm_202405016_Sample2,4.0,FAI,Precursor,DMF:DMSO (5:1 v/v),219.3,mg
+10_1002_aenm_202405016_Sample2,4.0,MAI,Precursor,DMF:DMSO (5:1 v/v),23.8,mg
+10_1002_aenm_202405016_Sample2,4.0,CsI,Precursor,DMF:DMSO (5:1 v/v),19.5,mg
+10_1002_aenm_202405016_Sample2,4.0,PbI2,Precursor,DMF:DMSO (5:1 v/v),760.7,mg
+10_1002_aenm_202405016_Sample2,5.0,PDADI2,,IPA,0.5,mg/mL
+10_1002_aenm_202405016_Sample2,6.0,C60,,,,
+10_1002_aenm_202405016_Sample2,7.0,SnOx,ETL buffer,,,
+10_1002_aenm_202405016_Sample2,8.0,Ag,,,,
+10_1002_aenm_202405016_Sample3,1.0,FTO,Substrate,,,
+10_1002_aenm_202405016_Sample3,2.0,NiOx,Nanoparticles,Deionized water,20.0,mg/mL
+10_1002_aenm_202405016_Sample3,3.0,RbCl,NiOx post-treatment dopant,Ammonia water,2.0,mg/mL
+10_1002_aenm_202405016_Sample3,3.0,MeO-4PACz,SAM solution,Anhydrous ethanol,0.3,mg/mL
+10_1002_aenm_202405016_Sample3,4.0,FAI,Precursor,DMF:DMSO (5:1 v/v),219.3,mg
+10_1002_aenm_202405016_Sample3,4.0,MAI,Precursor,DMF:DMSO (5:1 v/v),23.8,mg
+10_1002_aenm_202405016_Sample3,4.0,CsI,Precursor,DMF:DMSO (5:1 v/v),19.5,mg
+10_1002_aenm_202405016_Sample3,4.0,PbI2,Precursor,DMF:DMSO (5:1 v/v),760.7,mg
+10_1002_aenm_202405016_Sample3,5.0,PDADI2,PSK surface treatment,IPA,0.5,mg/mL
+10_1002_aenm_202405016_Sample3,6.0,C60,,,,
+10_1002_aenm_202405016_Sample3,7.0,SnOx,ETL buffer,,,
+10_1002_aenm_202405016_Sample3,8.0,Ag,,,,
 10_1002_smll_202504237_Sample1,1.0,FTO,Substrate,,,
 10_1002_smll_202504237_Sample1,2.0,NiO,,,,
 10_1002_smll_202504237_Sample1,3.0,,,,,
@@ -363,6 +927,41 @@ device_id,layer_id,material,type,solvent,amount,unit
 10_1016_j_solener_2025_113286_Sample2,6.0,PC61BM,,Chlorobenzene,20.0,mg mL-1
 10_1016_j_solener_2025_113286_Sample2,7.0,BCP,,IPA,0.5,mg mL-1
 10_1016_j_solener_2025_113286_Sample2,8.0,Ag,,,,
+10_1021_acsaem_2c03072_Sample1,1.0,FTO,Substrate,,,
+10_1021_acsaem_2c03072_Sample1,2.0,NiOx,Sol-gel precursor,Anhydrous ethanol,32.11,mg mL-1
+10_1021_acsaem_2c03072_Sample1,4.0,PbI2,Precursor,DMF/DMSO (4:1 v/v),1.35,M
+10_1021_acsaem_2c03072_Sample1,4.0,FAI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample1,4.0,MAI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample1,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample1,4.0,CsI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample1,6.0,C60,,,,
+10_1021_acsaem_2c03072_Sample1,7.0,BCP,,,,
+10_1021_acsaem_2c03072_Sample1,8.0,Cu,,,,
+10_1021_acsaem_2c03072_Sample2,1.0,FTO,Substrate,,,
+10_1021_acsaem_2c03072_Sample2,2.0,NiOx,Sol-gel precursor,Anhydrous ethanol,32.11,mg mL-1
+10_1021_acsaem_2c03072_Sample2,3.0,LiF,,Anhydrous ethanol,2.0,mg mL-1
+10_1021_acsaem_2c03072_Sample2,4.0,PbI2,Precursor,DMF/DMSO (4:1 v/v),1.35,M
+10_1021_acsaem_2c03072_Sample2,4.0,FAI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample2,4.0,MAI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample2,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample2,4.0,CsI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample2,5.0,,,,,
+10_1021_acsaem_2c03072_Sample2,6.0,C60,,,,
+10_1021_acsaem_2c03072_Sample2,7.0,BCP,,,,
+10_1021_acsaem_2c03072_Sample2,8.0,Cu,,,,
+10_1021_acsaem_2c03072_Sample3,1.0,FTO,Substrate,,,
+10_1021_acsaem_2c03072_Sample3,2.0,NiOx,Sol-gel precursor,Anhydrous ethanol,32.11,mg mL-1
+10_1021_acsaem_2c03072_Sample3,3.0,LiF,,Anhydrous ethanol,2.0,mg mL-1
+10_1021_acsaem_2c03072_Sample3,3.0,2PACz,,,,
+10_1021_acsaem_2c03072_Sample3,4.0,PbI2,Precursor,DMF/DMSO (4:1 v/v),1.35,M
+10_1021_acsaem_2c03072_Sample3,4.0,FAI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample3,4.0,MAI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample3,4.0,PbBr2,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample3,4.0,CsI,Precursor,DMF/DMSO (4:1 v/v),,
+10_1021_acsaem_2c03072_Sample3,5.0,,,,,
+10_1021_acsaem_2c03072_Sample3,6.0,C60,,,,
+10_1021_acsaem_2c03072_Sample3,7.0,BCP,,,,
+10_1021_acsaem_2c03072_Sample3,8.0,Cu,,,,
 10_1021_acsami_4c14300_Sample1,1.0,FTO,,,,
 10_1021_acsami_4c14300_Sample1,2.0,NiOx,,,,
 10_1021_acsami_4c14300_Sample1,3.0,,,,,
@@ -385,6 +984,32 @@ device_id,layer_id,material,type,solvent,amount,unit
 10_1021_acsami_4c14300_Sample2,5.0,PC61BM,Solution,CB,20.0,mg mL-1
 10_1021_acsami_4c14300_Sample2,6.0,BCP,Solution,IPA,1.0,mg mL-1
 10_1021_acsami_4c14300_Sample2,7.0,Ag,,,,
+10_1021_acsami_5c13836_Sample1,1.0,ITO,Substrate,,,
+10_1021_acsami_5c13836_Sample1,2.0,NiOx NPs,Nanoparticles,Ethanol,2.5,wt%
+10_1021_acsami_5c13836_Sample1,3.0,,,,,
+10_1021_acsami_5c13836_Sample1,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample1,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample1,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample1,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample1,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample1,4.0,Ethyl acetate,Anti-solvent,,,
+10_1021_acsami_5c13836_Sample1,5.0,,,,,
+10_1021_acsami_5c13836_Sample1,6.0,C60,Evaporation,,,
+10_1021_acsami_5c13836_Sample1,7.0,BCP,Evaporation,,,
+10_1021_acsami_5c13836_Sample1,8.0,Ag,,,,
+10_1021_acsami_5c13836_Sample2,1.0,ITO,Substrate,,,
+10_1021_acsami_5c13836_Sample2,2.0,Ni target,Sputtering target,,,
+10_1021_acsami_5c13836_Sample2,3.0,,,,,
+10_1021_acsami_5c13836_Sample2,4.0,MABr,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample2,4.0,FAI,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample2,4.0,CsI,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample2,4.0,PbI2,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample2,4.0,PbBr2,Precursor,DMF:DMSO (4:1 v/v),1.41,M
+10_1021_acsami_5c13836_Sample2,4.0,Ethyl acetate,Anti-solvent,,,
+10_1021_acsami_5c13836_Sample2,5.0,,,,,
+10_1021_acsami_5c13836_Sample2,6.0,C60,Evaporation,,,
+10_1021_acsami_5c13836_Sample2,7.0,BCP,Evaporation,,,
+10_1021_acsami_5c13836_Sample2,8.0,Ag,,,,
 10_1021_acsami_5c15868_Sample1,1.0,FTO,,,,
 10_1021_acsami_5c15868_Sample1,2.0,NiOx,,,,
 10_1021_acsami_5c15868_Sample1,3.0,,,,,
@@ -422,6 +1047,43 @@ device_id,layer_id,material,type,solvent,amount,unit
 10_1021_acsami_5c15868_Sample3,6.0,PC61BM,Solution,CB,20.0,mg mL-1
 10_1021_acsami_5c15868_Sample3,7.0,BCP,Solution,IPA,0.5,mg mL-1
 10_1021_acsami_5c15868_Sample3,8.0,Ag,,,,
+10_1021_acsami_5c16972_Sample1,1.0,ITO,,,,
+10_1021_acsami_5c16972_Sample1,2.0,NiOx NPs,Nanoparticles,H2O,20.0,mg mL-1
+10_1021_acsami_5c16972_Sample1,3.0,,,,,
+10_1021_acsami_5c16972_Sample1,4.0,PbI2,Precursor,DMF/DMSO (4:1 V/V),548.6,mg
+10_1021_acsami_5c16972_Sample1,4.0,CsI,Precursor,DMF/DMSO (4:1 V/V),18.2,mg
+10_1021_acsami_5c16972_Sample1,4.0,PbBr2,Precursor,DMF/DMSO (4:1 V/V),77.05,mg
+10_1021_acsami_5c16972_Sample1,4.0,MAI,Precursor,DMF/DMSO (4:1 V/V),35.6,mg
+10_1021_acsami_5c16972_Sample1,4.0,FAI,Precursor,DMF/DMSO (4:1 V/V),190.2,mg
+10_1021_acsami_5c16972_Sample1,5.0,,,,,
+10_1021_acsami_5c16972_Sample1,6.0,PC61BM,Solution,CB,20.0,mg mL-1
+10_1021_acsami_5c16972_Sample1,7.0,BCP,Solution,Anhydrous ethanol,0.5,mg mL-1
+10_1021_acsami_5c16972_Sample1,8.0,Ag,,,,
+10_1021_acsami_5c16972_Sample2,1.0,ITO,,,,
+10_1021_acsami_5c16972_Sample2,2.0,NiOx NPs,Nanoparticles,H2O,20.0,mg mL-1
+10_1021_acsami_5c16972_Sample2,3.0,Me-4PACz,Solution,Ethanol,0.5,mg mL-1
+10_1021_acsami_5c16972_Sample2,4.0,PbI2,Precursor,DMF/DMSO (4:1 V/V),548.6,mg
+10_1021_acsami_5c16972_Sample2,4.0,CsI,Precursor,DMF/DMSO (4:1 V/V),18.2,mg
+10_1021_acsami_5c16972_Sample2,4.0,PbBr2,Precursor,DMF/DMSO (4:1 V/V),77.05,mg
+10_1021_acsami_5c16972_Sample2,4.0,MAI,Precursor,DMF/DMSO (4:1 V/V),35.6,mg
+10_1021_acsami_5c16972_Sample2,4.0,FAI,Precursor,DMF/DMSO (4:1 V/V),190.2,mg
+10_1021_acsami_5c16972_Sample2,5.0,,,,,
+10_1021_acsami_5c16972_Sample2,6.0,PC61BM,Solution,CB,20.0,mg mL-1
+10_1021_acsami_5c16972_Sample2,7.0,BCP,Solution,Anhydrous ethanol,0.5,mg mL-1
+10_1021_acsami_5c16972_Sample2,8.0,Ag,,,,
+10_1021_acsami_5c16972_Sample3,1.0,ITO,,,,
+10_1021_acsami_5c16972_Sample3,2.0,NiOx NPs,Nanoparticles,H2O,20.0,mg mL-1
+10_1021_acsami_5c16972_Sample3,3.0,Me-4PACz,Solution,Ethanol,0.5,mg mL-1
+10_1021_acsami_5c16972_Sample3,3.0,PCPTFB,Co-SAM additive,Ethanol,0.3,mg mL-1
+10_1021_acsami_5c16972_Sample3,4.0,PbI2,Precursor,DMF/DMSO (4:1 V/V),548.6,mg
+10_1021_acsami_5c16972_Sample3,4.0,CsI,Precursor,DMF/DMSO (4:1 V/V),18.2,mg
+10_1021_acsami_5c16972_Sample3,4.0,PbBr2,Precursor,DMF/DMSO (4:1 V/V),77.05,mg
+10_1021_acsami_5c16972_Sample3,4.0,MAI,Precursor,DMF/DMSO (4:1 V/V),35.6,mg
+10_1021_acsami_5c16972_Sample3,4.0,FAI,Precursor,DMF/DMSO (4:1 V/V),190.2,mg
+10_1021_acsami_5c16972_Sample3,5.0,,,,,
+10_1021_acsami_5c16972_Sample3,6.0,PC61BM,Solution,CB,20.0,mg mL-1
+10_1021_acsami_5c16972_Sample3,7.0,BCP,Solution,Anhydrous ethanol,0.5,mg mL-1
+10_1021_acsami_5c16972_Sample3,8.0,Ag,,,,
 10_1039_d3lf00258f_Sample1,1.0,FTO,Substrate,,,
 10_1039_d3lf00258f_Sample1,2.0,Ni(OAc)2·4H2O,Precursor,IPA,0.1,M (0.5 mmol in 5 mL)
 10_1039_d3lf00258f_Sample1,2.0,Ethanolamine,Additive,IPA,30.0,µL

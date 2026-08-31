@@ -1,92 +1,108 @@
 property,base_property,stat,scan,layer,carrier,n_rows
-AFM RMS,AFM RMS,,,,,4
-AFM rms (HTL),AFM RMS,,,HTL,,1
-AFM rms (PVK),AFM RMS,,,PSK,,1
-Bandgap,Bandgap,,,,,1
+AFM Roughness,AFM rms,,,,,2
+AFM rms,AFM rms,,,,,9
+RMS,AFM rms,,,,,2
+RMS roughness,AFM rms,,,,,4
+Roughness,AFM rms,,,,,4
+Roughness RMS,AFM rms,,,,,4
+Rq,AFM rms,,,,,2
+AFM rms (HTL),AFM rms,,,HTL,,1
+AFM rms (PVK),AFM rms,,,PSK,,1
 Carrier concentration,Carrier concentration,,,,,2
-Conductivity,Conductivity,,,,,4
-Contact angle,Contact angle,,,,,17
+Conductivity,Conductivity,,,,,6
+Electrical conductivity,Conductivity,,,,,3
+Contact Angle,Contact angle,,,,,33
 Contact Angle (HTL),Contact angle,,,HTL,,1
-Crec,Crec,,,,,3
 Defect density,Defect density,,,,,2
-EIS Rrec,EIS Rrec,,,,,1
-EIS Rs,EIS Rs,,,,,1
-Electrical conductivity,Electrical conductivity,,,,,3
-Energy gap,Energy gap,,,,,1
-FF,FF,,,,,7
-FF (FS),FF,,FS,,,7
-FF (RS),FF,,RS,,,9
-Average FF,FF,average,,,,13
-Average FF (RS),FF,average,RS,,,2
-Avg FF,FF,avg,,,,1
-Champion FF,FF,champion,,,,20
-Champion FF (FS),FF,champion,FS,,,4
-Champion FF (RS),FF,champion,RS,,,4
+FF,FF,,,,,9
+FF (FS),FF,,FS,,,4
+FF (RS),FF,,RS,,,6
+Average FF,FF,average,,,,41
+Average FF (FS),FF,average,FS,,,4
+Average FF (RS),FF,average,RS,,,6
+Avg FF,FF,avg,,,,4
+Champion FF,FF,champion,,,,52
+Champion FF (FS),FF,champion,FS,,,24
+Champion FF (RS),FF,champion,RS,,,24
 FWHM,FWHM,,,,,4
-Fermi level,Fermi level,,,,,7
-Grain size,Grain size,,,,,20
-HTL grain size,Grain size,,,HTL,,3
-PSK grain size,Grain size,,,PSK,,3
+EF,Fermi level,,,,,2
+EF (UPS),Fermi level,,,,,1
+Fermi level,Fermi level,,,,,4
+Grain Size (Bottom),Grain Size (Bottom),,,,,3
+Grain Size (Top),Grain Size (Top),,,,,3
+Grain size,Grain size,,,,,29
 Grain size range,Grain size range,,,,,1
-HI,HI,,,,,11
-Hysteresis Index,Hysteresis Index,,,,,1
-Ideality factor,Ideality factor,,,,,5
-Integrated Jsc,Integrated Jsc,,,,,2
-Jsc,Jsc,,,,,7
-Jsc (FS),Jsc,,FS,,,7
-Jsc (RS),Jsc,,RS,,,9
-Average Jsc,Jsc,average,,,,13
-Average Jsc (RS),Jsc,average,RS,,,2
-Avg Jsc,Jsc,avg,,,,1
-Champion Jsc,Jsc,champion,,,,20
-Champion Jsc (FS),Jsc,champion,FS,,,4
-Champion Jsc (RS),Jsc,champion,RS,,,4
+HI,HI,,,,,13
+Hysteresis Index,HI,,,,,1
+Average HI,HI,average,,,,3
+Avg HI,HI,avg,,,,1
+Champion HI,HI,champion,,,,4
+Ideality factor,Ideality factor,,,,,8
+Jsc,Jsc,,,,,9
+Jsc (FS),Jsc,,FS,,,4
+Jsc (RS),Jsc,,RS,,,6
+Average Jsc,Jsc,average,,,,40
+Average Jsc (FS),Jsc,average,FS,,,4
+Average Jsc (RS),Jsc,average,RS,,,6
+Avg Jsc,Jsc,avg,,,,4
+Champion Jsc,Jsc,champion,,,,52
+Champion Jsc (FS),Jsc,champion,FS,,,24
+Champion Jsc (RS),Jsc,champion,RS,,,24
+Integrated Jsc,Jsc EQE,,,,,2
 Jsc EQE,Jsc EQE,,,,,10
-KPFM CPD,KPFM CPD,,,,,3
-PCE,PCE,,,,,6
-PCE (FS),PCE,,FS,,,7
-PCE (RS),PCE,,RS,,,9
-Average PCE,PCE,average,,,,14
-Average PCE (RS),PCE,average,RS,,,2
-Avg PCE,PCE,avg,,,,1
+PCE,PCE,,,,,8
+PCE (FS),PCE,,FS,,,4
+PCE (RS),PCE,,RS,,,6
+Average PCE,PCE,average,,,,45
+Average PCE (FS),PCE,average,FS,,,4
+Average PCE (RS),PCE,average,RS,,,6
+Avg PCE,PCE,avg,,,,5
 Certified PCE (FS),PCE,certified,FS,,,1
 Certified PCE (RS),PCE,certified,RS,,,1
-Champion PCE,PCE,champion,,,,24
-Champion PCE (FS),PCE,champion,FS,,,4
-Champion PCE (RS),PCE,champion,RS,,,4
+Champion PCE,PCE,champion,,,,58
+Champion PCE (FS),PCE,champion,FS,,,24
+Champion PCE (RS),PCE,champion,RS,,,24
 Verified PCE,PCE,verified,,,,1
 Rec,Rec,,,,,1
-Roughness,Roughness,,,,,4
-Roughness RMS,Roughness RMS,,,,,7
-Rq,Rq,,,,,2
-Rrec,Rrec,,,,,15
-Rs,Rs,,,,,22
-Rsh,Rsh,,,,,2
+EIS Rrec,Rrec,,,,,4
+Rrec,Rrec,,,,,14
+EIS Rs,Rs,,,,,4
+Rs,Rs,,,,,27
+Rs (FS),Rs,,FS,,,2
+Rs (RS),Rs,,RS,,,2
+Rsh,Rsh,,,,,8
+Rsh (FS),Rsh,,FS,,,2
+Rsh (RS),Rsh,,RS,,,2
 SPO,SPO,,,,,5
+KPFM CPD,Surface potential (CPD),,,,,3
 TRPL t1,TRPL t1,,,,,4
 TRPL t2,TRPL t2,,,,,4
 TRPL tavg,TRPL tavg,,,,,4
-Trap density,Trap density,,,,,18
+Trap Density,Trap density,,,,,31
 Electron Trap Density,Trap density,,,,electron,3
 Hole Trap Density,Trap density,,,,hole,5
-VB,VB,,,,,4
-VBM,VBM,,,,,15
-VTFL,VTFL,,,,,26
+VB,VBM,,,,,4
+VBM,VBM,,,,,27
+VBM (UPS),VBM,,,,,1
+VTFL,VTFL,,,,,40
 Electron VTFL,VTFL,,,,electron,2
 Hole VTFL,VTFL,,,,hole,2
 Vbi,Vbi,,,,,2
-Voc,Voc,,,,,7
-Voc (FS),Voc,,FS,,,7
-Voc (RS),Voc,,RS,,,9
-Average Voc,Voc,average,,,,13
-Average Voc (RS),Voc,average,RS,,,2
-Avg Voc,Voc,avg,,,,1
-Champion Voc,Voc,champion,,,,20
-Champion Voc (FS),Voc,champion,FS,,,4
-Champion Voc (RS),Voc,champion,RS,,,4
-WF,WF,,,,,2
+Voc,Voc,,,,,9
+Voc (FS),Voc,,FS,,,4
+Voc (RS),Voc,,RS,,,6
+Average Voc,Voc,average,,,,40
+Average Voc (FS),Voc,average,FS,,,4
+Average Voc (RS),Voc,average,RS,,,6
+Avg Voc,Voc,avg,,,,4
+Champion Voc,Voc,champion,,,,52
+Champion Voc (FS),Voc,champion,FS,,,24
+Champion Voc (RS),Voc,champion,RS,,,24
+WF,WF,,,,,13
 Work Function,Work Function,,,,,8
-Hole mobility,mobility,,,,hole,9
+Hole mobility,mobility,,,,hole,7
+Bandgap,optical band gap,,,,,4
+Energy gap,optical band gap,,,,,1
 HTL optical band gap,optical band gap,,,HTL,,4
 PSK optical band gap,optical band gap,,,PSK,,4
 tDOS,tDOS,,,,,2

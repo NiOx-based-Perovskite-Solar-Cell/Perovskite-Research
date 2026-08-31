@@ -1,45 +1,67 @@
 table,column,raw,canonical,n_rows,rule
 layers,layer_type,HTL Treatment,HTL treatment,1,majority
 layers,layer_type,PSK Treatment,PSK treatment,1,majority
+layers,material,Cs/FA/MA,CsFAMA,1,majority
+layers,material,Cs/FA/MA triple-cation perovskite,CsFAMA triple-cation perovskite,1,majority
+layers,material,NiOx (Sputtered),NiOx (sputtered),1,majority
+layers,material,SnOx (,SnOx,1,majority
 materials,solvent,DMF /DMSO (3.08/1 V/V),DMF/DMSO (3.08/1 v/v),1,override
 materials,solvent,DMF/DMSO (3.08/1 V/V),DMF/DMSO (3.08/1 v/v),1,override
 materials,solvent,DMFDMSO (3.08/1 v/v),DMF/DMSO (3.08/1 v/v),2,override
-materials,solvent,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v),51,override
-materials,solvent,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v),43,override
-materials,solvent,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v),12,override
+materials,solvent,DMF/DMSO (4/1 V/V),DMF/DMSO (4:1 v/v),36,override
+materials,solvent,DMF/DMSO (4:1 V/V),DMF/DMSO (4:1 v/v),58,override
+materials,solvent,DMF/DMSO (4:1 v:v),DMF/DMSO (4:1 v/v),20,override
+materials,solvent,DMF:DMSO (4:1 v/v),DMF/DMSO (4:1 v/v),86,override
 materials,solvent,DMF:DMSO (4:1),DMF/DMSO (4:1),10,override
+materials,solvent,DMF:DMSO (1:4 v:v),DMF:DMSO (1:4 v/v),10,majority
+materials,solvent,DMF/DMSO (8:2 V/V),DMF:DMSO (8:2 v/v),10,majority
+materials,solvent,DMSO/DMF (1:4 v/v),DMSO:DMF (1:4 v/v),25,majority
 materials,solvent,De-ionized water,Deionized water,3,majority
-materials,solvent,Ethanol,ethanol,1,majority
-materials,solvent,Ethyl Alcohol,ethyl alcohol,2,majority
-materials,type,Anti-solvent,Antisolvent,2,majority
-materials,unit,mg/ml,mg/mL,7,majority
+materials,solvent,ethanol,Ethanol,4,majority
+materials,type,Anti-solvent,Antisolvent,4,majority
+materials,unit,mg/ml,mg/mL,19,majority
 materials,unit,mol,mol%,6,majority
 materials,unit,µl,µL,1,majority
 process,description,"CB,",CB,1,majority
 process,description,"Co-sputtering, 1 sccm O2 + 19 sccm Ar","Co-sputtering, 1 sccm O2 + 19 sccm Ar,",1,majority
 process,description,"Ultrasonic, IPA, Acetone, DI Water","Ultrasonic, IPA, acetone, DI Water",1,majority
-process,process_type,Antisolvent,AntiSolvent,7,majority
+process,process_type,Antisolvent,AntiSolvent,26,majority
 process,process_type,PlasmaTreat,Plasma Treat,4,majority
-process,process_type,Pre-sputtering,PreSputtering,2,majority
-process,process_type,SpinCoating,Spin coating,204,override
+process,process_type,Pre-sputtering,Presputtering,2,majority
+process,process_type,PreSputtering,Presputtering,3,majority
+process,process_type,RFsputtering,RFSputtering,2,majority
+process,process_type,SpinCoating,Spin coating,408,override
 process,process_type,Thermal Evaporation,Thermal evaporation,12,override
-process,process_type,ThermalEvaporation,Thermal evaporation,64,override
+process,process_type,ThermalEvaporation,Thermal evaporation,164,override
+process,unit,"C , min","C, min",3,majority
 process,unit,"C,sec","C, sec",4,majority
 process,unit,"RPM, RPM/s,sec","RPM,RPM/s,sec",4,majority
-process,unit,torr,Torr,4,majority
+process,unit,torr,Torr,6,majority
 process,unit,"W, mtorr,sec","W, mtorr, sec",1,majority
-process,unit,"µl, sec","µL, sec",2,majority
-properties,property,Contact Angle,Contact angle,8,majority
-properties,property,Grain Size,Grain size,10,override
+process,unit,"µl, sec","µL, sec",8,majority
+properties,property,AFM RMS,AFM rms,4,majority
+properties,property,Contact angle,Contact Angle,10,majority
+properties,property,Grain Size,Grain size,19,override
 properties,property,Hole trap density,Hole Trap Density,2,majority
 properties,property,Hole Mobility,Hole mobility,2,majority
-properties,property,Trap Density,Trap density,7,majority
+properties,property,Ideality Factor,Ideality factor,2,majority
+properties,property,RMS Roughness,RMS roughness,2,majority
+properties,property,Trap density,Trap Density,8,majority
 properties,property,Work function,Work Function,1,majority
 properties,unit,mA/cm-2,mA cm-2,2,majority
 properties,unit,mA/cm2,mA cm-2,3,majority
-properties,unit,mAcm-2,mA cm-2,12,majority
-stability,environment,Ambient,ambient,2,majority
-vendors,vendor,Sigma Aldrich,Sigma-Aldrich,12,majority
-vendors,vendor,Xi'an Polymer Light Technology Corp.,Xi-an Polymer Light Technology Corp.,4,majority
+properties,unit,mAcm-2,mA cm-2,6,majority
+properties,unit,Ω·cm2,Ω cm2,8,majority
+stability,environment,Thermal aging,Thermal Aging,2,majority
+vendors,material,ITO glass substrate,ITO/glass substrate,2,majority
+vendors,material,NiNO3.6H2O,NiNO3·6H2O,4,majority
+vendors,vendor,Great Cell Solar,GreatCell Solar,8,majority
+vendors,vendor,Greatcell Solar,GreatCell Solar,4,majority
+vendors,vendor,Great Cell Solar Materials,Greatcell Solar Materials,4,majority
+vendors,vendor,GreatCell Solar Materials,Greatcell Solar Materials,9,majority
+vendors,vendor,Liaoning Youxuan New Energy Technology Co. Ltd.,"Liaoning Youxuan New Energy Technology Co., Ltd.",4,majority
+vendors,vendor,Nano C,Nano-C,4,majority
+vendors,vendor,Sigma Aldrich,Sigma-Aldrich,48,majority
+vendors,vendor,Xi'an Polymer Light Technology Corp.,Xi-an Polymer Light Technology Corp.,6,majority
 vendors,vendor,Xian Polymer Light Technology Corp,Xi-an Polymer Light Technology Corp.,5,majority
-vendors,vendor,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd.",12,majority
+vendors,vendor,"Xi'an Yuri Solar Co., Ltd.","Xian Yuri Solar Co., Ltd.",15,majority
