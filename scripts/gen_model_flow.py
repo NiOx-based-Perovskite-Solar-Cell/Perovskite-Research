@@ -33,9 +33,13 @@ COR = D["model_channel_correlations"].set_index("คู่")
 PROV = D["paper_provenance"]
 EV = D["paper_evidence_table"]
 RANK = D["model_class_ranking"]
+STAB_E = D.get("model_stability_effect")
+NEWMED = D.get("model_new_mediators")
 
 N_CTRL_PAP = int(PROV.loc[PROV["ข้ออ้าง"].str.contains("มีทั้งอุปกรณ์ควบคุม"), "n_เปเปอร์"].iloc[0])
-_pce_claim = PROV[PROV["ข้ออ้าง"].str.startswith("ΔPCE")].iloc[0]["ข้ออ้าง"]
+_m = PROV[(PROV["หัวข้อ"] == "§6-7 ขนาดผล") & PROV["ข้ออ้าง"].str.startswith("Δpce")]
+assert len(_m) == 1, f"หาข้ออ้างขนาดผลรวมไม่เจอหรือเจอหลายแถว: {len(_m)}"
+_pce_claim = _m.iloc[0]["ข้ออ้าง"]
 
 # ตัวอย่างที่ใช้เดินเรื่องทั้งเอกสาร -- เปเปอร์ที่ขยับทั้งสองช่องทาง เห็นภาพครบ
 EXP = EV[EV["เปเปอร์"] == "10.1016j.jechem.2021.11.029"].iloc[0]
@@ -70,6 +74,10 @@ def tbl(head, rows, cls=""):
     h = "".join(f"<th>{c}</th>" for c in head)
     b = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
     return f'<table class="{cls}"><thead><tr>{h}</tr></thead><tbody>{b}</tbody></table>'
+
+
+def num(x, f="{:+.3f}"):
+    return '<span class="muted">—</span>' if pd.isna(x) else f'<span class="num">{f.format(x)}</span>'
 
 
 # ═════════════════════════════════ ตัวช่วยวาด SVG ═════════════════════════════════
@@ -393,6 +401,35 @@ A('<div class="box warn"><h4>ข้อควรระวังที่ต้อ
   '<b>ไม่ชอบน้ำมากขึ้น</b> ให้ Jsc ดีขึ้น ไม่ใช่ผิวที่เปียกง่ายขึ้น '
   'อธิบายได้ว่าผิวไม่ชอบน้ำทำให้จุดก่อผลึกน้อยลง เกรนจึงโตใหญ่ขึ้น '
   'แต่นี่คือ<b>การตีความ</b> ข้อต่อ «เกรนใหญ่ขึ้น» ยังยืนบนเปเปอร์น้อยมาก</p></div>')
+
+A("<h3>6.2 ลองหาช่องทางที่สาม — แล้วไม่เจอ</h3>")
+if NEWMED is not None and len(NEWMED):
+    A("<p>ΔVoc กินส่วนแบ่งราวหนึ่งในสามของการเพิ่ม PCE แต่ยังไม่มีตัวกลางอธิบาย "
+      "จึงดึงตัวกลางอีกสี่ตัวที่มีในข้อมูลอยู่แล้วเข้ามาทดสอบ</p>")
+    A(tbl(["ตัวกลาง", "เปเปอร์", "ทิศทาง", "เกาะ ΔVoc", "เกาะ ΔFF", "เกาะ ΔJsc"],
+          [[f'<code>{esc(r["ตัวกลาง"])}</code>', f'<span class="num">{int(r["n_paper"])}</span>',
+            esc(r["ทิศบวก"]), num(r["เกาะ_Δvoc"], "{:+.2f}"),
+            num(r["เกาะ_Δff"], "{:+.2f}"), num(r["เกาะ_Δjsc"], "{:+.2f}")]
+           for _, r in NEWMED.iterrows()], "num"))
+    A('<div class="box warn"><h4>ไม่ผ่าน — และเขียนไว้ตรงนี้เพราะผลลบก็คือผล</h4>'
+      "<p><code>work_function</code> เกาะ ΔVoc แน่นมาก แต่มีแค่ 5 เปเปอร์ · "
+      "<code>vbm</code> ที่วัดเรื่องเดียวกันและมี 9 เปเปอร์ กลับไม่มีสัญญาณเลย "
+      "สองตัวขัดกันเอง จึงยังไม่นับว่ามีช่องที่สาม</p>"
+      "<p><code>afm_rms</code> ก็ไม่ได้หนุนช่องสัณฐานอย่างที่คาด — ผิวเรียบขึ้นทุกเปเปอร์ "
+      "แต่ไปเกาะ ΔVoc มากกว่า ΔJsc</p></div>")
+
+A("<h3>6.3 เสถียรภาพ — คำถามที่เพิ่งถามครั้งแรก</h3>")
+if STAB_E is not None and len(STAB_E):
+    A("<p>เสถียรภาพคือคอขวดจริงของเพอรอฟสไกต์ ไม่ใช่ประสิทธิภาพ · "
+      "สองคอลัมน์นี้อยู่ในชุดข้อมูลมาตลอดแต่ไม่เคยถูกวิเคราะห์ ใช้วิธีเดียวกับ ΔPCE ทุกประการ</p>")
+    A(tbl(["ตัวชี้วัด", "ทิศทางที่ดี", "เปเปอร์", "ค่ากลาง", "ดีขึ้น", "p"],
+          [[f'<code>{esc(r["ตัวชี้วัด"])}</code>',
+            "สูงขึ้น" if r["ตัวชี้วัด"] == "retention_25c" else "ต่ำลง",
+            f'<span class="num">{int(r["n_paper"])}</span>', num(r["ค่ากลาง"], "{:+.4g}"),
+            f'<b>{esc(r["ดีขึ้นกี่เปเปอร์"])}</b>', f'<span class="num">{r["p"]:.4g}</span>']
+           for _, r in STAB_E.iterrows()], "num"))
+    A('<div class="box good"><p>สองตัวชี้วัดคำนวณคนละทางแต่เห็นตรงกัน <b>7 จาก 7 เปเปอร์</b> '
+      "ทั้งคู่ · ยืนบน 7 เปเปอร์เท่านั้น และอคติจากการตีพิมพ์ใช้ได้เต็มที่</p></div>")
 
 # ───────── 7 ─────────
 A('<h2 class="brk">7 · แผนผังทั้งเส้น — ไฟล์ไหนสร้างอะไร</h2>')
