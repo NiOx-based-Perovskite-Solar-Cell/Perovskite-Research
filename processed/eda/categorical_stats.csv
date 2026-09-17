@@ -1,0 +1,11 @@
+﻿คอลัมน์,ระดับ,มีค่า,เปเปอร์ที่แปรค่า,การกระจาย
+htl_mod_kind,2,56,22,coating 53 · (ไม่มีค่า) 39 · additive 3
+htl_mod_class,5,95,22,ไม่ดัดแปลง 39 · โมเลกุลอินทรีย์ 26 · SAM (คาร์บาโซล) 16 · เกลือไอออน 11 · ออกไซด์ 3
+htl_dope,5,95,4,ไม่เจือ 87 · Cu 3 · Sm 3 · La 1 · TTTS 1
+htl_route,4,95,6,สารละลาย 50 · อนุภาคนาโน 42 · สปัตเตอร์ 2 · ลำอิเล็กตรอน 1
+psk_mod_kind,1,41,1,(ไม่มีค่า) 54 · coating 41
+etl_family,4,95,0,PCBM 46 · C60 42 · SnO2 5 · BCP 2
+jv_variant,3,94,1,champion 75 · plain 15 · average 4 · (ไม่มีค่า) 1
+jv_scan,2,94,2,- 64 · RS 30 · (ไม่มีค่า) 1
+trap_scale_flag,3,37,2,(ไม่มีค่า) 58 · ok 29 · scale_suspect 5 · no_vtfl 3
+htl_mod_material,46,56,24,(ไม่มีค่า) 39 · CsPbI3 PeQDs 4 · PMMA 3 · Ar plasma + HNO3 2 · PTAA + Al2O3 2 · 2PACz 2 · (+อีก 41)

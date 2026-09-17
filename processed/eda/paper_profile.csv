@@ -1,0 +1,32 @@
+﻿เปเปอร์,ปี,เครื่อง,PCE ต่ำ–สูง,ช่วง PCE,สูตร (Cs/FA/Br),ETL,J-V,มีคู่ ควบคุม/ดัดแปลง,ΔPCE ในเปเปอร์,สิ่งที่เปเปอร์นี้แปร,วัดอะไรไว้บ้าง,มี stability
+1021_acsami.3c02156,2023.0,4,12.31–20.81,8.5,0.06/0.79/0.15,PCBM,champion,✔,6.09,"htl_mod_kind, htl_mod_material, coat_htl, htl_route",J-V · trap · hysteresis,✔
+1021_acsami_5c16972,2025.0,3,17.50–23.68,6.18,0.05/0.79/0.10,PCBM,champion,✔,4.5,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · เกรน · Rs · Rrec · AFM · มุมสัมผัส,✔
+31635_ccschem_025_202505977,2025.0,3,20.17–25.28,5.11,0.05/0.90/0.05,PCBM,champion,✔,4.0,"htl_mod_kind, htl_mod_material, coat_htl, htl_dose",J-V · trap · Rrec · มุมสัมผัส,✔
+1126_science_ade9637,,2,21.60–25.60,4.0,0.05/0.85/0.00,C60,champion,✔,4.0,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · AFM · มุมสัมผัส,✔
+1002_adfm_202214774,2022.0,2,19.66–23.61,3.95,0.05/0.90/0.05,C60,champion,✔,3.95,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · Rs · Rrec · AFM · มุมสัมผัส,✔
+1021_acsami_5c15868,2025.0,3,18.98–23.31,4.33,0.11/0.74/0.15,PCBM,champion,✔,3.87,"htl_mod_kind, htl_mod_material, coat_htl",J-V · Rs · Rrec · AFM · มุมสัมผัส · hysteresis,✔
+1038_s41598-023-32697-z,2023.0,5,16.60–20.40,3.8,0.05/0.81/0.05,C60,champion,✔,2.6,"htl_mod_kind, htl_mod_material, coat_htl, coat_psk",J-V,✔
+1021_acsaem_2c03072,2022.0,3,18.93–22.45,3.52,0.05/0.79/0.10,C60,champion,✔,2.4,"htl_mod_kind, htl_mod_material, coat_htl",J-V,–
+1016_j.joule.2022.06.026,2022.0,4,19.60–23.40,3.8,0.10/0.78/0.13,PCBM,champion,✔,2.37,"htl_mod_kind, htl_mod_material, coat_htl, htl_route",J-V · trap · มุมสัมผัส,✔
+1016j.jechem.2021.11.029,2021.0,2,17.83–20.16,2.33,0.05/0.81/0.15,PCBM,plain,✔,2.33,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · เกรน · มุมสัมผัส · bandgap,✔
+1021_acsami_4c14300,2024.0,2,20.67–22.76,2.09,0.05/0.85/0.00,BCP,champion,✔,2.09,"htl_mod_kind, htl_mod_material, coat_htl",J-V · เกรน · Rs · Rrec · AFM · มุมสัมผัส,✔
+1016.jpowsour.2020.228738,2020.0,2,18.84–20.74,1.9,0.54/0.23/0.16,PCBM,plain,✔,1.9,"htl_mod_kind, htl_mod_material, coat_htl",J-V · Rs · AFM · มุมสัมผัส,✔
+1021_acsaem.2c03434,2022.0,2,16.20–17.98,1.78,0.59/0.34/0.09,PCBM,champion,✔,1.78,"htl_mod_kind, htl_mod_material, coat_htl",J-V · AFM · hysteresis,✔
+1039_d3lf00258f,2023.0,4,12.94–15.62,2.68,0.05/0.81/0.15,PCBM,average,✔,1.7,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · เกรน · AFM,✔
+1016_j_solener_2025_113286,2025.0,2,14.94–16.59,1.65,0.05/0.79/0.23,PCBM,champion,✔,1.65,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · เกรน · มุมสัมผัส · hysteresis · bandgap,✔
+1016_j.apsusc.2021.149973,2021.0,2,18.71–20.21,1.5,0.17/0.75/0.12,PCBM,champion,✔,1.5,"htl_mod_kind, htl_mod_material, coat_htl, htl_route",J-V · trap · มุมสัมผัส,✔
+1002adma_202507730,2025.0,5,24.50–26.50,2.0,0.05/0.90/0.00,C60,plain,✔,1.4,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · Rs · Rrec · มุมสัมผัส · hysteresis,✔
+1021_acsenergylett.3c00697,2023.0,3,22.70–23.90,1.2,0.10/0.90/0.05,C60,champion,✔,0.95,"htl_mod_kind, htl_mod_material, coat_htl",J-V · trap · hysteresis,✔
+1021_acsaem.4c02471,2024.0,5,10.34–16.00,5.66,0.10/0.75/0.15,SnO2,champion,✔,0.67,"htl_mod_kind, htl_mod_material, coat_htl",J-V · มุมสัมผัส,–
+1016_j_heliyon_2024_e25352,2024.0,5,18.20–20.50,2.3,0.15/0.81/0.05,C60,champion,✔,0.65,"htl_mod_kind, htl_mod_material, coat_htl, htl_dose",J-V,✔
+1002admi.202500231,2025.0,4,16.25–17.11,0.86,0.05/0.79/0.13,C60,plain,✔,0.47,"htl_mod_kind, htl_mod_material",J-V · Rs · bandgap,✔
+1016_j.solmat.2025.113858,2025.0,4,13.87–22.22,8.35,0.05/0.85/0.05,C60,champion,✔,-1.44,"htl_mod_kind, htl_mod_material, coat_htl, htl_dose",J-V · bandgap,✔
+1007_s10854-017-8094-9,2017.0,4,9.10–12.80,3.7,0.08/0.76/0.17,PCBM,champion,–,,htl_route,J-V · Rs,–
+1016_j.solener.2024.112888,2024.0,2,9.90–11.40,1.5,0.08/0.76/0.17,PCBM,champion,–,,htl_dope,J-V · เกรน · AFM · bandgap,–
+1016j.nanoen.2021.106285,2021.0,3,20.28–21.90,1.62,0.00/0.83/0.10,PCBM,plain,–,,"htl_mod_material, htl_dose, a_Cs, a_FA, x_Br",J-V · trap · Rs · Rrec · AFM,✔
+1002_adfm_202102452,2021.0,4,16.97–19.16,2.19,0.05/0.81/0.15,PCBM,champion,–,,"htl_dope, htl_route",J-V,✔
+1002_aenm_202405016,2024.0,3,23.60–25.66,2.06,0.05/0.85/0.00,C60,champion,–,,"htl_mod_material, htl_dose",J-V · AFM,✔
+1002_smll_202504237,2025.0,2,15.11–16.61,1.5,0.05/0.79/0.17,PCBM,champion,–,,htl_dope,J-V · AFM,–
+1002_solr_202200422,2022.0,2,20.12–22.81,2.69,0.05/0.81/0.14,C60,champion,–,,htl_dope,J-V · Rs · AFM · มุมสัมผัส · hysteresis,✔
+1002_solr_202400534,2024.0,2,20.37–24.21,3.84,0.05/0.83/0.17,C60,champion,–,,(ไม่แปรอะไรเลย),J-V · Rs · Rrec · AFM,✔
+1021_acsami_5c13836,2025.0,2,17.08–18.65,1.57,0.05/0.85/0.10,C60,champion,–,,htl_route,J-V · Rs,✔

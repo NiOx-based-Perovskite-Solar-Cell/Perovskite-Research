@@ -1,0 +1,6 @@
+﻿อุปกรณ์,คอลัมน์,ค่า,เหตุผล
+10.1016.jpowsour.2020.228738_Sample1,a_Cs,0.539,a_Cs > 0.25 — Cs สูงผิดปกติ เสี่ยง phase แยก
+10.1016.jpowsour.2020.228738_Sample2,a_Cs,0.539,a_Cs > 0.25 — Cs สูงผิดปกติ เสี่ยง phase แยก
+10.1021_acsaem.2c03434_Sample1,a_Cs,0.595,a_Cs > 0.25 — Cs สูงผิดปกติ เสี่ยง phase แยก
+10.1021_acsaem.2c03434_Sample2,a_Cs,0.595,a_Cs > 0.25 — Cs สูงผิดปกติ เสี่ยง phase แยก
+10_1002_solr_202400534_Sample2,retention_25c,100.85,retention เกิน 100% (อธิบายได้ด้วย light-soaking)
