@@ -1,0 +1,3 @@
+device_id,environment,temperature_c,note
+10_31635_ccschem_025_202505977_Sample1,N2,25.0,recheck §4.0c: เปเปอร์ระบุว่าเป็นการเก็บที่ room temperature เงื่อนไขเดียวกับ Sample3 -> 25 C
+10_31635_ccschem_025_202505977_Sample2,N2,25.0,recheck §4.0c: เปเปอร์ระบุว่าเป็นการเก็บที่ room temperature เงื่อนไขเดียวกับ Sample3 -> 25 C

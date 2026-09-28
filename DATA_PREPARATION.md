@@ -26,6 +26,23 @@ processed/prepared_v2/                — ชุดสุดท้ายสำ�
 notebook เสริม: `after_col_prepare.ipynb` (ยุบเป็น device-level 44×39 เพื่อดูภาพรวม), `eda_prepare.ipynb` (EDA ชุด prepared), `column_audit.ipynb`
 notebook ตอบคำถามวิจัย: `eda_htl_modification.ipynb` (Δ treated−control ภายใน paper — ผลหลัก ΔPCE +2.09 11/11)
 
+### วิธีรันทั้งเส้น (2026-09-28)
+
+ขั้น 1-3 ถูกพอร์ตเป็นสคริปต์แล้ว ไม่ต้องเปิด notebook ไล่ทีละตัว — ตรรกะเหมือนเดิมทุกไบต์
+
+```bash
+python run_pipeline.py          # Raw Data -> normalize -> prepared -> prepared_v2
+python run_pipeline.py verify   # พิสูจน์ว่าผลตรงกับ notebook (เทียบ CSV 29 ไฟล์แบบไบต์ต่อไบต์)
+```
+
+ของใหม่ที่กติกายังไม่รู้จัก (หน่วยแบบใหม่ ค่าหลุดช่วงฟิสิกส์ DOI ที่เขียนสองแบบ) จะ**ไม่หยุด
+pipeline** อีกแล้ว แต่ไปรวมที่ `processed/review/review_queue.csv` ให้ไล่ดูทีเดียว
+การแก้รายเครื่องย้ายออกจากโค้ดไปเป็น `pipeline/overrides/*.csv` เพิ่มเคสใหม่คือเพิ่มบรรทัด
+รายละเอียดทั้งหมดอยู่ใน [`pipeline/README.md`](pipeline/README.md)
+
+notebook เดิมยังอยู่ใช้อ่านเหตุผลและสำรวจได้ แต่ **ผลลัพธ์จริงให้มาจากสคริปต์** เพราะ
+ROOT ของ notebook ถอยขึ้นได้ชั้นเดียว พอย้ายเข้าโฟลเดอร์ย่อยแล้วหา `processed/` ไม่เจอ
+
 ---
 
 ## พื้นฐาน domain — อ่านก่อนถ้าไม่ได้มาสายวัสดุ/เคมี

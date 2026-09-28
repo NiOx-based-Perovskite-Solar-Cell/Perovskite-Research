@@ -1,4 +1,150 @@
 device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,material_family
+10.1002_advs.202309111_Sample1,FTO coated glass,,"Nippon Sheet Glass Co., Japan",,,missing,TCO
+10.1002_advs.202309111_Sample1,Nickel(II) acetylacetonate,95.0,Sigma-Aldrich,95.0,=,percent,
+10.1002_advs.202309111_Sample1,CsCl,99.0,Sigma-Aldrich,99.0,=,percent,
+10.1002_advs.202309111_Sample1,Acetonitrile,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1002_advs.202309111_Sample1,Ethanol,99.5,Sigma-Aldrich,99.5,=,percent,
+10.1002_advs.202309111_Sample1,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1002_advs.202309111_Sample1,DMSO,99.9,Sigma-Aldrich,99.9,=,percent,
+10.1002_advs.202309111_Sample1,Chlorobenzene,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1002_advs.202309111_Sample1,IPA,99.5,Sigma-Aldrich,99.5,=,percent,
+10.1002_advs.202309111_Sample1,BCP,99.99,Sigma-Aldrich,99.99,=,percent,BCP
+10.1002_advs.202309111_Sample1,PbI2,99.99,TCI Chemicals,99.99,=,percent,PbI2
+10.1002_advs.202309111_Sample1,MAI,99.99,Greatcell Solar Materials,99.99,=,percent,
+10.1002_advs.202309111_Sample1,FAI,99.99,Greatcell Solar Materials,99.99,=,percent,
+10.1002_advs.202309111_Sample1,PCBM,99.5,Luminescence Technology Corp.,99.5,=,percent,PCBM
+10.1002_advs.202309111_Sample1,Ag,99.99,"Laiyan Technology Co., Ltd.",99.99,=,percent,Metal electrode
+10.1002_advs.202309111_Sample2,FTO coated glass,,"Nippon Sheet Glass Co., Japan",,,missing,TCO
+10.1002_advs.202309111_Sample2,Nickel(II) acetylacetonate,95.0,Sigma-Aldrich,95.0,=,percent,
+10.1002_advs.202309111_Sample2,CsCl,99.0,Sigma-Aldrich,99.0,=,percent,
+10.1002_advs.202309111_Sample2,Acetonitrile,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1002_advs.202309111_Sample2,Ethanol,99.5,Sigma-Aldrich,99.5,=,percent,
+10.1002_advs.202309111_Sample2,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1002_advs.202309111_Sample2,DMSO,99.9,Sigma-Aldrich,99.9,=,percent,
+10.1002_advs.202309111_Sample2,Chlorobenzene,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1002_advs.202309111_Sample2,IPA,99.5,Sigma-Aldrich,99.5,=,percent,
+10.1002_advs.202309111_Sample2,BCP,99.99,Sigma-Aldrich,99.99,=,percent,BCP
+10.1002_advs.202309111_Sample2,PbI2,99.99,TCI Chemicals,99.99,=,percent,PbI2
+10.1002_advs.202309111_Sample2,MAI,99.99,Greatcell Solar Materials,99.99,=,percent,
+10.1002_advs.202309111_Sample2,FAI,99.99,Greatcell Solar Materials,99.99,=,percent,
+10.1002_advs.202309111_Sample2,PCBM,99.5,Luminescence Technology Corp.,99.5,=,percent,PCBM
+10.1002_advs.202309111_Sample2,Ag,99.99,"Laiyan Technology Co., Ltd.",99.99,=,percent,Metal electrode
+10.1002_advs.202309111_Sample2,KBH4 (Potassium borohydride),98.0,Alfa Aesar,98.0,=,percent,
+10.1002_smtd.202200787_Sample1,PbI2,99.0,TCI,99.0,=,percent,PbI2
+10.1002_smtd.202200787_Sample1,PbBr2,99.0,TCI,99.0,=,percent,
+10.1002_smtd.202200787_Sample1,CsI,,TCI,,,missing,
+10.1002_smtd.202200787_Sample1,MABr,,Dyesol,,,missing,
+10.1002_smtd.202200787_Sample1,FAI,,Dyesol,,,missing,
+10.1002_smtd.202200787_Sample1,DMSO,99.0,Acros,99.0,=,percent,
+10.1002_smtd.202200787_Sample1,DMF,99.0,Acros,99.0,=,percent,
+10.1002_smtd.202200787_Sample1,Isopropyl alcohol (IPA),,Acros,,,missing,
+10.1002_smtd.202200787_Sample1,Chlorobenzene (CB),99.8,Acros,99.8,=,percent,
+10.1002_smtd.202200787_Sample1,PCBM,,Solarmer Energy Inc.,,,missing,PCBM
+10.1002_smtd.202200787_Sample1,Zirconium(IV) acetylacetonate (ZrAcac),98.0,Sigma-Aldrich,98.0,=,percent,
+10.1002_smtd.202200787_Sample2,PbI2,99.0,TCI,99.0,=,percent,PbI2
+10.1002_smtd.202200787_Sample2,PbBr2,99.0,TCI,99.0,=,percent,
+10.1002_smtd.202200787_Sample2,CsI,,TCI,,,missing,
+10.1002_smtd.202200787_Sample2,MABr,,Dyesol,,,missing,
+10.1002_smtd.202200787_Sample2,FAI,,Dyesol,,,missing,
+10.1002_smtd.202200787_Sample2,DMSO,99.0,Acros,99.0,=,percent,
+10.1002_smtd.202200787_Sample2,DMF,99.0,Acros,99.0,=,percent,
+10.1002_smtd.202200787_Sample2,Isopropyl alcohol (IPA),,Acros,,,missing,
+10.1002_smtd.202200787_Sample2,Chlorobenzene (CB),99.8,Acros,99.8,=,percent,
+10.1002_smtd.202200787_Sample2,PCBM,,Solarmer Energy Inc.,,,missing,PCBM
+10.1002_smtd.202200787_Sample2,Zirconium(IV) acetylacetonate (ZrAcac),98.0,Sigma-Aldrich,98.0,=,percent,
+10.1002_smtd.202200787_Sample2,4-(2-Aminoethyl) benzoic acid (ABA),97.0,Sigma-Aldrich,97.0,=,percent,
+10.1002_smtd.202200787_Sample2,HBr (48 wt% in H2O),,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample1,FAI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample1,MAI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample1,CsI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample1,MACl,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample1,BCP,,Xi'an Polymer Light Technology Corp.,,,missing,BCP
+10.1002_smtd.202300241_Sample1,C60,,Xi'an Polymer Light Technology Corp.,,,missing,C60
+10.1002_smtd.202300241_Sample1,PbI2,99.99,Xi'an Polymer Light Technology Corp.,99.99,=,percent,PbI2
+10.1002_smtd.202300241_Sample1,DMF,,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample1,DMSO,,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample1,Isopropanol (IPA),,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample1,Chlorobenzene,,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample2,FAI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample2,MAI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample2,CsI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample2,MACl,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1002_smtd.202300241_Sample2,BCP,,Xi'an Polymer Light Technology Corp.,,,missing,BCP
+10.1002_smtd.202300241_Sample2,C60,,Xi'an Polymer Light Technology Corp.,,,missing,C60
+10.1002_smtd.202300241_Sample2,PbI2,99.99,Xi'an Polymer Light Technology Corp.,99.99,=,percent,PbI2
+10.1002_smtd.202300241_Sample2,DMF,,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample2,DMSO,,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample2,Isopropanol (IPA),,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample2,Chlorobenzene,,Sigma-Aldrich,,,missing,
+10.1002_smtd.202300241_Sample2,2-(4-fluorophenyl)ethylammonium iodide (p-F-PEAI),,Aladdin,,,missing,Amine passivation
+10.1002_solr.202400534_Sample1,ITO coated glass,,"South China Science & Technology Co., Ltd.",,,missing,TCO
+10.1002_solr.202400534_Sample1,PbI2,99.999,Ying Kou You Xuan Trade Co. Ltd.,99.999,=,percent,PbI2
+10.1002_solr.202400534_Sample1,FAI,99.9,Ying Kou You Xuan Trade Co. Ltd.,99.9,=,percent,
+10.1002_solr.202400534_Sample1,C60,99.9,Ying Kou You Xuan Trade Co. Ltd.,99.9,=,percent,C60
+10.1002_solr.202400534_Sample1,NiOx,99.999,Ying Kou You Xuan Trade Co. Ltd.,99.999,=,percent,NiOx
+10.1002_solr.202400534_Sample1,MACl,,Greatcell Solar Materials,,,missing,
+10.1002_solr.202400534_Sample1,MABr,,Greatcell Solar Materials,,,missing,
+10.1002_solr.202400534_Sample1,Me-2PACz,,"TCI (Shanghai) Development Co., Ltd.",,,missing,SAM (xPACz)
+10.1002_solr.202400534_Sample1,BCP,99.0,"TCI (Shanghai) Development Co., Ltd.",99.0,=,percent,BCP
+10.1002_solr.202400534_Sample1,PCBM,,"Nano-C, Inc.",,,missing,PCBM
+10.1002_solr.202400534_Sample1,CsI,99.99,Xi'an Polymer Light Technology Corp.,99.99,=,percent,
+10.1002_solr.202400534_Sample1,PEAI,99.5,Xi'an Polymer Light Technology Corp.,99.5,=,percent,Amine passivation
+10.1002_solr.202400534_Sample1,Chlorobenzene,99.8,J&K Scientific Ltd.,99.8,=,percent,
+10.1002_solr.202400534_Sample1,Ethyl acetate,99.9,J&K Scientific Ltd.,99.9,=,percent,
+10.1002_solr.202400534_Sample1,Methanol,99.9,J&K Scientific Ltd.,99.9,=,percent,
+10.1002_solr.202400534_Sample1,IPA,99.5,J&K Scientific Ltd.,99.5,=,percent,
+10.1002_solr.202400534_Sample1,DMF,99.8,J&K Scientific Ltd.,99.8,=,percent,
+10.1002_solr.202400534_Sample1,DMSO,99.7,J&K Scientific Ltd.,99.7,=,percent,
+10.1002_solr.202400534_Sample2,ITO coated glass,,"South China Science & Technology Co., Ltd.",,,missing,TCO
+10.1002_solr.202400534_Sample2,PbI2,99.999,Ying Kou You Xuan Trade Co. Ltd.,99.999,=,percent,PbI2
+10.1002_solr.202400534_Sample2,FAI,99.9,Ying Kou You Xuan Trade Co. Ltd.,99.9,=,percent,
+10.1002_solr.202400534_Sample2,C60,99.9,Ying Kou You Xuan Trade Co. Ltd.,99.9,=,percent,C60
+10.1002_solr.202400534_Sample2,NiOx,99.999,Ying Kou You Xuan Trade Co. Ltd.,99.999,=,percent,NiOx
+10.1002_solr.202400534_Sample2,MACl,,Greatcell Solar Materials,,,missing,
+10.1002_solr.202400534_Sample2,MABr,,Greatcell Solar Materials,,,missing,
+10.1002_solr.202400534_Sample2,Me-2PACz,,"TCI (Shanghai) Development Co., Ltd.",,,missing,SAM (xPACz)
+10.1002_solr.202400534_Sample2,BCP,99.0,"TCI (Shanghai) Development Co., Ltd.",99.0,=,percent,BCP
+10.1002_solr.202400534_Sample2,PCBM,,"Nano-C, Inc.",,,missing,PCBM
+10.1002_solr.202400534_Sample2,CsI,99.99,Xi'an Polymer Light Technology Corp.,99.99,=,percent,
+10.1002_solr.202400534_Sample2,PEAI,99.5,Xi'an Polymer Light Technology Corp.,99.5,=,percent,Amine passivation
+10.1002_solr.202400534_Sample2,Chlorobenzene,99.8,J&K Scientific Ltd.,99.8,=,percent,
+10.1002_solr.202400534_Sample2,Ethyl acetate,99.9,J&K Scientific Ltd.,99.9,=,percent,
+10.1002_solr.202400534_Sample2,Methanol,99.9,J&K Scientific Ltd.,99.9,=,percent,
+10.1002_solr.202400534_Sample2,IPA,99.5,J&K Scientific Ltd.,99.5,=,percent,
+10.1002_solr.202400534_Sample2,DMF,99.8,J&K Scientific Ltd.,99.8,=,percent,
+10.1002_solr.202400534_Sample2,DMSO,99.7,J&K Scientific Ltd.,99.7,=,percent,
+10.1002_solr.202400534_Sample2,TFMBAFa (4-(trifluoromethyl) benzylammonium formate),,Synthesized in-house,,,missing,
+10.1002_solr.202500173_Sample1,DMSO,99.9,Sigma-Aldrich,99.9,=,percent,
+10.1002_solr.202500173_Sample1,Chlorobenzene (CB),99.9,Sigma-Aldrich,99.9,=,percent,
+10.1002_solr.202500173_Sample1,DMF,99.8,J&K,99.8,=,percent,
+10.1002_solr.202500173_Sample1,Methyl acetate (MeOAc),99.0,J&K,99.0,=,percent,
+10.1002_solr.202500173_Sample1,Isopropanol (IPA),99.5,J&K,99.5,=,percent,
+10.1002_solr.202500173_Sample1,PbI2,99.999,TCI,99.999,=,percent,PbI2
+10.1002_solr.202500173_Sample1,PbBr2,99.99,TCI,99.99,=,percent,
+10.1002_solr.202500173_Sample1,CsI,99.99,TCI,99.99,=,percent,
+10.1002_solr.202500173_Sample1,MAI,99.99,"Xi'an Yuri Solar Co., Ltd.",99.99,=,percent,
+10.1002_solr.202500173_Sample1,FAI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.1002_solr.202500173_Sample1,BCP,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,BCP
+10.1002_solr.202500173_Sample1,PCBM,99.9,"Vizuchem Co., Ltd.",99.9,=,percent,PCBM
+10.1002_solr.202500173_Sample1,C60,99.0,"Vizuchem Co., Ltd.",99.0,=,percent,C60
+10.1002_solr.202500173_Sample1,ITO coated glass,,"Suzhou ShangYang Solar Technology Co., Ltd.",,,missing,TCO
+10.1002_solr.202500173_Sample1,Me-4PACz,99.0,TCI,99.0,=,percent,SAM (xPACz)
+10.1002_solr.202500173_Sample2,DMSO,99.9,Sigma-Aldrich,99.9,=,percent,
+10.1002_solr.202500173_Sample2,Chlorobenzene (CB),99.9,Sigma-Aldrich,99.9,=,percent,
+10.1002_solr.202500173_Sample2,DMF,99.8,J&K,99.8,=,percent,
+10.1002_solr.202500173_Sample2,Methyl acetate (MeOAc),99.0,J&K,99.0,=,percent,
+10.1002_solr.202500173_Sample2,Isopropanol (IPA),99.5,J&K,99.5,=,percent,
+10.1002_solr.202500173_Sample2,PbI2,99.999,TCI,99.999,=,percent,PbI2
+10.1002_solr.202500173_Sample2,PbBr2,99.99,TCI,99.99,=,percent,
+10.1002_solr.202500173_Sample2,CsI,99.99,TCI,99.99,=,percent,
+10.1002_solr.202500173_Sample2,MAI,99.99,"Xi'an Yuri Solar Co., Ltd.",99.99,=,percent,
+10.1002_solr.202500173_Sample2,FAI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.1002_solr.202500173_Sample2,BCP,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,BCP
+10.1002_solr.202500173_Sample2,PCBM,99.9,"Vizuchem Co., Ltd.",99.9,=,percent,PCBM
+10.1002_solr.202500173_Sample2,C60,99.0,"Vizuchem Co., Ltd.",99.0,=,percent,C60
+10.1002_solr.202500173_Sample2,ITO coated glass,,"Suzhou ShangYang Solar Technology Co., Ltd.",,,missing,TCO
+10.1002_solr.202500173_Sample2,Me-4PACz,99.0,TCI,99.0,=,percent,SAM (xPACz)
+10.1002_solr.202500173_Sample2,5-chloro-7-azaindole (5C7A),,TCI,,,missing,
 10.1002admi.202500231_Sample1,ITO coated glass,9 - 15 Ω □-1,"Colorado Concept Coatings LLC, 96041",,,sheet_resistance_misfiled,TCO
 10.1002admi.202500231_Sample1,DMF,99.9,Sigma-Aldrich,99.9,=,percent,
 10.1002admi.202500231_Sample1,DMSO,99,Alfa Aesar,99.0,=,percent,
@@ -425,6 +571,31 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10.1016j.nanoen.2021.106285_Sample3,CsI,99.999,Alfa Aesar,99.999,=,percent,
 10.1016j.nanoen.2021.106285_Sample3,Ethanolamine,99,Alfa Aesar,99.0,=,percent,
 10.1016j.nanoen.2021.106285_Sample3,PTAA,,Xian p-OLED Corp,,,missing,
+10.1021_acsaem.2c02799_Sample1,NiOx powder,,"Beijing HuaMin New Materials Technology Co., Ltd.",,,missing,NiOx
+10.1021_acsaem.2c02799_Sample1,ITO,,"Advanced Election Technology Co., Ltd.",,,missing,TCO
+10.1021_acsaem.2c02799_Sample1,FAI,,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsaem.2c02799_Sample1,PbI2,,"Advanced Election Technology Co., Ltd.",,,missing,PbI2
+10.1021_acsaem.2c02799_Sample1,CsI,,Alfa Aesar,,,missing,
+10.1021_acsaem.2c02799_Sample1,PbBr2,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1021_acsaem.2c02799_Sample1,MABr,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1021_acsaem.2c02799_Sample1,DMF,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample1,DMSO,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample1,Ethyl acetate,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample1,Isopropyl alcohol,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample2,NiOx powder,,"Beijing HuaMin New Materials Technology Co., Ltd.",,,missing,NiOx
+10.1021_acsaem.2c02799_Sample2,ITO,,"Advanced Election Technology Co., Ltd.",,,missing,TCO
+10.1021_acsaem.2c02799_Sample2,FAI,,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsaem.2c02799_Sample2,PbI2,,"Advanced Election Technology Co., Ltd.",,,missing,PbI2
+10.1021_acsaem.2c02799_Sample2,CsI,,Alfa Aesar,,,missing,
+10.1021_acsaem.2c02799_Sample2,PbBr2,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1021_acsaem.2c02799_Sample2,MABr,,Xi'an Polymer Light Technology Corp.,,,missing,
+10.1021_acsaem.2c02799_Sample2,DMF,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample2,DMSO,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample2,Ethyl acetate,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample2,Isopropyl alcohol,,Sigma-Aldrich,,,missing,
+10.1021_acsaem.2c02799_Sample2,CTBAI (2-methylallylamine hydroiodide),,Synthesized in-house,,,missing,
+10.1021_acsaem.2c02799_Sample2,"Hydriodic acid (HI, 57 wt%)",57 wt%,"Shanghai Aladdin Biochemical Technology Co., Ltd.",,,concentration_wt_pct,
+10.1021_acsaem.2c02799_Sample2,2-Methylallylamine,,"Shanghai Aladdin Biochemical Technology Co., Ltd.",,,missing,
 10.1021_acsaem.2c03434_Sample1,FTO glass substrates (6 Ω sq-1),,Youxuan Technology,,,missing,TCO
 10.1021_acsaem.2c03434_Sample1,Nickel acetate tetrahydrate (Ni(CH3COO)2·4H2O),,Alfa Aesar,,,missing,
 10.1021_acsaem.2c03434_Sample1,Copper(II) acetate monohydrate (Cu(CH3COO)2·H2O),,Alfa Aesar,,,missing,
@@ -433,7 +604,7 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10.1021_acsaem.2c03434_Sample1,FAI,,GreatCell Solar,,,missing,
 10.1021_acsaem.2c03434_Sample1,MABr,,GreatCell Solar,,,missing,
 10.1021_acsaem.2c03434_Sample1,MACl,,GreatCell Solar,,,missing,
-10.1021_acsaem.2c03434_Sample1,PbI2,,Xi-an Polymer Light Technology Corp.,,,missing,PbI2
+10.1021_acsaem.2c03434_Sample1,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
 10.1021_acsaem.2c03434_Sample1,PbBr2,99.0,Sigma-Aldrich,99.0,=,percent,
 10.1021_acsaem.2c03434_Sample1,CsI,,Sigma-Aldrich,,,missing,
 10.1021_acsaem.2c03434_Sample1,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
@@ -452,7 +623,7 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10.1021_acsaem.2c03434_Sample2,FAI,,GreatCell Solar,,,missing,
 10.1021_acsaem.2c03434_Sample2,MABr,,GreatCell Solar,,,missing,
 10.1021_acsaem.2c03434_Sample2,MACl,,GreatCell Solar,,,missing,
-10.1021_acsaem.2c03434_Sample2,PbI2,,Xi-an Polymer Light Technology Corp.,,,missing,PbI2
+10.1021_acsaem.2c03434_Sample2,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
 10.1021_acsaem.2c03434_Sample2,PbBr2,99.0,Sigma-Aldrich,99.0,=,percent,
 10.1021_acsaem.2c03434_Sample2,CsI,,Sigma-Aldrich,,,missing,
 10.1021_acsaem.2c03434_Sample2,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
@@ -624,6 +795,91 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10.1021_acsami.3c02156_Sample4,Methanol,,Sigma-Aldrich,,,missing,
 10.1021_acsami.3c02156_Sample4,Chloroform,,Acros,,,missing,
 10.1021_acsami.3c02156_Sample4,Ag,,,,,missing,Metal electrode
+10.1021_acsami.4c00249_Sample1,PbI2,99.999,Tokyo Chemical Industry (TCI),99.999,=,percent,PbI2
+10.1021_acsami.4c00249_Sample1,FAI,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample1,PbBr2,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample1,CsI,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample1,MABr,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample1,PCBM,99.9,"Advanced Election Technology Co., Ltd.",99.9,=,percent,PCBM
+10.1021_acsami.4c00249_Sample1,BCP,99.9,"Xi'an Yuri Solar Co., Ltd.",99.9,=,percent,BCP
+10.1021_acsami.4c00249_Sample1,DMF,,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsami.4c00249_Sample1,DMSO,99.9,"Advanced Election Technology Co., Ltd.",99.9,=,percent,
+10.1021_acsami.4c00249_Sample1,Chlorobenzene (CB),,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsami.4c00249_Sample1,Isopropyl alcohol (IPA),99.9,"J&K Scientific Co., Ltd.",99.9,=,percent,
+10.1021_acsami.4c00249_Sample1,FTO coated glass,,"Advanced Election Technology Co., Ltd.",,,missing,TCO
+10.1021_acsami.4c00249_Sample1,NiOx target,99.9,"Vital Thin Film Material Co., Ltd.",99.9,=,percent,NiOx
+10.1021_acsami.4c00249_Sample2,PbI2,99.999,Tokyo Chemical Industry (TCI),99.999,=,percent,PbI2
+10.1021_acsami.4c00249_Sample2,FAI,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample2,PbBr2,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample2,CsI,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample2,MABr,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample2,PCBM,99.9,"Advanced Election Technology Co., Ltd.",99.9,=,percent,PCBM
+10.1021_acsami.4c00249_Sample2,BCP,99.9,"Xi'an Yuri Solar Co., Ltd.",99.9,=,percent,BCP
+10.1021_acsami.4c00249_Sample2,DMF,,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsami.4c00249_Sample2,DMSO,99.9,"Advanced Election Technology Co., Ltd.",99.9,=,percent,
+10.1021_acsami.4c00249_Sample2,Chlorobenzene (CB),,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsami.4c00249_Sample2,Isopropyl alcohol (IPA),99.9,"J&K Scientific Co., Ltd.",99.9,=,percent,
+10.1021_acsami.4c00249_Sample2,FTO coated glass,,"Advanced Election Technology Co., Ltd.",,,missing,TCO
+10.1021_acsami.4c00249_Sample2,NiOx target,99.9,"Vital Thin Film Material Co., Ltd.",99.9,=,percent,NiOx
+10.1021_acsami.4c00249_Sample3,PbI2,99.999,Tokyo Chemical Industry (TCI),99.999,=,percent,PbI2
+10.1021_acsami.4c00249_Sample3,FAI,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample3,PbBr2,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample3,CsI,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample3,MABr,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,
+10.1021_acsami.4c00249_Sample3,PCBM,99.9,"Advanced Election Technology Co., Ltd.",99.9,=,percent,PCBM
+10.1021_acsami.4c00249_Sample3,BCP,99.9,"Xi'an Yuri Solar Co., Ltd.",99.9,=,percent,BCP
+10.1021_acsami.4c00249_Sample3,DMF,,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsami.4c00249_Sample3,DMSO,99.9,"Advanced Election Technology Co., Ltd.",99.9,=,percent,
+10.1021_acsami.4c00249_Sample3,Chlorobenzene (CB),,"Advanced Election Technology Co., Ltd.",,,missing,
+10.1021_acsami.4c00249_Sample3,Isopropyl alcohol (IPA),99.9,"J&K Scientific Co., Ltd.",99.9,=,percent,
+10.1021_acsami.4c00249_Sample3,FTO coated glass,,"Advanced Election Technology Co., Ltd.",,,missing,TCO
+10.1021_acsami.4c00249_Sample3,NiOx target,99.9,"Vital Thin Film Material Co., Ltd.",99.9,=,percent,NiOx
+10.1021_acsami.4c00249_Sample3,Aminoguanidine nitrate (AGN),99.0,Adamas-beta,99.0,=,percent,
+10.1021_acsami.5c16972_Sample1,CB,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1021_acsami.5c16972_Sample1,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1021_acsami.5c16972_Sample1,IPA,,Sigma-Aldrich,,,missing,
+10.1021_acsami.5c16972_Sample1,DMSO,99.9,Sigma-Aldrich,99.9,=,percent,
+10.1021_acsami.5c16972_Sample1,PCBM,,"Liaoing Youxuan New Energy Technology Co., LTD.,",,,missing,PCBM
+10.1021_acsami.5c16972_Sample1,BCP,96.0,"Liaoing Youxuan New Energy Technology Co., LTD.,",96.0,=,percent,BCP
+10.1021_acsami.5c16972_Sample1,PbI2,99.999,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.999,=,percent,PbI2
+10.1021_acsami.5c16972_Sample1,CsI,99.9,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.9,=,percent,
+10.1021_acsami.5c16972_Sample1,MAI,99.99,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample1,PbBr2,99.99,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample1,FAI,99.99,"Xi'an Boilite Photonic Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample1,Me-4PACz,,TCI,,,missing,SAM (xPACz)
+10.1021_acsami.5c16972_Sample1,PCPTFB,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample1,PBPTFB,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample1,PPTFP,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample2,CB,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1021_acsami.5c16972_Sample2,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1021_acsami.5c16972_Sample2,IPA,,Sigma-Aldrich,,,missing,
+10.1021_acsami.5c16972_Sample2,DMSO,99.9,Sigma-Aldrich,99.9,=,percent,
+10.1021_acsami.5c16972_Sample2,PCBM,,"Liaoing Youxuan New Energy Technology Co., LTD.,",,,missing,PCBM
+10.1021_acsami.5c16972_Sample2,BCP,96.0,"Liaoing Youxuan New Energy Technology Co., LTD.,",96.0,=,percent,BCP
+10.1021_acsami.5c16972_Sample2,PbI2,99.999,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.999,=,percent,PbI2
+10.1021_acsami.5c16972_Sample2,CsI,99.9,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.9,=,percent,
+10.1021_acsami.5c16972_Sample2,MAI,99.99,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample2,PbBr2,99.99,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample2,FAI,99.99,"Xi'an Boilite Photonic Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample2,Me-4PACz,,TCI,,,missing,SAM (xPACz)
+10.1021_acsami.5c16972_Sample2,PCPTFB,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample2,PBPTFB,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample2,PPTFP,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample3,CB,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1021_acsami.5c16972_Sample3,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1021_acsami.5c16972_Sample3,IPA,,Sigma-Aldrich,,,missing,
+10.1021_acsami.5c16972_Sample3,DMSO,99.9,Sigma-Aldrich,99.9,=,percent,
+10.1021_acsami.5c16972_Sample3,PCBM,,"Liaoing Youxuan New Energy Technology Co., LTD.,",,,missing,PCBM
+10.1021_acsami.5c16972_Sample3,BCP,96.0,"Liaoing Youxuan New Energy Technology Co., LTD.,",96.0,=,percent,BCP
+10.1021_acsami.5c16972_Sample3,PbI2,99.999,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.999,=,percent,PbI2
+10.1021_acsami.5c16972_Sample3,CsI,99.9,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.9,=,percent,
+10.1021_acsami.5c16972_Sample3,MAI,99.99,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample3,PbBr2,99.99,"Liaoing Youxuan New Energy Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample3,FAI,99.99,"Xi'an Boilite Photonic Technology Co., LTD.,",99.99,=,percent,
+10.1021_acsami.5c16972_Sample3,Me-4PACz,,TCI,,,missing,SAM (xPACz)
+10.1021_acsami.5c16972_Sample3,PCPTFB,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample3,PBPTFB,,Aladdin,,,missing,
+10.1021_acsami.5c16972_Sample3,PPTFP,,Aladdin,,,missing,
 10.1021_acsenergylett.3c00697_Sample1,ITO coated glass,,Colorado Concept Coatings LLC,,,missing,TCO
 10.1021_acsenergylett.3c00697_Sample1,Ni(NO3)2·6H2O,,,,,missing,
 10.1021_acsenergylett.3c00697_Sample1,NaOH,,,,,missing,
@@ -684,6 +940,24 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10.1021_acsenergylett.3c00697_Sample3,IPA (anhydrous),,Sigma-Aldrich,,,missing,
 10.1021_acsenergylett.3c00697_Sample3,Cu,,Angstrom Engineering Inc.,,,missing,Metal electrode
 10.1021_acsenergylett.3c00697_Sample3,MgF2,,Angstrom Engineering Inc.,,,missing,
+10.1021_acsomega.1c01378_Sample1,FTO coated glass,,"Ruilong Optoelectronics Technology Co., Ltd.",,,missing,TCO
+10.1021_acsomega.1c01378_Sample1,NiSO4·7H2O,98.0,Acros,98.0,=,percent,
+10.1021_acsomega.1c01378_Sample1,PbI2,99.9985,Luminescence Technology Corp.,99.9985,=,percent,PbI2
+10.1021_acsomega.1c01378_Sample1,PbBr2,99.99,Luminescence Technology Corp.,99.99,=,percent,
+10.1021_acsomega.1c01378_Sample1,MABr,99.5,Luminescence Technology Corp.,99.5,=,percent,
+10.1021_acsomega.1c01378_Sample1,FAI,98.0,"STAREK Scientific Co., Ltd.",98.0,=,percent,
+10.1021_acsomega.1c01378_Sample1,CsI,99.9,Alfa Aesar,99.9,=,percent,
+10.1021_acsomega.1c01378_Sample1,PC61BM,99.0,Solenne B.V.,99.0,=,percent,PCBM
+10.1021_acsomega.1c01378_Sample2,FTO coated glass,,"Ruilong Optoelectronics Technology Co., Ltd.",,,missing,TCO
+10.1021_acsomega.1c01378_Sample2,NiSO4·7H2O,98,Acros,98.0,=,percent,
+10.1021_acsomega.1c01378_Sample2,PbI2,99.9985,Luminescence Technology Corp.,99.9985,=,percent,PbI2
+10.1021_acsomega.1c01378_Sample2,PbBr2,99.99,Luminescence Technology Corp.,99.99,=,percent,
+10.1021_acsomega.1c01378_Sample2,MABr,99.5,Luminescence Technology Corp.,99.5,=,percent,
+10.1021_acsomega.1c01378_Sample2,FAI,98,"STAREK Scientific Co., Ltd.",98.0,=,percent,
+10.1021_acsomega.1c01378_Sample2,CsI,99.9,Alfa Aesar,99.9,=,percent,
+10.1021_acsomega.1c01378_Sample2,PC61BM,99,Solenne B.V.,99.0,=,percent,PCBM
+10.1021_acsomega.1c01378_Sample2,K2S2O8,98,SHOWA,98.0,=,percent,
+10.1021_acsomega.1c01378_Sample2,NH3 (aq),25-28 wt%,Sigma-Aldrich,,,concentration_wt_pct,
 10.1038_s41598-023-32697-z_Sample1,FTO-coated glass substrates (8 Ω sq-1),,Ruilong,,,missing,TCO
 10.1038_s41598-023-32697-z_Sample1,Nickel nitrate,99.9985,Alfa Aesar,99.9985,=,percent,
 10.1038_s41598-023-32697-z_Sample1,Ethylenediamine,99,Alfa Aesar,99.0,=,percent,
@@ -799,6 +1073,199 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10.1038_s41598-023-32697-z_Sample5,Hexane,95,Echo Chemical,95.0,=,percent,
 10.1038_s41598-023-32697-z_Sample5,Fullerene-C60,99.95,STAREK Scientific,99.95,=,percent,C60
 10.1038_s41598-023-32697-z_Sample5,Ag,99.9%,Ultimate Materials Technology,99.9,=,percent,Metal electrode
+10.1039_d2tc04215k_Sample1,ITO coated glass,,Colorado Concept Coatings LLC,,,missing,TCO
+10.1039_d2tc04215k_Sample1,PbI2,,Tokyo Chemical Industry (TCI),,,missing,PbI2
+10.1039_d2tc04215k_Sample1,FAI,,Greatcell Solar Materials,,,missing,
+10.1039_d2tc04215k_Sample1,CsI,,Tokyo Chemical Industry (TCI),,,missing,
+10.1039_d2tc04215k_Sample1,MABr,,Greatcell Solar Materials,,,missing,
+10.1039_d2tc04215k_Sample1,C60,,Nano-C,,,missing,C60
+10.1039_d2tc04215k_Sample1,BCP,,Luminescence Technology Corp. (Lumtec),,,missing,BCP
+10.1039_d2tc04215k_Sample1,Cu,,Angstrom Engineering,,,missing,Metal electrode
+10.1039_d2tc04215k_Sample1,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1039_d2tc04215k_Sample1,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample1,Toluene,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample1,Chlorobenzene,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample2,ITO coated glass,,Colorado Concept Coatings LLC,,,missing,TCO
+10.1039_d2tc04215k_Sample2,PbI2,,Tokyo Chemical Industry (TCI),,,missing,PbI2
+10.1039_d2tc04215k_Sample2,FAI,,Greatcell Solar Materials,,,missing,
+10.1039_d2tc04215k_Sample2,CsI,,Tokyo Chemical Industry (TCI),,,missing,
+10.1039_d2tc04215k_Sample2,MABr,,Greatcell Solar Materials,,,missing,
+10.1039_d2tc04215k_Sample2,C60,,Nano-C,,,missing,C60
+10.1039_d2tc04215k_Sample2,BCP,,Luminescence Technology Corp. (Lumtec),,,missing,BCP
+10.1039_d2tc04215k_Sample2,Cu,,Angstrom Engineering,,,missing,Metal electrode
+10.1039_d2tc04215k_Sample2,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1039_d2tc04215k_Sample2,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample2,Toluene,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample2,Chlorobenzene,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample2,Cz (carbazole derivative),,"Synthesized in-house (Herckens et al., ref. 1)",,,missing,
+10.1039_d2tc04215k_Sample3,ITO coated glass,,Colorado Concept Coatings LLC,,,missing,TCO
+10.1039_d2tc04215k_Sample3,PbI2,,Tokyo Chemical Industry (TCI),,,missing,PbI2
+10.1039_d2tc04215k_Sample3,FAI,,Greatcell Solar Materials,,,missing,
+10.1039_d2tc04215k_Sample3,CsI,,Tokyo Chemical Industry (TCI),,,missing,
+10.1039_d2tc04215k_Sample3,MABr,,Greatcell Solar Materials,,,missing,
+10.1039_d2tc04215k_Sample3,C60,,Nano-C,,,missing,C60
+10.1039_d2tc04215k_Sample3,BCP,,Luminescence Technology Corp. (Lumtec),,,missing,BCP
+10.1039_d2tc04215k_Sample3,Cu,,Angstrom Engineering,,,missing,Metal electrode
+10.1039_d2tc04215k_Sample3,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
+10.1039_d2tc04215k_Sample3,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample3,Toluene,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample3,Chlorobenzene,,Sigma-Aldrich,,,missing,
+10.1039_d2tc04215k_Sample3,"BTBT (benzothieno[3,2-b]benzothiophene derivative)",,"Synthesized in-house (Van Gompel et al., ref. 2)",,,missing,
+10.1039_d3ta05069f_Sample1,Chlorobenzene (CB),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample1,Isopropanol (IPA),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample1,DMF,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample1,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample1,BCP,,Advanced Election Technology,,,missing,BCP
+10.1039_d3ta05069f_Sample1,PC60BM,,Advanced Election Technology,,,missing,PCBM
+10.1039_d3ta05069f_Sample1,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
+10.1039_d3ta05069f_Sample1,FAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample1,MAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample1,MACl,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample1,CsI,,TCI,,,missing,
+10.1039_d3ta05069f_Sample1,MABr,,TCI,,,missing,
+10.1039_d3ta05069f_Sample1,PbBr2,,TCI,,,missing,
+10.1039_d3ta05069f_Sample2,Chlorobenzene (CB),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample2,Isopropanol (IPA),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample2,DMF,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample2,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample2,BCP,,Advanced Election Technology,,,missing,BCP
+10.1039_d3ta05069f_Sample2,PC60BM,,Advanced Election Technology,,,missing,PCBM
+10.1039_d3ta05069f_Sample2,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
+10.1039_d3ta05069f_Sample2,FAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample2,MAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample2,MACl,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample2,CsI,,TCI,,,missing,
+10.1039_d3ta05069f_Sample2,MABr,,TCI,,,missing,
+10.1039_d3ta05069f_Sample2,PbBr2,,TCI,,,missing,
+10.1039_d3ta05069f_Sample2,2-Iodobenzoic acid (2-IBA),,Adamas,,,missing,
+10.1039_d3ta05069f_Sample3,Chlorobenzene (CB),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample3,Isopropanol (IPA),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample3,DMF,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample3,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample3,BCP,,Advanced Election Technology,,,missing,BCP
+10.1039_d3ta05069f_Sample3,PC60BM,,Advanced Election Technology,,,missing,PCBM
+10.1039_d3ta05069f_Sample3,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
+10.1039_d3ta05069f_Sample3,FAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample3,MAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample3,MACl,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample3,CsI,,TCI,,,missing,
+10.1039_d3ta05069f_Sample3,MABr,,TCI,,,missing,
+10.1039_d3ta05069f_Sample3,PbBr2,,TCI,,,missing,
+10.1039_d3ta05069f_Sample3,2-Iodobenzenesulfonic acid (2-IBSA),,Adamas,,,missing,
+10.1039_d3ta05069f_Sample4,Chlorobenzene (CB),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample4,Isopropanol (IPA),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample4,DMF,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample4,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample4,BCP,,Advanced Election Technology,,,missing,BCP
+10.1039_d3ta05069f_Sample4,PC60BM,,Advanced Election Technology,,,missing,PCBM
+10.1039_d3ta05069f_Sample4,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
+10.1039_d3ta05069f_Sample4,FAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample4,MAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample4,MACl,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample4,CsI,,TCI,,,missing,
+10.1039_d3ta05069f_Sample4,MABr,,TCI,,,missing,
+10.1039_d3ta05069f_Sample4,PbBr2,,TCI,,,missing,
+10.1039_d3ta05069f_Sample4,2-Iodophenylboronic acid (2-IPBA),,Adamas,,,missing,
+10.1039_d3ta05069f_Sample5,Chlorobenzene (CB),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample5,Isopropanol (IPA),,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample5,DMF,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample5,DMSO,,Sigma-Aldrich,,,missing,
+10.1039_d3ta05069f_Sample5,BCP,,Advanced Election Technology,,,missing,BCP
+10.1039_d3ta05069f_Sample5,PC60BM,,Advanced Election Technology,,,missing,PCBM
+10.1039_d3ta05069f_Sample5,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
+10.1039_d3ta05069f_Sample5,FAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample5,MAI,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample5,MACl,,GreatCell,,,missing,
+10.1039_d3ta05069f_Sample5,CsI,,TCI,,,missing,
+10.1039_d3ta05069f_Sample5,MABr,,TCI,,,missing,
+10.1039_d3ta05069f_Sample5,PbBr2,,TCI,,,missing,
+10.1039_d3ta05069f_Sample5,4-Iodophenylboronic acid (4-IPBA),,Adamas,,,missing,
+10.1039_d5ya00072f_Sample1,Nickel nitrate hexahydrate,>=97,Sigma-Aldrich,97.0,≥,percent_lower_bound,
+10.1039_d5ya00072f_Sample1,Ethylenediamine,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample1,Ethylene glycol,99,Fisher,99.0,=,percent,
+10.1039_d5ya00072f_Sample1,PCBM,,Nano-C,,,missing,PCBM
+10.1039_d5ya00072f_Sample1,Chlorobenzene,99,Sigma-Aldrich,99.0,=,percent,
+10.1039_d5ya00072f_Sample2,Nickel nitrate hexahydrate,>=97,Sigma-Aldrich,97.0,≥,percent_lower_bound,
+10.1039_d5ya00072f_Sample2,Ethylenediamine,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample2,Ethylene glycol,99,Fisher,99.0,=,percent,
+10.1039_d5ya00072f_Sample2,PCBM,,Nano-C,,,missing,PCBM
+10.1039_d5ya00072f_Sample2,Chlorobenzene,99,Sigma-Aldrich,99.0,=,percent,
+10.1039_d5ya00072f_Sample2,Lithium nitrate,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample3,Nickel nitrate hexahydrate,>=97,Sigma-Aldrich,97.0,≥,percent_lower_bound,
+10.1039_d5ya00072f_Sample3,Ethylenediamine,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample3,Ethylene glycol,99,Fisher,99.0,=,percent,
+10.1039_d5ya00072f_Sample3,PCBM,,Nano-C,,,missing,PCBM
+10.1039_d5ya00072f_Sample3,Chlorobenzene,99,Sigma-Aldrich,99.0,=,percent,
+10.1039_d5ya00072f_Sample3,Lithium nitrate,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample4,Nickel nitrate hexahydrate,>=97,Sigma-Aldrich,97.0,≥,percent_lower_bound,
+10.1039_d5ya00072f_Sample4,Ethylenediamine,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample4,Ethylene glycol,99,Fisher,99.0,=,percent,
+10.1039_d5ya00072f_Sample4,PCBM,,Nano-C,,,missing,PCBM
+10.1039_d5ya00072f_Sample4,Chlorobenzene,99,Sigma-Aldrich,99.0,=,percent,
+10.1039_d5ya00072f_Sample4,Lithium nitrate,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample5,Nickel nitrate hexahydrate,>=97,Sigma-Aldrich,97.0,≥,percent_lower_bound,
+10.1039_d5ya00072f_Sample5,Ethylenediamine,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample5,Ethylene glycol,99,Fisher,99.0,=,percent,
+10.1039_d5ya00072f_Sample5,PCBM,,Nano-C,,,missing,PCBM
+10.1039_d5ya00072f_Sample5,Chlorobenzene,99,Sigma-Aldrich,99.0,=,percent,
+10.1039_d5ya00072f_Sample5,Lithium nitrate,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample6,Nickel nitrate hexahydrate,>=97,Sigma-Aldrich,97.0,≥,percent_lower_bound,
+10.1039_d5ya00072f_Sample6,Ethylenediamine,99,Alfa Aesar,99.0,=,percent,
+10.1039_d5ya00072f_Sample6,Ethylene glycol,99,Fisher,99.0,=,percent,
+10.1039_d5ya00072f_Sample6,PCBM,,Nano-C,,,missing,PCBM
+10.1039_d5ya00072f_Sample6,Chlorobenzene,99,Sigma-Aldrich,99.0,=,percent,
+10.1039_d5ya00072f_Sample6,Lithium nitrate,99,Alfa Aesar,99.0,=,percent,
+10.26599_NRE.2025.9120172_Sample1,FAI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,CsI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,MACl,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,PbCl2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,PbI2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,PbI2
+10.26599_NRE.2025.9120172_Sample1,PbBr2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,MABr,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,PC61BM,,"Xi'an Yuri Solar Co., Ltd.",,,missing,PCBM
+10.26599_NRE.2025.9120172_Sample1,VNPB,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,BCP,,"Xi'an Yuri Solar Co., Ltd.",,,missing,BCP
+10.26599_NRE.2025.9120172_Sample1,DMF,99.9,"Alfa Aesar Chemical Co., Ltd.",99.9,=,percent,
+10.26599_NRE.2025.9120172_Sample1,DMSO,99.9,"Alfa Aesar Chemical Co., Ltd.",99.9,=,percent,
+10.26599_NRE.2025.9120172_Sample1,Chlorobenzene (CB),,"Alfa Aesar Chemical Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,Ethyl acetate (EA),,"Alfa Aesar Chemical Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample1,Isopropanol (IPA),,"Alfa Aesar Chemical Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,FAI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,CsI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,MACl,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,PbCl2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,PbI2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,PbI2
+10.26599_NRE.2025.9120172_Sample2,PbBr2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,MABr,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,PC61BM,,"Xi'an Yuri Solar Co., Ltd.",,,missing,PCBM
+10.26599_NRE.2025.9120172_Sample2,VNPB,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,BCP,,"Xi'an Yuri Solar Co., Ltd.",,,missing,BCP
+10.26599_NRE.2025.9120172_Sample2,DMF,99.9,"Alfa Aesar Chemical Co., Ltd.",99.9,=,percent,
+10.26599_NRE.2025.9120172_Sample2,DMSO,99.9,"Alfa Aesar Chemical Co., Ltd.",99.9,=,percent,
+10.26599_NRE.2025.9120172_Sample2,Chlorobenzene (CB),,"Alfa Aesar Chemical Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,Ethyl acetate (EA),,"Alfa Aesar Chemical Co., Ltd.",,,missing,
+10.26599_NRE.2025.9120172_Sample2,Isopropanol (IPA),,"Alfa Aesar Chemical Co., Ltd.",,,missing,
+10.3390_nano11113074_Sample1,ITO coated glass,,Psiotec Ltd.,,,missing,TCO
+10.3390_nano11113074_Sample1,Ni(NO3)2·6H2O,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample1,Cu(NO3)2·3H2O,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample1,2-methoxyethanol,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample1,Acetylacetone,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample1,PC60BM,,Sigma-Aldrich,,,missing,PCBM
+10.3390_nano11113074_Sample1,Bathocuproine (BCP),,Sigma-Aldrich,,,missing,BCP
+10.3390_nano11113074_Sample2,ITO coated glass,,Psiotec Ltd.,,,missing,TCO
+10.3390_nano11113074_Sample2,Ni(NO3)2·6H2O,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample2,Cu(NO3)2·3H2O,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample2,2-methoxyethanol,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample2,Acetylacetone,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample2,PC60BM,,Sigma-Aldrich,,,missing,PCBM
+10.3390_nano11113074_Sample2,Bathocuproine (BCP),,Sigma-Aldrich,,,missing,BCP
+10.3390_nano11113074_Sample3,ITO coated glass,,Psiotec Ltd.,,,missing,TCO
+10.3390_nano11113074_Sample3,Ni(NO3)2·6H2O,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample3,Cu(NO3)2·3H2O,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample3,2-methoxyethanol,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample3,Acetylacetone,,Sigma-Aldrich,,,missing,
+10.3390_nano11113074_Sample3,PC60BM,,Sigma-Aldrich,,,missing,PCBM
+10.3390_nano11113074_Sample3,Bathocuproine (BCP),,Sigma-Aldrich,,,missing,BCP
 10_1002_adfm_202102452_Sample1,ITO coated glass,,,,,missing,TCO
 10_1002_adfm_202102452_Sample1,Ni(NO3)2·6H2O,≥98,Tianjin Damao Chemical Reagent Factory,98.0,≥,percent_lower_bound,
 10_1002_adfm_202102452_Sample1,Sm(NO3)3·6H2O,≥99,Adamas,99.0,≥,percent_lower_bound,
@@ -910,7 +1377,7 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_aenm_202405016_Sample1,MACl,,Greatcell Solar Materials,,,missing,
 10_1002_aenm_202405016_Sample1,CsI,99.999,Alfa Aesar,99.999,=,percent,
 10_1002_aenm_202405016_Sample1,PbI2,99.99,TCI Chemical,99.99,=,percent,PbI2
-10_1002_aenm_202405016_Sample1,"PDADI2 (1,3-propane-diammonium iodide)",,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_1002_aenm_202405016_Sample1,"PDADI2 (1,3-propane-diammonium iodide)",,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_1002_aenm_202405016_Sample1,C60,,Sigma-Aldrich,,,missing,C60
 10_1002_aenm_202405016_Sample1,BCP,98.0,Alfa Aesar,98.0,=,percent,BCP
 10_1002_aenm_202405016_Sample1,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
@@ -929,7 +1396,7 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_aenm_202405016_Sample2,MACl,,Greatcell Solar Materials,,,missing,
 10_1002_aenm_202405016_Sample2,CsI,99.999,Alfa Aesar,99.999,=,percent,
 10_1002_aenm_202405016_Sample2,PbI2,99.99,TCI Chemical,99.99,=,percent,PbI2
-10_1002_aenm_202405016_Sample2,"PDADI2 (1,3-propane-diammonium iodide)",,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_1002_aenm_202405016_Sample2,"PDADI2 (1,3-propane-diammonium iodide)",,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_1002_aenm_202405016_Sample2,C60,,Sigma-Aldrich,,,missing,C60
 10_1002_aenm_202405016_Sample2,BCP,98.0,Alfa Aesar,98.0,=,percent,BCP
 10_1002_aenm_202405016_Sample2,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
@@ -948,7 +1415,7 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_aenm_202405016_Sample3,MACl,,Greatcell Solar Materials,,,missing,
 10_1002_aenm_202405016_Sample3,CsI,99.999,Alfa Aesar,99.999,=,percent,
 10_1002_aenm_202405016_Sample3,PbI2,99.99,TCI Chemical,99.99,=,percent,PbI2
-10_1002_aenm_202405016_Sample3,"PDADI2 (1,3-propane-diammonium iodide)",,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_1002_aenm_202405016_Sample3,"PDADI2 (1,3-propane-diammonium iodide)",,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_1002_aenm_202405016_Sample3,C60,,Sigma-Aldrich,,,missing,C60
 10_1002_aenm_202405016_Sample3,DMF,99.8,Sigma-Aldrich,99.8,=,percent,
 10_1002_aenm_202405016_Sample3,DMSO,99.7,Sigma-Aldrich,99.7,=,percent,
@@ -990,14 +1457,14 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_solr_202200422_Sample1,IPA,99.9,Sigma-Aldrich,99.9,=,percent,
 10_1002_solr_202200422_Sample1,Chlorobenzene,99.8,Sigma-Aldrich,99.8,=,percent,
 10_1002_solr_202200422_Sample1,DMSO,99.8,Sigma-Aldrich,99.8,=,percent,
-10_1002_solr_202200422_Sample1,CsI,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample1,PbI2,,Xi-an Polymer Light Technology Corp.,,,missing,PbI2
-10_1002_solr_202200422_Sample1,FAI,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample1,PbBr2,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample1,MABr,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample1,PC61BM,,Xi-an Polymer Light Technology Corp.,,,missing,PCBM
-10_1002_solr_202200422_Sample1,C60,,Xi-an Polymer Light Technology Corp.,,,missing,C60
-10_1002_solr_202200422_Sample1,BCP (bathocuproine),,Xi-an Polymer Light Technology Corp.,,,missing,BCP
+10_1002_solr_202200422_Sample1,CsI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample1,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
+10_1002_solr_202200422_Sample1,FAI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample1,PbBr2,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample1,MABr,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample1,PC61BM,,Xi'an Polymer Light Technology Corp.,,,missing,PCBM
+10_1002_solr_202200422_Sample1,C60,,Xi'an Polymer Light Technology Corp.,,,missing,C60
+10_1002_solr_202200422_Sample1,BCP (bathocuproine),,Xi'an Polymer Light Technology Corp.,,,missing,BCP
 10_1002_solr_202200422_Sample1,Cr,,,,,missing,Metal electrode
 10_1002_solr_202200422_Sample1,Au,,,,,missing,Metal electrode
 10_1002_solr_202200422_Sample2,ITO coated glass,,,,,missing,TCO
@@ -1007,14 +1474,14 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_solr_202200422_Sample2,IPA,99.9,Sigma-Aldrich,99.9,=,percent,
 10_1002_solr_202200422_Sample2,Chlorobenzene,99.8,Sigma-Aldrich,99.8,=,percent,
 10_1002_solr_202200422_Sample2,DMSO,99.8,Sigma-Aldrich,99.8,=,percent,
-10_1002_solr_202200422_Sample2,CsI,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample2,PbI2,,Xi-an Polymer Light Technology Corp.,,,missing,PbI2
-10_1002_solr_202200422_Sample2,FAI,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample2,PbBr2,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample2,MABr,,Xi-an Polymer Light Technology Corp.,,,missing,
-10_1002_solr_202200422_Sample2,PC61BM,,Xi-an Polymer Light Technology Corp.,,,missing,PCBM
-10_1002_solr_202200422_Sample2,C60,,Xi-an Polymer Light Technology Corp.,,,missing,C60
-10_1002_solr_202200422_Sample2,BCP (bathocuproine),,Xi-an Polymer Light Technology Corp.,,,missing,BCP
+10_1002_solr_202200422_Sample2,CsI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample2,PbI2,,Xi'an Polymer Light Technology Corp.,,,missing,PbI2
+10_1002_solr_202200422_Sample2,FAI,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample2,PbBr2,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample2,MABr,,Xi'an Polymer Light Technology Corp.,,,missing,
+10_1002_solr_202200422_Sample2,PC61BM,,Xi'an Polymer Light Technology Corp.,,,missing,PCBM
+10_1002_solr_202200422_Sample2,C60,,Xi'an Polymer Light Technology Corp.,,,missing,C60
+10_1002_solr_202200422_Sample2,BCP (bathocuproine),,Xi'an Polymer Light Technology Corp.,,,missing,BCP
 10_1002_solr_202200422_Sample2,Cr,,,,,missing,Metal electrode
 10_1002_solr_202200422_Sample2,Au,,,,,missing,Metal electrode
 10_1002_solr_202400534_Sample1,ITO coated glass,,"South China Science & Technology Co., Ltd., China",,,missing,TCO
@@ -1027,8 +1494,8 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_solr_202400534_Sample1,Me-2PACz,,"TCI (Shanghai) Development Co., Ltd., China",,,missing,SAM (xPACz)
 10_1002_solr_202400534_Sample1,BCP,>99.0,"TCI (Shanghai) Development Co., Ltd., China",99.0,>,percent_lower_bound,BCP
 10_1002_solr_202400534_Sample1,PCBM,,"Nano-C, Inc.",,,missing,PCBM
-10_1002_solr_202400534_Sample1,CsI,≥99.99,Xi-an Polymer Light Technology Corp.,99.99,≥,percent_lower_bound,
-10_1002_solr_202400534_Sample1,PEAI,≥99.5,Xi-an Polymer Light Technology Corp.,99.5,≥,percent_lower_bound,Amine passivation
+10_1002_solr_202400534_Sample1,CsI,≥99.99,Xi'an Polymer Light Technology Corp.,99.99,≥,percent_lower_bound,
+10_1002_solr_202400534_Sample1,PEAI,≥99.5,Xi'an Polymer Light Technology Corp.,99.5,≥,percent_lower_bound,Amine passivation
 10_1002_solr_202400534_Sample1,Chlorobenzene,99.8,"J&K Scientific Ltd., China",99.8,=,percent,
 10_1002_solr_202400534_Sample1,Ethyl acetate,99.9,"J&K Scientific Ltd., China",99.9,=,percent,
 10_1002_solr_202400534_Sample1,Methanol,99.9,"J&K Scientific Ltd., China",99.9,=,percent,
@@ -1047,8 +1514,8 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_solr_202400534_Sample2,Me-2PACz,,"TCI (Shanghai) Development Co., Ltd., China",,,missing,SAM (xPACz)
 10_1002_solr_202400534_Sample2,BCP,>99.0,"TCI (Shanghai) Development Co., Ltd., China",99.0,>,percent_lower_bound,BCP
 10_1002_solr_202400534_Sample2,PCBM,,"Nano-C, Inc.",,,missing,PCBM
-10_1002_solr_202400534_Sample2,CsI,≥99.99,Xi-an Polymer Light Technology Corp.,99.99,≥,percent_lower_bound,
-10_1002_solr_202400534_Sample2,PEAI,≥99.5,Xi-an Polymer Light Technology Corp.,99.5,≥,percent_lower_bound,Amine passivation
+10_1002_solr_202400534_Sample2,CsI,≥99.99,Xi'an Polymer Light Technology Corp.,99.99,≥,percent_lower_bound,
+10_1002_solr_202400534_Sample2,PEAI,≥99.5,Xi'an Polymer Light Technology Corp.,99.5,≥,percent_lower_bound,Amine passivation
 10_1002_solr_202400534_Sample2,Chlorobenzene,99.8,"J&K Scientific Ltd., China",99.8,=,percent,
 10_1002_solr_202400534_Sample2,Ethyl acetate,99.9,"J&K Scientific Ltd., China",99.9,=,percent,
 10_1002_solr_202400534_Sample2,Methanol,99.9,"J&K Scientific Ltd., China",99.9,=,percent,
@@ -1058,22 +1525,22 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1002_solr_202400534_Sample2,TFMBAFa,,Synthesized in-house (Qing Lian),,,missing,
 10_1002_solr_202400534_Sample2,Cu,,,,,missing,Metal electrode
 10_1002adma_202507730_Sample1,"PbI2, BCP",,TCI,,,missing,BCP
-10_1002adma_202507730_Sample1,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi-an Polymer Light Technology Corp.,,,missing,C60
+10_1002adma_202507730_Sample1,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi'an Polymer Light Technology Corp.,,,missing,C60
 10_1002adma_202507730_Sample1,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
 10_1002adma_202507730_Sample2,"PbI2, BCP",,TCI,,,missing,BCP
-10_1002adma_202507730_Sample2,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi-an Polymer Light Technology Corp.,,,missing,C60
+10_1002adma_202507730_Sample2,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi'an Polymer Light Technology Corp.,,,missing,C60
 10_1002adma_202507730_Sample2,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
 10_1002adma_202507730_Sample2,BA,,Leyan and Bidepharm,,,missing,
 10_1002adma_202507730_Sample3,"PbI2, BCP",,TCI,,,missing,BCP
-10_1002adma_202507730_Sample3,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi-an Polymer Light Technology Corp.,,,missing,C60
+10_1002adma_202507730_Sample3,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi'an Polymer Light Technology Corp.,,,missing,C60
 10_1002adma_202507730_Sample3,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
 10_1002adma_202507730_Sample3,PTES,,Leyan and Bidepharm,,,missing,
 10_1002adma_202507730_Sample4,"PbI2, BCP",,TCI,,,missing,BCP
-10_1002adma_202507730_Sample4,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi-an Polymer Light Technology Corp.,,,missing,C60
+10_1002adma_202507730_Sample4,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi'an Polymer Light Technology Corp.,,,missing,C60
 10_1002adma_202507730_Sample4,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
 10_1002adma_202507730_Sample4,F-PTES,,Leyan and Bidepharm,,,missing,
 10_1002adma_202507730_Sample5,"PbI2, BCP",,TCI,,,missing,BCP
-10_1002adma_202507730_Sample5,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi-an Polymer Light Technology Corp.,,,missing,C60
+10_1002adma_202507730_Sample5,"CsI, FAI, MAI, MACl, PEAI, C60",,Xi'an Polymer Light Technology Corp.,,,missing,C60
 10_1002adma_202507730_Sample5,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
 10_1002adma_202507730_Sample5,3F-PTES,,Leyan and Bidepharm,,,missing,
 10_1016_j_heliyon_2024_e25352_Sample1,FTO glass,,Ruilong,,,missing,TCO
@@ -1248,12 +1715,12 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1021_acsaem_2c03072_Sample3,Cu,,,,,missing,Metal electrode
 10_1021_acsami_4c14300_Sample1,FTO coated glass,,,,,missing,TCO
 10_1021_acsami_4c14300_Sample1,PbI2,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,PbI2
-10_1021_acsami_4c14300_Sample1,FAI,99.5,"Xian Yuri Solar Co., Ltd.",99.5,=,percent,
-10_1021_acsami_4c14300_Sample1,MAI,99.5,"Xian Yuri Solar Co., Ltd.",99.5,=,percent,
-10_1021_acsami_4c14300_Sample1,MACl,99.5,"Xian Yuri Solar Co., Ltd.",99.5,=,percent,
-10_1021_acsami_4c14300_Sample1,CsI,99.999,"Xian Yuri Solar Co., Ltd.",99.999,=,percent,
-10_1021_acsami_4c14300_Sample1,PC61BM,99.9,"Xian Yuri Solar Co., Ltd.",99.9,=,percent,PCBM
-10_1021_acsami_4c14300_Sample1,BCP,96.0,"Xian Yuri Solar Co., Ltd.",96.0,=,percent,BCP
+10_1021_acsami_4c14300_Sample1,FAI,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,
+10_1021_acsami_4c14300_Sample1,MAI,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,
+10_1021_acsami_4c14300_Sample1,MACl,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,
+10_1021_acsami_4c14300_Sample1,CsI,99.999,"Xi'an Yuri Solar Co., Ltd.",99.999,=,percent,
+10_1021_acsami_4c14300_Sample1,PC61BM,99.9,"Xi'an Yuri Solar Co., Ltd.",99.9,=,percent,PCBM
+10_1021_acsami_4c14300_Sample1,BCP,96.0,"Xi'an Yuri Solar Co., Ltd.",96.0,=,percent,BCP
 10_1021_acsami_4c14300_Sample1,DMF,,Sigma-Aldrich,,,missing,
 10_1021_acsami_4c14300_Sample1,DMSO,,Sigma-Aldrich,,,missing,
 10_1021_acsami_4c14300_Sample1,CB,99.8,Sigma-Aldrich,99.8,=,percent,
@@ -1263,12 +1730,12 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_1021_acsami_4c14300_Sample2,NiOx,,,,,missing,NiOx
 10_1021_acsami_4c14300_Sample2,TFFA,,TCI,,,missing,
 10_1021_acsami_4c14300_Sample2,PbI2,99.999,"Advanced Election Technology Co., Ltd.",99.999,=,percent,PbI2
-10_1021_acsami_4c14300_Sample2,FAI,99.5,"Xian Yuri Solar Co., Ltd.",99.5,=,percent,
-10_1021_acsami_4c14300_Sample2,MAI,99.5,"Xian Yuri Solar Co., Ltd.",99.5,=,percent,
-10_1021_acsami_4c14300_Sample2,MACl,99.5,"Xian Yuri Solar Co., Ltd.",99.5,=,percent,
-10_1021_acsami_4c14300_Sample2,CsI,99.999,"Xian Yuri Solar Co., Ltd.",99.999,=,percent,
-10_1021_acsami_4c14300_Sample2,PC61BM,99.9,"Xian Yuri Solar Co., Ltd.",99.9,=,percent,PCBM
-10_1021_acsami_4c14300_Sample2,BCP,96.0,"Xian Yuri Solar Co., Ltd.",96.0,=,percent,BCP
+10_1021_acsami_4c14300_Sample2,FAI,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,
+10_1021_acsami_4c14300_Sample2,MAI,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,
+10_1021_acsami_4c14300_Sample2,MACl,99.5,"Xi'an Yuri Solar Co., Ltd.",99.5,=,percent,
+10_1021_acsami_4c14300_Sample2,CsI,99.999,"Xi'an Yuri Solar Co., Ltd.",99.999,=,percent,
+10_1021_acsami_4c14300_Sample2,PC61BM,99.9,"Xi'an Yuri Solar Co., Ltd.",99.9,=,percent,PCBM
+10_1021_acsami_4c14300_Sample2,BCP,96.0,"Xi'an Yuri Solar Co., Ltd.",96.0,=,percent,BCP
 10_1021_acsami_4c14300_Sample2,DMF,,Sigma-Aldrich,,,missing,
 10_1021_acsami_4c14300_Sample2,DMSO,,Sigma-Aldrich,,,missing,
 10_1021_acsami_4c14300_Sample2,CB,99.8,Sigma-Aldrich,99.8,=,percent,
@@ -1500,14 +1967,14 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_31635_ccschem_025_202505977_Sample1,ITO coated glass,,,,,missing,TCO
 10_31635_ccschem_025_202505977_Sample1,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
 10_31635_ccschem_025_202505977_Sample1,PbI2,,Not provided,,,missing,PbI2
-10_31635_ccschem_025_202505977_Sample1,PbBr2,,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample1,PbBr2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_31635_ccschem_025_202505977_Sample1,FAI,,Greatcell Solar Materials,,,missing,
-10_31635_ccschem_025_202505977_Sample1,MABr,,"Xian Yuri Solar Co., Ltd.",,,missing,
-10_31635_ccschem_025_202505977_Sample1,MACl,,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample1,MABr,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample1,MACl,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_31635_ccschem_025_202505977_Sample1,CsI,,Sigma-Aldrich,,,missing,
-10_31635_ccschem_025_202505977_Sample1,PC61BM,,"Xian Yuri Solar Co., Ltd.",,,missing,PCBM
+10_31635_ccschem_025_202505977_Sample1,PC61BM,,"Xi'an Yuri Solar Co., Ltd.",,,missing,PCBM
 10_31635_ccschem_025_202505977_Sample1,BCP,,Aladdin,,,missing,BCP
-10_31635_ccschem_025_202505977_Sample1,PEAI,,"Xian Yuri Solar Co., Ltd.",,,missing,Amine passivation
+10_31635_ccschem_025_202505977_Sample1,PEAI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,Amine passivation
 10_31635_ccschem_025_202505977_Sample1,DMF,,Sigma-Aldrich,,,missing,
 10_31635_ccschem_025_202505977_Sample1,DMSO,,Sigma-Aldrich,,,missing,
 10_31635_ccschem_025_202505977_Sample1,CB,,Sigma-Aldrich,,,missing,
@@ -1518,14 +1985,14 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_31635_ccschem_025_202505977_Sample2,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
 10_31635_ccschem_025_202505977_Sample2,2PACz,,"Tokyo Chemical Industry Co., Ltd.",,,missing,SAM (xPACz)
 10_31635_ccschem_025_202505977_Sample2,PbI2,,,,,missing,PbI2
-10_31635_ccschem_025_202505977_Sample2,PbBr2,,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample2,PbBr2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_31635_ccschem_025_202505977_Sample2,FAI,,Greatcell Solar Materials,,,missing,
-10_31635_ccschem_025_202505977_Sample2,MABr,,"Xian Yuri Solar Co., Ltd.",,,missing,
-10_31635_ccschem_025_202505977_Sample2,MACl,,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample2,MABr,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample2,MACl,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_31635_ccschem_025_202505977_Sample2,CsI,,Sigma-Aldrich,,,missing,
-10_31635_ccschem_025_202505977_Sample2,PC61BM,,"Xian Yuri Solar Co., Ltd.",,,missing,PCBM
+10_31635_ccschem_025_202505977_Sample2,PC61BM,,"Xi'an Yuri Solar Co., Ltd.",,,missing,PCBM
 10_31635_ccschem_025_202505977_Sample2,BCP,,Aladdin,,,missing,BCP
-10_31635_ccschem_025_202505977_Sample2,PEAI,,"Xian Yuri Solar Co., Ltd.",,,missing,Amine passivation
+10_31635_ccschem_025_202505977_Sample2,PEAI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,Amine passivation
 10_31635_ccschem_025_202505977_Sample2,DMF,,Sigma-Aldrich,,,missing,
 10_31635_ccschem_025_202505977_Sample2,DMSO,,Sigma-Aldrich,,,missing,
 10_31635_ccschem_025_202505977_Sample2,CB,,Sigma-Aldrich,,,missing,
@@ -1534,16 +2001,16 @@ device_id,material,purity,vendor,purity_pct,purity_qualifier,purity_kind,materia
 10_31635_ccschem_025_202505977_Sample2,Ag,,,,,missing,Metal electrode
 10_31635_ccschem_025_202505977_Sample3,ITO coated glass,,,,,missing,TCO
 10_31635_ccschem_025_202505977_Sample3,NiOx NPs,,"Advanced Election Technology Co., Ltd.",,,missing,NiOx
-10_31635_ccschem_025_202505977_Sample3,2Br-4PADMAc,,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample3,2Br-4PADMAc,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_31635_ccschem_025_202505977_Sample3,PbI2,,,,,missing,PbI2
-10_31635_ccschem_025_202505977_Sample3,PbBr2,,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample3,PbBr2,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_31635_ccschem_025_202505977_Sample3,FAI,,Greatcell Solar Materials,,,missing,
-10_31635_ccschem_025_202505977_Sample3,MABr,,"Xian Yuri Solar Co., Ltd.",,,missing,
-10_31635_ccschem_025_202505977_Sample3,MACl,,"Xian Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample3,MABr,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
+10_31635_ccschem_025_202505977_Sample3,MACl,,"Xi'an Yuri Solar Co., Ltd.",,,missing,
 10_31635_ccschem_025_202505977_Sample3,CsI,,Sigma-Aldrich,,,missing,
-10_31635_ccschem_025_202505977_Sample3,PC61BM,,"Xian Yuri Solar Co., Ltd.",,,missing,PCBM
+10_31635_ccschem_025_202505977_Sample3,PC61BM,,"Xi'an Yuri Solar Co., Ltd.",,,missing,PCBM
 10_31635_ccschem_025_202505977_Sample3,BCP,,Aladdin,,,missing,BCP
-10_31635_ccschem_025_202505977_Sample3,PEAI,,"Xian Yuri Solar Co., Ltd.",,,missing,Amine passivation
+10_31635_ccschem_025_202505977_Sample3,PEAI,,"Xi'an Yuri Solar Co., Ltd.",,,missing,Amine passivation
 10_31635_ccschem_025_202505977_Sample3,DMF,,Sigma-Aldrich,,,missing,
 10_31635_ccschem_025_202505977_Sample3,DMSO,,Sigma-Aldrich,,,missing,
 10_31635_ccschem_025_202505977_Sample3,CB,,Sigma-Aldrich,,,missing,

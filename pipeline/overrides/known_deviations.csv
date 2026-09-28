@@ -1,0 +1,7 @@
+ไฟล์,เหตุผล,วันที่
+prepared/stability,retention ของ heliyon_Sample3 เปลี่ยนจาก [อนุมาน] เป็น [ยืนยันจากเปเปอร์] -- ค่ายังเป็น 80.0 เท่าเดิม เปลี่ยนแค่ข้อความ note,2026-09-28
+prepared_v2/stability,ตามไฟล์ prepared/stability (คัดลอกตรง),2026-09-28
+prepared_v2/process,หน่วย 'Μl' (มิวตัวใหญ่ U+039C) ถูกรวมเข้า 'uL' -- คอลัมน์ AntiSolvent__Μl หายไป ค่าไปอยู่ AntiSolvent__uL แทน,2026-09-28
+prepared_v2/target_table,antisolvent_vol_uL ได้ค่าเพิ่ม 11 device (58 -> 69) จากการรวมหน่วย 'Μl' เข้า 'uL' -- ไม่มีค่าเดิมตัวไหนเปลี่ยน มีแต่ช่องว่างที่ถูกเติม,2026-09-28
+prepared/materials,เพิ่มชื่อตัวทำละลาย (2-propanol=IPA · DCB=Dichlorobenzene · Octane · Ethylenediamine · 2-methoxyethanol) และนับ '+' เป็นตัวคั่น -- 17 แถวได้ solvent_1 คืน และ 'Acetonitrile + Ethanol' เลิกทิ้ง Ethanol,2026-09-28
+prepared_v2/materials,ตามไฟล์ prepared/materials (คัดลอกตรง),2026-09-28

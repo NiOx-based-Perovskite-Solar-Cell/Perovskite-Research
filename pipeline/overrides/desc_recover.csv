@@ -1,0 +1,14 @@
+device_id,layer_id,step_order,parameter,unit,หลักฐาน
+10_1002_solr_202400534_Sample2,4,2,5000,RPM,sibling sample กรอกครบในช่อง parameter
+10_1021_acsami_5c15868_Sample1,1,2,60,C,sibling sample กรอกครบในช่อง parameter
+10_1021_acsami_5c15868_Sample1,2,1,"0.2, 0.0006, 25","Å/s, Pa, C",sibling sample
+10_1021_acsami_5c15868_Sample1,2,2,"200, 10","C, hr",sibling sample
+10_1021_acsami_5c15868_Sample1,4,1,"2000, 10","RPM, sec",sibling sample
+10_1021_acsami_5c15868_Sample1,4,2,"4000, 30","RPM, sec",sibling sample
+10_1021_acsami_5c15868_Sample1,4,3,"150, 30","uL, sec",sibling sample
+10_1021_acsami_5c15868_Sample1,4,4,"100, 30","C, min",sibling sample
+10_1021_acsami_5c15868_Sample1,5,1,"4000, 30","RPM, sec",sibling sample
+10_1021_acsami_5c15868_Sample1,5,2,"100, 5","C, min",sibling sample
+10_1021_acsami_5c15868_Sample1,6,1,"1400, 30","RPM, sec",sibling sample
+10_1021_acsami_5c15868_Sample1,7,1,"5000, 17","RPM, sec",sibling sample
+10.3390_nano11113074_Sample2,4,2,"300, 10","uL, sec","Nanomaterials 2021, 11, 3074 §2 Device fabrication: 'spin-coating at 5000 rpm for 35 s and after 10 s. 300 mL [sic, µL] of ethyl acetate were dropped' · Sample1/3 กรอก '300, 10' อยู่แล้ว"

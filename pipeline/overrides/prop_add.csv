@@ -1,0 +1,2 @@
+device_id,property,value,unit,base_property,remarks,note
+10_31635_ccschem_025_202505977_Sample1,Rrec,179.0,Ω,Rrec,Recombination resistance from EIS (Figure 4f),recheck §4.0c: เปเปอร์ระบุ Rrec ของ control = 179 Ω แต่ไม่ได้กรอกลงไฟล์ เติมตามต้นฉบับ

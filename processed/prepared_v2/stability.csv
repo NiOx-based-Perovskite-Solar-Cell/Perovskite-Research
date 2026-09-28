@@ -1,4 +1,19 @@
 device_id,environment,encapsulation,temperature_c,humidity_pct,time_hr,retention_pct,t80_hr,initial_pce,final_pce,temperature_c_parsed,temperature_c_note,humidity_pct_parsed,humidity_pct_min,humidity_pct_max,humidity_pct_note,t80_hr_parsed,t80_hr_censor,t80_hr_note,retention_pct_parsed,retention_pct_censor,retention_pct_note,stress_group
+10.1002_advs.202309111_Sample1,"MPP tracking, 1 Sun, ambient air (ISOS-L-2)",Y,65,,2000.0,66,,,,65.0,,,,,,,,,66.0,,,light/operational
+10.1002_advs.202309111_Sample2,"MPP tracking, 1 Sun, ambient air (ISOS-L-2)",Y,65,,2000.0,94,,,,65.0,,,,,,,,,94.0,,,light/operational
+10.1002_smtd.202200787_Sample1,"MPP tracking, 1 Sun, ambient air",N,,,500.0,50,,,,,,,,,,,,,50.0,,,light/operational
+10.1002_smtd.202200787_Sample2,"MPP tracking, 1 Sun, ambient air",N,,,500.0,90,,,,,,,,,,,,,90.0,,,light/operational
+10.1002_smtd.202300241_Sample1,Ambient air storage,N,25,50-60,500.0,<50,,,,25.0,,55.0,50.0,60.0,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)",,,,50.0,<,ค่า censored: รู้แค่ว่า ต่ำกว่า 50 — ห้ามใช้เป็นค่าจริงโดยไม่ดูธง censor,dark storage
+10.1002_smtd.202300241_Sample2,Ambient air storage,N,25.0,50-60,1000.0,85,,,,25.0,,55.0,50.0,60.0,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)",,,,85.0,,,dark storage
+10.1002_smtd.202300241_Sample2,"MPP tracking, 1 Sun, N2",N,,,700.0,80,,,,,,,,,,,,,80.0,,,light/operational
+10.1002_solr.202400534_Sample1,N2 storage,N,25,,1440.0,90.31,,,,25.0,,,,,,,,,90.31,,,dark storage
+10.1002_solr.202400534_Sample1,"Thermal, N2 (hot plate)",N,85,,400.0,73.0,,,,85.0,,,,,,,,,73.0,,,thermal
+10.1002_solr.202400534_Sample1,"MPPT, 1 Sun LED, N2",N,50,,850.0,60.0,,,,50.0,,,,,,,,,60.0,,,light/operational
+10.1002_solr.202400534_Sample2,N2 storage,N,25,,1440.0,100.85,,,,25.0,,,,,,,,,100.85,,> 100% (เป็นไปได้จาก light-soaking) เก็บค่าเดิมไว้,dark storage
+10.1002_solr.202400534_Sample2,"Thermal, N2 (hot plate)",N,85,,1300.0,82.0,,,,85.0,,,,,,,,,82.0,,,thermal
+10.1002_solr.202400534_Sample2,"MPPT, 1 Sun LED, N2",N,50,,850.0,70.0,,,,50.0,,,,,,,,,70.0,,,light/operational
+10.1002_solr.202500173_Sample1,Ambient air storage (ISOS-D-1),N,25,20-30,440.0,80,,,,25.0,,25.0,20.0,30.0,"ช่วงค่า: ใช้ค่ากลาง 25 (min=20, max=30)",,,,80.0,,,dark storage
+10.1002_solr.202500173_Sample2,Ambient air storage (ISOS-D-1),N,25,20-30,2000.0,80,,,,25.0,,25.0,20.0,30.0,"ช่วงค่า: ใช้ค่ากลาง 25 (min=20, max=30)",,,,80.0,,,dark storage
 10.1002admi.202500231_Sample1,ISOS-L2,N,,,72.0,,,16.31,14.5,,,,,,,,,,88.9,,คำนวณจาก final_pce/initial_pce x100,light/operational
 10.1002admi.202500231_Sample2,ISOS-L2,N,,,72.0,,,17.11,10.5,,,,,,,,,,61.37,,คำนวณจาก final_pce/initial_pce x100,light/operational
 10.1002admi.202500231_Sample3,ISOS-L2,N,,,72.0,,,16.97,11.8,,,,,,,,,,69.53,,คำนวณจาก final_pce/initial_pce x100,light/operational
@@ -23,17 +38,46 @@ device_id,environment,encapsulation,temperature_c,humidity_pct,time_hr,retention
 10.1016j.nanoen.2021.106285_Sample3,Nitrogen (N2),N,,,500.0,80.0,,,,,,,,,,,,,80.0,,,inert (N2)
 10.1016j.nanoen.2021.106285_Sample3,Ambient MPP,N,,45–55,0.83,90.0,,,,,,50.0,45.0,55.0,"ช่วงค่า: ใช้ค่ากลาง 50 (min=45, max=55)",,,,90.0,,,light/operational
 10.1016j.nanoen.2021.106285_Sample3,Thermal Aging,N,85.0,50–60,,,,,,85.0,,55.0,50.0,60.0,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)",,,,,,,thermal
+10.1021_acsaem.2c02799_Sample1,"MPP tracking, continuous illumination, ambient air",Y,,50-60,280.0,<49,,,,,,55.0,50.0,60.0,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)",,,,49.0,<,ค่า censored: รู้แค่ว่า ต่ำกว่า 49 — ห้ามใช้เป็นค่าจริงโดยไม่ดูธง censor,light/operational
+10.1021_acsaem.2c02799_Sample2,"MPP tracking, continuous illumination, ambient air",Y,,50-60,280.0,93,,,,,,55.0,50.0,60.0,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60)",,,,93.0,,,light/operational
 10.1021_acsaem.2c03434_Sample1,Ambient air,N,25,50,72.0,77,,,,25.0,,50.0,50.0,50.0,,,,,77.0,,,ambient air
 10.1021_acsaem.2c03434_Sample2,Ambient air,N,25,50,72.0,87,,,,25.0,,50.0,50.0,50.0,,,,,87.0,,,ambient air
 10.1021_acsami.3c02156_Sample3,"MPP, 1 sun AM1.5G, ambient",Y,,60-70,,80,22,,,,,65.0,60.0,70.0,"ช่วงค่า: ใช้ค่ากลาง 65 (min=60, max=70)",22.0,,,80.0,,,light/operational
 10.1021_acsami.3c02156_Sample4,"MPP, 1 sun AM1.5G, ambient",Y,,60-70,,80,,,,,,65.0,60.0,70.0,"ช่วงค่า: ใช้ค่ากลาง 65 (min=60, max=70)",,,,80.0,,,light/operational
+10.1021_acsami.4c00249_Sample1,Ambient air storage,N,25,25,530.0,80,,,,25.0,,25.0,25.0,25.0,,,,,80.0,,,dark storage
+10.1021_acsami.4c00249_Sample1,Ambient air storage,N,25,25,1200.0,65,,,,25.0,,25.0,25.0,25.0,,,,,65.0,,,dark storage
+10.1021_acsami.4c00249_Sample3,Ambient air storage,N,25,25.0,1200.0,>80,,,,25.0,,25.0,25.0,25.0,,,,,80.0,>,ค่า censored: รู้แค่ว่า สูงกว่า 80 — ห้ามใช้เป็นค่าจริงโดยไม่ดูธง censor,dark storage
+10.1021_acsami.4c00249_Sample3,Ambient air storage (high humidity),N,25,85.0,800.0,>60,,,,25.0,,85.0,85.0,85.0,,,,,60.0,>,ค่า censored: รู้แค่ว่า สูงกว่า 60 — ห้ามใช้เป็นค่าจริงโดยไม่ดูธง censor,dark storage
+10.1021_acsami.4c00249_Sample3,"Thermal, N2",N,85,,400.0,63,,,,85.0,,,,,,,,,63.0,,,thermal
+10.1021_acsami.5c16972_Sample1,N2,N,25,0,1400.0,43,,,,25.0,,0.0,0.0,0.0,,,,,43.0,,,inert (N2)
+10.1021_acsami.5c16972_Sample1,Ambient,N,25,30-50,1000.0,38,,,,25.0,,40.0,30.0,50.0,"ช่วงค่า: ใช้ค่ากลาง 40 (min=30, max=50)",,,,38.0,,,ambient air
+10.1021_acsami.5c16972_Sample2,N2,N,25,0,1400.0,72,,,,25.0,,0.0,0.0,0.0,,,,,72.0,,,inert (N2)
+10.1021_acsami.5c16972_Sample2,Ambient,N,25,30-50,1000.0,70,,,,25.0,,40.0,30.0,50.0,"ช่วงค่า: ใช้ค่ากลาง 40 (min=30, max=50)",,,,70.0,,,ambient air
+10.1021_acsami.5c16972_Sample3,N2,N,25,0,1400.0,90,,,,25.0,,0.0,0.0,0.0,,,,,90.0,,,inert (N2)
+10.1021_acsami.5c16972_Sample3,Ambient,N,25,30-50,1000.0,85,,,,25.0,,40.0,30.0,50.0,"ช่วงค่า: ใช้ค่ากลาง 40 (min=30, max=50)",,,,85.0,,,ambient air
 10.1021_acsenergylett.3c00697_Sample3,N2,N,85,,1850.0,88,,,,85.0,,,,,,,,,88.0,,,inert (N2)
 10.1021_acsenergylett.3c00697_Sample3,1-Sun MPPT,N,60,,1000.0,97,,,,60.0,,,,,,,,,97.0,,,light/operational
+10.1021_acsomega.1c01378_Sample1,"N2 glovebox storage, measured in ambient air",,25,,1200.0,80,,,,25.0,,,,,,,,,80.0,,,dark storage
+10.1021_acsomega.1c01378_Sample2,"N2 glovebox storage, measured in ambient air",,25,,1200.0,80,,,,25.0,,,,,,,,,80.0,,,dark storage
 10.1038_s41598-023-32697-z_Sample1,N2-filled glovebox,N,25,,120.0,< 20,,,,25.0,,,,,,,,,20.0,<,ค่า censored: รู้แค่ว่า ต่ำกว่า 20 — ห้ามใช้เป็นค่าจริงโดยไม่ดูธง censor,inert (N2)
 10.1038_s41598-023-32697-z_Sample2,N2-filled glovebox,N,25,,120.0,,,,,25.0,,,,,,,,,,,,inert (N2)
 10.1038_s41598-023-32697-z_Sample3,N2-filled glovebox,N,25,,120.0,78.7,,,,25.0,,,,,,,,,78.7,,,inert (N2)
 10.1038_s41598-023-32697-z_Sample4,N2-filled glovebox,N,25,,120.0,85.1,,,,25.0,,,,,,,,,85.1,,,inert (N2)
 10.1038_s41598-023-32697-z_Sample5,N2-filled glovebox,N,25,,120.0,77.9,,,,25.0,,,,,,,,,77.9,,,inert (N2)
+10.1039_d2tc04215k_Sample1,Ambient (dark),N,30,25.0,250.0,67,,,,30.0,,25.0,25.0,25.0,,,,,67.0,,,dark storage
+10.1039_d2tc04215k_Sample1,MPPT (continuous illumination),N,30,,1.0,82,,,,30.0,,,,,,,,,82.0,,,light/operational
+10.1039_d2tc04215k_Sample2,Ambient (dark),N,30,25.0,250.0,84,,,,30.0,,25.0,25.0,25.0,,,,,84.0,,,dark storage
+10.1039_d2tc04215k_Sample2,MPPT (continuous illumination),N,30,,1.0,88,,,,30.0,,,,,,,,,88.0,,,light/operational
+10.1039_d2tc04215k_Sample3,Ambient (dark),N,30,25.0,250.0,89,,,,30.0,,25.0,25.0,25.0,,,,,89.0,,,dark storage
+10.1039_d2tc04215k_Sample3,MPPT (continuous illumination),N,30,,1.0,95,,,,30.0,,,,,,,,,95.0,,,light/operational
+10.1039_d3ta05069f_Sample4,N2 storage,N,25,,3000.0,61.5,,,,25.0,,,,,,,,,61.5,,,dark storage
+10.1039_d3ta05069f_Sample4,"Thermal, N2",N,60,,1000.0,52.8,,,,60.0,,,,,,,,,52.8,,,thermal
+10.1039_d3ta05069f_Sample4,Ambient air,N,25,50-70,1000.0,60.6,,,,25.0,,60.0,50.0,70.0,"ช่วงค่า: ใช้ค่ากลาง 60 (min=50, max=70)",,,,60.6,,,ambient air
+10.1039_d3ta05069f_Sample5,N2 storage,N,25,,3000.0,81.0,,,,25.0,,,,,,,,,81.0,,,dark storage
+10.1039_d3ta05069f_Sample5,"Thermal, N2",N,60,,1000.0,80.1,,,,60.0,,,,,,,,,80.1,,,thermal
+10.1039_d3ta05069f_Sample5,Ambient air,N,25,50-70,1000.0,80.6,,,,25.0,,60.0,50.0,70.0,"ช่วงค่า: ใช้ค่ากลาง 60 (min=50, max=70)",,,,80.6,,,ambient air
+10.26599_NRE.2025.9120172_Sample1,"MPP tracking, N2, LED (100 mW/cm2)",N,,,300.0,5,,,,,,,,,,,,,5.0,,,light/operational
+10.26599_NRE.2025.9120172_Sample2,"MPP tracking, N2, LED (100 mW/cm2)",N,,,400.0,70,,,,,,,,,,,,,70.0,,,light/operational
 10_1002_adfm_202102452_Sample1,Ambient,N,,30 ± 5,500.0,80,,,,,,30.0,25.0,35.0,"ค่ากลาง±คลาดเคลื่อน: 30 (min=25, max=35)",,,,80.0,,,ambient air
 10_1002_adfm_202102452_Sample2,Ambient,N,,30 ± 5,500.0,80,,,,,,30.0,25.0,35.0,"ค่ากลาง±คลาดเคลื่อน: 30 (min=25, max=35)",,,,80.0,,,ambient air
 10_1002_adfm_202102452_Sample3,Ambient,N,25,30 ± 5,500.0,80,,,,25.0,,30.0,25.0,35.0,"ค่ากลาง±คลาดเคลื่อน: 30 (min=25, max=35)",,,,80.0,,,ambient air
@@ -57,7 +101,7 @@ device_id,environment,encapsulation,temperature_c,humidity_pct,time_hr,retention
 10_1002adma_202507730_Sample1,ISOS-L-3,Y,65,60,580.0,0.4,,,,65.0,,60.0,60.0,60.0,,,,,40.0,,สเกล: x100 [ยืนยันแล้ว: ต้นฉบับใช้ Excel percent format '0%'],light/operational
 10_1002adma_202507730_Sample5,ISOS-L-3 (MPPT),Y,65,60,1500.0,0.97,,,,65.0,,60.0,60.0,60.0,,,,,97.0,,สเกล: x100 [ยืนยันแล้ว: ต้นฉบับใช้ Excel percent format '0%'],light/operational
 10_1016_j_heliyon_2024_e25352_Sample1,"N2 glovebox, AM1.5G 1-sun illumination",N,25,,144.0,,,,,25.0,,,,,,,,,,,,light/operational
-10_1016_j_heliyon_2024_e25352_Sample3,"N2 glovebox, AM1.5G 1-sun illumination",N,25,,144.0,0.8,,,,25.0,,,,,,,,,80.0,,สเกล: x100 [อนุมาน -- ต้นฉบับพิมพ์ค่าดิบไว้ ไม่ได้จัดรูปแบบ percent ต้องเช็ค paper],light/operational
+10_1016_j_heliyon_2024_e25352_Sample3,"N2 glovebox, AM1.5G 1-sun illumination",N,25,,144.0,0.8,,,,25.0,,,,,,,,,80.0,,สเกล: x100 [ยืนยันจากเปเปอร์: CsI-modified retaining 80% of its opening PCE after 144 h],light/operational
 10_1016_j_solener_2025_113286_Sample1,Ambient,N,RT,35,1000.0,< 55,,,,25.0,RT (room temperature) -> 25 C [assumption: CONFIG],35.0,35.0,35.0,,,,,55.0,<,ค่า censored: รู้แค่ว่า ต่ำกว่า 55 — ห้ามใช้เป็นค่าจริงโดยไม่ดูธง censor,ambient air
 10_1016_j_solener_2025_113286_Sample2,Ambient,N,RT,35,1000.0,80,,,,25.0,RT (room temperature) -> 25 C [assumption: CONFIG],35.0,35.0,35.0,,,,,80.0,,,ambient air
 10_1021_acsami_4c14300_Sample1,N2,N,,,1200.0,55,,,,,,,,,,,,,55.0,,,inert (N2)

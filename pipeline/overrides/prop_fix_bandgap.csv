@@ -1,0 +1,4 @@
+device_id,property,ค่าที่ถูก,note
+10.1002admi.202500231_Sample2,PSK optical band gap,1.605,recheck §8.8: ค่าเดิมเป็น PL peak แก้เป็น Tauc Eg จาก SI Figure S10b
+10.1002admi.202500231_Sample3,PSK optical band gap,1.615,recheck §8.8: ค่าเดิมเป็น PL peak แก้เป็น Tauc Eg จาก SI Figure S10b
+10.1002admi.202500231_Sample4,PSK optical band gap,1.616,recheck §8.8: ค่าเดิมเป็น PL peak แก้เป็น Tauc Eg จาก SI Figure S10b

@@ -1,4 +1,84 @@
 device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thickness_nm_min,thickness_nm_max,thickness_nm_note,material_family
+10.1002_advs.202309111_Sample1,1,Anode,FTO,,,,,,TCO
+10.1002_advs.202309111_Sample1,2,HTL,NiOx,,,,,,NiOx
+10.1002_advs.202309111_Sample1,3,HTL treatment,,,,,,,
+10.1002_advs.202309111_Sample1,4,PSK,Cs0.05MA0.05FA0.9PbI3,,,,,,
+10.1002_advs.202309111_Sample1,5,PSK treatment,,,,,,,
+10.1002_advs.202309111_Sample1,6,ETL,PCBM,,,,,,PCBM
+10.1002_advs.202309111_Sample1,7,ETL treatment,BCP,,,,,,BCP
+10.1002_advs.202309111_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1002_advs.202309111_Sample2,1,Anode,FTO,,,,,,TCO
+10.1002_advs.202309111_Sample2,2,HTL,NiOx,,,,,,NiOx
+10.1002_advs.202309111_Sample2,3,HTL treatment,KBH4,,,,,,
+10.1002_advs.202309111_Sample2,4,PSK,Cs0.05MA0.05FA0.9PbI3,,,,,,
+10.1002_advs.202309111_Sample2,5,PSK treatment,,,,,,,
+10.1002_advs.202309111_Sample2,6,ETL,PCBM,,,,,,PCBM
+10.1002_advs.202309111_Sample2,7,ETL treatment,BCP,,,,,,BCP
+10.1002_advs.202309111_Sample2,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1002_smtd.202200787_Sample1,1,Anode,ITO,,,,,,TCO
+10.1002_smtd.202200787_Sample1,2,HTL,NiOx,,,,,,NiOx
+10.1002_smtd.202200787_Sample1,3,HTL treatment,,,,,,,
+10.1002_smtd.202200787_Sample1,4,PSK,Cs0.05(MA0.15FA0.85)0.95Pb(I0.85Br0.15)3,,,,,,
+10.1002_smtd.202200787_Sample1,5,PSK treatment,,,,,,,
+10.1002_smtd.202200787_Sample1,6,ETL,PCBM,,,,,,PCBM
+10.1002_smtd.202200787_Sample1,7,ETL treatment,Zr(acac)4,,,,,,
+10.1002_smtd.202200787_Sample1,8,Cathode,Ag,120.0,120.0,120.0,120.0,,Metal electrode
+10.1002_smtd.202200787_Sample2,1,Anode,ITO,,,,,,TCO
+10.1002_smtd.202200787_Sample2,2,HTL,NiOx,,,,,,NiOx
+10.1002_smtd.202200787_Sample2,3,HTL treatment,ABABr,10.15,10.15,10.15,10.15,,
+10.1002_smtd.202200787_Sample2,4,PSK,Cs0.05(MA0.15FA0.85)0.95Pb(I0.85Br0.15)3,,,,,,
+10.1002_smtd.202200787_Sample2,5,PSK treatment,,,,,,,
+10.1002_smtd.202200787_Sample2,6,ETL,PCBM,,,,,,PCBM
+10.1002_smtd.202200787_Sample2,7,ETL treatment,Zr(acac)4,,,,,,
+10.1002_smtd.202200787_Sample2,8,Cathode,Ag,120.0,120.0,120.0,120.0,,Metal electrode
+10.1002_smtd.202300241_Sample1,1,Anode,ITO,,,,,,TCO
+10.1002_smtd.202300241_Sample1,2,HTL,NiOx,,,,,,NiOx
+10.1002_smtd.202300241_Sample1,3,HTL treatment,,,,,,,
+10.1002_smtd.202300241_Sample1,4,PSK,Cs0.05FA0.85MA0.1PbI3,,,,,,
+10.1002_smtd.202300241_Sample1,5,PSK treatment,,,,,,,
+10.1002_smtd.202300241_Sample1,6,ETL,C60,40.0,40.0,40.0,40.0,,C60
+10.1002_smtd.202300241_Sample1,7,ETL treatment,BCP,8.0,8.0,8.0,8.0,,BCP
+10.1002_smtd.202300241_Sample1,8,Cathode,Cu,100.0,100.0,100.0,100.0,,Metal electrode
+10.1002_smtd.202300241_Sample2,1,Anode,ITO,,,,,,TCO
+10.1002_smtd.202300241_Sample2,2,HTL,NiOx,,,,,,NiOx
+10.1002_smtd.202300241_Sample2,3,HTL treatment,p-F-PEAI,,,,,,Amine passivation
+10.1002_smtd.202300241_Sample2,4,PSK,Cs0.05FA0.85MA0.1PbI3,,,,,,
+10.1002_smtd.202300241_Sample2,5,PSK treatment,,,,,,,
+10.1002_smtd.202300241_Sample2,6,ETL,C60,40.0,40.0,40.0,40.0,,C60
+10.1002_smtd.202300241_Sample2,7,ETL treatment,BCP,8.0,8.0,8.0,8.0,,BCP
+10.1002_smtd.202300241_Sample2,8,Cathode,Cu,100.0,100.0,100.0,100.0,,Metal electrode
+10.1002_solr.202400534_Sample1,1,Anode,ITO,,,,,,TCO
+10.1002_solr.202400534_Sample1,2,HTL,NiOx,,,,,,NiOx
+10.1002_solr.202400534_Sample1,3,HTL treatment,Me-2PACz,,,,,,SAM (xPACz)
+10.1002_solr.202400534_Sample1,4,PSK,Cs0.08MA0.14FA1.3Pb1.6I(with MACl 0.3M additive),,,,,,
+10.1002_solr.202400534_Sample1,5,PSK treatment,PEAI,,,,,,Amine passivation
+10.1002_solr.202400534_Sample1,6,ETL,C60/PCBM,40.0,40.0,40.0,40.0,,C60
+10.1002_solr.202400534_Sample1,7,ETL treatment,BCP,9.0,9.0,9.0,9.0,,BCP
+10.1002_solr.202400534_Sample1,8,Cathode,Cu,120.0,120.0,120.0,120.0,,Metal electrode
+10.1002_solr.202400534_Sample2,1,Anode,ITO,,,,,,TCO
+10.1002_solr.202400534_Sample2,2,HTL,NiOx,,,,,,NiOx
+10.1002_solr.202400534_Sample2,3,HTL treatment,Me-2PACz,,,,,,SAM (xPACz)
+10.1002_solr.202400534_Sample2,4,PSK,Cs0.08MA0.14FA1.3Pb1.6I(with MACl 0.3M additive) + TFMBAFa,,,,,,
+10.1002_solr.202400534_Sample2,5,PSK treatment,PEAI,,,,,,Amine passivation
+10.1002_solr.202400534_Sample2,6,ETL,C60/PCBM,40.0,40.0,40.0,40.0,,C60
+10.1002_solr.202400534_Sample2,7,ETL treatment,BCP,9.0,9.0,9.0,9.0,,BCP
+10.1002_solr.202400534_Sample2,8,Cathode,Cu,120.0,120.0,120.0,120.0,,Metal electrode
+10.1002_solr.202500173_Sample1,1,Anode,ITO,,,,,,TCO
+10.1002_solr.202500173_Sample1,2,HTL,NiOx,26.0,26.0,26.0,26.0,,NiOx
+10.1002_solr.202500173_Sample1,3,HTL treatment,Me-4PACz,,,,,,SAM (xPACz)
+10.1002_solr.202500173_Sample1,4,PSK,Cs0.1FA0.65MA0.25Pb(I0.8Br0.2)3,,,,,,
+10.1002_solr.202500173_Sample1,5,PSK treatment,,,,,,,
+10.1002_solr.202500173_Sample1,6,ETL,PCBM,,,,,,PCBM
+10.1002_solr.202500173_Sample1,7,ETL treatment,BCP,,,,,,BCP
+10.1002_solr.202500173_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1002_solr.202500173_Sample2,1,Anode,ITO,,,,,,TCO
+10.1002_solr.202500173_Sample2,2,HTL,NiOx,26.0,26.0,26.0,26.0,,NiOx
+10.1002_solr.202500173_Sample2,3,HTL treatment,Me-4PACz,,,,,,SAM (xPACz)
+10.1002_solr.202500173_Sample2,4,PSK,Cs0.1FA0.65MA0.25Pb(I0.8Br0.2)3 + 5C7A,,,,,,
+10.1002_solr.202500173_Sample2,5,PSK treatment,,,,,,,
+10.1002_solr.202500173_Sample2,6,ETL,PCBM,,,,,,PCBM
+10.1002_solr.202500173_Sample2,7,ETL treatment,BCP,,,,,,BCP
+10.1002_solr.202500173_Sample2,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
 10.1002admi.202500231_Sample1,1,Anode,ITO,,,,,,TCO
 10.1002admi.202500231_Sample1,2,HTL,NiOx NPs,,,,,,NiOx
 10.1002admi.202500231_Sample1,3,HTL treatment,,,,,,,
@@ -215,6 +295,22 @@ device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thicknes
 10.1016j.nanoen.2021.106285_Sample3,6,ETL,PCBM,,,,,,PCBM
 10.1016j.nanoen.2021.106285_Sample3,7,ETL treatment,BCP + SnO2,,,,,,BCP
 10.1016j.nanoen.2021.106285_Sample3,8,Cathode,Ag,200.0,200.0,200.0,200.0,,Metal electrode
+10.1021_acsaem.2c02799_Sample1,1,Anode,ITO,,,,,,TCO
+10.1021_acsaem.2c02799_Sample1,2,HTL,NiOx,,,,,,NiOx
+10.1021_acsaem.2c02799_Sample1,3,HTL treatment,,,,,,,
+10.1021_acsaem.2c02799_Sample1,4,PSK,Cs0.05MA0.1FA0.85Pb(I0.9Br0.1)3,,,,,,
+10.1021_acsaem.2c02799_Sample1,5,PSK treatment,,,,,,,
+10.1021_acsaem.2c02799_Sample1,6,ETL,C60,40.0,40.0,40.0,40.0,,C60
+10.1021_acsaem.2c02799_Sample1,7,ETL treatment,BCP,8.0,8.0,8.0,8.0,,BCP
+10.1021_acsaem.2c02799_Sample1,8,Cathode,Ag,150.0,150.0,150.0,150.0,,Metal electrode
+10.1021_acsaem.2c02799_Sample2,1,Anode,ITO,,,,,,TCO
+10.1021_acsaem.2c02799_Sample2,2,HTL,NiOx,,,,,,NiOx
+10.1021_acsaem.2c02799_Sample2,3,HTL treatment,CTBAI,,,,,,
+10.1021_acsaem.2c02799_Sample2,4,PSK,Cs0.05MA0.1FA0.85Pb(I0.9Br0.1)3,,,,,,
+10.1021_acsaem.2c02799_Sample2,5,PSK treatment,,,,,,,
+10.1021_acsaem.2c02799_Sample2,6,ETL,C60,40.0,40.0,40.0,40.0,,C60
+10.1021_acsaem.2c02799_Sample2,7,ETL treatment,BCP,8.0,8.0,8.0,8.0,,BCP
+10.1021_acsaem.2c02799_Sample2,8,Cathode,Ag,150.0,150.0,150.0,150.0,,Metal electrode
 10.1021_acsaem.2c03434_Sample1,1,Anode,FTO,,,,,,TCO
 10.1021_acsaem.2c03434_Sample1,2,HTL,Cu:NiOx,40-60,50.0,40.0,60.0,"ช่วงค่า: ใช้ค่ากลาง 50 (min=40, max=60)",NiOx
 10.1021_acsaem.2c03434_Sample1,3,HTL treatment,,,,,,,
@@ -303,6 +399,54 @@ device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thicknes
 10.1021_acsami.3c02156_Sample4,6,ETL,PCBM,,,,,,PCBM
 10.1021_acsami.3c02156_Sample4,7,ETL treatment,BCP,,,,,,BCP
 10.1021_acsami.3c02156_Sample4,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsami.4c00249_Sample1,1,Anode,FTO,,,,,,TCO
+10.1021_acsami.4c00249_Sample1,2,HTL,NiOx,25.0,25.0,25.0,25.0,,NiOx
+10.1021_acsami.4c00249_Sample1,3,HTL treatment,,,,,,,
+10.1021_acsami.4c00249_Sample1,4,PSK,Cs0.10(FA0.83MA0.17)0.90Pb(Br0.15I0.85)3,,,,,,
+10.1021_acsami.4c00249_Sample1,5,PSK treatment,,,,,,,
+10.1021_acsami.4c00249_Sample1,6,ETL,PCBM,,,,,,PCBM
+10.1021_acsami.4c00249_Sample1,7,ETL treatment,BCP,,,,,,BCP
+10.1021_acsami.4c00249_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsami.4c00249_Sample2,1,Anode,FTO,,,,,,TCO
+10.1021_acsami.4c00249_Sample2,2,HTL,NiOx,25.0,25.0,25.0,25.0,,NiOx
+10.1021_acsami.4c00249_Sample2,3,HTL treatment,,,,,,,
+10.1021_acsami.4c00249_Sample2,4,PSK,Cs0.10(FA0.83MA0.17)0.90Pb(Br0.15I0.85)3,,,,,,
+10.1021_acsami.4c00249_Sample2,5,PSK treatment,,,,,,,
+10.1021_acsami.4c00249_Sample2,6,ETL,PCBM,,,,,,PCBM
+10.1021_acsami.4c00249_Sample2,7,ETL treatment,BCP,,,,,,BCP
+10.1021_acsami.4c00249_Sample2,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsami.4c00249_Sample3,1,Anode,FTO,,,,,,TCO
+10.1021_acsami.4c00249_Sample3,2,HTL,NiOx,25.0,25.0,25.0,25.0,,NiOx
+10.1021_acsami.4c00249_Sample3,3,HTL treatment,AGN,,,,,,
+10.1021_acsami.4c00249_Sample3,4,PSK,Cs0.10(FA0.83MA0.17)0.90Pb(Br0.15I0.85)3,,,,,,
+10.1021_acsami.4c00249_Sample3,5,PSK treatment,,,,,,,
+10.1021_acsami.4c00249_Sample3,6,ETL,PCBM,,,,,,PCBM
+10.1021_acsami.4c00249_Sample3,7,ETL treatment,BCP,,,,,,BCP
+10.1021_acsami.4c00249_Sample3,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsami.5c16972_Sample1,1,Anode,ITO,,,,,,TCO
+10.1021_acsami.5c16972_Sample1,2,HTL,NiOx,20.0,20.0,20.0,20.0,,NiOx
+10.1021_acsami.5c16972_Sample1,3,HTL treatment,,,,,,,
+10.1021_acsami.5c16972_Sample1,4,PSK,(FA0.83MA0.17)0.95Cs0.05Pb(I0.9Br0.1)3,,,,,,
+10.1021_acsami.5c16972_Sample1,5,PSK treatment,,,,,,,
+10.1021_acsami.5c16972_Sample1,6,ETL,PCBM,,,,,,PCBM
+10.1021_acsami.5c16972_Sample1,7,ETL treatment,BCP,,,,,,BCP
+10.1021_acsami.5c16972_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsami.5c16972_Sample2,1,Anode,ITO,,,,,,TCO
+10.1021_acsami.5c16972_Sample2,2,HTL,NiOx,20.0,20.0,20.0,20.0,,NiOx
+10.1021_acsami.5c16972_Sample2,3,HTL treatment,Me-4PACz,,,,,,SAM (xPACz)
+10.1021_acsami.5c16972_Sample2,4,PSK,(FA0.83MA0.17)0.95Cs0.05Pb(I0.9Br0.1)3,,,,,,
+10.1021_acsami.5c16972_Sample2,5,PSK treatment,,,,,,,
+10.1021_acsami.5c16972_Sample2,6,ETL,PCBM,,,,,,PCBM
+10.1021_acsami.5c16972_Sample2,7,ETL treatment,BCP,,,,,,BCP
+10.1021_acsami.5c16972_Sample2,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsami.5c16972_Sample3,1,Anode,ITO,,,,,,TCO
+10.1021_acsami.5c16972_Sample3,2,HTL,NiOx,20.0,20.0,20.0,20.0,,NiOx
+10.1021_acsami.5c16972_Sample3,3,HTL treatment,Me-4PACz + PFPTFB,,,,,,SAM (xPACz)
+10.1021_acsami.5c16972_Sample3,4,PSK,(FA0.83MA0.17)0.95Cs0.05Pb(I0.9Br0.1)3,,,,,,
+10.1021_acsami.5c16972_Sample3,5,PSK treatment,,,,,,,
+10.1021_acsami.5c16972_Sample3,6,ETL,PCBM,,,,,,PCBM
+10.1021_acsami.5c16972_Sample3,7,ETL treatment,BCP,,,,,,BCP
+10.1021_acsami.5c16972_Sample3,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
 10.1021_acsenergylett.3c00697_Sample1,1,Anode,ITO,,,,,,TCO
 10.1021_acsenergylett.3c00697_Sample1,2,HTL,NiOx NPs / Me-4PACz,,,,,,NiOx
 10.1021_acsenergylett.3c00697_Sample1,3,HTL treatment,,,,,,,
@@ -327,6 +471,22 @@ device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thicknes
 10.1021_acsenergylett.3c00697_Sample3,6,ETL,LiF / C60 / BCP,,,,,,C60
 10.1021_acsenergylett.3c00697_Sample3,7,ETL treatment,,,,,,,
 10.1021_acsenergylett.3c00697_Sample3,8,Cathode,Cu,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsomega.1c01378_Sample1,1,Anode,FTO,,,,,,TCO
+10.1021_acsomega.1c01378_Sample1,2,HTL,NiOx (thin film),30.0,30.0,30.0,30.0,,NiOx
+10.1021_acsomega.1c01378_Sample1,3,HTL treatment,,,,,,,
+10.1021_acsomega.1c01378_Sample1,4,PSK,Cs0.05FA0.81MA0.14Pb(Br0.15I0.85)3,550.0,550.0,550.0,550.0,,
+10.1021_acsomega.1c01378_Sample1,5,PSK treatment,,,,,,,
+10.1021_acsomega.1c01378_Sample1,6,ETL,PCBM (2 wt% TBABF4),,,,,,PCBM
+10.1021_acsomega.1c01378_Sample1,7,ETL treatment,TIPD,,,,,,
+10.1021_acsomega.1c01378_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1021_acsomega.1c01378_Sample2,1,Anode,FTO,,,,,,TCO
+10.1021_acsomega.1c01378_Sample2,2,HTL,Nanoporous NiOx,100-120,110.0,100.0,120.0,"ช่วงค่า: ใช้ค่ากลาง 110 (min=100, max=120)",NiOx
+10.1021_acsomega.1c01378_Sample2,3,HTL treatment,,,,,,,
+10.1021_acsomega.1c01378_Sample2,4,PSK,Cs0.05FA0.81MA0.14Pb(Br0.15I0.85)3,550,550.0,550.0,550.0,,
+10.1021_acsomega.1c01378_Sample2,5,PSK treatment,,,,,,,
+10.1021_acsomega.1c01378_Sample2,6,ETL,PCBM (2 wt% TBABF4),,,,,,PCBM
+10.1021_acsomega.1c01378_Sample2,7,ETL treatment,TIPD,,,,,,
+10.1021_acsomega.1c01378_Sample2,8,Cathode,Ag,100,100.0,100.0,100.0,,Metal electrode
 10.1038_s41598-023-32697-z_Sample1,1,Anode,FTO,,,,,,TCO
 10.1038_s41598-023-32697-z_Sample1,2,HTL,NiOx,,,,,,NiOx
 10.1038_s41598-023-32697-z_Sample1,3,HTL treatment,,,,,,,
@@ -367,6 +527,158 @@ device_id,layer_id,layer_type,material,thickness_nm,thickness_nm_parsed,thicknes
 10.1038_s41598-023-32697-z_Sample5,6,ETL,C60,20.0,20.0,20.0,20.0,,C60
 10.1038_s41598-023-32697-z_Sample5,7,ETL treatment,BCP,5.0,5.0,5.0,5.0,,BCP
 10.1038_s41598-023-32697-z_Sample5,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d2tc04215k_Sample1,1,Anode,ITO,,,,,,TCO
+10.1039_d2tc04215k_Sample1,2,HTL,NiOx,15.0,15.0,15.0,15.0,,NiOx
+10.1039_d2tc04215k_Sample1,3,HTL treatment,,,,,,,
+10.1039_d2tc04215k_Sample1,4,PSK,Cs0.05MA0.10FA0.85Pb(I0.97Br0.03)3,,,,,,
+10.1039_d2tc04215k_Sample1,5,PSK treatment,,,,,,,
+10.1039_d2tc04215k_Sample1,6,ETL,C60,40.0,40.0,40.0,40.0,,C60
+10.1039_d2tc04215k_Sample1,7,ETL treatment,BCP,5.0,5.0,5.0,5.0,,BCP
+10.1039_d2tc04215k_Sample1,8,Cathode,Cu,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d2tc04215k_Sample2,1,Anode,ITO,,,,,,TCO
+10.1039_d2tc04215k_Sample2,2,HTL,NiOx,15.0,15.0,15.0,15.0,,NiOx
+10.1039_d2tc04215k_Sample2,3,HTL treatment,Cz,,,,,,
+10.1039_d2tc04215k_Sample2,4,PSK,Cs0.05MA0.10FA0.85Pb(I0.97Br0.03)3,,,,,,
+10.1039_d2tc04215k_Sample2,5,PSK treatment,,,,,,,
+10.1039_d2tc04215k_Sample2,6,ETL,C60,40.0,40.0,40.0,40.0,,C60
+10.1039_d2tc04215k_Sample2,7,ETL treatment,BCP,5.0,5.0,5.0,5.0,,BCP
+10.1039_d2tc04215k_Sample2,8,Cathode,Cu,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d2tc04215k_Sample3,1,Anode,ITO,,,,,,TCO
+10.1039_d2tc04215k_Sample3,2,HTL,NiOx,15.0,15.0,15.0,15.0,,NiOx
+10.1039_d2tc04215k_Sample3,3,HTL treatment,BTBT,,,,,,
+10.1039_d2tc04215k_Sample3,4,PSK,Cs0.05MA0.10FA0.85Pb(I0.97Br0.03)3,,,,,,
+10.1039_d2tc04215k_Sample3,5,PSK treatment,,,,,,,
+10.1039_d2tc04215k_Sample3,6,ETL,C60,40.0,40.0,40.0,40.0,,C60
+10.1039_d2tc04215k_Sample3,7,ETL treatment,BCP,5.0,5.0,5.0,5.0,,BCP
+10.1039_d2tc04215k_Sample3,8,Cathode,Cu,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d3ta05069f_Sample1,1,Anode,ITO,,,,,,TCO
+10.1039_d3ta05069f_Sample1,2,HTL,NiOx,,,,,,NiOx
+10.1039_d3ta05069f_Sample1,3,HTL treatment,,,,,,,
+10.1039_d3ta05069f_Sample1,4,PSK,Cs0.05(FA0.98MA0.02)0.95Pb(I0.98Br0.02)3,700.0,700.0,700.0,700.0,,
+10.1039_d3ta05069f_Sample1,5,PSK treatment,,,,,,,
+10.1039_d3ta05069f_Sample1,6,ETL,PC60BM,,,,,,PCBM
+10.1039_d3ta05069f_Sample1,7,ETL treatment,BCP,6.0,6.0,6.0,6.0,,BCP
+10.1039_d3ta05069f_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d3ta05069f_Sample2,1,Anode,ITO,,,,,,TCO
+10.1039_d3ta05069f_Sample2,2,HTL,NiOx,,,,,,NiOx
+10.1039_d3ta05069f_Sample2,3,HTL treatment,2-IBA,,,,,,
+10.1039_d3ta05069f_Sample2,4,PSK,Cs0.05(FA0.98MA0.02)0.95Pb(I0.98Br0.02)3,700.0,700.0,700.0,700.0,,
+10.1039_d3ta05069f_Sample2,5,PSK treatment,,,,,,,
+10.1039_d3ta05069f_Sample2,6,ETL,PC60BM,,,,,,PCBM
+10.1039_d3ta05069f_Sample2,7,ETL treatment,BCP,6.0,6.0,6.0,6.0,,BCP
+10.1039_d3ta05069f_Sample2,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d3ta05069f_Sample3,1,Anode,ITO,,,,,,TCO
+10.1039_d3ta05069f_Sample3,2,HTL,NiOx,,,,,,NiOx
+10.1039_d3ta05069f_Sample3,3,HTL treatment,2-IBSA,,,,,,
+10.1039_d3ta05069f_Sample3,4,PSK,Cs0.05(FA0.98MA0.02)0.95Pb(I0.98Br0.02)3,700.0,700.0,700.0,700.0,,
+10.1039_d3ta05069f_Sample3,5,PSK treatment,,,,,,,
+10.1039_d3ta05069f_Sample3,6,ETL,PC60BM,,,,,,PCBM
+10.1039_d3ta05069f_Sample3,7,ETL treatment,BCP,6.0,6.0,6.0,6.0,,BCP
+10.1039_d3ta05069f_Sample3,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d3ta05069f_Sample4,1,Anode,ITO,,,,,,TCO
+10.1039_d3ta05069f_Sample4,2,HTL,NiOx,,,,,,NiOx
+10.1039_d3ta05069f_Sample4,3,HTL treatment,2-IPBA,,,,,,
+10.1039_d3ta05069f_Sample4,4,PSK,Cs0.05(FA0.98MA0.02)0.95Pb(I0.98Br0.02)3,700.0,700.0,700.0,700.0,,
+10.1039_d3ta05069f_Sample4,5,PSK treatment,,,,,,,
+10.1039_d3ta05069f_Sample4,6,ETL,PC60BM,,,,,,PCBM
+10.1039_d3ta05069f_Sample4,7,ETL treatment,BCP,6.0,6.0,6.0,6.0,,BCP
+10.1039_d3ta05069f_Sample4,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d3ta05069f_Sample5,1,Anode,ITO,,,,,,TCO
+10.1039_d3ta05069f_Sample5,2,HTL,NiOx,,,,,,NiOx
+10.1039_d3ta05069f_Sample5,3,HTL treatment,4-IPBA,,,,,,
+10.1039_d3ta05069f_Sample5,4,PSK,Cs0.05(FA0.98MA0.02)0.95Pb(I0.98Br0.02)3,700.0,700.0,700.0,700.0,,
+10.1039_d3ta05069f_Sample5,5,PSK treatment,,,,,,,
+10.1039_d3ta05069f_Sample5,6,ETL,PC60BM,,,,,,PCBM
+10.1039_d3ta05069f_Sample5,7,ETL treatment,BCP,6.0,6.0,6.0,6.0,,BCP
+10.1039_d3ta05069f_Sample5,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d5ya00072f_Sample1,1,Anode,ITO,,,,,,TCO
+10.1039_d5ya00072f_Sample1,2,HTL,NiOx,24.0,24.0,24.0,24.0,,NiOx
+10.1039_d5ya00072f_Sample1,3,HTL treatment,,,,,,,
+10.1039_d5ya00072f_Sample1,4,PSK,CsFAMAPb(IBrCl)3,450.0,450.0,450.0,450.0,,
+10.1039_d5ya00072f_Sample1,5,PSK treatment,,,,,,,
+10.1039_d5ya00072f_Sample1,6,ETL,PCBM,40.0,40.0,40.0,40.0,,PCBM
+10.1039_d5ya00072f_Sample1,7,ETL treatment,ZnO,5.0,5.0,5.0,5.0,,
+10.1039_d5ya00072f_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d5ya00072f_Sample2,1,Anode,ITO,,,,,,TCO
+10.1039_d5ya00072f_Sample2,2,HTL,Li:NiOx (2%),24.0,24.0,24.0,24.0,,NiOx
+10.1039_d5ya00072f_Sample2,3,HTL treatment,,,,,,,
+10.1039_d5ya00072f_Sample2,4,PSK,CsFAMAPb(IBrCl)3,450.0,450.0,450.0,450.0,,
+10.1039_d5ya00072f_Sample2,5,PSK treatment,,,,,,,
+10.1039_d5ya00072f_Sample2,6,ETL,PCBM,40.0,40.0,40.0,40.0,,PCBM
+10.1039_d5ya00072f_Sample2,7,ETL treatment,ZnO,5.0,5.0,5.0,5.0,,
+10.1039_d5ya00072f_Sample2,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d5ya00072f_Sample3,1,Anode,ITO,,,,,,TCO
+10.1039_d5ya00072f_Sample3,2,HTL,Li:NiOx (4%),24.0,24.0,24.0,24.0,,NiOx
+10.1039_d5ya00072f_Sample3,3,HTL treatment,,,,,,,
+10.1039_d5ya00072f_Sample3,4,PSK,CsFAMAPb(IBrCl)3,450.0,450.0,450.0,450.0,,
+10.1039_d5ya00072f_Sample3,5,PSK treatment,,,,,,,
+10.1039_d5ya00072f_Sample3,6,ETL,PCBM,40.0,40.0,40.0,40.0,,PCBM
+10.1039_d5ya00072f_Sample3,7,ETL treatment,ZnO,5.0,5.0,5.0,5.0,,
+10.1039_d5ya00072f_Sample3,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d5ya00072f_Sample4,1,Anode,ITO,,,,,,TCO
+10.1039_d5ya00072f_Sample4,2,HTL,Li:NiOx (6%),24.0,24.0,24.0,24.0,,NiOx
+10.1039_d5ya00072f_Sample4,3,HTL treatment,,,,,,,
+10.1039_d5ya00072f_Sample4,4,PSK,CsFAMAPb(IBrCl)3,450.0,450.0,450.0,450.0,,
+10.1039_d5ya00072f_Sample4,5,PSK treatment,,,,,,,
+10.1039_d5ya00072f_Sample4,6,ETL,PCBM,40.0,40.0,40.0,40.0,,PCBM
+10.1039_d5ya00072f_Sample4,7,ETL treatment,ZnO,5.0,5.0,5.0,5.0,,
+10.1039_d5ya00072f_Sample4,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d5ya00072f_Sample5,1,Anode,ITO,,,,,,TCO
+10.1039_d5ya00072f_Sample5,2,HTL,Li:NiOx (8%),24.0,24.0,24.0,24.0,,NiOx
+10.1039_d5ya00072f_Sample5,3,HTL treatment,,,,,,,
+10.1039_d5ya00072f_Sample5,4,PSK,CsFAMAPb(IBrCl)3,450.0,450.0,450.0,450.0,,
+10.1039_d5ya00072f_Sample5,5,PSK treatment,,,,,,,
+10.1039_d5ya00072f_Sample5,6,ETL,PCBM,40.0,40.0,40.0,40.0,,PCBM
+10.1039_d5ya00072f_Sample5,7,ETL treatment,ZnO,5.0,5.0,5.0,5.0,,
+10.1039_d5ya00072f_Sample5,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.1039_d5ya00072f_Sample6,1,Anode,ITO,,,,,,TCO
+10.1039_d5ya00072f_Sample6,2,HTL,Li:NiOx (10%),24.0,24.0,24.0,24.0,,NiOx
+10.1039_d5ya00072f_Sample6,3,HTL treatment,,,,,,,
+10.1039_d5ya00072f_Sample6,4,PSK,CsFAMAPb(IBrCl)3,450.0,450.0,450.0,450.0,,
+10.1039_d5ya00072f_Sample6,5,PSK treatment,,,,,,,
+10.1039_d5ya00072f_Sample6,6,ETL,PCBM,40.0,40.0,40.0,40.0,,PCBM
+10.1039_d5ya00072f_Sample6,7,ETL treatment,ZnO,5.0,5.0,5.0,5.0,,
+10.1039_d5ya00072f_Sample6,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.26599_NRE.2025.9120172_Sample1,1,Anode,FTO,,,,,,TCO
+10.26599_NRE.2025.9120172_Sample1,2,HTL,NiOx,,,,,,NiOx
+10.26599_NRE.2025.9120172_Sample1,3,HTL treatment,VNPB,,,,,,
+10.26599_NRE.2025.9120172_Sample1,4,PSK,Cs0.25MA0.03FA0.72PbI2.73Br0.27 + 10% MACl + 10% PbCl2,,,,,,PbI2
+10.26599_NRE.2025.9120172_Sample1,5,PSK treatment,,,,,,,
+10.26599_NRE.2025.9120172_Sample1,6,ETL,PC61BM,,,,,,PCBM
+10.26599_NRE.2025.9120172_Sample1,7,ETL treatment,BCP,,,,,,BCP
+10.26599_NRE.2025.9120172_Sample1,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.26599_NRE.2025.9120172_Sample2,1,Anode,FTO,,,,,,TCO
+10.26599_NRE.2025.9120172_Sample2,2,HTL,NiOx,,,,,,NiOx
+10.26599_NRE.2025.9120172_Sample2,3,HTL treatment,VNPB,,,,,,
+10.26599_NRE.2025.9120172_Sample2,4,PSK,Cs0.25MA0.03FA0.72PbI2.73Br0.27 + 10% MACl + 10% PbCl2 + 10% CsCl,,,,,,PbI2
+10.26599_NRE.2025.9120172_Sample2,5,PSK treatment,,,,,,,
+10.26599_NRE.2025.9120172_Sample2,6,ETL,PC61BM,,,,,,PCBM
+10.26599_NRE.2025.9120172_Sample2,7,ETL treatment,BCP,,,,,,BCP
+10.26599_NRE.2025.9120172_Sample2,8,Cathode,Ag,100.0,100.0,100.0,100.0,,Metal electrode
+10.3390_nano11113074_Sample1,1,Anode,ITO,,,,,,TCO
+10.3390_nano11113074_Sample1,2,HTL,Cu:NiOx,50.0,50.0,50.0,50.0,,NiOx
+10.3390_nano11113074_Sample1,3,HTL treatment,,,,,,,
+10.3390_nano11113074_Sample1,4,PSK,Cs0.04(MA0.17FA0.83)0.96Pb(I0.83Br0.17)3,,,,,,
+10.3390_nano11113074_Sample1,5,PSK treatment,,,,,,,
+10.3390_nano11113074_Sample1,6,ETL,PC60BM,,,,,,PCBM
+10.3390_nano11113074_Sample1,7,ETL treatment,BCP,7.0,7.0,7.0,7.0,,BCP
+10.3390_nano11113074_Sample1,8,Cathode,Ag,80.0,80.0,80.0,80.0,,Metal electrode
+10.3390_nano11113074_Sample2,1,Anode,ITO,,,,,,TCO
+10.3390_nano11113074_Sample2,2,HTL,Cu:NiOx,50.0,50.0,50.0,50.0,,NiOx
+10.3390_nano11113074_Sample2,3,HTL treatment,,,,,,,
+10.3390_nano11113074_Sample2,4,PSK,Cs0.04(MA0.17FA0.83)0.96Pb(I0.83Br0.17)3,,,,,,
+10.3390_nano11113074_Sample2,5,PSK treatment,,,,,,,
+10.3390_nano11113074_Sample2,6,ETL,PC60BM,,,,,,PCBM
+10.3390_nano11113074_Sample2,7,ETL treatment,BCP,7.0,7.0,7.0,7.0,,BCP
+10.3390_nano11113074_Sample2,8,Cathode,Ag,80.0,80.0,80.0,80.0,,Metal electrode
+10.3390_nano11113074_Sample3,1,Anode,ITO,,,,,,TCO
+10.3390_nano11113074_Sample3,2,HTL,Cu:NiOx,50.0,50.0,50.0,50.0,,NiOx
+10.3390_nano11113074_Sample3,3,HTL treatment,,,,,,,
+10.3390_nano11113074_Sample3,4,PSK,Cs0.04(MA0.17FA0.83)0.96Pb(I0.83Br0.17)3,,,,,,
+10.3390_nano11113074_Sample3,5,PSK treatment,,,,,,,
+10.3390_nano11113074_Sample3,6,ETL,PC60BM,,,,,,PCBM
+10.3390_nano11113074_Sample3,7,ETL treatment,BCP,7.0,7.0,7.0,7.0,,BCP
+10.3390_nano11113074_Sample3,8,Cathode,Ag,80.0,80.0,80.0,80.0,,Metal electrode
 10_1002_adfm_202102452_Sample1,1,Anode,ITO,,,,,,TCO
 10_1002_adfm_202102452_Sample1,2,HTL,NiOx,25.0,25.0,25.0,25.0,,NiOx
 10_1002_adfm_202102452_Sample1,3,HTL treatment,,,,,,,
