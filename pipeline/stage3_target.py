@@ -24,6 +24,18 @@ from .paths import Paths
 
 MAIN_IDS = {1, 2, 4, 6, 8}
 COATING_IDS = {3, 5, 7}
+
+# ปีตีพิมพ์ -- confounder ที่ใหญ่ที่สุดของข้อมูลวรรณกรรม (PCE ที่รายงานสูงขึ้นทุกปี
+# วัสดุที่เพิ่งนิยมจะดูดีกว่าเพราะความใหม่ ไม่ใช่เพราะตัวมัน) ต้องมีคอลัมน์นี้ถึงจะคุมได้
+_YEAR_4 = re.compile(r"(?:19|20)\d{2}")
+_YEAR_ACS = re.compile(r"[._-](\d)c\d{5}", re.I)          # acsami.4c00249  -> 2024
+_YEAR_RSC = re.compile(r"[._-]d(\d)[a-z]{2}\d{5}", re.I)  # d3ta05069f      -> 2023
+_YEAR_SPRINGER = re.compile(r"s\d{5}-(\d{3})-")           # s41598-023-32697 -> 2023
+
+# ตระกูลการทดสอบเสถียรภาพ -- เทียบ retention ข้ามตระกูลไม่ได้ (ISOS)
+# เก็บในที่มืดกับวัดใต้แสงคือความเครียดคนละชนิด เรียงจากเฉพาะไปกว้าง
+_STAB_LIGHT = re.compile(r"mpp|mppt|illuminat|1\s*sun|am1\.5|isos-l|operational|outdoor", re.I)
+_STAB_INERT = re.compile(r"n2|nitrogen|glovebox|argon|desiccator", re.I)
 MOD_KIND = {3: "htl_mod_kind", 5: "psk_mod_kind"}
 COAT_MAP = {3: "coat_htl", 5: "coat_psk", 7: "coat_etl"}
 
@@ -358,6 +370,11 @@ def run(paths: Paths, gate: GateReport) -> dict:
                                         degradation_rate=("degradation_rate", "min")))
     gate.note(f"§7 Y {Y.shape} | retention @25C {len(stab_Y)} devices")
 
+    # §7.y เสถียรภาพแยกตามตระกูลการทดสอบ
+    # retention_25c ข้างบนคือค่าสูงสุดข้ามทุกสภาพทดสอบ ใช้เทียบข้ามเครื่องไม่ได้
+    # เพราะเครื่องหนึ่งอาจได้ค่าจากการเก็บในที่มืด อีกเครื่องจากการวัดใต้แสง
+    stab_Y = stab_Y.join(_stability_by_family(stab, gate))
+
     # ------------------------------------------------- §8.5 องค์ประกอบ PSK
     psk_composition, comp_dev, jm = _build_composition(tp, lay, gate)
 
@@ -414,8 +431,11 @@ def run(paths: Paths, gate: GateReport) -> dict:
     # ---------------------------------------------------------------- §9 ฝั่ง X
     X_dev = _build_X(pr_out, device_layer_flags, gate)
 
+    year_dev = _paper_year_col(tp["devices"], paths, gate)
+
     target_table = (device_layer_flags.set_index("device_id")
-                    .join(Y).join(stab_Y).join(X_dev).join(comp_dev).join(arch_dev))
+                    .join(Y).join(stab_Y).join(X_dev).join(comp_dev).join(arch_dev)
+                    .join(year_dev))
     gate.require(len(target_table) == N_DEV and target_table.index.is_unique,
                  "target-shape",
                  f"target_table ต้อง {N_DEV} แถว unique (ได้ {len(target_table)})")
@@ -435,6 +455,75 @@ def run(paths: Paths, gate: GateReport) -> dict:
 
 # ===========================================================================
 # §7 -- ฝั่ง Y
+
+def _doi_year(doi_raw: str) -> float:
+    """ปีตีพิมพ์จากรูปของ DOI
+
+    ลองสี่กติกาตามลำดับ: เลขปีสี่หลักในตัว DOI, รหัสปีหลักเดียวของ ACS,
+    รหัส dN ของ RSC, และรหัสปีของ Springer ถ้าไม่เข้าเลยคืน NaN
+    แล้วไปรับค่าจาก overrides/paper_year.csv
+    """
+    s = str(doi_raw)
+    m = _YEAR_4.search(s)
+    if m and 2005 <= int(m.group()) <= 2030:
+        return float(m.group())
+    for pat in (_YEAR_ACS, _YEAR_RSC):
+        m = pat.search(s)
+        if m:
+            return float(2020 + int(m.group(1)))
+    m = _YEAR_SPRINGER.search(s)
+    if m:
+        return float(2000 + int(m.group(1)))
+    return np.nan
+
+
+def _paper_year_col(devices: pd.DataFrame, paths: Paths, gate: GateReport) -> pd.DataFrame:
+    d = devices[["device_id", "doi_raw"]].drop_duplicates("device_id").copy()
+    d["year"] = d["doi_raw"].map(_doi_year)
+
+    ov = OV.paper_year(paths)
+    if not ov.empty:
+        fill = d["doi_raw"].map(ov.set_index("doi_raw")["year"])
+        d["year"] = d["year"].fillna(fill)
+
+    miss = d.loc[d["year"].isna(), "doi_raw"].drop_duplicates()
+    if len(miss):
+        gate.review("paper-year-missing",
+                    f"อ่านปีจาก DOI ไม่ได้ {len(miss)} เปเปอร์ -- เติมใน "
+                    f"overrides/paper_year.csv ไม่งั้นคุมผลของปีไม่ได้",
+                    miss.to_frame())
+    gate.note(f"§9 year {int(d['year'].notna().sum())}/{len(d)} devices | "
+              f"{d['year'].min():.0f}-{d['year'].max():.0f}")
+    return d.set_index("device_id")[["year"]]
+
+
+def _stability_by_family(stab: pd.DataFrame, gate: GateReport) -> pd.DataFrame:
+    """retention ที่ ~25C แยกตามตระกูลการทดสอบ พร้อมชั่วโมงของการทดสอบนั้น
+
+    เทียบ retention ข้ามตระกูลไม่ได้ และค่าที่ชั่วโมงต่างกันก็เทียบกันไม่ได้
+    จึงเก็บชั่วโมงคู่กันไว้ทุกตระกูล ถ้าตระกูลเดียวมีหลายแถว ใช้แถวที่ทดสอบนานสุด
+    """
+    s = stab[stab["temp_bin"] == "~25C"].copy()
+    env = s["environment"].astype(str)
+    s["family"] = np.select(
+        [env.str.contains(_STAB_LIGHT), env.str.contains(_STAB_INERT)],
+        ["light_mpp", "dark_inert"], default="dark_ambient")
+    # retention > 100 = เครื่องไม่เสื่อมเลย เป็นค่า censored ห้ามเอาไปเฉลี่ยเป็นค่าจริง
+    s["censored_100"] = s["ret"] >= 100
+
+    out = []
+    for fam, g in s.groupby("family"):
+        g = g.sort_values("t_hr", ascending=False).drop_duplicates("device_id")
+        out.append(g.set_index("device_id")[["ret", "t_hr", "censored_100"]]
+                    .rename(columns={"ret": f"retention_{fam}",
+                                     "t_hr": f"retention_{fam}_hr",
+                                     "censored_100": f"retention_{fam}_censored"}))
+    fam_wide = pd.concat(out, axis=1) if out else pd.DataFrame()
+    n_fam = s.groupby("device_id")["family"].nunique().rename("retention_n_family")
+    gate.note("§7 retention by family " + " ".join(
+        f"{k}={int(v)}" for k, v in s.groupby("family")["device_id"].nunique().items()))
+    return fam_wide.join(n_fam)
+
 
 def _build_Y(tp: dict, gate: GateReport):
     prop = tp["properties"].dropna(subset=["value_parsed"]).copy()

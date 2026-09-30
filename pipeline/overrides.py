@@ -24,6 +24,16 @@ def _read(paths: Paths, name: str) -> pd.DataFrame:
     return df.dropna(how="all")
 
 
+def paper_year(paths: Paths) -> pd.DataFrame:
+    """doi_raw -> year สำหรับเปเปอร์ที่อ่านปีจากรูป DOI ไม่ได้"""
+    df = _read(paths, "paper_year.csv")
+    if not df.empty:
+        df["doi_raw"] = df["doi_raw"].astype(str).str.strip()
+        df["year"] = pd.to_numeric(df["year"], errors="coerce")
+        df = df.dropna(subset=["year"])
+    return df
+
+
 def param_fix(paths: Paths) -> pd.DataFrame:
     """(device_id, layer_id, ค่าดิบ) -> ค่าที่ถูก"""
     df = _read(paths, "param_fix.csv")
