@@ -1,0 +1,28 @@
+# plan.py run AC-5
+# command: python .claude/skills/project-cli/datactl.py csv processed/prepared_v2/target_table.csv --values htl_mod_kind && ! python .claude/skills/project-cli/datactl.py csv processed/prepared_v2/target_table.csv --values htl_dose && python .claude/skills/project-cli/datactl.py xlsx "Raw Data" --sheet Stability
+# cwd: D:\University\Year 4 Semester 1 (Intern)\Perovskites-Research
+# started: 2026-10-20T14:00:22+00:00
+# duration_s: 1.5
+# git: 507b203 (dirty)
+# exit: 0
+----- stdout -----
+processed\prepared_v2\target_table.csv: 134 rows x 63 columns
+htl_mod_kind: 3 distinct
+      71  coating
+      59  <empty>
+       4  additive
+processed\prepared_v2\target_table.csv: 134 rows x 63 columns
+no column 'htl_dose'; similar: htl_mod_kind, htl_anneal_C
+Raw Data: 134 workbook(s)
+
+[Stability] in 134 workbook(s), 134 data rows
+    66 x Environment | Encapsulation | Temperature (°C) | Humidity (%) | Time (hr) | Retention (%)
+    52 x Environment | Encapsulation | Temperature (°C) | Humidity (%) | Time (hr) | Retention (%) | T80 (hr)
+     4 x Environment | Encapsulation | temperature (celsius) | relative humidity (%) | time (hr) | Normalize PCE (%) | Initial PCE (%) | Final PCE (%)
+     4 x Environment | Encapsulation | temperature (C) | humidity (%) | time (hr) | Retention (%)
+     4 x Environment | Encapsulation | Temperature (°C) | humidity (%) | time (hr) | Retention (%)
+     2 x Environment | Encapsulation | temperature (celsius) | relative humidity (%) | time (hr) | Normalize PCE (%)
+     1 x Environment | Encapsulation | temperature (C) | humidity (%) | time (hr) | Normalize PCE (%)
+     1 x Environment | Encapsulation | temperature (celsius) | relative humidity (%) | time (hr) | Final normalize PCE (%)
+
+----- stderr -----

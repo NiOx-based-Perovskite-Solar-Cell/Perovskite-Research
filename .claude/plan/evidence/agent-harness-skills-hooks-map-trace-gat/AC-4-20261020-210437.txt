@@ -1,0 +1,74 @@
+# plan.py run AC-4
+# command: (cd "agent for research" && PYTHONPATH=src python -m unittest discover -s tests) && PYTHONPATH="agent for research/src" PYTHONIOENCODING=utf-8 python -m psc_recheck pairs --raw "Raw Data" --pdf "original paper" && python .claude/skills/trace-to-skill/tracelog.py digest > /dev/null && echo "verified commands: all exit 0"
+# cwd: D:\University\Year 4 Semester 1 (Intern)\Perovskites-Research
+# started: 2026-10-20T14:04:42+00:00
+# duration_s: 4.9
+# git: 507b203 (dirty)
+# tree: a70346fafa2e
+# exit: 0
+----- stdout -----
+101002adfm202102452                4 workbook(s)  43 Adv Funct Materials - 2021 - Bao - Samarium‐Doped Nickel Oxide for Superior Inverted Perovskite Solar Cells  Insight into.pdf
+101002adfm202214774                2 workbook(s)  44 Adv Funct Materials - 2023 - Li - Efficient Inverted Perovskite Solar Cells with a Fill Factor Over 86 via Surface.pdf
+101002adma202507730                5 workbook(s)  2 Advanced Materials - 2025 - Wang - Covalent Tridentate Molecule Anchoring Enhances Nickel Oxide for Efficient Perovskite.pdf  (ignored duplicate: 4 Covalent Tridentate Molecule Anchoring Enhances Nickel Oxide for Efficient Perovskite Solar Cells.pdf)
+101002admi202500231                4 workbook(s)  10.1002admi.202500231.pdf
+101002advs202309111                2 workbook(s)  46 Advanced Science - 2024 - Liu - Synergistic Redox Modulation for High‐Performance Nickel Oxide‐Based Inverted Perovskite-1.pdf
+101002aenm202405016                3 workbook(s)  45 Advanced Energy Materials - 2024 - Feng - Doped‐NiOx Seed Layer on Textured Substrates for Low‐Loss Contacts in Perovskite.pdf
+101002smll202504237                2 workbook(s)  11 Small - 2025 - Puja - Interface Engineering and Band Alignment Studies of Cu Doped NiO as a Hole Transport Layer for Tr.pdf
+101002smtd202200787                2 workbook(s)  49 Small_Methods_-_2022_-_Ahmad_-_Suppressing_Nickel_Oxide_Perovskite_Interface_Redox_Reaction_and_Defects[1].pdf
+101002smtd202300241                2 workbook(s)  48 Small Methods - 2023 - Jiang - Quenching Detrimental Reactions and Boosting Hole Extraction via Multi.pdf
+101002solr202200422                2 workbook(s)  10 Overcome Low Intrinsic Conductivity of NiOx Through Triazinyl Modification for Highly Efficient and Stable.pdf
+101002solr202400534                4 workbook(s)  37 Solar RRL - 2024 - Wang - Organic Salt Buffer Layer Enables High‐Performance NiOx‐Based Inverted Perovskite Solar Cells.pdf  (ignored duplicate: 12 Solar RRL - 2024 - Wang - Organic Salt Buffer Layer Enables High‐Performance NiOx‐Based Inverted Perovskite Solar C.pdf)
+101002solr202500173                2 workbook(s)  50 Solar RRL - 2025 - Yang - Enhancing the Performance of Perovskite Silicon Tandem Solar Cells via Cation.pdf
+101007s1085401780949               4 workbook(s)  27 investigation of NiOX hole transport layers in triple cation perovskite.pdf
+101016japsusc2021149973            2 workbook(s)  24 Enhanced performance of p-i-n perovskite solar cell via defect passivation.pdf
+101016jheliyon2024e25352           5 workbook(s)  7 Improved stability and efficiency of inverted triple-cation mixed-halide perovskite solar cells with CsI-modified NiOx.pdf
+101016jjechem202111029             2 workbook(s)  5 molecular layer electronically bridges the NiOx hole transport layer and the perovskite layer.pdf
+101016jjoule202206026              4 workbook(s)  42 1-s2.0-S2542435122003002-main.pdf
+101016jnanoen2021106285            3 workbook(s)  3 Cation-size mismatch and interface stabilization for efficient NiOx-based inverted perovskite solar cells with 21.9% efficiency.pdf
+101016jpowsour2020228738           2 workbook(s)  18 Boron nitride-incorporated NiO.pdf  (TYPO? workbook names differ from PDF DOI 10.1016/j.jpowsour.2020.228738)
+101016jsolener2024112888           2 workbook(s)  22 Elucidating the improved properties of defect engineered lanthanum doped nickel oxide .pdf
+101016jsolener2025113286           2 workbook(s)  9 Kajal Yadav.pdf
+101016jsolmat2025113858            4 workbook(s)  21 Efficient and stable sputtered NiOx-Based inverted perovskite solar cells by inserting PMMA.pdf
+101021acsaem2c02799                2 workbook(s)  35 polymerizable-ammonium-salt-interlayer-for-efficient-and-stable-niox-based-perovskite-solar-cells.pdf
+101021acsaem2c03072                3 workbook(s)  41 tuning-surface-oxidation-states-of-nickel-oxide-for-efficient-inverted-perovskite-solar-cells.pdf
+101021acsaem2c03434                2 workbook(s)  25 high-fill-factor-and-reduced-hysteresis-perovskite-solar-cells-using-small-molecule-engineered-nickel-oxide-as-the-hole.pdf
+101021acsaem4c02471                5 workbook(s)  19 counterion-effects-of-imidazolium-ionic-liquids-for-the-passivation-of-the-niox-perovskite-interface-in-blade.pdf
+101021acsami3c02156                4 workbook(s)  20 dual-surface-modifications-of-niox-perovskite-interface-for-enhancement-of-device-stability.pdf
+101021acsami4c00249                3 workbook(s)  51 su-et-al-2024-evaporated-nickel-oxide-films-with-slow-annealing-and-interface-modification.pdf
+101021acsami4c14300                2 workbook(s)  14 surface-property-regulation-of-a-magnetron-sputtered-niox-hole-transport-layer-for-high-performance-inverted-perovskite.pdf
+101021acsami5c13836                2 workbook(s)  16 Unveiling NiOxPerovskite Interfaces Charge Transport and Device Performance in Perovskite Solar Cells.pdf
+101021acsami5c15868                3 workbook(s)  15 synergistic-interface-modification-of-electron-beam-evaporated-niox-for-high-performance-perovskite-solar-cells.pdf
+101021acsami5c16972                6 workbook(s)  17 Bimolecular Passivation Layer Modified NiOx to improve the efficiency and satbility of perovskite solar cell.pdf
+101021acsenergylett3c00697         3 workbook(s)  29 minimizing-the-interface-driven-losses-in-inverted-perovskite-solar-cells-and-modules.pdf
+101021acsomega1c01378              2 workbook(s)  34 performance-comparison-between-the-nanoporous-niox-layer-and-niox-thin-film-for-inverted.pdf
+101038s4159802332697z              5 workbook(s)  28 methylammonium halide interfacial modification of perovskite quantum dot .triple cation perovskite enable efficient solar cell.pdf
+101039d2tc04215k                   3 workbook(s)  32 organic ammonium iodide salts as passivation for buried  interface enable efficient and NiOx base Pin PSK.pdf
+101039d3lf00258f                   4 workbook(s)  8 Interfacial modification between NiOx and perovskite layers with hexafluorophosphate salts for enhancing device efficiency.pdf
+101039d3ta05069f                   5 workbook(s)  53 Unrevailing the Modification Effect.pdf
+101039d5ya00072f                   6 workbook(s)  33 Performance enhancement of inversted perovskite solar cell through lithium-ion diffusion from the nickel oxide hole.pdf
+1026599nre20259120172              2 workbook(s)  52 Understanding of chlorine incorporation in wide-bandgap perovskites for efficient and stable solar cells.pdf
+1031635ccschem025202505977         3 workbook(s)  6 du-et-al-2025-mitigation-of-harmful-byproducts-in-redox-reactions-to-enhance-efficiency-and-stability-of-niox-based.pdf
+103390nano11113074                 3 workbook(s)  40 Thermal analysis of metal -organic precursor for fucntional Cu NioX Hole transporting layer in.pdf
+101126scienceade9637               2 workbook(s)  NO PDF
+                                   0 workbook(s)  13 Stabilized hole-selective layer for high-performance inverted p-i-n perovskite solar cells.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  23 enhanced inverted perovskite solar cells via indium doped nickel oxide as hole transport layer.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  26 Influence of Inorganic NiOx Hole Transport Layer on THE GROWTH OF CsBi3I10.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  30 Modulating-buried-interface-with-multi-fluorine-containing-organic-molecule-toward-efficient Copy.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  31 NiOx thickness dependent improvement of NiOxPerovskite interface for.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  36 Small Methods - 2025 - Yoo - Oxidation State Manipulation of NiOx for High Performance and Light‐Soakin.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  38 sputtered nickel oxide hole transpporting layer for perovskite soalr cell.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  39 Surface Treatment of Cu NiOx Hole Transporting layer using B Alanine for hysteresis free and thermally.pdf  (DOI not among workbooks)
+                                   0 workbook(s)  47 Boric acid anchoring-based self-assembled monolayer.pdf  (DOI not among workbooks)
+
+42 paired, 1 DOI(s) without PDF, 9 PDF(s) without workbooks
+verified commands: all exit 0
+
+----- stderr -----
+.............paper.pdf: Notes: HTTP 400: {"error":{"code":400,"message":"bad request"}}
+paper.pdf: Notes: HTTP 400: {"error":{"code":400,"message":"bad request"}}
+.paper.pdf: Notes: HTTP 400: {"error":{"code":400,"message":"bad request"}}
+.
+----------------------------------------------------------------------
+Ran 15 tests in 1.115s
+
+OK

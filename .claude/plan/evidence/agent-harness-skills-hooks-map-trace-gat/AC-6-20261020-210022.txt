@@ -1,0 +1,36 @@
+# plan.py run AC-6
+# command: git check-ignore -q .claude/skills/caveman/SKILL.md && ! git check-ignore -q .claude/skills/repo-map/SKILL.md && ! git check-ignore -q .claude/settings.json && git check-ignore -q .claude/trace/trace.jsonl && git status --short --untracked-files=all .claude .gitignore
+# cwd: D:\University\Year 4 Semester 1 (Intern)\Perovskites-Research
+# started: 2026-10-20T14:00:23+00:00
+# duration_s: 0.3
+# git: 507b203 (dirty)
+# exit: 0
+----- stdout -----
+ M .gitignore
+?? .claude/agents/ac-judge.md
+?? .claude/agents/repo-scout.md
+?? .claude/hooks/hooks.py
+?? .claude/plan/evidence/agent-harness-skills-hooks-map-trace-gat/AC-1-20261020-210011.txt
+?? .claude/plan/evidence/agent-harness-skills-hooks-map-trace-gat/AC-2-20261020-210015.txt
+?? .claude/plan/evidence/agent-harness-skills-hooks-map-trace-gat/AC-3-20261020-210015.txt
+?? .claude/plan/evidence/agent-harness-skills-hooks-map-trace-gat/AC-4-20261020-210016.txt
+?? .claude/plan/evidence/agent-harness-skills-hooks-map-trace-gat/AC-5-20261020-210021.txt
+?? .claude/settings.json
+?? .claude/skills/plan-evidence/SKILL.md
+?? .claude/skills/plan-evidence/plan.py
+?? .claude/skills/project-cli/SKILL.md
+?? .claude/skills/project-cli/datactl.py
+?? .claude/skills/repo-map/REPO_MAP.md
+?? .claude/skills/repo-map/SKILL.md
+?? .claude/skills/repo-map/build_map.py
+?? .claude/skills/repo-map/notes.md
+?? .claude/skills/trace-to-skill/SKILL.md
+?? .claude/skills/trace-to-skill/tracelog.py
+?? .claude/tests/_setup.py
+?? .claude/tests/test_build_map.py
+?? .claude/tests/test_datactl.py
+?? .claude/tests/test_hooks.py
+?? .claude/tests/test_plan.py
+?? .claude/tests/test_tracelog.py
+
+----- stderr -----

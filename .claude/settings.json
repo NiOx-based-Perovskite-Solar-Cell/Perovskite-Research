@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python .claude/skills/repo-map/build_map.py:*)",
+      "Bash(python .claude/skills/trace-to-skill/tracelog.py digest:*)",
+      "Bash(python .claude/skills/project-cli/datactl.py:*)",
+      "Bash(python .claude/skills/plan-evidence/plan.py status:*)",
+      "Bash(python .claude/skills/plan-evidence/plan.py verdict:*)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/hooks.py\" prompt", "timeout": 10 }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/hooks.py\" post", "timeout": 30 }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/hooks.py\" fail", "timeout": 10 }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/hooks.py\" subagent", "timeout": 30 }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/hooks.py\" stop", "timeout": 60 }
+        ]
+      }
+    ]
+  }
+}
