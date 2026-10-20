@@ -1,0 +1,12 @@
+build/
+*.egg-info/
+__pycache__/
+recheck_out/
+extract_out/
+analyze_out/
+# web service: one folder per job (results, traces, uploads, model cache)
+runs/
+# Tailwind build tools; the built app.css is committed, so running the app needs no Node
+tailwind/node_modules/
+# generated from the data on every run (DataMapHook); learned-rules/ is kept: it is curated knowledge
+skills/data-map/
