@@ -1,0 +1,13 @@
+{
+  "name": "psc-agent-tailwind",
+  "private": true,
+  "description": "Builds src/psc_agent/web/static/app.css; the app itself needs no Node",
+  "scripts": {
+    "build": "tailwindcss -i input.css -o ../src/psc_agent/web/static/app.css --minify",
+    "watch": "tailwindcss -i input.css -o ../src/psc_agent/web/static/app.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "tailwindcss": "4.3.3"
+  }
+}

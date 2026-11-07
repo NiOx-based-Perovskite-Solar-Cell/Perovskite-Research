@@ -1,0 +1,13 @@
+# plan.py run AC-3
+# command: python -I .claude/skills/repo-map/build_map.py --check && ! grep -n "_map_probe" .claude/skills/repo-map/REPO_MAP.md && python -I -c "import json; ev=[json.loads(l) for l in open('.claude/trace/trace.jsonl', encoding='utf-8')]; got=[c for r in ev if r.get('event')=='map' for c in r.get('changes', []) if 'probe' in c]; need=['+scripts/_map_probe.py', '+scripts/_map_probe_moved.py', '-scripts/_map_probe.py', '-scripts/_map_probe_moved.py']; print('map rebuild events from hooks:', got); raise SystemExit(0 if all(n in got for n in need) else 1)"
+# cwd: D:\University\Year 4 Semester 1 (Intern)\Perovskites-Research
+# started: 2026-10-20T14:04:37+00:00
+# duration_s: 0.7
+# git: 507b203 (dirty)
+# tree: a70346fafa2e
+# exit: 0
+----- stdout -----
+fresh
+map rebuild events from hooks: ['-scripts/_map_probe_moved.py', '+scripts/_map_probe.py', '+scripts/_map_probe_moved.py', '-scripts/_map_probe.py', '-scripts/_map_probe_moved.py']
+
+----- stderr -----

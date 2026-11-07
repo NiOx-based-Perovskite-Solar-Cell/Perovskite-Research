@@ -1,0 +1,20 @@
+# git diff HEAD -- .gitignore
+diff --git a/.gitignore b/.gitignore
+index b6fcbe3..3e483f6 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -22,8 +22,12 @@ __pycache__/
+ # caveman skills (ติดตั้งเองได้ ไม่ต้องเก็บในรีโป)
+ .agents/
+ agent/
+-.claude/skills/
++.claude/skills/cave*/
+ skills-lock.json
+ 
+ # Claude Code (เก็บ settings.json ที่แชร์ได้ ไม่เก็บของเครื่องตัวเอง)
+ .claude/settings.local.json
++# trace ของ hook และสถานะภายในเครื่อง (skill/hook/agent ของโปรเจกต์ยังเก็บใน git)
++.claude/trace/
++.claude/plan/.gate_state.json
++.claude/skills/repo-map/.map_state.json
+

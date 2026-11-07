@@ -1,0 +1,11 @@
+# plan.py run AC-2
+# command: python -I -c "import json; recs=[json.loads(l) for l in open('.claude/trace/trace.jsonl', encoding='utf-8')]; fails=[r for r in recs if r.get('event')=='tool' and r.get('ok') is False and r.get('exit')==3]; print(len(recs), 'trace records;', len(fails), 'failure(s) with exit 3, last:', fails[-1]['input'] if fails else None); raise SystemExit(0 if fails else 1)"
+# cwd: D:\University\Year 4 Semester 1 (Intern)\Perovskites-Research
+# started: 2026-10-20T14:00:15+00:00
+# duration_s: 0.2
+# git: 507b203 (dirty)
+# exit: 0
+----- stdout -----
+31 trace records; 1 failure(s) with exit 3, last: {'command': 'cd "D:/University/Year 4 Semester 1 (Intern)/Perovskites-Research" && python -c "import sys; print(\'deliberate failure for AC-2\'); sys.exit(3)"', 'description': 'Trigger a deliberate exit-3 failure for the trace'}
+
+----- stderr -----

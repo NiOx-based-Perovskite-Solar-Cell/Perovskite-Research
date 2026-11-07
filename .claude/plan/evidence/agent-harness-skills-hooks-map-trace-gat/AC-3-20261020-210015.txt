@@ -1,0 +1,11 @@
+# plan.py run AC-3
+# command: python -I .claude/skills/repo-map/build_map.py --check && grep -n "_map_probe_moved.py" .claude/skills/repo-map/REPO_MAP.md && ! grep -n "_map_probe\.py" .claude/skills/repo-map/REPO_MAP.md
+# cwd: D:\University\Year 4 Semester 1 (Intern)\Perovskites-Research
+# started: 2026-10-20T14:00:16+00:00
+# duration_s: 0.3
+# git: 507b203 (dirty)
+# exit: 1
+----- stdout -----
+stale
+
+----- stderr -----

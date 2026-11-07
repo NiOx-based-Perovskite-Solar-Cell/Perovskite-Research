@@ -1,0 +1,32 @@
+/* Source of src/psc_agent/web/static/app.css (the built file is committed, so running the app needs no Node).
+   Rebuild after changing classes in templates/index.html or static/app.js:
+     cd "agent for research/tailwind" && npm ci && npm run build      (npm run watch while editing) */
+@import "tailwindcss" source(none);
+@source "../src/psc_agent/web/templates/index.html";
+@source "../src/psc_agent/web/static/app.js";
+
+@layer components {
+  .card { @apply rounded-xl border border-slate-200 bg-white p-5 shadow-sm; }
+  .card-title { @apply mb-3 text-sm font-semibold text-slate-900; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-ghost { @apply inline-flex items-center justify-center gap-1 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-danger { @apply inline-flex items-center justify-center gap-1 rounded-lg border border-rose-300 bg-white px-3 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-50; }
+  .input { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none; }
+  .label { @apply mb-1 block text-xs font-medium tracking-wide text-slate-500 uppercase; }
+  .hint { @apply mt-1 text-xs text-slate-500; }
+  .badge { @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap; }
+  .tab { @apply rounded-t-lg px-4 py-2 text-sm font-medium whitespace-nowrap text-slate-300 hover:text-white; }
+  .tab-active { @apply bg-slate-50 text-slate-900 hover:text-slate-900; }
+  .th { @apply sticky top-0 bg-slate-100 px-3 py-2 text-left text-xs font-semibold tracking-wide text-slate-600 uppercase; }
+  .td { @apply border-t border-slate-100 px-3 py-2 align-top text-sm; }
+  .stat { @apply text-3xl font-semibold text-slate-900 tabular-nums; }
+  .md h1 { @apply mt-4 mb-2 text-lg font-semibold text-slate-900; }
+  .md h2 { @apply mt-4 mb-2 text-base font-semibold text-slate-900; }
+  .md h3 { @apply mt-3 mb-1 text-sm font-semibold text-slate-900; }
+  .md p { @apply my-2 text-sm leading-relaxed; }
+  .md ul { @apply my-2 list-disc space-y-1 pl-5 text-sm; }
+  .md ol { @apply my-2 list-decimal space-y-1 pl-5 text-sm; }
+  .md code { @apply rounded bg-slate-100 px-1 py-0.5 font-mono text-xs; }
+  .md table { @apply my-3 w-full text-left text-xs; }
+  .md td, .md th { @apply border border-slate-200 px-2 py-1; }
+}
