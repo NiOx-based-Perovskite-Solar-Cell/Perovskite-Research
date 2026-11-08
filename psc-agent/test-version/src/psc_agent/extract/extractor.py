@@ -26,6 +26,7 @@ from ..core.hooks import HookBlock
 from ..core.openrouter import OpenRouterError
 from ..core.runtime import Runtime, Usage
 from ..sources.paper import Paper, load_paper, paper_parts
+from ..sources.si import si_hint
 from ..sources.workbook import STANDARD_HEADERS, Source, write_workbook
 
 log = logging.getLogger(__name__)
@@ -60,6 +61,8 @@ class ExtractResult(BaseModel):
     rows: list[XRow] = Field(default_factory=list)
     verdicts: dict[str, Verdict] = Field(default_factory=dict)
     files: list[str] = Field(default_factory=list)
+    si_link: str = ""  # where to download the SI when none was loaded: recipes and suppliers are usually only there
+    si_save_as: str = ""
     usage: Usage = Field(default_factory=Usage)
     errors: list[str] = Field(default_factory=list)
 
@@ -123,22 +126,28 @@ class Extractor:
         paper = paper if isinstance(paper, Paper) else load_paper(paper)
         out = Path(out_dir)
         result = ExtractResult(paper=paper.name, doi=paper.doi)
+        result.si_link, result.si_save_as = si_hint(paper)
         run = {"kind": "extract", "paper": paper.name}
         self.rt.hooks.emit("run_start", run=run, runtime=self.rt)
         parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, images=self.images)
+        total = 2 + len(GROUPS)  # map, one call per sheet group, the verdicts
+        tick = lambda done: self.rt.hooks.emit("progress", scope=paper.name, done=done, total=total)  # noqa: E731
         try:
             self._map(paper, parts, result)
+            tick(1)
         except FAILURES as e:  # without the device map nothing else can be asked
             result.errors.append(f"map: {e}")
             self.rt.hooks.emit("run_end", run=run, summary={"errors": result.errors})
             return result
-        for group in GROUPS:
+        for i, group in enumerate(GROUPS, 2):
             try:
                 self._rows(paper, parts, group, result)
             except FAILURES as e:
                 result.errors.append(f"{'/'.join(group)}: {e}")
                 log.error("%s: %s", paper.name, e)
+            tick(i)
         result.verdicts = self._decide(paper, result)
+        tick(total)
         self._write(paper, out, result)
         self.rt.hooks.emit("run_end", run=run, summary={"devices": len(result.devices), "rows": len(result.rows),
                                                         "verdicts": result.counts(), "errors": len(result.errors)})
@@ -203,7 +212,7 @@ class Extractor:
         return verdicts
 
     def _write(self, paper: Paper, out: Path, result: ExtractResult) -> None:
-        stem = (paper.doi or Path(paper.name).stem).replace("/", "_")
+        stem = (paper.doi or Path(paper.name).stem[:40].strip()).replace("/", "_")  # a long title would pass Windows' path limit
         for n, d in enumerate(result.devices, 1):
             sheets: dict[str, list[dict]] = {}
             for r in result.rows:
@@ -215,13 +224,13 @@ class Extractor:
         with open(out / "review.csv", "w", newline="", encoding="utf-8-sig") as fh:
             w = csv.writer(fh)
             w.writerow(["row_id", "device", "sheet", "values", "page", "source", "evidence", "quote_ok", "decision",
-                        "p", "reason", "note"])
+                        "p", "reason", "note", "si_link", "si_save_as"])
             for i, r in enumerate(result.rows):
                 rid = f"{r.device}:{r.sheet}:{i}"
                 v = result.verdicts.get(rid)
                 w.writerow([rid, r.device, r.sheet, json.dumps(r.cells(), ensure_ascii=False), r.page, r.source,
                             r.evidence, r.quote_ok, v.choice if v else "", v.p if v else "", v.reason if v else "",
-                            r.note])
+                            r.note, result.si_link, result.si_save_as])
         (out / "extraction.json").write_text(result.model_dump_json(indent=2), encoding="utf-8")
 
 

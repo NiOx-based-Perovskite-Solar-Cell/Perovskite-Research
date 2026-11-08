@@ -8,11 +8,14 @@ to the judge role.
 from __future__ import annotations
 
 import logging
+import re
 from collections.abc import Iterable
 
 from ..core.hooks import HookBlock, QuoteCheckHook
 from ..core.openrouter import OpenRouterClient, OpenRouterError
 from ..core.runtime import Runtime, Usage
+from ..sources.pairing import doi_key
+from ..sources.si import si_hint
 from ..sources.paper import Paper, load_paper, paper_parts
 from ..sources.workbook import Device, Row, Source, is_process_like, load_workbook
 from .compare import compare_values
@@ -100,7 +103,10 @@ class Rechecker:
         self.rt.hooks.emit("run_start", run=run, runtime=self.rt)
         parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages)
 
-        for group in _sheet_groups(devices):
+        groups = _sheet_groups(devices)
+        total = len(groups) + 1  # one call per sheet group, then the judge
+        for i, group in enumerate(groups, 1):
+            self.rt.hooks.emit("progress", scope=paper.name, done=i - 1, total=total)
             rows = [(ref, row) for ref, d in refs.items() for s in group for row in d.sheets.get(s, [])]
             answer, error = None, ""
             try:
@@ -109,14 +115,20 @@ class Rechecker:
                 error = f"{'/'.join(group)}: {e}"
                 report.errors.append(error)
                 log.error("%s: %s", paper.name, error)
-            report.findings += self._findings(refs, rows, answer, error)
+            report.findings += self._findings(refs, rows, answer, error, paper)
             if answer:
                 named = {a.device_id: a.paper_device for a in answer.devices}
                 for info in report.devices:
                     info.paper_device = info.paper_device or named.get(info.ref)
 
+        self.rt.hooks.emit("progress", scope=paper.name, done=total - 1, total=total)
         if self.judge:
             self._judge(report)
+        link, save_as = si_hint(paper)
+        for f in report.findings:
+            if link and f.status in ("needs_si", "not_found"):
+                f.si_link, f.si_save_as = link, save_as
+        self.rt.hooks.emit("progress", scope=paper.name, done=total, total=total)
         self.rt.hooks.emit("run_end", run=run, summary=report.counts())
         return report
 
@@ -127,9 +139,10 @@ class Rechecker:
         self.rt.hooks.emit("after_answer", kind="recheck", paper=paper, rows=answer.rows)
         return answer
 
-    def _findings(self, refs, rows: list[tuple[str, Row]], answer: ExtractionAnswer | None, error: str):
+    def _findings(self, refs, rows: list[tuple[str, Row]], answer: ExtractionAnswer | None, error: str, paper: Paper):
         by_id = {a.row_id.strip(): a for a in answer.rows} if answer else {}
         out: list[Finding] = []
+        text = None  # the paper's numbers and words, built on first use
         for ref, row in rows:
             a = by_id.get(row_id(ref, row))
             got = {c.column: c.value for c in a.values} if a else {}
@@ -144,6 +157,8 @@ class Rechecker:
                     if rec is not None:
                         status, detail = (("not_checked", error or "model returned no answer for this row") if a is None
                                           else ("not_found", _join("row not found in paper", a.note)))
+                        if status == "not_found" and (note := _needs_si(paper, rec, a.note if a else None)):
+                            status, detail = "needs_si", note
                         out.append(Finding(**f, status=status, detail=detail))
                     continue
                 pv, pu = got.get(col), row.unit_of(col, got)
@@ -151,6 +166,10 @@ class Rechecker:
                 if v is None:
                     continue
                 status, detail, judgeable = v.status, v.detail, v.judgeable
+                if status == "missing_in_record" and col in _FREE_TEXT:
+                    continue  # curators leave descriptions and remarks empty; that is not a gap in the data
+                if status == "not_found" and (note := _needs_si(paper, rec, a.note)):
+                    status, detail = "needs_si", note
                 if a.quote_ok is False and status != "not_found":  # checkpoint: evidence not on the cited page
                     status, judgeable = "review", False
                     detail = _join(f"evidence quote not found on page {a.page}; paper value unverified", detail)
@@ -166,10 +185,14 @@ class Rechecker:
         pending = [(i, f) for i, f in enumerate(report.findings) if f.status == "review" and f.judgeable]
         if not pending:
             return
-        items = [{"id": str(i), "field": f"{f.sheet} / {f.column}", "row": f.keys,
+        # the same row of several devices reads the same: ask once, apply the verdict to each copy
+        groups: dict[tuple, list[tuple[int, Finding]]] = {}
+        for i, f in pending:
+            groups.setdefault((f.sheet, f.column, f.keys, f.recorded, f.recorded_unit, f.paper_value, f.paper_unit), []).append((i, f))
+        items = [{"id": str(members[0][0]), "field": f"{f.sheet} / {f.column}", "row": f.keys,
                   "recorded": _join(f.recorded, f.recorded_unit, sep=" "),
                   "paper": _join(f.paper_value, f.paper_unit, sep=" "), "paper_evidence": f.evidence}
-                 for i, f in pending]
+                 for members in groups.values() for f in [members[0][1]]]
         try:
             answer = self.rt.ask_json("judge", judge_task(items), JudgeAnswer, schema=judge_schema(),
                                       usage=report.usage)
@@ -178,11 +201,35 @@ class Rechecker:
             log.error("%s: judge failed: %s", report.paper, e)
             return
         verdicts = {v.id: v for v in answer.verdicts}
-        for i, f in pending:
-            v = verdicts.get(str(i))
+        for members in groups.values():
+            v = verdicts.get(str(members[0][0]))
             if v:
-                f.status = "match" if v.same else "mismatch"
-                f.detail = _join(f.detail, f"judge: {v.reason}")
+                for _, f in members:
+                    f.status = "match" if v.same else "mismatch"
+                    f.detail = _join(f.detail, f"judge: {v.reason}")
+
+
+_FREE_TEXT = {"Descriptions", "Remarks"}
+# the model's own remark that the paper points elsewhere (an SI, a previous report) or does not give the value
+_DEFERS = re.compile(r"previous (?:report|work|paper)|supporting|supplement|\bSI\b|\bESI\b|ref(?:erence)?\.", re.I)
+_NOT_REPORTED = re.compile(r"\bnot\s+(?:reported|given|stated|specified|provided|mentioned|available|in\s+(?:the\s+)?(?:main\s+)?text)"
+                           r"|\bno\b[^.;]{0,40}\b(?:reported|given|stated|specified)\b|unavailable|not\s+described", re.I)
+
+
+def _needs_si(paper: Paper, recorded, note: str | None) -> str | None:
+    """Why a recorded value the model could not find is probably in the supporting information: the SI is not loaded
+    and the value (its numbers, or most of its words) is nowhere in the main text, or the paper itself defers to
+    another document. None if the SI was loaded, or the value is in the text and the model simply missed it."""
+    if paper.si_pages:
+        return None
+    from ..evaluate.text import likely_in_paper, paper_text  # lazy: evaluate imports this package
+
+    defers = bool(note and (_DEFERS.search(note) or _NOT_REPORTED.search(note)))
+    if not defers and likely_in_paper(recorded, paper_text(paper.pages)):
+        return None
+    key = doi_key(paper.doi) if paper.doi else "<doi key>"
+    return _join("not in the main text; probably in the supporting information, which is not loaded "
+                 f"(save it as {key}_SI.pdf in the SI/ folder next to the PDF)", note)
 
 
 def _sheet_groups(devices: list[Device]) -> list[list[str]]:

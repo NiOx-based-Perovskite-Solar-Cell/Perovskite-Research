@@ -5,6 +5,7 @@ import base64
 import os
 import re
 import threading
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -18,12 +19,20 @@ _DOI = re.compile(r"10\.\d{4,9}/[^\s\"<>]+")
 _MIN_DRAWINGS = 30  # vector plots and ruled tables; below this a page is plain text
 
 
+MAX_SI_PAGES = 60  # an SI can run to hundreds of pages; past this the prompt grows faster than the yield
+
+
 @dataclass
 class Paper:
     name: str
-    data: bytes
-    pages: list[str]  # text layer, one entry per page
+    data: bytes  # the PDF; the supporting information, when given, is appended after the main pages
+    pages: list[str]  # text layer, one entry per page (main pages, then SI pages)
     metadata: dict[str, str]
+    n_main: int | None = None  # pages before the SI; None = no SI
+
+    @property
+    def si_pages(self) -> int:
+        return 0 if self.n_main is None else len(self.pages) - self.n_main
 
     def head_text(self, n_pages: int = 2) -> str:
         return " ".join([*self.metadata.values(), *self.pages[:n_pages]])
@@ -41,21 +50,38 @@ class Paper:
         out = []
         with _FITZ_LOCK, fitz.open(stream=self.data, filetype="pdf") as doc:
             for page in doc:
+                if self.n_main is not None and page.number >= self.n_main:
+                    break  # SI pages go in as text only: their plots would multiply the prompt
                 if all_pages or page.get_images() or len(page.get_drawings()) >= _MIN_DRAWINGS:
                     out.append((page.number, page.get_pixmap(dpi=dpi).tobytes("jpg", jpg_quality=quality)))
         return out
 
 
-def load_paper(src: Source, name: str | None = None) -> Paper:
-    """Read a PDF from a path or raw bytes."""
+def load_paper(src: Source, name: str | None = None, si: Sequence[Source] = ()) -> Paper:
+    """Read a PDF from a path or raw bytes. ``si``: supporting-information PDFs, appended after the main pages
+    (at most ``MAX_SI_PAGES`` of them), so page numbers, evidence quotes and the text layer all cover both."""
     if isinstance(src, bytes):
         data, name = src, name or "paper.pdf"
     else:
         data, name = Path(src).read_bytes(), name or os.path.basename(src)
     with _FITZ_LOCK, fitz.open(stream=data, filetype="pdf") as doc:
-        pages = [p.get_text() for p in doc]
         meta = {k: str(v) for k, v in (doc.metadata or {}).items() if v}
-    return Paper(name, data, pages, meta)
+        n_main = len(doc)
+        if si:
+            for extra in si:
+                if len(doc) - n_main >= MAX_SI_PAGES:
+                    break
+                with fitz.open(stream=extra if isinstance(extra, bytes) else Path(extra).read_bytes(), filetype="pdf") as sd:
+                    sd.select(list(range(min(len(sd), MAX_SI_PAGES - (len(doc) - n_main)))))
+                    doc.insert_pdf(sd)
+            if len(doc) > n_main:
+                data = doc.tobytes()
+            else:
+                n_main = None
+        else:
+            n_main = None
+        pages = [p.get_text() for p in doc]
+    return Paper(name, data, pages, meta, n_main)
 
 
 def paper_parts(paper: Paper, *, dpi: int, all_pages: bool, images: bool = True) -> list[dict]:
@@ -66,7 +92,9 @@ def paper_parts(paper: Paper, *, dpi: int, all_pages: bool, images: bool = True)
         parts.append({"type": "text", "text": f"[Image of page {i + 1}]"})
         parts.append({"type": "image_url",
                       "image_url": {"url": "data:image/jpeg;base64," + base64.b64encode(jpg).decode()}})
-    text = "\n\n".join(f"=== Page {i} ===\n{t.strip()}" for i, t in enumerate(paper.pages, 1))
+    main = len(paper.pages) if paper.n_main is None else paper.n_main
+    text = "\n\n".join(f"=== Page {i}{' (supporting information)' if i > main else ''} ===\n{t.strip()}"
+                      for i, t in enumerate(paper.pages, 1))
     parts.append({"type": "text", "text": f"TEXT LAYER OF THE PAPER ({paper.name})\n\n{text}",
                   "cache_control": {"type": "ephemeral"}})
     return parts

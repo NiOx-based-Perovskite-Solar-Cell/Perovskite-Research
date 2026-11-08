@@ -1,0 +1,11 @@
+.env
+.git
+**/__pycache__
+*.egg-info
+build/
+evaluate_out/
+flow_out/
+out/
+runs/
+docs/
+tailwind/node_modules/

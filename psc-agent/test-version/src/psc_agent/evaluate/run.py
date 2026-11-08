@@ -65,10 +65,11 @@ def load_eval(folder: Path) -> PaperEval | None:
 
 
 def evaluate_paper(extractor: Extractor, pair: PaperPair, out: str | Path, *, tol: float = 0.01,
-                   auditor: Auditor | None = None) -> PaperEval:
+                   auditor: Auditor | None = None, use_si: bool = True) -> PaperEval:
     folder = Path(out) / pair.key
     started = time.time()
-    paper = load_paper(pair.pdf)
+    folder.mkdir(parents=True, exist_ok=True)  # the extractor creates it only when it gets as far as writing
+    paper = load_paper(pair.pdf, si=pair.si if use_si else ())
     res = extractor.extract(paper, folder / "extracted")
     record = [load_workbook(p) for p in pair.workbooks]
     extracted = [load_workbook(f) for f in res.files]
@@ -82,7 +83,7 @@ def evaluate_paper(extractor: Extractor, pair: PaperPair, out: str | Path, *, to
 
 
 def evaluate_pairs(extractor: Extractor, pairs: list[PaperPair], out: str | Path, *, workers: int = 1, force: bool = False,
-                   tol: float = 0.01, auditor: Auditor | None = None) -> list[PaperEval]:
+                   tol: float = 0.01, auditor: Auditor | None = None, use_si: bool = True) -> list[PaperEval]:
     """Evaluate every pair (finished ones are reloaded unless ``force``); results keep the order of ``pairs``."""
 
     def one(pair: PaperPair) -> PaperEval:
@@ -91,13 +92,13 @@ def evaluate_pairs(extractor: Extractor, pairs: list[PaperPair], out: str | Path
         if done:
             if auditor and any(c.kind == "value" and c.status in ("mismatch", "unit_mismatch", "review") and not c.audit_verdict for c in done.cells):
                 log.info("%s: auditing existing eval", pair.key)
-                paper = load_paper(pair.pdf)
+                paper = load_paper(pair.pdf, si=pair.si if use_si else ())
                 done.cells = auditor.audit(paper, done.cells)
                 _write(folder, done)
             log.info("%s: reusing %s", pair.key, folder / "eval.json")
             return done
         try:
-            ev = evaluate_paper(extractor, pair, out, tol=tol, auditor=auditor)
+            ev = evaluate_paper(extractor, pair, out, tol=tol, auditor=auditor, use_si=use_si)
         except Exception as e:  # one bad paper must not stop the batch
             log.exception("%s failed", pair.key)
             ev = PaperEval(pair.key, pair.pdf.name, [], [], {}, [f"{type(e).__name__}: {e}"], 0.0)

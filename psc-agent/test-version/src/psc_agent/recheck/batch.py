@@ -15,6 +15,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from ..sources.pairing import Pairing, PaperPair, doi_key, pair_folders
+from ..sources.paper import load_paper
 from .rechecker import Rechecker
 from .report import STATUSES, Finding, PaperReport
 
@@ -32,6 +33,7 @@ def recheck_folders(
     limit: int | None = None,
     workers: int = 1,
     force: bool = False,
+    use_si: bool = True,
     should_stop=None,
 ) -> list[PaperReport]:
     """Run every paired paper (or those whose DOI is in ``only``); returns this run's reports.
@@ -48,12 +50,13 @@ def recheck_folders(
         todo = [p for p in todo if not (out / "papers" / f"{p.key}.json").exists()]
     todo = todo[:limit] if limit else todo
     log.info("%d paper(s) to recheck", len(todo))
+    rechecker.rt.hooks.emit("batch", papers=len(todo))
 
     def run(pair: PaperPair) -> PaperReport | None:
         if should_stop and should_stop():
             return None
         try:
-            report = rechecker.recheck(pair.pdf, pair.workbooks)
+            report = rechecker.recheck(load_paper(pair.pdf, si=pair.si if use_si else ()), pair.workbooks)
         except Exception:  # one bad paper must not stop the batch
             log.exception("%s failed", pair.pdf.name)
             return None

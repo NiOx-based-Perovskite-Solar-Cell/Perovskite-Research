@@ -20,6 +20,7 @@
       <a href="#recheck" data-tab="recheck" class="tab">Recheck</a>
       <a href="#extract" data-tab="extract" class="tab">Extract</a>
       <a href="#analyze" data-tab="analyze" class="tab">Analyze</a>
+      <a href="#columns" data-tab="columns" class="tab">Columns</a>
       <a href="#skills" data-tab="skills" class="tab">Skills</a>
       <a href="#jobs" data-tab="jobs" class="tab">Jobs</a>
     </nav>
@@ -129,6 +130,35 @@
           <div id="analyze-tables" class="text-sm"></div>
         </div>
       </div>
+    </section>
+
+    <!-- Columns -->
+    <section id="tab-columns" class="tab-panel hidden space-y-6">
+      <div class="card space-y-3">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <h2 class="card-title">Columns of the processed tables</h2>
+          <div class="flex gap-2">
+            <a class="btn-ghost" href="/api/columns?format=csv" download>Download CSV</a>
+            <a class="btn-ghost" href="/api/columns?format=md" download>Download Markdown</a>
+            <button class="btn-ghost" onclick="window.print()">Print</button>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600">The goal of the research is to find insights from the extracted papers (which class of substance
+          changes the device results, how and through which channel), not to tune a PCE or a retention value. Each column is rated by how much
+          that analysis needs it, so the dataset can be cut down to what matters.</p>
+        <ul class="grid gap-1 text-xs text-slate-600 md:grid-cols-2">
+          <li><span class="font-semibold">core</span>: the analysis reads it: what was changed, what happened, through which mechanism.</li>
+          <li><span class="font-semibold">context</span>: needed to compare fairly (control, perovskite composition, measurement condition).</li>
+          <li><span class="font-semibold">provenance</span>: identifiers and source traces; kept for joins and audit, not analysed.</li>
+          <li><span class="font-semibold">drop</span>: redundant, constant, empty or a raw leftover: a candidate to remove.</li>
+        </ul>
+        <div id="columns-chips" class="flex flex-wrap items-center gap-2"></div>
+        <div class="flex flex-wrap items-end gap-3">
+          <div><label class="label" for="columns-table">Table</label><select id="columns-table" class="input w-56"></select></div>
+          <div class="grow"><label class="label" for="columns-search">Search column, meaning or reason</label><input id="columns-search" class="input" placeholder="e.g. htl_mod_kind, trap, duplicate"></div>
+        </div>
+      </div>
+      <div class="card overflow-x-auto"><div id="columns-table-body" class="text-sm"></div></div>
     </section>
 
     <!-- Skills -->

@@ -138,8 +138,11 @@ class Analyst:
             result.errors.append(f"plan: {e}")
             plan = PlanAnswer(questions=[])
         result.notes = plan.notes
-        for q in plan.questions[: self.max_questions]:
+        questions = plan.questions[: self.max_questions]
+        for i, q in enumerate(questions):
+            self.rt.hooks.emit("progress", scope="analyze", done=i, total=len(questions) + 1)  # +1: the report
             result.acs.append(self._answer(q, out, result))
+        self.rt.hooks.emit("progress", scope="analyze", done=len(questions), total=len(questions) + 1)
         try:
             result.report = self._report(goal, result)
         except FAILURES as e:

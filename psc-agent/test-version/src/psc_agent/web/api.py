@@ -75,7 +75,7 @@ def _pairing():
 def pairs():
     pr = _pairing()
     return jsonify(
-        pairs=[{"key": p.key, "pdf": p.pdf.name, "workbooks": len(p.workbooks), "devices": [w.stem for w in p.workbooks],
+        pairs=[{"key": p.key, "pdf": p.pdf.name, "workbooks": len(p.workbooks), "si": len(p.si), "si_files": [f.name for f in p.si], "devices": [w.stem for w in p.workbooks],
                 "typo_pdf_doi": p.pdf_doi, "duplicates": [d.name for d in p.duplicate_pdfs]} for p in pr.pairs],
         workbooks_without_pdf=[{"key": k, "workbooks": len(v)} for k, v in sorted(pr.workbooks_without_pdf.items())],
         unmatched_pdfs=[p.name for p in pr.unmatched_pdfs])
@@ -126,6 +126,78 @@ def uploads():
     if not saved:
         raise ApiError("no files in the 'files' field")
     return jsonify(files=saved), 201
+
+
+# ------------------------------------------------------------------ supporting information
+
+
+_SI_KEY = re.compile(r"[0-9a-z]{6,80}")
+_SI_NAME = re.compile(r"[0-9a-z]{6,80}_SI\d{0,2}\.pdf")
+
+
+def _si_dir() -> Path:
+    from ..sources.pairing import SI_DIR
+
+    return _cfg().pdf_dir / SI_DIR
+
+
+@bp.get("/si")
+def list_si():
+    d = _si_dir()
+    return jsonify(files=[{"name": p.name, "size": p.stat().st_size} for p in sorted(d.glob("*.pdf"))] if d.is_dir() else [])
+
+
+@bp.post("/si")
+def upload_si():
+    """Save the supporting information of one paper as ``<pdf folder>/SI/<doi key>_SI.pdf`` (``_SI2`` ... for more
+    files). The key is the DOI as lowercase letters and digits (a DOI itself is accepted); pairing finds the file by it,
+    so the next recheck / extract / evaluate reads it."""
+    import fitz
+
+    from ..sources.pairing import doi_key
+
+    key = doi_key(request.form.get("key", ""))
+    if not _SI_KEY.fullmatch(key):
+        raise ApiError("give the paper's DOI key (its DOI as letters and digits)")
+    files = request.files.getlist("files")
+    if not files:
+        raise ApiError("no files in the 'files' field")
+    d = _si_dir()
+    d.mkdir(parents=True, exist_ok=True)
+    saved = []
+    for f in files:
+        head = f.stream.read(5)
+        if head != b"%PDF-":
+            raise ApiError(f"not a PDF: {f.filename}")
+        f.stream.seek(0)
+        data = f.stream.read()
+        try:
+            with fitz.open(stream=data, filetype="pdf") as doc:
+                pages = len(doc)
+        except Exception:
+            raise ApiError(f"the PDF cannot be read: {f.filename}") from None
+        n = 1
+        target = d / f"{key}_SI.pdf"
+        while target.exists():
+            n += 1
+            if n > 99:
+                raise ApiError("too many SI files for this paper")
+            target = d / f"{key}_SI{n}.pdf"
+        target.write_bytes(data)
+        saved.append({"name": target.name, "pages": pages, "size": len(data)})
+    paired = any(p.key == key for p in _pairing().pairs)
+    return jsonify(key=key, files=saved, paired=paired), 201
+
+
+@bp.delete("/si/<name>")
+def delete_si(name):
+    if not _SI_NAME.fullmatch(name):
+        raise ApiError("not an SI file name", 404)
+    path = _si_dir() / name
+    if not path.is_file():
+        raise ApiError(f"no such SI file: {name}", 404)
+    path.unlink()
+    return jsonify(deleted=name)
 
 
 # ------------------------------------------------------------------ jobs
@@ -343,6 +415,30 @@ def data_tables():
     if not cfg.data_dir.is_dir():
         raise ApiError(f"no data folder {cfg.data_dir}", 404)
     return jsonify(DataTools(cfg.data_dir, catalog=cfg.catalog).list_tables())
+
+
+@bp.get("/columns")
+def columns():
+    """Every column of the processed tables: type, coverage, meaning and how much the analysis needs it.
+    ``?format=csv`` or ``md`` downloads the same as a file."""
+    from flask import Response, request
+
+    cfg = _cfg()
+    try:
+        from ..analyze.columns import profile, summary, to_csv, to_markdown
+    except ImportError:
+        raise ApiError("columns need pandas: pip install 'psc-agent[analysis]'", 501) from None
+    if not cfg.data_dir.is_dir():
+        raise ApiError(f"no data folder {cfg.data_dir}", 404)
+    cols = profile(cfg.data_dir, catalog=cfg.catalog)
+    fmt = request.args.get("format", "json")
+    if fmt == "csv":
+        return Response(to_csv(cols).encode("utf-8-sig"), mimetype="text/csv",
+                        headers={"Content-Disposition": 'attachment; filename="columns.csv"'})
+    if fmt == "md":
+        return Response(to_markdown(cols).encode("utf-8"), mimetype="text/markdown",
+                        headers={"Content-Disposition": 'attachment; filename="columns.md"'})
+    return jsonify(summary=summary(cols), columns=[c.to_dict() for c in cols])
 
 
 @bp.post("/data/map")

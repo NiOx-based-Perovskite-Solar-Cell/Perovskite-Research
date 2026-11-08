@@ -133,6 +133,7 @@ _QTY = re.compile(
     rf"^(?P<q>~|\u2248|<|>|\u2264|\u2265|ca\.?|approx\.?)?\s*(?P<a>-?\s*{_NUM})"
     rf"(?:\s*(?:-|~|to)\s*(?P<b>-?\s*{_NUM}))?"
     rf"(?:\s*(?:\u00b1|\+/-)\s*{_NUM})?"
+    rf"\s*\+?"  # "98+" means at least 98
     rf"\s*(?P<unit>[^\d\s,;:/\-].*?)?\s*$",  # a unit never starts with - : / ("2-propanol", "50:50")
     re.I,
 )
@@ -212,6 +213,21 @@ def _close(r: float, p_in_r: float, r_in_p: float, p: float, r_dec, p_dec, tol: 
     return (hr is not None and abs(r - p_in_r) <= hr) or (hp is not None and abs(r_in_p - p) <= hp)
 
 
+def _unit_slip(r: Quantity, p: Quantity, tol: float) -> str | None:
+    """A unit of the recorded dimension in which the recorded numbers equal the paper's (1440 "sec" is 24 h as 1440 min)."""
+    rs, ps = unit_spec(r.unit), unit_spec(p.unit)
+    if not rs or not ps or rs[0] != ps[0] or rs[0] == "temperature":
+        return None
+    same = canonical_unit(r.unit)
+    for unit, (dim, factor, _) in _UNITS.items():
+        if dim != rs[0] or unit == same or unit_spec(unit) == rs:
+            continue
+        if all(abs(a * factor - b * ps[1]) <= tol * max(abs(a * factor), abs(b * ps[1]))
+               for a, b in ((r.lo, p.lo), (r.hi, p.hi))):
+            return unit
+    return None
+
+
 def _compare_pair(r: Quantity, p: Quantity, tol: float) -> Verdict:
     rs, ps = unit_spec(r.unit), unit_spec(p.unit)
     rc, pc = canonical_unit(r.unit), canonical_unit(p.unit)
@@ -233,13 +249,21 @@ def _compare_pair(r: Quantity, p: Quantity, tol: float) -> Verdict:
                 return Verdict("review", f"range vs single value: {pair}")
         return Verdict("mismatch", pair)
     if comparable:
-        return Verdict("match") if close else Verdict("mismatch", pair)
+        if close:
+            return Verdict("match")
+        slip = _unit_slip(r, p, tol)
+        if slip:
+            return Verdict("unit_mismatch", f"the numbers agree if the recorded unit is {slip}, not {r.unit}: {pair}")
+        return Verdict("mismatch", pair)
     if rc is None:
         return Verdict("unit_mismatch", f"unit missing in record: {pair}") if close else Verdict("mismatch", pair)
     if pc is None:
         return Verdict("match", "paper unit not given") if close else Verdict("mismatch", pair)
     if rs and ps:  # both understood, different dimensions
-        return Verdict("unit_mismatch", f"same number, different unit: {pair}") if close else Verdict("mismatch", pair)
+        if close:
+            return Verdict("unit_mismatch", f"same number, different unit: {pair}")
+        # 25 mg/mL against 1 %: two ways to state a concentration, not a disagreement about one value
+        return Verdict("review", f"different kinds of quantity, cannot be compared: {pair}")
     return Verdict("review", f"units not comparable: {pair}", judgeable=True)
 
 
@@ -259,6 +283,34 @@ def _align(rq: list[Quantity], pq: list[Quantity]) -> list[tuple[Quantity, Quant
     return pairs
 
 
+def _subset(rq: list[Quantity], pq: list[Quantity]):
+    """When the paper gives more values than the record holds: pair each recorded value with a paper value of its own
+    unit dimension. -> (pairs, the paper values left over), or None if some recorded value has no partner."""
+    dim = lambda q: (unit_spec(q.unit) or (None,))[0]  # noqa: E731
+    rest, pairs = list(pq), []
+    for a in rq:
+        b = next((b for b in rest if dim(a) is not None and dim(b) == dim(a)), None)
+        if b is None:
+            return None
+        rest.remove(b)
+        pairs.append((a, b))
+    return pairs, rest
+
+
+_NOTE_QTY = re.compile(r"(\d+(?:\.\d+)?)\s*([A-Za-zµμ/%]+)")
+
+
+def _note_match(recorded_unit, pq: list[Quantity], tol: float) -> str | None:
+    """A recorded unit such as ``M (0.5 mmol in 5 mL)`` also states an amount: if the paper gives that amount, the
+    record is right and only written another way."""
+    for inner in re.findall(r"\(([^)]*)\)", str(recorded_unit or "")):
+        for num, unit in _NOTE_QTY.findall(inner):
+            q = Quantity(float(num), float(num), unit, None)
+            if any(unit_spec(p.unit) and unit_spec(q.unit) and _compare_pair(q, p, tol).status == "match" for p in pq):
+                return f"the recorded unit note gives {q}, which the paper states"
+    return None
+
+
 def compare_values(recorded, recorded_unit, paper, paper_unit, *, tol: float) -> Verdict | None:
     """Verdict for one cell, or None when neither side has a value."""
     r_blank, p_blank = _blank(recorded), _blank(paper)
@@ -271,12 +323,27 @@ def compare_values(recorded, recorded_unit, paper, paper_unit, *, tol: float) ->
 
     rq, pq = parse_quantities(recorded, recorded_unit), parse_quantities(paper, paper_unit)
     if rq and pq:
-        if len(rq) != len(pq):
-            return Verdict("mismatch", f"{len(rq)} recorded value(s) vs {len(pq)} in paper")
-        verdicts = [_compare_pair(a, b, tol) for a, b in _align(rq, pq)]
+        extra: list[Quantity] = []
+        if len(rq) == len(pq):
+            pairs = _align(rq, pq)
+        else:
+            sub = _subset(rq, pq) if len(pq) > len(rq) else None
+            if sub is None:
+                note = _note_match(recorded_unit, pq, tol)
+                return Verdict("match", note) if note else Verdict("mismatch", f"{len(rq)} recorded value(s) vs {len(pq)} in paper")
+            pairs, extra = sub
+        verdicts = [_compare_pair(a, b, tol) for a, b in pairs]
         worst = min(verdicts, key=lambda v: _WORST_FIRST.index(v.status)).status
         same = [v for v in verdicts if v.status == worst]
-        return Verdict(worst, "; ".join(v.detail for v in same if v.detail), any(v.judgeable for v in same))
+        detail = "; ".join(v.detail for v in same if v.detail)
+        if worst == "mismatch":
+            note = _note_match(recorded_unit, pq, tol)
+            if note:
+                return Verdict("match", note)
+        if extra and worst in ("match", "unit_mismatch"):  # the paper says more than the record does: not an error
+            also = f"paper also gives {', '.join(map(str, extra))} (not recorded)"
+            detail = f"{detail}; {also}" if detail else also
+        return Verdict(worst, detail, any(v.judgeable for v in same))
 
     r_txt = f"{recorded} {recorded_unit or ''}"
     p_txt = f"{paper} {paper_unit or ''}"

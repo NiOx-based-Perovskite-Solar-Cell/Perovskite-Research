@@ -4,8 +4,12 @@ Every call starts ``claude -p`` headless, with all tools, hooks and settings swi
 only the system prompt and the message (text and page images) and answers in plain text or, with a schema, as
 validated JSON. It lets the workflows run on the Claude plan the user already has. To move to OpenRouter,
 build ``Runtime`` with an ``OpenRouterClient`` instead (``psc-agent ... --provider openrouter``); nothing
-else changes. Limits: Claude models only, no tool calling (the analyst loop needs OpenRouter), and the cost
-in the usage is the API-equivalent price at list rates, not a charge.
+else changes. Limits: Claude models only, and the cost in the usage is the API-equivalent price at list rates,
+not a charge.
+
+Tool calling is emulated: the tools are described in the system prompt and the model answers with a structured
+reply, either calls to make or a final answer, which comes back in OpenAI's ``tool_calls`` shape. The agent loop
+(``core.agent``) cannot tell the difference.
 """
 from __future__ import annotations
 
@@ -27,6 +31,24 @@ log = logging.getLogger(__name__)
 # Variables that would make the child use an API key instead of the plan, or think it runs inside another session.
 _DROP_ENV = ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "CLAUDECODE", "CLAUDE_CODE_CHILD_SESSION",
              "CLAUDE_CODE_SESSION_ID", "CLAUDE_CODE_MESSAGING_SOCKET")
+_TOOL_REPLY = {"name": "reply", "strict": True, "schema": {
+    "type": "object", "additionalProperties": False, "required": ["tool_calls", "answer"],
+    "properties": {
+        "tool_calls": {"type": "array", "items": {
+            "type": "object", "additionalProperties": False, "required": ["name", "arguments"],
+            "properties": {"name": {"type": "string"},
+                           "arguments": {"type": "string", "description": "the arguments as one JSON object, encoded as a string"}}}},
+        "answer": {"type": "string"}}}}
+_TOOL_RULES = """
+You can call these tools. Each reply is JSON with two fields:
+- tool_calls: the calls to make now (several are allowed, they run in order); empty when you answer.
+- answer: your final answer, written only when tool_calls is empty; empty otherwise.
+The tools exist and work, but only through this reply: you have no other tool interface, so do not look for one and
+never answer that tools are unavailable. Call a tool whenever you need data: results come back in the next message,
+each labelled [Tn]. Do not guess values.
+
+Tools:
+"""
 _MAX_CMDLINE = 24000  # Windows allows 32767 characters for the whole command line
 
 
@@ -71,11 +93,15 @@ def _blocks(messages: list[dict]) -> tuple[str, list[dict]]:
         parts = [{"type": "text", "text": content}] if isinstance(content, str) else (content or [])
         if role == "system":
             system += [p.get("text", "") for p in parts]
-        elif role == "tool" or m.get("tool_calls"):
-            raise SubscriptionError("tool calling is not available on the subscription client; use OpenRouter")
+        elif role == "tool":
+            body = "".join(p.get("text", "") for p in parts)
+            blocks.append({"type": "text", "text": f"[Tool result {m.get('tool_call_id', '')}]\n{body}"})
         else:
             if role == "assistant":
                 blocks.append({"type": "text", "text": "[Your previous reply]"})
+                for tc in m.get("tool_calls") or []:
+                    fn = tc.get("function") or {}
+                    blocks.append({"type": "text", "text": f"[You called {fn.get('name')} with {fn.get('arguments')}]"})
             for p in parts:
                 if p.get("type") == "image_url":
                     media, _, data = p["image_url"]["url"].removeprefix("data:").partition(";base64,")
@@ -104,10 +130,12 @@ class ClaudeCodeClient(CachedClient):
 
     def complete(self, model: str, messages: list[dict], *, schema: dict | None = None, tools: list[dict] | None = None,
                  tool_choice=None, max_tokens: int = 32000, extra: dict | None = None) -> Completion:
-        if tools:
-            raise SubscriptionError("tool calling is not available on the subscription client; use OpenRouter")
         name = cli_model(model)
         system, blocks = _blocks(messages)
+        use_tools = bool(tools) and tool_choice != "none"
+        if use_tools:
+            schema = _TOOL_REPLY
+            system += _TOOL_RULES + "\n".join(_describe(t) for t in tools)
         schema_json = json.dumps(schema["schema"], separators=(",", ":")) if schema else None
         if len(system) + len(schema_json or "") > _MAX_CMDLINE:  # too long for a command line: send it as the first block
             blocks.insert(0, {"type": "text", "text": system})
@@ -117,6 +145,8 @@ class ClaudeCodeClient(CachedClient):
         cached = data is not None
         if not cached:
             data = self._run(name, system, blocks, schema_json, max_tokens)
+            if use_tools:
+                data = _tool_message(data)
         comp = self._completion(data, model, max_tokens, cached)
         if not cached:
             self._cache_put(key, data)
@@ -159,6 +189,28 @@ class ClaudeCodeClient(CachedClient):
             log.warning("Claude Code %s; retry %d/%d in %.0fs", err, attempt + 1, self.max_retries, delay)
             time.sleep(delay)
         raise AssertionError("unreachable")
+
+
+def _describe(tool: dict) -> str:
+    fn = tool.get("function") or tool
+    schema = json.dumps(fn.get("parameters") or {}, separators=(",", ":"))
+    return f"- {fn.get('name')}: {fn.get('description', '')}\n  arguments (JSON schema): {schema}"
+
+
+def _tool_message(data: dict) -> dict:
+    """The structured reply (calls or answer) rewritten as an OpenAI assistant message."""
+    msg = data["choices"][0]["message"]
+    try:
+        reply = json.loads(msg["content"])
+        calls, answer = reply.get("tool_calls") or [], str(reply.get("answer") or "")
+    except (ValueError, AttributeError):
+        calls, answer = [], str(msg.get("content") or "")  # not JSON: treat the text as the final answer
+    out = {"role": "assistant", "content": answer if not calls else None}
+    if calls:
+        out["tool_calls"] = [{"id": f"call_{i}", "type": "function",
+                              "function": {"name": c.get("name", ""), "arguments": c.get("arguments") or "{}"}}
+                             for i, c in enumerate(calls, 1)]
+    return {**data, "choices": [{**data["choices"][0], "message": out}]}
 
 
 def _final_event(stdout: str) -> dict | None:

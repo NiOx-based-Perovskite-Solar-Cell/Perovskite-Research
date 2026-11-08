@@ -1,4 +1,4 @@
-"""Command line: psc-agent pairs | recheck | extract | evaluate | analyze | map | trace | learn | skills | serve."""
+"""Command line: psc-agent pairs | si | browser | columns | recheck | extract | evaluate | analyze | map | trace | learn | skills | serve."""
 from __future__ import annotations
 
 import argparse
@@ -6,6 +6,7 @@ import logging
 import sys
 from pathlib import Path
 
+from .core.env import load_env
 from .core.hooks import BudgetHook, QuoteCheckHook, TraceHook
 from .core.runtime import Runtime
 from .core.skills import SkillBook
@@ -14,11 +15,11 @@ from .recheck.report import STATUSES
 DEFAULT_MODEL = {"openrouter": "anthropic/claude-sonnet-5.5", "claude-code": "claude-sonnet-5-5"}
 
 
-def _model_args(p: argparse.ArgumentParser, out: str, *, subscription: bool = True) -> None:
-    providers = ["openrouter", "claude-code"] if subscription else ["openrouter"]
+def _model_args(p: argparse.ArgumentParser, out: str) -> None:
+    providers = ["openrouter", "claude-code"]
     p.add_argument("--provider", choices=providers, default="openrouter",
                    help="openrouter = OPENROUTER_API_KEY; claude-code = your Claude subscription through the `claude` CLI, no key "
-                        "(Claude models only, no tool calling)")
+                        "(Claude models only; tool calling is emulated)")
     p.add_argument("--model", help="default model id for every role (image input + structured output); "
                                    f"default {DEFAULT_MODEL['openrouter']} / {DEFAULT_MODEL['claude-code']}")
     p.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"],
@@ -49,6 +50,7 @@ def _runtime(args, out: Path, models: dict, hooks=()) -> Runtime:
 def main(argv: list[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(errors="replace")  # PDF names and Thai text on a Windows console
+    load_env(Path.cwd() / ".env", Path(__file__).resolve().parents[2] / ".env")  # the working folder, then the project folder
     ap = argparse.ArgumentParser(prog="psc-agent", description="Research agent for perovskite solar cell papers.")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -66,6 +68,7 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--limit", type=int, help="at most this many papers")
     r.add_argument("--workers", type=int, default=1, help="papers in parallel")
     r.add_argument("--force", action="store_true", help="redo papers that already have a report")
+    r.add_argument("--no-si", action="store_true", help="ignore the supporting information found in <pdf folder>/SI/")
     r.add_argument("--dpi", type=int, default=150)
     r.add_argument("--all-pages", action="store_true", help="send images of every page, not only pages with figures")
 
@@ -77,6 +80,38 @@ def main(argv: list[str] | None = None) -> int:
     x.add_argument("--no-decide", action="store_true", help="rules only, no decision model")
     x.add_argument("--dpi", type=int, default=150)
     x.add_argument("--all-pages", action="store_true")
+    x.add_argument("--no-si", action="store_true", help="ignore the supporting information found in <pdf folder>/SI/")
+
+    cm = sub.add_parser("columns", help="print every column of the processed tables with its meaning and how much the analysis needs it")
+    cm.add_argument("--data", default="processed/prepared_v2", help="folder of the processed CSV tables")
+    cm.add_argument("--catalog", help="column catalog CSV (default: <data>/../eda/column_catalog.csv)")
+    cm.add_argument("--notes", help="column notes CSV (default: <data>/../eda/column_notes.csv)")
+    cm.add_argument("--table", nargs="+", help="only these tables")
+    cm.add_argument("--relevance", nargs="+", choices=["core", "context", "provenance", "drop", "none"], help="only columns rated so")
+    cm.add_argument("--format", choices=["text", "md", "csv"], default="text")
+    cm.add_argument("--out", help="write to this file instead of the terminal")
+
+    br = sub.add_parser("browser", help="the Chrome window the agent uses: sign in to the publishers once")
+    br.add_argument("action", choices=["login"], help="login: open the window, sign in by hand, press Enter here")
+    br.add_argument("--url", default="about:blank", help="a page to open first, e.g. the login page of your library")
+    br.add_argument("--chrome-profile", help="profile folder (default ~/.psc-agent/chrome)")
+
+    si = sub.add_parser("si", help="find and download the supporting information (SI) of papers, with web search")
+    si.add_argument("--raw", required=True, help="folder of <doi>_Sample<N>.xlsx workbooks")
+    si.add_argument("--pdf", required=True, help="folder of source PDFs; SI is saved in <pdf folder>/SI/")
+    _model_args(si, "si_out")
+    si.add_argument("--only", nargs="+", metavar="DOI", help="only these DOIs (any part of the DOI)")
+    si.add_argument("--limit", type=int, help="at most this many papers")
+    si.add_argument("--workers", type=int, default=1, help="papers in parallel")
+    si.add_argument("--force", action="store_true", help="search again for papers that already have an SI file")
+    si.add_argument("--browser", action="store_true",
+                    help="let the agent use your Chrome (a window of its own, signed in once with `browser login`) to open "
+                         "publisher pages and download the SI; papers run one after another")
+    si.add_argument("--chrome-profile", help="Chrome profile folder for --browser (default ~/.psc-agent/chrome)")
+    si.add_argument("--cdp-url", help="attach to a Chrome you started with --remote-debugging-port instead (e.g. http://127.0.0.1:9222)")
+    si.add_argument("--wait-human", type=float, default=300.0,
+                    help="seconds to leave a bot-check or sign-in page open for you to solve it in the window (default 300)")
+    si.add_argument("--links-only", action="store_true", help="no web search and no model: just list the pages to open")
 
     ev = sub.add_parser("evaluate", help="extract papers that already have workbooks, then score the extraction against them")
     ev.add_argument("--raw", default="Raw Data", help="folder of the hand-entered <doi>_Sample<N>.xlsx workbooks (the record)")
@@ -93,6 +128,7 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--dpi", type=int, default=150)
     ev.add_argument("--all-pages", action="store_true")
     ev.add_argument("--no-images", action="store_true", help="send the text layer only, no page images")
+    ev.add_argument("--no-si", action="store_true", help="ignore the supporting information found in <pdf folder>/SI/")
     ev.add_argument("--audit", action="store_true", help="run auditor agent on non-matching cells")
     ev.add_argument("--audit-model", help="model for auditor agent (default: --model)")
 
@@ -100,7 +136,7 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("--goal", required=True)
     a.add_argument("--data", required=True, help="folder of processed CSV tables, e.g. processed/prepared_v2")
     a.add_argument("--catalog", help="column catalog CSV (default: <data>/../eda/column_catalog.csv)")
-    _model_args(a, "analyze_out", subscription=False)
+    _model_args(a, "analyze_out")
     a.add_argument("--analyst-model", help="model for the tool loop (default: --model)")
     a.add_argument("--decision-model", help="small model for accept / verify_more / revise (default: --model)")
     a.add_argument("--questions", type=int, default=6)
@@ -158,6 +194,108 @@ def cmd_pairs(args) -> int:
     return 0
 
 
+def cmd_columns(args) -> int:
+    from .analyze.columns import profile, to_csv, to_markdown, to_text
+
+    cols = profile(args.data, catalog=args.catalog, notes=args.notes)
+    if args.table:
+        cols = [c for c in cols if c.table in args.table]
+    if args.relevance:
+        cols = [c for c in cols if (c.relevance or "none") in args.relevance]
+    if not cols:
+        print("no column matches")
+        return 1
+    text = {"text": to_text, "md": to_markdown, "csv": to_csv}[args.format](cols)
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8-sig" if args.format == "csv" else "utf-8")
+        print(f"{len(cols)} column(s) -> {args.out}")
+    else:
+        print(text)
+    return 0
+
+
+def cmd_browser(args) -> int:
+    from .core.browser import DEFAULT_PROFILE, Browser, BrowserError, find_chrome
+
+    if not find_chrome():
+        print("Chrome was not found: install it or set CHROME_BIN")
+        return 1
+    try:
+        Browser(args.chrome_profile or DEFAULT_PROFILE).login(args.url)
+    except BrowserError as e:
+        print(f"error: {e}")
+        return 1
+    print("signed in sessions are kept in the profile; run `psc-agent si --browser ...`")
+    return 0
+
+
+def cmd_si(args) -> int:
+    import csv
+    from concurrent.futures import ThreadPoolExecutor
+
+    from .sources.pairing import SI_DIR, doi_key, pair_folders
+    from .sources.paper import load_paper
+    from .sources.si import SiFinder, SiResult, supplement_links
+
+    out = Path(args.out)
+    pairs = pair_folders(args.raw, args.pdf).pairs
+    if args.only:
+        wanted = [doi_key(o) for o in args.only]
+        pairs = [p for p in pairs if any(w in p.key for w in wanted)]
+    have = [p for p in pairs if p.si]
+    todo = pairs if args.force else [p for p in pairs if not p.si]
+    todo = todo[: args.limit] if args.limit else todo
+    print(f"{len(pairs)} paper(s): {len(have)} already have an SI file, {len(todo)} to search")
+    if not todo:
+        return 0
+    browser = None
+    if args.browser and not args.links_only:
+        from .core.browser import DEFAULT_PROFILE, Browser
+
+        browser = Browser(args.chrome_profile or DEFAULT_PROFILE, cdp_url=args.cdp_url, wait_human=args.wait_human)
+        args.workers = 1  # one window, one thread
+    finder = None if args.links_only else SiFinder(_runtime(args, out, {"default": args.model}), browser=browser)
+    si_dir = Path(args.pdf) / SI_DIR
+
+    def one(pair):
+        paper = load_paper(pair.pdf)
+        if finder is None:  # no search: the publisher's pages for a person to open
+            return pair, SiResult(pair.key, "manual", doi=paper.doi, links=supplement_links(paper.doi))
+        return pair, finder.find(paper, si_dir, key=pair.key)
+
+    try:
+        if browser:  # Playwright belongs to the thread that started it: no pool
+            results = [one(p) for p in todo]
+        else:
+            with ThreadPoolExecutor(max(1, args.workers)) as pool:
+                results = list(pool.map(one, todo))
+    finally:
+        if browser:
+            browser.close()
+    out.mkdir(parents=True, exist_ok=True)
+    with open(out / "si_report.csv", "w", newline="", encoding="utf-8-sig") as fh:
+        w = csv.writer(fh)
+        w.writerow(["paper", "pdf", "doi", "status", "saved_files", "links", "save_as", "notes", "cost_usd"])
+        for pair, r in results:
+            w.writerow([pair.key, pair.pdf.name, r.doi or "", r.status, "; ".join(f.name for f in r.files), "\n".join(r.links),
+                        f"{pair.key}_SI.pdf", r.notes, round(r.usage.cost_usd, 4)])
+    todo_by_hand = [(pair, r) for pair, r in results if r.status != "found"]
+    lines = [f"# Supporting information to download by hand ({len(todo_by_hand)} of {len(results)} papers)", "",
+             f"Save each PDF in `{si_dir}` under the name shown. Then `recheck`, `extract` and `evaluate` read it.", ""]
+    for pair, r in todo_by_hand:
+        lines += [f"## {pair.pdf.stem}", f"- save as: `{pair.key}_SI.pdf`" + (f" (several files: `{pair.key}_SI2.pdf` ...)" if r.status != "manual" else ""),
+                  *[f"- {u}" for u in r.links], *([f"- note: {r.notes}"] if r.notes else []), ""]
+    (out / "si_links.md").write_text("\n".join(lines), encoding="utf-8")
+    for status in ("found", "blocked", "not_found", "error", "manual"):
+        n = sum(r.status == status for _, r in results)
+        if n:
+            print(f"  {status}: {n}")
+    for pair, r in todo_by_hand:
+        print(f"\n{pair.key}  ->  {pair.key}_SI.pdf\n  " + "\n  ".join(r.links or ["(no DOI found in the PDF)"]))
+    print(f"\nreport: {out / 'si_report.csv'}  links: {out / 'si_links.md'}")
+    return 0
+
+
 def cmd_recheck(args) -> int:
     from .recheck import Rechecker, recheck_folders
 
@@ -165,7 +303,7 @@ def cmd_recheck(args) -> int:
     rt = _runtime(args, out, {"default": args.model, "judge": args.judge_model})
     rechecker = Rechecker(runtime=rt, judge=not args.no_judge, dpi=args.dpi, all_pages=args.all_pages)
     reports = recheck_folders(rechecker, args.raw, args.pdf, out, only=args.only, limit=args.limit,
-                              workers=args.workers, force=args.force)
+                              workers=args.workers, force=args.force, use_si=not args.no_si)
     total = {s: sum(r.counts().get(s, 0) for r in reports) for s in STATUSES}
     print(f"\n{len(reports)} paper(s) rechecked, ${sum(r.usage.cost_usd for r in reports):.4f}")
     print("  " + ", ".join(f"{s} {n}" for s, n in total.items() if n))
@@ -178,16 +316,21 @@ def cmd_recheck(args) -> int:
 
 def cmd_extract(args) -> int:
     from .extract import Extractor
+    from .sources.pairing import doi_key, local_si
+    from .sources.paper import load_paper
 
     out = Path(args.out)
     rt = _runtime(args, out, {"default": args.model, "mapper": args.mapper_model, "decision": args.decision_model})
     extractor = Extractor(rt, dpi=args.dpi, all_pages=args.all_pages, decide_rows=not args.no_decide)
     failed = 0
     for pdf in args.pdfs:
-        res = extractor.extract(pdf, out / pdf.stem)
+        folder = out / pdf.stem[:40].strip()
+        paper = load_paper(pdf)
+        si = [] if args.no_si else local_si(pdf.parent, doi_key(paper.doi or ""))
+        res = extractor.extract(load_paper(pdf, si=si) if si else paper, folder)
         failed += bool(res.errors)
         print(f"{pdf.name}: {len(res.devices)} device(s), {len(res.rows)} rows, {res.counts()}, "
-              f"${res.usage.cost_usd:.4f} -> {out / pdf.stem}")
+              f"${res.usage.cost_usd:.4f} -> {folder}")
         for e in res.errors:
             print("  error:", e)
     return 1 if failed else 0
@@ -223,13 +366,14 @@ def cmd_evaluate(args) -> int:
                 if auditor and any(c.kind == "value" and c.status in ("mismatch", "unit_mismatch", "review") and not c.audit_verdict for c in ev.cells):
                     from .evaluate.run import _write
                     from .sources.paper import load_paper
-                    paper = load_paper(p.pdf)
+                    paper = load_paper(p.pdf, si=[] if args.no_si else p.si)
                     ev.cells = auditor.audit(paper, ev.cells)
                     _write(out / p.key, ev)
                 evals.append(ev)
     else:
         extractor = Extractor(rt, dpi=args.dpi, all_pages=args.all_pages, decide_rows=False, images=not args.no_images)
-        evals = evaluate_pairs(extractor, pairs, out, workers=args.workers, force=args.force, tol=args.tol, auditor=auditor)
+        evals = evaluate_pairs(extractor, pairs, out, workers=args.workers, force=args.force, tol=args.tol, auditor=auditor,
+                               use_si=not args.no_si)
     if not evals:
         print("nothing evaluated yet")
         return 1
@@ -312,7 +456,7 @@ def cmd_serve(args) -> int:
     return 0
 
 
-COMMANDS = {"pairs": cmd_pairs, "recheck": cmd_recheck, "extract": cmd_extract, "evaluate": cmd_evaluate, "analyze": cmd_analyze,
+COMMANDS = {"pairs": cmd_pairs, "si": cmd_si, "browser": cmd_browser, "columns": cmd_columns, "recheck": cmd_recheck, "extract": cmd_extract, "evaluate": cmd_evaluate, "analyze": cmd_analyze,
             "map": cmd_map, "trace": cmd_trace, "learn": cmd_learn, "skills": cmd_skills, "serve": cmd_serve}
 
 if __name__ == "__main__":

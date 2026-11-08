@@ -113,12 +113,35 @@ class Subscription(unittest.TestCase):
 
     def test_what_it_refuses(self):
         c = self.client()
-        with self.assertRaisesRegex(SubscriptionError, "tool calling"):
-            c.complete("claude-sonnet-5-5", [{"role": "user", "content": "x"}], tools=[{"type": "function"}])
         with self.assertRaisesRegex(SubscriptionError, "only run Claude models"):
             c.complete("openai/gpt-5", [{"role": "user", "content": "x"}])
         self.assertEqual([cli_model(m) for m in ("anthropic/claude-opus-5.5", "claude-haiku-5-5", "sonnet")],
                          ["claude-opus-5-5", "claude-haiku-5-5", "sonnet"])
+
+    def test_tool_calls_are_emulated_and_the_loop_cannot_tell(self):
+        from psc_agent.core.agent import Tool, run_tools
+
+        replies = iter([{"tool_calls": [{"name": "add", "arguments": '{"a": 2, "b": 3}'}], "answer": ""},
+                        {"tool_calls": [], "answer": "The sum is 5 [T1]."}])
+        client = self.client()
+        real_run = client._run
+
+        def scripted(*a, **kw):  # the stub always returns STUB_REPLY; script the two turns instead
+            os.environ["STUB_REPLY"] = json.dumps(next(replies))
+            return real_run(*a, **kw)
+
+        client._run = scripted
+        rt = Runtime("claude-sonnet-5-5", client=client)
+        add = Tool("add", "add two numbers", {"type": "object", "properties": {"a": {"type": "number"}, "b": {"type": "number"}}},
+                   lambda a, b: a + b)
+        out = run_tools(rt, "analyst", [{"role": "system", "content": "s"}, {"role": "user", "content": "2+3?"}], [add])
+        self.assertEqual(out.final, "The sum is 5 [T1].")
+        self.assertEqual([(c.id, c.name, c.ok, c.result) for c in out.calls], [("T1", "add", True, "5")])
+        first, second = self.calls()
+        self.assertIn("- add: add two numbers", first["system"])  # the tools are described to the model
+        self.assertEqual(set(json.loads(first["schema"])["required"]), {"tool_calls", "answer"})
+        texts = [b["text"] for b in second["blocks"]]
+        self.assertTrue(any("You called add" in t for t in texts) and any(t.endswith("[T1] 5") for t in texts))  # history replayed
 
     def test_it_plugs_into_runtime(self):
         class Answer(BaseModel):

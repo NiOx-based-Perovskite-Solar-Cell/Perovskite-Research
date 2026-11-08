@@ -40,11 +40,35 @@ class Job:
     log: list[str] = field(default_factory=list)
     cancel: threading.Event = field(default_factory=threading.Event, repr=False)
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
+    _steps: dict = field(default_factory=dict, repr=False)  # scope (a paper) -> (steps done, steps planned)
+    _scopes: int = field(default=1, repr=False)  # how many scopes (papers) the job will run in all
 
     def add_log(self, line: str) -> None:
         with self._lock:
             self.log.append(f"{datetime.now():%H:%M:%S} {line}")
             del self.log[:-MAX_LOG]
+
+    def set_scopes(self, n: int) -> None:
+        with self._lock:
+            self._scopes = max(1, n)
+
+    def set_steps(self, scope: str, done: int, total: int) -> None:
+        with self._lock:
+            self._steps[scope] = (done, total)
+
+    def progress(self) -> dict:
+        """Fraction done and an estimate of the time left. The estimate is the time so far scaled by what is left, so it
+        is rough (steps differ in length, a cached reply is instant) and absent until the first step has finished."""
+        with self._lock:
+            steps, scopes = list(self._steps.values()), self._scopes
+        fraction = sum(min(d / t, 1.0) for d, t in steps if t) / max(scopes, len(steps), 1)
+        if self.status in ("done", "failed", "cancelled", "interrupted"):
+            return {"fraction": 1.0 if self.status == "done" else round(fraction, 3), "eta_seconds": None, "elapsed_seconds": None}
+        elapsed = None
+        if self.started:
+            elapsed = max(0.0, (datetime.now() - datetime.fromisoformat(self.started)).total_seconds())
+        eta = round(elapsed * (1 - fraction) / fraction) if elapsed is not None and 0 < fraction < 1 else None
+        return {"fraction": round(fraction, 3), "eta_seconds": eta, "elapsed_seconds": None if elapsed is None else round(elapsed)}
 
     def add_cost(self, usd: float) -> None:
         with self._lock:
@@ -53,7 +77,8 @@ class Job:
     def to_dict(self, log_tail: int | None = 200) -> dict:
         with self._lock:
             log = list(self.log[-log_tail:]) if log_tail else []
-        return {"id": self.id, "kind": self.kind, "params": self.params, "status": self.status,
+        progress = self.progress()
+        return {"progress": progress, "id": self.id, "kind": self.kind, "params": self.params, "status": self.status,
                 "created": self.created, "started": self.started, "finished": self.finished,
                 "summary": self.summary, "error": self.error, "cost_usd": round(self.cost_usd, 4),
                 "cancel_requested": self.cancel.is_set(), "log": log}
@@ -140,6 +165,12 @@ class ProgressHook:
         self.job.add_log(f"{role} · {completion.model}: {u.get('prompt_tokens', 0)}+{u.get('completion_tokens', 0)} "
                          f"tokens, ${cost:.4f}{' (cache)' if completion.cached else ''}"
                          + (f" → {', '.join(tools)}" if tools else ""))
+
+    def on_batch(self, papers, **_):
+        self.job.set_scopes(papers)
+
+    def on_progress(self, scope, done, total, **_):
+        self.job.set_steps(scope, done, total)
 
     def on_model_error(self, role, error, **_):
         self.job.add_log(f"{role} error: {str(error)[:300]}")

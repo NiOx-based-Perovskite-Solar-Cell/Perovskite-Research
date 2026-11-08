@@ -13,8 +13,9 @@ Layer rows in the fixed slots of workbook-schema (only the slots the device uses
 
 Rows: for the sheets you are asked for, give rows for every device. Steps shared by several devices (e.g. the same
 perovskite recipe) are repeated for each device that uses them. Fill only what the paper states for that device.
-A value the paper does not give is null, never a typical value; recipes and suppliers are often only in the
-supporting information, which you do not have: then give no row. Use the exact column names of workbook-schema and
+A value the paper does not give is null, never a typical value. Recipes (spin speeds, temperatures, amounts) and
+suppliers are often only in the supporting information: pages marked "(supporting information)" are that SI, use
+them and cite their page. When no such pages are given, the SI is not available: then give no row for what only it holds. Use the exact column names of workbook-schema and
 follow evidence-rules for every row.
 
 - Vender: one row per chemical or material whose supplier or purity the paper names.

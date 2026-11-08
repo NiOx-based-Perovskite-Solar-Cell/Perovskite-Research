@@ -11,3 +11,8 @@ tailwind/node_modules/
 # generated from the data on every run (DataMapHook); learned-rules/ is kept: it is curated knowledge
 skills/data-map/
 evaluate_out/
+flow_out/
+
+# secrets: the API key lives here
+.env
+out/

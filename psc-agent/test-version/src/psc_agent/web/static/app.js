@@ -14,13 +14,15 @@ const BADGE = {
   failed: "bg-rose-100 text-rose-800", cancelled: "bg-amber-100 text-amber-800", interrupted: "bg-amber-100 text-amber-800",
   accept: "bg-emerald-100 text-emerald-800", verify_more: "bg-amber-100 text-amber-800", revise: "bg-rose-100 text-rose-800",
   match: "bg-emerald-100 text-emerald-800", mismatch: "bg-rose-100 text-rose-800", unit_mismatch: "bg-orange-100 text-orange-800",
-  missing_in_record: "bg-violet-100 text-violet-800", not_found: "bg-slate-100 text-slate-700", review: "bg-amber-100 text-amber-800",
+  missing_in_record: "bg-violet-100 text-violet-800", not_found: "bg-slate-100 text-slate-700", needs_si: "bg-sky-100 text-sky-800", review: "bg-amber-100 text-amber-800",
+  core: "bg-emerald-100 text-emerald-800", context: "bg-sky-100 text-sky-800", provenance: "bg-slate-100 text-slate-700",
+  drop: "bg-rose-100 text-rose-800",
   not_checked: "bg-slate-200 text-slate-700", project: "bg-indigo-100 text-indigo-800", generated: "bg-teal-100 text-teal-800",
   role: "bg-slate-100 text-slate-600", other: "bg-slate-100 text-slate-700",
 };
 const badge = (text, kind = text) => `<span class="badge ${BADGE[kind] || BADGE.other}">${esc(text)}</span>`;
-const FINDING_ORDER = ["mismatch", "unit_mismatch", "missing_in_record", "not_found", "review", "not_checked", "match"];
-const TABS = ["overview", "recheck", "extract", "analyze", "skills", "jobs"];
+const FINDING_ORDER = ["mismatch", "unit_mismatch", "missing_in_record", "not_found", "needs_si", "review", "not_checked", "match"];
+const TABS = ["overview", "recheck", "extract", "analyze", "columns", "skills", "jobs"];
 
 const state = { status: null, pairs: null, pdfs: [], pdfChoice: null, selected: new Set(), skills: [], roles: [],
   skill: null, jobs: [], job: null, rows: [], filter: "", timers: {} };
@@ -92,6 +94,42 @@ function stopPolling() {
   clearInterval(state.timers.jobs);
 }
 
+// ---------------------------------------------------------------- columns
+
+const RELEVANCE = ["core", "context", "provenance", "drop"];
+
+async function loadColumns() {
+  if (!state.columns) {
+    $("#columns-table-body").innerHTML = `<p class="text-slate-500">Reading the tables…</p>`;
+    state.columns = await api("/api/columns");
+    state.colFilter = { table: "", relevance: "", q: "" };
+    const tables = Object.keys(state.columns.summary.tables);
+    $("#columns-table").innerHTML = `<option value="">All tables (${state.columns.summary.total.columns} columns)</option>` +
+      tables.map((t) => `<option value="${esc(t)}">${esc(t)} (${state.columns.summary.tables[t].columns})</option>`).join("");
+  }
+  renderColumns();
+}
+
+function renderColumns() {
+  const { summary, columns } = state.columns, f = state.colFilter;
+  const chip = (key, label, n) => `<button data-colrel="${esc(key)}" class="btn-ghost ${f.relevance === key ? "ring-2 ring-slate-400" : ""}">${esc(label)} ${n}</button>`;
+  $("#columns-chips").innerHTML = chip("", "all", summary.total.columns) +
+    RELEVANCE.map((r) => chip(r, r, summary.total[r])).join("") + (summary.total.unrated ? chip("none", "not rated", summary.total.unrated) : "");
+  const q = f.q.toLowerCase();
+  const rows = columns.filter((c) => (!f.table || c.table === f.table)
+    && (!f.relevance || (f.relevance === "none" ? !c.relevance : c.relevance === f.relevance))
+    && (!q || `${c.table} ${c.column} ${c.description} ${c.catalog_note} ${c.why}`.toLowerCase().includes(q)));
+  $("#columns-table-body").innerHTML = `<div class="mb-2 text-xs text-slate-500">${rows.length} of ${columns.length} columns</div>
+    <table class="w-full"><thead><tr><th class="th">Column</th><th class="th">Relevance</th><th class="th">Filled</th><th class="th">Meaning</th><th class="th">Why</th></tr></thead><tbody>
+    ${rows.map((c) => `<tr class="align-top">
+      <td class="td"><div class="font-mono text-xs font-semibold">${esc(c.column)}</div><div class="text-xs text-slate-400">${esc(c.table)} · ${esc(c.dtype)}${c.role ? " · " + esc(c.role) : ""}</div>
+        ${c.examples.length ? `<div class="mt-1 text-xs text-slate-400">e.g. ${c.examples.map(esc).join(" · ")}</div>` : ""}</td>
+      <td class="td">${c.relevance ? badge(c.relevance) : `<span class="text-xs text-slate-400">not rated</span>`}</td>
+      <td class="td tabular-nums text-xs">${c.pct}%<div class="text-slate-400">${c.papers == null ? "" : c.papers + " papers"}${c.distinct ? " · " + c.distinct + " values" : ""}</div></td>
+      <td class="td text-xs">${esc(c.description || c.catalog_note)}</td>
+      <td class="td text-xs text-slate-600">${esc(c.why)}</td></tr>`).join("")}</tbody></table>`;
+}
+
 // ---------------------------------------------------------------- status + overview
 
 async function loadStatus() {
@@ -159,11 +197,14 @@ function recheckRows() {
 
 function renderRecheck() {
   const rows = recheckRows();
-  $("#recheck-papers").innerHTML = `<table class="w-full"><thead><tr><th class="th w-8"></th><th class="th">DOI key</th><th class="th">PDF</th><th class="th">Devices</th><th class="th">Flags</th></tr></thead><tbody>
+  $("#recheck-papers").innerHTML = `<table class="w-full"><thead><tr><th class="th w-8"></th><th class="th">DOI key</th><th class="th">PDF</th><th class="th">Devices</th><th class="th">SI</th><th class="th">Flags</th></tr></thead><tbody>
     ${rows.map((p) => `<tr class="hover:bg-slate-50">
       <td class="td"><input type="checkbox" data-doi="${esc(p.key)}" ${state.selected.has(p.key) ? "checked" : ""}></td>
       <td class="td font-mono text-xs">${esc(p.key)}</td><td class="td text-xs">${esc(p.pdf)}</td>
       <td class="td tabular-nums">${p.workbooks}</td>
+      <td class="td text-xs">${(p.si_files || []).map((n) => `<div title="${esc(n)}">${esc(n.length > 22 ? n.slice(0, 20) + "…" : n)}
+        <button data-sidelete="${esc(n)}" class="text-rose-600" title="remove this file">✕</button></div>`).join("")}
+        ${siUploadControl(p.key, p.si ? "Add another SI" : "Upload SI")}</td>
       <td class="td">${p.typo_pdf_doi ? badge("DOI typo in file names", "unit_mismatch") : ""} ${p.duplicates.length ? badge("duplicate PDF", "queued") : ""}</td>
     </tr>`).join("")}</tbody></table>`;
   updateRecheckButton();
@@ -329,11 +370,36 @@ async function openJob(id) {
       if (fresh.status !== state.job.status) { clearInterval(state.timers.job); await refreshJobs(); return openJob(id); }
       state.job = fresh;
       $("#job-cost").textContent = `$${Number(fresh.cost_usd).toFixed(4)}`;
+      updateProgress(fresh);
       const log = $("#job-log");
       log.textContent = fresh.log.join("\n");
       log.scrollTop = log.scrollHeight;
     }), 2000);
   }
+}
+
+function fmtEta(s) {
+  if (s == null) return "estimating the time left…";
+  if (s < 60) return `about ${Math.max(5, Math.round(s / 5) * 5)} s left`;
+  const m = Math.round(s / 60);
+  return m < 90 ? `about ${m} min left` : `about ${(s / 3600).toFixed(1)} h left`;
+}
+
+// A bar and an estimate of the time left. The estimate scales the time so far by what is left, so it is rough.
+function progressHtml(job) {
+  if (!["queued", "running"].includes(job.status)) return "";
+  return `<div id="job-progress" class="flex items-center gap-3 text-xs text-slate-600">
+      <progress id="job-bar" class="w-64 max-w-full" max="100" value="${Math.round((job.progress?.fraction || 0) * 100)}"></progress>
+      <span id="job-eta" class="tabular-nums"></span></div>`;
+}
+
+function updateProgress(job) {
+  const bar = $("#job-bar"), eta = $("#job-eta");
+  if (!bar || !eta) return;
+  const p = job.progress || {};
+  bar.value = Math.round((p.fraction || 0) * 100);
+  const running = p.elapsed_seconds != null ? ` · running ${Math.max(1, Math.round(p.elapsed_seconds / 60))} min` : "";
+  eta.textContent = job.status === "queued" ? "waiting for a free worker" : `${bar.value}% · ${fmtEta(p.eta_seconds)}${running}`;
 }
 
 function renderJob(job) {
@@ -357,6 +423,7 @@ function renderJob(job) {
       ${job.error ? `<div class="rounded-lg bg-rose-50 p-3 text-sm text-rose-800">${esc(job.error)}</div>` : ""}
       ${summary.length ? `<dl class="grid gap-3 text-sm md:grid-cols-2">${summary.map(([k, v]) => `<div><dt class="text-xs text-slate-500">${esc(k)}</dt>
         <dd class="mt-1 flex flex-wrap gap-1 break-words">${summaryValue(v)}</dd></div>`).join("")}</dl>` : ""}
+      ${progressHtml(job)}
       <details ${running ? "open" : ""}><summary class="cursor-pointer text-sm font-medium">Log</summary>
         <pre id="job-log" class="mt-2 max-h-72 overflow-auto rounded-lg bg-slate-900 p-3 text-xs whitespace-pre-wrap text-slate-100">${esc(job.log.join("\n"))}</pre></details>
     </div>
@@ -366,6 +433,7 @@ function renderJob(job) {
   const log = $("#job-log");
   log.scrollTop = log.scrollHeight;
   $$("#jobs-list [data-job]").forEach((tr) => tr.classList.toggle("bg-indigo-50", tr.dataset.job === job.id));
+  updateProgress(job);
   if (!running) { guard(() => loadFiles(job)); guard(() => loadResults(job)); }
 }
 
@@ -400,6 +468,55 @@ async function loadResults(job) {
 // one table component for recheck findings and extract review rows
 const sample = (device) => `<span title="${esc(device)}">${esc(String(device ?? "").replace(/^.*_(Sample\s*\d+)$/i, "$1"))}</span>`;
 const where = (r) => `${r.page ? `p${esc(r.page)} ` : ""}${r.source ? `[${esc(r.source)}] ` : ""}${esc(r.evidence)}`;
+// The SI link repeats on every row of a paper, so it is shown once: one entry per distinct link, beside the table,
+// with the rows it could settle. Clicking an entry shows only those rows.
+// a file picker that sends the chosen PDF to /api/si for this paper
+function siUploadControl(key, label) {
+  return `<label class="btn-ghost cursor-pointer" style="display:inline-block;padding:.15rem .5rem;font-size:.75rem">${esc(label)}
+    <input type="file" accept="application/pdf,.pdf" data-siupload="${esc(key)}" style="display:none"></label>`;
+}
+
+async function uploadSi(key, files) {
+  if (!files.length) return;
+  const form = new FormData();
+  form.append("key", key);
+  [...files].forEach((f) => form.append("files", f));
+  const res = await api("/api/si", { method: "POST", body: form });
+  toast(`Saved ${res.files.map((f) => `${f.name} (${f.pages} pages)`).join(", ")}${res.paired ? "" : " - no paper with this DOI key was found"}. Run again to use it.`, res.paired);
+  state.pairs = null;
+  if ((location.hash.slice(1) || "overview").startsWith("recheck")) await loadRecheck();
+}
+
+function siGroups(rows) {
+  const groups = new Map();
+  for (const r of rows) {
+    if (!r.si_link) continue;
+    const g = groups.get(r.si_link) || { link: r.si_link, saveAs: r.si_save_as, rows: 0, by: {} };
+    g.rows += 1;
+    const k = r.status || r.decision || "row";
+    g.by[k] = (g.by[k] || 0) + 1;
+    groups.set(r.si_link, g);
+  }
+  return [...groups.values()].sort((x, y) => y.rows - x.rows);
+}
+
+function siPanel(rows) {
+  const groups = siGroups(rows);
+  if (!groups.length) return "";
+  return `<aside style="flex:0 0 17rem" class="space-y-2 rounded-lg bg-sky-50 p-3 text-xs text-sky-900">
+    <div class="font-semibold">Supporting information to download</div>
+    <p>It was not loaded, so these rows cannot be settled. Download each file and save it under the name shown in
+      <code>original paper/SI/</code>, then run again.</p>
+    ${groups.map((g) => `<div class="space-y-1 rounded-md bg-white p-2">
+      <a style="display:inline-block;padding:.25rem .6rem;border-radius:.375rem;background:#0369a1;color:#fff;font-weight:600;text-decoration:none"
+         href="${esc(g.link)}" target="_blank" rel="noopener noreferrer">Open the SI page ↗</a>
+      <div class="break-all"><a style="color:#0369a1;text-decoration:underline" href="${esc(g.link)}" target="_blank" rel="noopener noreferrer">${esc(g.link)}</a></div>
+      <div>Save as: <code>${esc(g.saveAs)}</code></div>
+      <div>${siUploadControl(g.saveAs.replace(/_SI\d*\.pdf$/i, ""), "Upload the file here")}</div>
+      <div class="text-slate-600">${g.rows} rows: ${Object.entries(g.by).map(([k, n]) => `${esc(k)} ${n}`).join(", ")}</div>
+      <button class="btn-ghost" data-sifilter="${esc(g.link)}">${state.siFilter === g.link ? "show all rows" : "show these rows"}</button></div>`).join("")}</aside>`;
+}
+
 const ROW_VIEWS = {
   findings: { key: "status", order: FINDING_ORDER, title: "Findings (one row per checked cell)",
     head: ["Status", "Cell", "Field", "Recorded → paper", "Detail · evidence"],
@@ -419,20 +536,26 @@ function renderRows(rows, view) {
   state.rows = rows;
   state.view = view;
   state.filter = "";
+  state.siFilter = "";
   const counts = rows.reduce((c, r) => ((c[r[v.key]] = (c[r[v.key]] || 0) + 1), c), {});
   $("#job-results").innerHTML = `<div class="card space-y-3">
     <div class="flex flex-wrap items-center gap-2"><h3 class="card-title mr-2 mb-0">${esc(v.title)}</h3>
       ${v.order.filter((s) => counts[s]).map((s) => `<button data-filter="${esc(s)}">${badge(`${s || "none"} ${counts[s]}`, s)}</button>`).join("")}
       <button data-filter="" class="btn-ghost">all ${rows.length}</button>
       <input id="rows-search" class="input ml-auto w-56" placeholder="Search rows"></div>
-    <div id="rows-table" class="max-h-[36rem] overflow-auto rounded-lg border border-slate-200"></div></div>`;
+
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start">
+      <div id="rows-table" style="flex:1 1 36rem;min-width:0" class="max-h-[36rem] overflow-auto rounded-lg border border-slate-200"></div>
+      <div id="rows-si" style="flex:0 0 17rem"></div></div></div>`;
   drawRows();
 }
 
 function drawRows() {
   const v = ROW_VIEWS[state.view];
   const q = ($("#rows-search")?.value || "").toLowerCase();
-  const rows = state.rows.filter((r) => (!state.filter || r[v.key] === state.filter) && (!q || JSON.stringify(r).toLowerCase().includes(q)));
+  const rows = state.rows.filter((r) => (!state.filter || r[v.key] === state.filter) && (!state.siFilter || r.si_link === state.siFilter)
+    && (!q || JSON.stringify(r).toLowerCase().includes(q)));
+  $("#rows-si").innerHTML = siPanel(state.rows);
   $("#rows-table").innerHTML = `<table class="w-full"><thead><tr>${v.head.map((h) => `<th class="th">${h}</th>`).join("")}</tr></thead><tbody>
     ${rows.slice(0, 500).map((r) => `<tr>${v.cells(r).map((c) => `<td class="td text-xs">${c}</td>`).join("")}</tr>`).join("")}</tbody></table>
     ${rows.length > 500 ? `<p class="p-3 text-xs text-slate-500">Showing 500 of ${rows.length}. Download the CSV for all of them.</p>` : ""}
@@ -468,11 +591,21 @@ async function showTrace() {
 
 const LOADERS = {
   overview: () => guard(loadOverview), recheck: () => guard(loadRecheck), extract: () => guard(loadExtract),
-  analyze: () => guard(loadAnalyze), skills: () => guard(loadSkills), jobs: (id) => guard(() => loadJobs(id)),
+  analyze: () => guard(loadAnalyze), columns: () => guard(loadColumns), skills: () => guard(loadSkills), jobs: (id) => guard(() => loadJobs(id)),
 };
 
 function wire() {
   window.addEventListener("hashchange", route);
+  document.addEventListener("click", (e) => {
+    const rel = e.target.closest("[data-colrel]");
+    if (rel && state.columns) { state.colFilter.relevance = rel.dataset.colrel; renderColumns(); }
+  });
+  document.addEventListener("change", (e) => {
+    const up = e.target.closest?.("[data-siupload]");
+    if (up) guard(async () => { await uploadSi(up.dataset.siupload, up.files); up.value = ""; });
+  });
+  $("#columns-table").addEventListener("change", (e) => { state.colFilter.table = e.target.value; renderColumns(); });
+  $("#columns-search").addEventListener("input", (e) => { state.colFilter.q = e.target.value; renderColumns(); });
   document.addEventListener("click", (e) => {
     const job = e.target.closest("[data-job]");
     if (job) { location.hash = `jobs/${job.dataset.job}`; return; }
@@ -480,6 +613,18 @@ function wire() {
     if (skill) { guard(() => openSkill(skill.dataset.skill)); return; }
     const filter = e.target.closest("[data-filter]");
     if (filter) { state.filter = filter.dataset.filter; drawRows(); return; }
+    const del = e.target.closest("[data-sidelete]");
+    if (del) {
+      guard(async () => {
+        await api(`/api/si/${encodeURIComponent(del.dataset.sidelete)}`, { method: "DELETE" });
+        toast(`Removed ${del.dataset.sidelete}`);
+        state.pairs = null;
+        await loadRecheck();
+      });
+      return;
+    }
+    const si = e.target.closest("[data-sifilter]");
+    if (si) { state.siFilter = state.siFilter === si.dataset.sifilter ? "" : si.dataset.sifilter; drawRows(); return; }
     const id = e.target.closest("button")?.id;
     const actions = {
       "btn-map": async () => { const r = await api("/api/data/map", { method: "POST" }); toast(`Data map rebuilt (${r.chars.toLocaleString()} characters)`); },

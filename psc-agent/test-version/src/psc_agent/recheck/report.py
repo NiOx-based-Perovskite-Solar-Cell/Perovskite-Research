@@ -9,7 +9,8 @@ from pydantic import BaseModel, Field
 from ..core.runtime import Usage
 
 # worst first
-Status = Literal["mismatch", "unit_mismatch", "missing_in_record", "not_found", "review", "not_checked", "match"]
+# needs_si: the recorded value is not in the main text and no SI was loaded: it probably comes from the SI
+Status = Literal["mismatch", "unit_mismatch", "missing_in_record", "not_found", "needs_si", "review", "not_checked", "match"]
 STATUSES: tuple[str, ...] = get_args(Status)
 
 
@@ -31,6 +32,8 @@ class Finding(BaseModel):
     page: int | None = None
     source: str | None = None  # text | table | figure | none
     evidence: str | None = None
+    si_link: str = ""  # where to download the SI, on rows the SI could settle (needs_si, not_found)
+    si_save_as: str = ""  # the file name to save it under, in the SI/ folder next to the PDFs
     judgeable: bool = Field(default=False, exclude=True)
 
 

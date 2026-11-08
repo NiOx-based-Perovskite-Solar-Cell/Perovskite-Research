@@ -1,0 +1,23 @@
+# Run from this folder:
+#   docker compose up --build                     the web app on http://127.0.0.1:5000
+#   docker compose run --rm psc pairs --raw "Raw Data" --pdf "original paper"
+#   docker compose run --rm psc evaluate --raw "Raw Data" --pdf "original paper" --provider openrouter --budget 5 --out out/eval
+#   docker compose run --rm --entrypoint python psc -m unittest discover -s /app/tests
+# The key comes from .env (copy .env.example); it is passed as an environment variable, never baked into the image.
+# --provider claude-code (the Claude subscription) needs the `claude` CLI and its login, so it is not available here.
+services:
+  psc:
+    build: .
+    image: psc-agent
+    # published on this computer only: the service has no login and starts paid model runs
+    ports: ["127.0.0.1:5000:5000"]
+    env_file: [.env]
+    volumes:
+      - "../../Raw Data:/data/Raw Data:ro"
+      - "../../original paper:/data/original paper"   # writable: downloaded SI goes to SI/
+      - "../../processed:/data/processed:ro"
+      - "./skills:/data/skills"                         # the data map and learned rules are written here
+      - "./out:/data/out"                               # results of CLI runs: --out out/<name>
+      - "psc-runs:/runs"                                # one folder per web job
+volumes:
+  psc-runs:

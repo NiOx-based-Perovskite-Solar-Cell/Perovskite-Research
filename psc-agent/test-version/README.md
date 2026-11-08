@@ -26,6 +26,7 @@ Each role can run on a different model: Big models plan and map, small models ju
 | `planner` (Big) | analysis plan: questions with acceptance criteria | psc-domain, data-map, analysis-method, plan-task |
 | `analyst` | answers one question with data tools | psc-domain, data-map, analysis-method, analyst-tools |
 | `reporter` (Big) | INSIGHTS.md from accepted claims | … insight-report |
+| `si_finder` | finds and downloads a paper's supporting information on the web | si-finder-task |
 | `learner` | rules for the next run, from the trace | learner-task |
 
 `psc-agent skills --role analyst` prints the exact system prompt a role gets.
@@ -49,7 +50,9 @@ Two skills are generated into the project skills folder:
 | `DataMapHook(data, skills)` | run_start | data-map skill matches the data files |
 
 A hook is any object with `on_<event>(**ctx)` methods. The events are run_start, before_model, after_model,
-model_error, before_tool, after_tool, after_answer, decision and run_end. Raising `HookBlock` in a before_*
+model_error, before_tool, after_tool, after_answer, decision, run_end, plus batch (papers about to run) and
+progress (scope, done, total: steps finished in one paper), which the web page turns into a progress bar and an
+estimate of the time left. Raising `HookBlock` in a before_*
 event refuses the action.
 
 ## Workflows
@@ -57,8 +60,21 @@ event refuses the action.
 **recheck**: blind re-extraction. The model sees each row's key columns (layer, material, step, property)
 but never the recorded values. Values come back with page + quote and pass the quote check. Code compares
 them (units, rounding, figure tolerance), and the judge settles text that still differs. Output is
-`findings.csv`, with status per cell: mismatch, unit_mismatch, missing_in_record, not_found, review,
-not_checked, match.
+`findings.csv`, with status per cell: mismatch, unit_mismatch, missing_in_record, not_found, needs_si, review,
+not_checked, match. Rules that keep the list honest:
+- the paper giving more values than the record (a thickness next to a pressure) is not a mismatch: each recorded
+  value is paired with a paper value of its own unit, and the extra ones are noted ("paper also gives 100 nm");
+- `98+` is 98 with a qualifier; an amount written in the recorded unit's note (`M (0.5 mmol in 5 mL)`) counts;
+- numbers that agree once the recorded unit is read as another one of the same kind (1440 "sec" is 24 h as minutes)
+  are `unit_mismatch`, and the detail names the likely right unit;
+- a paper value for a blank Descriptions or Remarks cell is not reported (curators leave them empty);
+- `needs_si`: the recorded value is not in the main text (or the paper points to another report) and no SI is loaded,
+  so it probably comes from the SI. Save the SI in `SI/` and rerun: it then becomes match or `not_found`;
+- identical review rows of several devices go to the judge once.
+- `si_link` and `si_save_as` columns (findings.csv, review.csv, and an SI column in the web tables): where to download
+  the SI (the publisher's supplementary page when its address is known, else the DOI link) and the file name to save
+  it under in `original paper/SI/`. Filled on the rows the SI could settle (`needs_si`, `not_found`; every row for
+  extract) and only when no SI is loaded. The result page also shows one notice with the link.
 
 **extract**: the mapper (Big model) lists the devices, control first, with their layer stacks. The extract
 model then fills Vender+Materials, Process and Properties+Stability rows for all devices. Rules run before the
@@ -69,6 +85,31 @@ decision model:
 
 The small decision model judges the rest. Output: `<doi>_Sample<N>.xlsx` drafts in the Raw Data layout, and
 `review.csv` with each row's evidence and verdict.
+
+**supporting information (SI)**: recipes, suppliers and extra tables are often only in the SI, so every workflow reads
+it when it is there. SI PDFs live in `<pdf folder>/SI/<doi key>*.pdf` (the doi key is the DOI as lowercase letters
+and digits, e.g. `101039d3lf00258f_SI.pdf`). Pairing finds them; `load_paper(pdf, si=[...])` appends them after the
+main pages as text only (at most 60 pages), marked `(supporting information)`, so page numbers and quotes work as
+before. `--no-si` ignores them. Two ways to get the files:
+- by hand: download them from the journal and drop them in the `SI/` folder;
+- `psc-agent si --raw ... --pdf ...`: the `si_finder` agent searches the web (DuckDuckGo), reads the article page,
+  downloads the SI and writes `si_report.csv` (found / blocked / not_found) and `si_links.md`: for every paper it could
+  not save, the pages where a person gets the SI (publisher page, DOI link, repository links it saw) and the file name
+  to save it under. Publishers such as ACS and Wiley answer scripts with HTTP 403, so those need a manual download.
+  `--links-only` skips the search and the model and just writes those pages.
+- the web page: the Recheck list has an **Upload SI** button per paper, and the box beside a result lists each SI
+  link once with an **Upload the file here** button (`POST /api/si` with `key` and `files`; `GET /api/si`,
+  `DELETE /api/si/<name>`). The file is checked (a readable PDF), saved as `SI/<doi key>_SI.pdf` (`_SI2` ... for more)
+  and used by the next run; remove it with the ✕ next to its name.
+- `psc-agent si --browser`: the agent uses a Chrome window of its own (Playwright drives the installed Chrome;
+  `pip install playwright`, no browser download) that you sign in once with `psc-agent browser login [--url <your
+  library's login page>]` (it keeps the session in `~/.psc-agent/chrome`, a profile separate from your daily Chrome:
+  Chrome does not allow remote control of the default profile). Publishers that answer plain requests with 403 serve
+  their pages to a signed-in browser, so the agent opens the article, finds the supplementary file and saves it in
+  `SI/`. A bot check or a sign-in page is never solved by the program: the window stays open for you
+  (`--wait-human 300` seconds, default) and the terminal says so. Papers run one after another. It runs on the host,
+  not in the Docker container. `--cdp-url http://127.0.0.1:9222` attaches to a Chrome you started yourself with
+  `--remote-debugging-port` and its own `--user-data-dir`.
 
 **analyze**:
 1. The planner (Big model) turns the goal into acceptance criteria (ACs).
@@ -122,12 +163,14 @@ pip install -e "agent for research[analysis]"      # [analysis] adds pandas for 
 pip install "psc-agent[analysis] @ git+https://github.com/<owner>/<repo>.git#subdirectory=agent%20for%20research"
 ```
 
-Python ≥ 3.10. Set `OPENROUTER_API_KEY` or pass `api_key=`. The key only goes into the Authorization header.
+Python ≥ 3.10. Put `OPENROUTER_API_KEY=sk-or-...` in a `.env` file (copy `.env.example`; it is git-ignored; the CLI reads `./.env` and the
+project folder's `.env`), or set it as an environment variable (which wins over the file), or pass `api_key=`. The key only goes into the Authorization header.
 
 ## Command line
 
 ```bash
 psc-agent pairs   --raw "Raw Data" --pdf "original paper"
+psc-agent si      --raw "Raw Data" --pdf "original paper" [--only DOI ...] [--workers 3]   # SI -> original paper/SI/
 psc-agent recheck --raw "Raw Data" --pdf "original paper" --model anthropic/claude-sonnet-5.5 \
                   --skills "agent for research/skills" --budget 5 [--only DOI ...] [--workers 4]
 psc-agent extract "original paper/13 Stabilized hole-selective layer.pdf" --model anthropic/claude-sonnet-5.5 \
@@ -135,6 +178,7 @@ psc-agent extract "original paper/13 Stabilized hole-selective layer.pdf" --mode
 psc-agent analyze --goal "Which HTL modifications raise PCE, through which channel, and why?" \
                   --data processed/prepared_v2 --skills "agent for research/skills" \
                   --model anthropic/claude-sonnet-5.5 --decision-model anthropic/claude-haiku-5.5
+psc-agent columns --data processed/prepared_v2 [--table T ...] [--relevance core drop ...] [--format text|md|csv] [--out FILE]
 psc-agent map     --data processed/prepared_v2 --skills "agent for research/skills"
 psc-agent trace   analyze_out/trace.jsonl
 psc-agent learn   analyze_out/trace.jsonl recheck_out/trace.jsonl --skills "agent for research/skills" [--model M]
@@ -142,6 +186,40 @@ psc-agent skills  --skills "agent for research/skills" [--role decision]
 ```
 
 Every model command writes `trace.jsonl` and caches responses in `<out>/.cache`, so a rerun costs nothing.
+
+## Docker
+
+The image runs the web app by default, and every CLI command through the same entrypoint. From this folder:
+
+```bash
+cp .env.example .env                       # put OPENROUTER_API_KEY=... in it; passed as an environment variable, not baked in
+docker compose up --build                  # web app on http://127.0.0.1:5000
+docker compose run --rm psc pairs --raw "Raw Data" --pdf "original paper"
+docker compose run --rm psc evaluate --raw "Raw Data" --pdf "original paper" --provider openrouter --budget 5 --out out/eval
+docker compose run --rm psc si --raw "Raw Data" --pdf "original paper" --links-only --out out/si
+```
+
+`docker-compose.yml` mounts `Raw Data/` and `processed/` read-only, `original paper/` writable (downloaded SI goes to
+`original paper/SI/`), `skills/` (the data map is written there), `out/` (results of CLI runs: use `--out out/<name>`)
+and a volume for the web jobs. The port is published on 127.0.0.1 only: the service has no login and starts paid
+model runs. `--provider claude-code` (the Claude subscription) needs the `claude` CLI and its login, so it is not
+available in the container; use OpenRouter. In Git Bash on Windows, prefix commands that take a `/path` argument with
+`MSYS_NO_PATHCONV=1`.
+
+## Columns (what to keep for the analysis)
+
+`psc-agent columns` prints every column of the processed tables (289 in `processed/prepared_v2`) with its type, share
+of rows filled, number of papers, example values, its meaning and how much the analysis needs it; the web app shows
+the same on the Columns tab (filter by table and relevance, search, download CSV or Markdown, print). The point is to
+cut the dataset down to what the research needs: insights from the extracted papers (which class of substance changes
+the device results, how and through which channel), not tuning a PCE or retention value.
+
+- Relevance: `core` (the analysis reads it), `context` (needed to compare fairly), `provenance` (identifiers and source
+  traces, for joins and audit), `drop` (redundant, constant, empty or a raw leftover: a candidate to remove).
+- Measured from the tables: `psc_agent/analyze/columns.py`. Meaning and relevance are written by hand in
+  `processed/eda/column_notes.csv` (table, column, relevance, description, why); the older
+  `processed/eda/column_catalog.csv` fills in the meaning of a column that has no note yet. Edit the notes file to
+  change a rating; a column without a note shows as "not rated".
 
 ## Web app (Flask backend + HTML / Tailwind / JS frontend)
 

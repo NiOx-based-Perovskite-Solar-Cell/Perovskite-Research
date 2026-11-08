@@ -19,6 +19,17 @@ def doi_key(s: str) -> str:
     return re.sub(r"[^0-9a-z]", "", s.lower())
 
 
+SI_DIR = "SI"
+
+
+def local_si(pdf_dir, key: str) -> list[Path]:
+    """The supporting-information PDFs of the paper with this doi key, found in ``<pdf_dir>/SI/<key>*.pdf``."""
+    folder = Path(pdf_dir) / SI_DIR
+    if not key or not folder.is_dir():
+        return []
+    return sorted(p for p in folder.glob("*.pdf") if doi_key(p.stem).startswith(key))
+
+
 @dataclass
 class PaperPair:
     key: str
@@ -26,6 +37,7 @@ class PaperPair:
     workbooks: list[Path]
     duplicate_pdfs: list[Path] = field(default_factory=list)  # same DOI, not used
     pdf_doi: str | None = None  # set when paired despite a one-character typo in the workbook names
+    si: list[Path] = field(default_factory=list)  # supporting-information PDFs found in <pdf folder>/SI/
 
 
 @dataclass
@@ -71,7 +83,7 @@ def pair_folders(raw_dir, pdf_dir) -> Pairing:
     pairs = []
     for k, pdfs in sorted(by_key.items()):
         pdfs = sorted(pdfs, key=lambda p: -p.stat().st_size)  # keep the largest copy
-        pairs.append(PaperPair(k, pdfs[0], groups[k], pdfs[1:], typo.get(k)))
+        pairs.append(PaperPair(k, pdfs[0], groups[k], pdfs[1:], typo.get(k), local_si(pdf_dir, k)))
     return Pairing(pairs, still, {k: v for k, v in groups.items() if k not in by_key})
 
 
