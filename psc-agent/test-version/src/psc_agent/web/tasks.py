@@ -71,4 +71,25 @@ def run_learn(cfg, job: Job) -> dict:
     return {"skill": str(path), "traces": len(traces)}
 
 
-TASKS = {"recheck": run_recheck, "extract": run_extract, "analyze": run_analyze, "learn": run_learn}
+def run_evaluate(cfg, job: Job) -> dict:
+    from ..evaluate import Auditor, evaluate_pairs, write_report
+    from ..extract import Extractor
+    from ..sources.pairing import doi_key, pair_folders
+
+    p = job.params
+    rt = _runtime(cfg, job, _models(cfg, p, "mapper", "auditor"))
+    extractor = Extractor(rt, decide_rows=False)
+    auditor = Auditor(rt) if p.get("audit", True) else None
+    pairs = pair_folders(cfg.raw_dir, cfg.pdf_dir).pairs
+    if p.get("dois"):
+        wanted = [doi_key(o) for o in p["dois"]]
+        pairs = [pair for pair in pairs if any(w in pair.key for w in wanted)]
+    if p.get("limit"):
+        pairs = pairs[: int(p["limit"])]
+    evals = evaluate_pairs(extractor, pairs, job.out_dir, workers=int(p.get("workers") or 1),
+                           force=bool(p.get("force")), auditor=auditor)
+    write_report(evals, job.out_dir, {"provider": "openrouter", "model": p.get("model") or cfg.models["default"]})
+    return {"papers": len(evals), "errors": [e for ev in evals for e in ev.errors]}
+
+
+TASKS = {"recheck": run_recheck, "extract": run_extract, "analyze": run_analyze, "learn": run_learn, "evaluate": run_evaluate}

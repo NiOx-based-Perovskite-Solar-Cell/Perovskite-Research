@@ -17,6 +17,7 @@ from .core.hooks import BudgetHook, HookBlock, Hooks, QuoteCheckHook, TraceHook
 from .core.openrouter import OpenRouterClient, OpenRouterError
 from .core.runtime import Runtime, Usage
 from .core.skills import Skill, SkillBook
+from .evaluate.audit import Auditor
 from .extract import ExtractResult, Extractor
 from .recheck import STATUSES, DeviceInfo, Finding, PaperReport, Rechecker, recheck_folders
 from .recheck.compare import compare_values
@@ -37,7 +38,7 @@ def __getattr__(name):  # the analysis workflow needs pandas: load it on first u
 
 
 __all__ = [
-    "STATUSES", "AnalysisResult", "Analyst", "BudgetHook", "DataMapHook", "DataTools", "Device", "DeviceInfo",
+    "STATUSES", "AnalysisResult", "Analyst", "Auditor", "BudgetHook", "DataMapHook", "DataTools", "Device", "DeviceInfo",
     "ExtractResult", "Extractor", "Finding", "HookBlock", "Hooks", "OpenRouterClient", "OpenRouterError", "Paper",
     "PaperReport", "QuoteCheckHook", "Rechecker", "Runtime", "Skill", "SkillBook", "Tool", "ToolCall", "ToolError",
     "TraceHook", "Usage", "Verdict", "compare_values", "decide", "load_paper", "load_workbook", "pair_folders",

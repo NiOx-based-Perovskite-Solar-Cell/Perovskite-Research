@@ -1,7 +1,7 @@
 ---
 name: evidence-rules
 description: Every value needs page + verbatim quote (or figure/table label); quotes are machine-checked
-roles: [recheck, mapper, extract, decision]
+roles: [recheck, mapper, extract, decision, auditor]
 order: 30
 ---
 - Use only the paper you are given (text layer + page images). No outside knowledge, no typical values, no values

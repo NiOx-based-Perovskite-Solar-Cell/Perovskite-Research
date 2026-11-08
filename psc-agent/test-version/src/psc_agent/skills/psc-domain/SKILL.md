@@ -1,7 +1,7 @@
 ---
 name: psc-domain
 description: Inverted perovskite solar cells — device stack, metrics, mechanism measurements, abbreviations
-roles: [recheck, mapper, extract, judge, decision, planner, analyst, reporter]
+roles: [recheck, mapper, extract, judge, decision, planner, analyst, reporter, auditor]
 order: 10
 ---
 Devices are inverted (p-i-n) perovskite solar cells, bottom to top:

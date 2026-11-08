@@ -97,15 +97,14 @@ def _columns_text(sheets) -> str:
 
 
 def _values_on_page(row: XRow, pages: list[str]) -> tuple[bool, str]:
-    """Every value of the row is in the cited page's text: each number of a numeric value, the whole text
-    of any other value. Returns (all found, snippets around them) for the decision model."""
+    """Every number of the row's cells is in the cited page's text. Labels (a property name, a unit, a remark)
+    are not looked up, only the numbers. Returns (all found, snippets around them) for the decision model."""
     if not row.page or not 1 <= row.page <= len(pages):
         return False, ""
     text = normalize_text(pages[row.page - 1])
     snippets = []
     for value in row.cells().values():
-        needles = re.findall(r"\d+(?:\.\d+)?", str(value)) or [normalize_text(str(value))]
-        for needle in needles:
+        for needle in re.findall(r"\d+(?:\.\d+)?", str(value)):
             i = text.find(needle)
             if i < 0:
                 return False, ""
@@ -114,10 +113,11 @@ def _values_on_page(row: XRow, pages: list[str]) -> tuple[bool, str]:
 
 
 class Extractor:
-    """``decide_rows``: run the decision model on the rows (rules always run)."""
+    """``decide_rows``: run the decision model on the rows (rules always run). ``images``: send page images too, not only the text."""
 
-    def __init__(self, runtime: Runtime, *, dpi: int = 150, all_pages: bool = False, decide_rows: bool = True):
-        self.rt, self.dpi, self.all_pages, self.decide_rows = runtime, dpi, all_pages, decide_rows
+    def __init__(self, runtime: Runtime, *, dpi: int = 150, all_pages: bool = False, decide_rows: bool = True,
+                 images: bool = True):
+        self.rt, self.dpi, self.all_pages, self.decide_rows, self.images = runtime, dpi, all_pages, decide_rows, images
 
     def extract(self, paper: Paper | Source, out_dir) -> ExtractResult:
         paper = paper if isinstance(paper, Paper) else load_paper(paper)
@@ -125,7 +125,7 @@ class Extractor:
         result = ExtractResult(paper=paper.name, doi=paper.doi)
         run = {"kind": "extract", "paper": paper.name}
         self.rt.hooks.emit("run_start", run=run, runtime=self.rt)
-        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages)
+        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, images=self.images)
         try:
             self._map(paper, parts, result)
         except FAILURES as e:  # without the device map nothing else can be asked
@@ -146,8 +146,10 @@ class Extractor:
 
     def _map(self, paper: Paper, parts, result: ExtractResult) -> None:
         task = ("Build the paper map: every device the paper reports (S1, S2, ... control first) with how the paper "
-                "names it and a one-line description of what differs, plus its Layer rows (one per layer, bottom to "
-                f"top, LayerID 1, 2, ...).\n{_columns_text(['Layer'])}\n"
+                "names it and a one-line description of what differs, plus its Layer rows. Layer rows use the lab's fixed "
+                "slots (workbook-schema): LayerID 1 Anode, 2 HTL, 3 HTL treatment, 4 PSK, 5 PSK treatment, 6 ETL, "
+                "7 ETL treatment, 8 Cathode. Give a row for each slot the device uses, never renumber, and leave the glass "
+                f"substrate out.\n{_columns_text(['Layer'])}\n"
                 "Return JSON: devices [{sample, paper_name, description}] and rows (sheet = Layer).")
         ans = self.rt.ask_json("mapper", [*parts, {"type": "text", "text": task}], MapAnswer,
                                schema=_schema("paper_map", ["Layer"], True), usage=result.usage)
@@ -159,11 +161,12 @@ class Extractor:
 
     def _rows(self, paper: Paper, parts, group, result: ExtractResult) -> None:
         devices = "\n".join(f"{d.sample} = {d.paper_name or '?'}: {d.description or ''}" for d in result.devices)
-        stacks = "\n".join(f"{d.sample}: " + " / ".join(f"{r.cells().get('LayerID', '?')} {r.cells().get('Material', '?')}"
+        stacks = "\n".join(f"{d.sample}: " + " / ".join(f"slot {r.cells().get('LayerID', '?')} {r.cells().get('Material', '?')}"
                                                          for r in result.rows if r.device == d.sample and r.sheet == "Layer")
                            for d in result.devices)
         task = (f"DEVICES (the paper map):\n{devices}\n\nLAYER STACKS:\n{stacks}\n\n{_columns_text(group)}\n\n"
-                f"Give the rows of these sheets for every device: {', '.join(group)}. Return JSON: rows.")
+                f"LayerID is the slot number shown above.\nGive the rows of these sheets for every device: {', '.join(group)}. "
+                "Return JSON: rows.")
         ans = self.rt.ask_json("extract", [*parts, {"type": "text", "text": task}], RowsAnswer,
                                schema=_schema("sheet_rows", list(group), False), usage=result.usage)
         known = {d.sample for d in result.devices}

@@ -1,4 +1,4 @@
-"""Command line: psc-agent pairs | recheck | extract | analyze | map | trace | learn | skills."""
+"""Command line: psc-agent pairs | recheck | extract | evaluate | analyze | map | trace | learn | skills | serve."""
 from __future__ import annotations
 
 import argparse
@@ -11,9 +11,18 @@ from .core.runtime import Runtime
 from .core.skills import SkillBook
 from .recheck.report import STATUSES
 
+DEFAULT_MODEL = {"openrouter": "anthropic/claude-sonnet-5.5", "claude-code": "claude-sonnet-5-5"}
 
-def _model_args(p: argparse.ArgumentParser, out: str) -> None:
-    p.add_argument("--model", required=True, help="default OpenRouter model id for every role (image input + structured output)")
+
+def _model_args(p: argparse.ArgumentParser, out: str, *, subscription: bool = True) -> None:
+    providers = ["openrouter", "claude-code"] if subscription else ["openrouter"]
+    p.add_argument("--provider", choices=providers, default="openrouter",
+                   help="openrouter = OPENROUTER_API_KEY; claude-code = your Claude subscription through the `claude` CLI, no key "
+                        "(Claude models only, no tool calling)")
+    p.add_argument("--model", help="default model id for every role (image input + structured output); "
+                                   f"default {DEFAULT_MODEL['openrouter']} / {DEFAULT_MODEL['claude-code']}")
+    p.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"],
+                   help="thinking effort (claude-code: default medium; openrouter: sent as reasoning.effort when given)")
     p.add_argument("--out", default=out)
     p.add_argument("--skills", default="skills", help="project skills folder (added to the defaults; receives generated skills)")
     p.add_argument("--budget", type=float, help="stop calling models after this many USD")
@@ -25,7 +34,15 @@ def _runtime(args, out: Path, models: dict, hooks=()) -> Runtime:
     hooks = [TraceHook(out / "trace.jsonl"), QuoteCheckHook(), *hooks]
     if args.budget:
         hooks.append(BudgetHook(args.budget))
-    return Runtime({k: v for k, v in models.items() if v}, cache_dir=None if args.no_cache else out / ".cache",
+    cache = None if args.no_cache else out / ".cache"
+    client = extra = None
+    if args.provider == "claude-code":
+        from .core.subscription import ClaudeCodeClient
+
+        client = ClaudeCodeClient(effort=args.effort or "medium", cache_dir=cache)
+    elif args.effort:
+        extra = {"reasoning": {"effort": args.effort}}
+    return Runtime({k: v for k, v in models.items() if v}, client=client, cache_dir=cache, extra=extra,
                    skills_dirs=[args.skills] if args.skills else [], hooks=hooks, max_tokens=args.max_tokens)
 
 
@@ -61,11 +78,29 @@ def main(argv: list[str] | None = None) -> int:
     x.add_argument("--dpi", type=int, default=150)
     x.add_argument("--all-pages", action="store_true")
 
+    ev = sub.add_parser("evaluate", help="extract papers that already have workbooks, then score the extraction against them")
+    ev.add_argument("--raw", default="Raw Data", help="folder of the hand-entered <doi>_Sample<N>.xlsx workbooks (the record)")
+    ev.add_argument("--pdf", default="original paper", help="folder of source PDFs")
+    _model_args(ev, "evaluate_out")
+    ev.add_argument("--mapper-model", help="Big model for the paper map (default: --model)")
+    ev.add_argument("--only", nargs="+", metavar="DOI", help="only these DOIs (any part of the DOI)")
+    ev.add_argument("--exclude", nargs="+", metavar="DOI", help="skip these DOIs")
+    ev.add_argument("--limit", type=int, help="at most this many papers")
+    ev.add_argument("--workers", type=int, default=1, help="papers in parallel")
+    ev.add_argument("--force", action="store_true", help="redo papers that already have an evaluation")
+    ev.add_argument("--report-only", action="store_true", help="rebuild the report from finished papers, call no model")
+    ev.add_argument("--tol", type=float, default=0.01, help="relative tolerance for numbers (rounding is also forgiven)")
+    ev.add_argument("--dpi", type=int, default=150)
+    ev.add_argument("--all-pages", action="store_true")
+    ev.add_argument("--no-images", action="store_true", help="send the text layer only, no page images")
+    ev.add_argument("--audit", action="store_true", help="run auditor agent on non-matching cells")
+    ev.add_argument("--audit-model", help="model for auditor agent (default: --model)")
+
     a = sub.add_parser("analyze", help="find key insights in the processed data (plan → tools → decide → report)")
     a.add_argument("--goal", required=True)
     a.add_argument("--data", required=True, help="folder of processed CSV tables, e.g. processed/prepared_v2")
     a.add_argument("--catalog", help="column catalog CSV (default: <data>/../eda/column_catalog.csv)")
-    _model_args(a, "analyze_out")
+    _model_args(a, "analyze_out", subscription=False)
     a.add_argument("--analyst-model", help="model for the tool loop (default: --model)")
     a.add_argument("--decision-model", help="small model for accept / verify_more / revise (default: --model)")
     a.add_argument("--questions", type=int, default=6)
@@ -98,6 +133,8 @@ def main(argv: list[str] | None = None) -> int:
     w.add_argument("--dev", action="store_true", help="Flask development server instead of waitress")
 
     args = ap.parse_args(argv)
+    if hasattr(args, "provider"):
+        args.model = args.model or DEFAULT_MODEL[args.provider]
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)
     return COMMANDS[args.cmd](args)
@@ -154,6 +191,57 @@ def cmd_extract(args) -> int:
         for e in res.errors:
             print("  error:", e)
     return 1 if failed else 0
+
+
+def cmd_evaluate(args) -> int:
+    from .evaluate import Auditor, evaluate_pairs, load_eval, write_report
+    from .evaluate.report import pct, stats
+    from .extract import Extractor
+    from .sources.pairing import doi_key, pair_folders
+
+    out = Path(args.out)
+    pairs = pair_folders(args.raw, args.pdf).pairs
+    if args.only:
+        wanted = [doi_key(o) for o in args.only]
+        pairs = [p for p in pairs if any(w in p.key for w in wanted)]
+    if args.exclude:
+        skipped = [doi_key(o) for o in args.exclude]
+        pairs = [p for p in pairs if not any(s in p.key for s in skipped)]
+    pairs = pairs[: args.limit] if args.limit else pairs
+    if not pairs:
+        print("no paper selected")
+        return 1
+
+    rt = _runtime(args, out, {"default": args.model, "mapper": args.mapper_model, "auditor": args.audit_model}) if (not args.report_only or args.audit) else None
+    auditor = Auditor(rt, dpi=args.dpi, all_pages=args.all_pages, images=not args.no_images) if (args.audit and rt) else None
+
+    if args.report_only:
+        evals = []
+        for p in pairs:
+            ev = load_eval(out / p.key)
+            if ev:
+                if auditor and any(c.kind == "value" and c.status in ("mismatch", "unit_mismatch", "review") and not c.audit_verdict for c in ev.cells):
+                    from .evaluate.run import _write
+                    from .sources.paper import load_paper
+                    paper = load_paper(p.pdf)
+                    ev.cells = auditor.audit(paper, ev.cells)
+                    _write(out / p.key, ev)
+                evals.append(ev)
+    else:
+        extractor = Extractor(rt, dpi=args.dpi, all_pages=args.all_pages, decide_rows=False, images=not args.no_images)
+        evals = evaluate_pairs(extractor, pairs, out, workers=args.workers, force=args.force, tol=args.tol, auditor=auditor)
+    if not evals:
+        print("nothing evaluated yet")
+        return 1
+    report = write_report(evals, out, {"provider": args.provider, "model": args.model, "tol": args.tol})
+    values = stats([c for ev in evals for c in ev.cells if c.kind == "value"])
+    print(f"\n{len(evals)} paper(s): {pct(values['match_rate'])} of {values['n']} hand-entered values match "
+          f"({pct(values['match_rate_likely'])} of those present in the PDF text)")
+    errors = [f"{ev.key}: {e}" for ev in evals for e in ev.errors]
+    for e in errors:
+        print("  error:", e)
+    print(f"report: {report}  cells: {out / 'cells_all.csv'}")
+    return 1 if errors else 0
 
 
 def cmd_analyze(args) -> int:
@@ -224,7 +312,7 @@ def cmd_serve(args) -> int:
     return 0
 
 
-COMMANDS = {"pairs": cmd_pairs, "recheck": cmd_recheck, "extract": cmd_extract, "analyze": cmd_analyze,
+COMMANDS = {"pairs": cmd_pairs, "recheck": cmd_recheck, "extract": cmd_extract, "evaluate": cmd_evaluate, "analyze": cmd_analyze,
             "map": cmd_map, "trace": cmd_trace, "learn": cmd_learn, "skills": cmd_skills, "serve": cmd_serve}
 
 if __name__ == "__main__":

@@ -33,7 +33,60 @@ class Completion:
     message: dict = field(default_factory=dict)  # the assistant message, to append to the history
 
 
-class OpenRouterClient:
+class CachedClient:
+    """What every model client shares: the on-disk response cache and the reply -> Completion step.
+
+    A client answers ``complete(model, messages, *, schema, tools, tool_choice, max_tokens, extra)``;
+    ``Runtime`` only needs that method, so OpenRouter and the Claude Code subscription are interchangeable.
+    Replies are kept in OpenRouter's response shape (``choices[0].message``, ``usage``), also in the cache.
+    """
+
+    cache_dir: Path | None = None
+
+    def _completion(self, data: dict, model: str, max_tokens: int, cached: bool) -> Completion:
+        choice = (data.get("choices") or [{}])[0]
+        message = choice.get("message") or {}
+        content = message.get("content")
+        if isinstance(content, list):  # some providers return content parts
+            content = "".join(p.get("text", "") for p in content if isinstance(p, dict))
+        tool_calls = message.get("tool_calls") or []
+        finish = choice.get("finish_reason")
+        if finish == "length":
+            raise OpenRouterError(f"{model}: output hit max_tokens={max_tokens}; raise it or send fewer rows")
+        if not content and not tool_calls:
+            raise OpenRouterError(f"{model}: empty response (finish_reason={finish})")
+        usage = data.get("usage") or {}
+        log.info("%s: %s prompt + %s completion tokens, $%.4f%s", data.get("model", model),
+                 usage.get("prompt_tokens"), usage.get("completion_tokens"), usage.get("cost") or 0,
+                 " (cache)" if cached else "")
+        assistant = {"role": "assistant", "content": content or None}
+        if tool_calls:
+            assistant["tool_calls"] = tool_calls
+        return Completion(content or "", data.get("model", model), usage, cached, tool_calls, assistant)
+
+    def _cache_path(self, key: str) -> Path | None:
+        return self.cache_dir / key[:2] / f"{key}.json" if self.cache_dir else None
+
+    def _cache_get(self, key: str) -> dict | None:
+        p = self._cache_path(key)
+        if p is None or not p.exists():
+            return None
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return None
+
+    def _cache_put(self, key: str, data: dict) -> None:
+        p = self._cache_path(key)
+        if p is None:
+            return
+        p.parent.mkdir(parents=True, exist_ok=True)
+        tmp = p.with_suffix(f".{os.getpid()}.{threading.get_ident()}.tmp")
+        tmp.write_text(json.dumps(data), encoding="utf-8")
+        os.replace(tmp, p)
+
+
+class OpenRouterClient(CachedClient):
     """Thread-safe; share one instance across workers.
 
     ``api_key`` defaults to ``$OPENROUTER_API_KEY``. With ``cache_dir`` set, identical requests
@@ -105,28 +158,10 @@ class OpenRouterClient:
         cached = data is not None
         if not cached:
             data = self._post(body)
-
-        choice = (data.get("choices") or [{}])[0]
-        message = choice.get("message") or {}
-        content = message.get("content")
-        if isinstance(content, list):  # some providers return content parts
-            content = "".join(p.get("text", "") for p in content if isinstance(p, dict))
-        tool_calls = message.get("tool_calls") or []
-        finish = choice.get("finish_reason")
-        if finish == "length":
-            raise OpenRouterError(f"{model}: output hit max_tokens={max_tokens}; raise it or send fewer rows")
-        if not content and not tool_calls:
-            raise OpenRouterError(f"{model}: empty response (finish_reason={finish})")
+        comp = self._completion(data, model, max_tokens, cached)
         if not cached:
             self._cache_put(key, data)
-        usage = data.get("usage") or {}
-        log.info("%s: %s prompt + %s completion tokens, $%.4f%s", data.get("model", model),
-                 usage.get("prompt_tokens"), usage.get("completion_tokens"), usage.get("cost") or 0,
-                 " (cache)" if cached else "")
-        assistant = {"role": "assistant", "content": content or None}
-        if tool_calls:
-            assistant["tool_calls"] = tool_calls
-        return Completion(content or "", data.get("model", model), usage, cached, tool_calls, assistant)
+        return comp
 
     def _post(self, body: dict) -> dict:
         for attempt in range(self.max_retries + 1):
@@ -161,24 +196,3 @@ class OpenRouterClient:
             log.warning("OpenRouter %s; retry %d/%d in %.0fs", err, attempt + 1, self.max_retries, delay)
             time.sleep(delay)
         raise AssertionError("unreachable")
-
-    def _cache_path(self, key: str) -> Path | None:
-        return self.cache_dir / key[:2] / f"{key}.json" if self.cache_dir else None
-
-    def _cache_get(self, key: str) -> dict | None:
-        p = self._cache_path(key)
-        if p is None or not p.exists():
-            return None
-        try:
-            return json.loads(p.read_text(encoding="utf-8"))
-        except (OSError, ValueError):
-            return None
-
-    def _cache_put(self, key: str, data: dict) -> None:
-        p = self._cache_path(key)
-        if p is None:
-            return
-        p.parent.mkdir(parents=True, exist_ok=True)
-        tmp = p.with_suffix(f".{os.getpid()}.{threading.get_ident()}.tmp")
-        tmp.write_text(json.dumps(data), encoding="utf-8")
-        os.replace(tmp, p)

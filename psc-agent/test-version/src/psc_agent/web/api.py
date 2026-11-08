@@ -14,7 +14,7 @@ from ..core.skills import DEFAULT_DIR, SkillBook
 from .tasks import TASKS
 
 bp = Blueprint("api", __name__, url_prefix="/api")
-ROLES = ("recheck", "mapper", "extract", "judge", "decision", "planner", "analyst", "reporter", "learner")
+ROLES = ("recheck", "mapper", "extract", "judge", "decision", "planner", "analyst", "reporter", "learner", "auditor")
 _MODEL = re.compile(r"^[\w.\-/:]{1,200}$")
 _SKILL = re.compile(r"^[a-z0-9][a-z0-9-]{0,49}$")
 READ_ONLY_SKILLS = {"data-map"}  # rebuilt from the data on every analyze run

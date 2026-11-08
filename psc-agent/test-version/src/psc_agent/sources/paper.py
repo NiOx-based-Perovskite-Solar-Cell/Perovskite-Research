@@ -58,11 +58,11 @@ def load_paper(src: Source, name: str | None = None) -> Paper:
     return Paper(name, data, pages, meta)
 
 
-def paper_parts(paper: Paper, *, dpi: int, all_pages: bool) -> list[dict]:
-    """The paper as model message parts: page images, then the text layer marked as a cache breakpoint
-    (it is resent with every call about the same paper)."""
+def paper_parts(paper: Paper, *, dpi: int, all_pages: bool, images: bool = True) -> list[dict]:
+    """The paper as model message parts: page images (unless ``images`` is off), then the text layer marked as a
+    cache breakpoint (it is resent with every call about the same paper)."""
     parts: list[dict] = []
-    for i, jpg in paper.page_images(dpi=dpi, all_pages=all_pages):
+    for i, jpg in paper.page_images(dpi=dpi, all_pages=all_pages) if images else []:
         parts.append({"type": "text", "text": f"[Image of page {i + 1}]"})
         parts.append({"type": "image_url",
                       "image_url": {"url": "data:image/jpeg;base64," + base64.b64encode(jpg).decode()}})
