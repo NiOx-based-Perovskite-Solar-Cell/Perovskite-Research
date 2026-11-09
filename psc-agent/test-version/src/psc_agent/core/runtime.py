@@ -43,6 +43,10 @@ class Usage(BaseModel):
         self.cached_prompt_tokens += (u.get("prompt_tokens_details") or {}).get("cached_tokens") or 0
         self.cost_usd += u.get("cost") or 0.0
 
+    def merge(self, other: "Usage") -> None:
+        for name in type(self).model_fields:
+            setattr(self, name, getattr(self, name) + getattr(other, name))
+
 
 def parse_json(text: str):
     """JSON from a reply, tolerating code fences or prose around the object."""
@@ -65,7 +69,7 @@ class Runtime:
 
     def __init__(self, models, *, client: OpenRouterClient | None = None, api_key: str | None = None,
                  cache_dir=None, skills: SkillBook | None = None, skills_dirs=(), hooks=(),
-                 max_tokens: int = 32000, extra: dict | None = None):
+                 max_tokens: int = 32000, extra: dict | None = None, native_pdf: bool = False):
         models = {"default": models} if isinstance(models, str) else dict(models)
         if not models.get("default"):
             raise ValueError("models needs a 'default' model id")
@@ -75,6 +79,7 @@ class Runtime:
         self.hooks = hooks if isinstance(hooks, Hooks) else Hooks(hooks)
         self.max_tokens = max_tokens
         self.extra = extra
+        self.native_pdf = native_pdf  # the model reads whole PDFs: papers go in as one file, not as page images
         self.usage = Usage()
         self._lock = threading.Lock()
 

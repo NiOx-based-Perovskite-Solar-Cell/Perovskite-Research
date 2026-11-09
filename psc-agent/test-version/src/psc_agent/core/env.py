@@ -8,6 +8,11 @@ import os
 from pathlib import Path
 
 
+def env_key(*names: str) -> str | None:
+    """The first of these environment variables that has a value (a provider's key can go by several names)."""
+    return next((os.environ[n] for n in names if os.environ.get(n)), None)
+
+
 def load_env(*paths: str | os.PathLike) -> list[Path]:
     """Load each existing file in order (earlier files win over later ones). Returns the files read."""
     read = []

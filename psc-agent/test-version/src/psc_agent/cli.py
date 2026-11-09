@@ -1,4 +1,4 @@
-"""Command line: psc-agent pairs | si | browser | columns | recheck | extract | evaluate | analyze | map | trace | learn | skills | serve."""
+"""Command line: psc-agent pairs | si | run | browser | agent-server | columns | recheck | extract | evaluate | analyze | map | trace | learn | skills | serve."""
 from __future__ import annotations
 
 import argparse
@@ -12,18 +12,25 @@ from .core.runtime import Runtime
 from .core.skills import SkillBook
 from .recheck.report import STATUSES
 
-DEFAULT_MODEL = {"openrouter": "anthropic/claude-sonnet-5.5", "claude-code": "claude-sonnet-5-5"}
+DEFAULT_MODEL = {"openrouter": "anthropic/claude-sonnet-5.5", "claude-code": "claude-sonnet-5-5",
+                 "gemini": "gemini-3.5-flash-lite", "ollama": "deepseek-v4-pro"}
+
+
+# `run`: the extract and recheck agents start on Haiku 5.5, the SI agent (web search with tools) on Sonnet 5.5
+HAIKU = {"claude-code": "claude-haiku-5-5", "openrouter": "anthropic/claude-haiku-5.5"}
+SONNET = {"claude-code": "claude-sonnet-5-5", "openrouter": "anthropic/claude-sonnet-5.5"}
 
 
 def _model_args(p: argparse.ArgumentParser, out: str) -> None:
-    providers = ["openrouter", "claude-code"]
-    p.add_argument("--provider", choices=providers, default="openrouter",
+    p.add_argument("--provider", choices=list(DEFAULT_MODEL), default="openrouter",
                    help="openrouter = OPENROUTER_API_KEY; claude-code = your Claude subscription through the `claude` CLI, no key "
-                        "(Claude models only; tool calling is emulated)")
-    p.add_argument("--model", help="default model id for every role (image input + structured output); "
-                                   f"default {DEFAULT_MODEL['openrouter']} / {DEFAULT_MODEL['claude-code']}")
+                        "(Claude models only; tool calling is emulated); gemini = GOOGLE_GEMINI_API_KEY, whole PDFs and schema-"
+                        "bound JSON, no tool calling; ollama = OLLAMA_CLOUD_API_KEY (Ollama Cloud, e.g. deepseek-v4-pro)")
+    p.add_argument("--model", help="default model id for every role (image input + structured output); default per provider: "
+                                   + ", ".join(f"{k} {v}" for k, v in DEFAULT_MODEL.items()))
     p.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"],
-                   help="thinking effort (claude-code: default medium; openrouter: sent as reasoning.effort when given)")
+                   help="thinking effort (claude-code: default medium; openrouter: sent as reasoning.effort when given; "
+                        "gemini: thinkingLevel low/medium/high when given)")
     p.add_argument("--out", default=out)
     p.add_argument("--skills", default="skills", help="project skills folder (added to the defaults; receives generated skills)")
     p.add_argument("--budget", type=float, help="stop calling models after this many USD")
@@ -41,10 +48,19 @@ def _runtime(args, out: Path, models: dict, hooks=()) -> Runtime:
         from .core.subscription import ClaudeCodeClient
 
         client = ClaudeCodeClient(effort=args.effort or "medium", cache_dir=cache)
+    elif args.provider == "gemini":
+        from .core.gemini import GeminiClient
+
+        client = GeminiClient(effort=args.effort, cache_dir=cache)
+    elif args.provider == "ollama":
+        from .core.ollama import OllamaCloudClient
+
+        client = OllamaCloudClient(cache_dir=cache)
     elif args.effort:
         extra = {"reasoning": {"effort": args.effort}}
     return Runtime({k: v for k, v in models.items() if v}, client=client, cache_dir=cache, extra=extra,
-                   skills_dirs=[args.skills] if args.skills else [], hooks=hooks, max_tokens=args.max_tokens)
+                   skills_dirs=[args.skills] if args.skills else [], hooks=hooks, max_tokens=args.max_tokens,
+                   native_pdf=args.provider == "gemini")  # Gemini reads whole PDFs: no page images
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -91,6 +107,30 @@ def main(argv: list[str] | None = None) -> int:
     cm.add_argument("--format", choices=["text", "md", "csv"], default="text")
     cm.add_argument("--out", help="write to this file instead of the terminal")
 
+    rn = sub.add_parser("run", help="per paper: check for an SI, find it if needed, then ONE reading by the extract or recheck agent")
+    rn.add_argument("--raw", required=True, help="folder of <doi>_Sample<N>.xlsx workbooks")
+    rn.add_argument("--pdf", required=True, help="folder of source PDFs (SI files live in <pdf folder>/SI/)")
+    _model_args(rn, "run_out")
+    rn.add_argument("--mode", choices=["auto", "extract", "recheck"], default="auto",
+                    help="auto: recheck papers that have workbooks, extract the PDFs that have none")
+    rn.add_argument("--si-model", help="model of the SI agent (default: Sonnet 5.5; with tools it follows instructions more reliably than Haiku)")
+    rn.add_argument("--extract-model", help="model of the extract agent, mapper included (default: --model)")
+    rn.add_argument("--recheck-model", help="model of the recheck agent and its judge (default: --model)")
+    rn.add_argument("--only", nargs="+", metavar="DOI", help="only these DOIs (any part of the DOI)")
+    rn.add_argument("--limit", type=int, help="at most this many papers")
+    rn.add_argument("--workers", type=int, default=1, help="papers in parallel (1 with --browser)")
+    rn.add_argument("--no-si", action="store_true", help="ignore the SI: no check, no search, no SI files")
+    rn.add_argument("--no-si-agent", action="store_true", help="never call the SI agent: papers whose SI link does not follow from the DOI get the DOI link")
+    rn.add_argument("--no-si-reader", action="store_true", help="do not let a model read the paper for its SI reference (the SI model is --model): a text rule decides whether it refers to one")
+    rn.add_argument("--browser", action="store_true", help="the SI agent downloads through your signed-in Chrome (see `browser login`)")
+    rn.add_argument("--chrome-profile", help="Chrome profile folder for --browser")
+    rn.add_argument("--cdp-url", help="attach to a Chrome started with --remote-debugging-port")
+    rn.add_argument("--wait-human", type=float, default=300.0, help="seconds to leave a bot check open for you (default 300)")
+    rn.add_argument("--no-judge", action="store_true", help="recheck: leave differing text as 'review'")
+    rn.add_argument("--no-decide", action="store_true", help="extract: rules only, no decision model")
+    rn.add_argument("--dpi", type=int, default=150)
+    rn.add_argument("--all-pages", action="store_true")
+
     br = sub.add_parser("browser", help="the Chrome window the agent uses: sign in to the publishers once")
     br.add_argument("action", choices=["login"], help="login: open the window, sign in by hand, press Enter here")
     br.add_argument("--url", default="about:blank", help="a page to open first, e.g. the login page of your library")
@@ -111,6 +151,9 @@ def main(argv: list[str] | None = None) -> int:
     si.add_argument("--cdp-url", help="attach to a Chrome you started with --remote-debugging-port instead (e.g. http://127.0.0.1:9222)")
     si.add_argument("--wait-human", type=float, default=300.0,
                     help="seconds to leave a bot-check or sign-in page open for you to solve it in the window (default 300)")
+    si.add_argument("--urls-only", action="store_true",
+                    help="the agent searches the web but downloads nothing: it answers with the SI addresses (the file or its "
+                         "page) for you to open; fits any provider, e.g. --provider ollama --model deepseek-v4-pro")
     si.add_argument("--links-only", action="store_true", help="no web search and no model: just list the pages to open")
 
     ev = sub.add_parser("evaluate", help="extract papers that already have workbooks, then score the extraction against them")
@@ -123,6 +166,9 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--limit", type=int, help="at most this many papers")
     ev.add_argument("--workers", type=int, default=1, help="papers in parallel")
     ev.add_argument("--force", action="store_true", help="redo papers that already have an evaluation")
+    ev.add_argument("--rescore", action="store_true",
+                    help="score the saved extractions again with the current comparison rules, call no model (use it on a copy "
+                         "of an old run so two runs are scored by the same rules)")
     ev.add_argument("--report-only", action="store_true", help="rebuild the report from finished papers, call no model")
     ev.add_argument("--tol", type=float, default=0.01, help="relative tolerance for numbers (rounding is also forgiven)")
     ev.add_argument("--dpi", type=int, default=150)
@@ -131,6 +177,12 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--no-si", action="store_true", help="ignore the supporting information found in <pdf folder>/SI/")
     ev.add_argument("--audit", action="store_true", help="run auditor agent on non-matching cells")
     ev.add_argument("--audit-model", help="model for auditor agent (default: --model)")
+
+    cp = sub.add_parser("compare", help="put two `evaluate` runs side by side (two models, or with and without the SI)")
+    cp.add_argument("run_a", type=Path, help="output folder of the first evaluate run (the baseline)")
+    cp.add_argument("run_b", type=Path, help="output folder of the second evaluate run")
+    cp.add_argument("--labels", nargs=2, metavar=("A", "B"), help="names for the two runs (default: the folder names)")
+    cp.add_argument("--out", type=Path, help="report file (default: <run_b>/vs_<run_a>.md)")
 
     a = sub.add_parser("analyze", help="find key insights in the processed data (plan → tools → decide → report)")
     a.add_argument("--goal", required=True)
@@ -159,6 +211,18 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--skills", default="skills")
     s.add_argument("--role", help="print the composed system prompt of this role")
 
+    ag = sub.add_parser("agent-server", help="the SI agent with your own Chrome as a small server outside Docker; the web app calls it "
+                                             "(needs AGENT_SERVER_TOKEN in .env)")
+    ag.add_argument("--pdf", required=True, help="folder of source PDFs, the one the web app reads; SI is saved in <pdf folder>/SI/")
+    ag.add_argument("--host", default="127.0.0.1", help="127.0.0.1 = this computer only (Docker Desktop reaches it as host.docker.internal)")
+    ag.add_argument("--port", type=int, default=5100)
+    ag.add_argument("--model", default=DEFAULT_MODEL["openrouter"], help="model of the SI agent (OpenRouter; the key comes from .env)")
+    ag.add_argument("--budget", type=float, default=1.0, help="USD per paper")
+    ag.add_argument("--chrome-profile", help="Chrome profile folder (default ~/.psc-agent/chrome; sign in once with `browser login`)")
+    ag.add_argument("--cdp-url", help="attach to a Chrome you started with --remote-debugging-port instead (e.g. http://127.0.0.1:9222)")
+    ag.add_argument("--wait-human", type=float, default=300.0,
+                    help="seconds to leave a bot-check or sign-in page open for you to solve it in the window (default 300)")
+
     w = sub.add_parser("serve", help="run the web service (Flask API + HTML/Tailwind/JS frontend)")
     w.add_argument("--root", default=".", help="project folder holding Raw Data/, original paper/, processed/")
     w.add_argument("--host", default="127.0.0.1", help="127.0.0.1 = this computer only (there is no login)")
@@ -170,7 +234,9 @@ def main(argv: list[str] | None = None) -> int:
 
     args = ap.parse_args(argv)
     if hasattr(args, "provider"):
-        args.model = args.model or DEFAULT_MODEL[args.provider]
+        args.model = args.model or (HAIKU.get(args.provider) if args.cmd == "run" else None) or DEFAULT_MODEL[args.provider]
+        if args.cmd == "run":
+            args.si_model = args.si_model or SONNET.get(args.provider)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)
     return COMMANDS[args.cmd](args)
@@ -229,13 +295,51 @@ def cmd_browser(args) -> int:
     return 0
 
 
+def cmd_run(args) -> int:
+    from .extract import Extractor
+    from .recheck import Rechecker
+    from .runner import collect, run_items
+    from .sources.si import SiFinder, SiReader
+
+    out = Path(args.out)
+    items = collect(args.raw, args.pdf, only=args.only, limit=args.limit, mode=args.mode)
+    if not items:
+        print("no paper selected")
+        return 1
+    models = {"default": args.model, "si_finder": args.si_model, "mapper": args.extract_model, "extract": args.extract_model,
+              "recheck": args.recheck_model, "judge": args.recheck_model}
+    rt = _runtime(args, out, models)
+    browser = None
+    if args.browser and not args.no_si_agent:
+        from .core.browser import DEFAULT_PROFILE, Browser
+
+        browser = Browser(args.chrome_profile or DEFAULT_PROFILE, cdp_url=args.cdp_url, wait_human=args.wait_human)
+        args.workers = 1
+    finder = None if args.no_si_agent else SiFinder(rt, browser=browser, download=browser is not None)
+    reader = None if args.no_si_reader else SiReader(rt)
+    extractor = Extractor(rt, dpi=args.dpi, all_pages=args.all_pages, decide_rows=not args.no_decide)
+    rechecker = Rechecker(runtime=rt, judge=not args.no_judge, dpi=args.dpi, all_pages=args.all_pages)
+    print(f"{len(items)} paper(s): {sum(bool(i.workbooks) for i in items)} to recheck, {sum(not i.workbooks for i in items)} to extract; "
+          f"every agent on {args.model} unless set per role")
+    try:
+        outcomes = run_items(items, finder=finder, extractor=extractor, rechecker=rechecker, out=out, use_si=not args.no_si,
+                             workers=args.workers, reader=reader)
+    finally:
+        if browser:
+            browser.close()
+    for o in outcomes:
+        print(f"  {o.item.key:30s} {o.mode:8s} SI {o.si.status:15s} {o.counts}" + (f"  ERRORS: {len(o.errors)}" if o.errors else ""))
+    print(f"\n{len(outcomes)} paper(s), ${sum(o.cost for o in outcomes):.2f} as reported, tokens/cost per call in {out / 'trace.jsonl'}")
+    print(f"summary: {out / 'run_summary.csv'}  SI to download by hand: {out / 'si_links.md'}")
+    return 1 if any(o.errors for o in outcomes) else 0
+
+
 def cmd_si(args) -> int:
-    import csv
     from concurrent.futures import ThreadPoolExecutor
 
     from .sources.pairing import SI_DIR, doi_key, pair_folders
     from .sources.paper import load_paper
-    from .sources.si import SiFinder, SiResult, supplement_links
+    from .sources.si import SiFinder, SiResult, supplement_links, write_si_reports
 
     out = Path(args.out)
     pairs = pair_folders(args.raw, args.pdf).pairs
@@ -254,7 +358,8 @@ def cmd_si(args) -> int:
 
         browser = Browser(args.chrome_profile or DEFAULT_PROFILE, cdp_url=args.cdp_url, wait_human=args.wait_human)
         args.workers = 1  # one window, one thread
-    finder = None if args.links_only else SiFinder(_runtime(args, out, {"default": args.model}), browser=browser)
+    finder = None if args.links_only else SiFinder(_runtime(args, out, {"default": args.model}), browser=browser,
+                                                    download=not args.urls_only)
     si_dir = Path(args.pdf) / SI_DIR
 
     def one(pair):
@@ -272,26 +377,13 @@ def cmd_si(args) -> int:
     finally:
         if browser:
             browser.close()
-    out.mkdir(parents=True, exist_ok=True)
-    with open(out / "si_report.csv", "w", newline="", encoding="utf-8-sig") as fh:
-        w = csv.writer(fh)
-        w.writerow(["paper", "pdf", "doi", "status", "saved_files", "links", "save_as", "notes", "cost_usd"])
-        for pair, r in results:
-            w.writerow([pair.key, pair.pdf.name, r.doi or "", r.status, "; ".join(f.name for f in r.files), "\n".join(r.links),
-                        f"{pair.key}_SI.pdf", r.notes, round(r.usage.cost_usd, 4)])
-    todo_by_hand = [(pair, r) for pair, r in results if r.status != "found"]
-    lines = [f"# Supporting information to download by hand ({len(todo_by_hand)} of {len(results)} papers)", "",
-             f"Save each PDF in `{si_dir}` under the name shown. Then `recheck`, `extract` and `evaluate` read it.", ""]
-    for pair, r in todo_by_hand:
-        lines += [f"## {pair.pdf.stem}", f"- save as: `{pair.key}_SI.pdf`" + (f" (several files: `{pair.key}_SI2.pdf` ...)" if r.status != "manual" else ""),
-                  *[f"- {u}" for u in r.links], *([f"- note: {r.notes}"] if r.notes else []), ""]
-    (out / "si_links.md").write_text("\n".join(lines), encoding="utf-8")
-    for status in ("found", "blocked", "not_found", "error", "manual"):
+    by_hand = write_si_reports([(pair.key, pair.pdf.name, r) for pair, r in results], out, si_dir)
+    for status in ("found", "links", "blocked", "not_found", "error", "manual"):
         n = sum(r.status == status for _, r in results)
         if n:
             print(f"  {status}: {n}")
-    for pair, r in todo_by_hand:
-        print(f"\n{pair.key}  ->  {pair.key}_SI.pdf\n  " + "\n  ".join(r.links or ["(no DOI found in the PDF)"]))
+    for key, _, r in by_hand:
+        print(f"\n{key}  ->  {key}_SI.pdf\n  " + "\n  ".join(r.links or ["(no DOI found in the PDF)"]))
     print(f"\nreport: {out / 'si_report.csv'}  links: {out / 'si_links.md'}")
     return 0
 
@@ -355,10 +447,15 @@ def cmd_evaluate(args) -> int:
         print("no paper selected")
         return 1
 
-    rt = _runtime(args, out, {"default": args.model, "mapper": args.mapper_model, "auditor": args.audit_model}) if (not args.report_only or args.audit) else None
+    needs_model = args.audit or not (args.report_only or args.rescore)
+    rt = _runtime(args, out, {"default": args.model, "mapper": args.mapper_model, "auditor": args.audit_model}) if needs_model else None
     auditor = Auditor(rt, dpi=args.dpi, all_pages=args.all_pages, images=not args.no_images) if (args.audit and rt) else None
 
-    if args.report_only:
+    if args.rescore:  # score the saved extractions again with the current rules: no model call
+        from .evaluate.run import rescore_paper
+
+        evals = [ev for ev in (rescore_paper(p, out, tol=args.tol, use_si=not args.no_si) for p in pairs) if ev]
+    elif args.report_only:
         evals = []
         for p in pairs:
             ev = load_eval(out / p.key)
@@ -386,6 +483,29 @@ def cmd_evaluate(args) -> int:
         print("  error:", e)
     print(f"report: {report}  cells: {out / 'cells_all.csv'}")
     return 1 if errors else 0
+
+
+def cmd_compare(args) -> int:
+    from .evaluate.report import pct
+    from .evaluate.versus import compare_runs, load_run, write_comparison
+
+    runs = []
+    for folder in (args.run_a, args.run_b):
+        if not folder.is_dir():
+            print(f"no such folder: {folder}")
+            return 1
+        runs.append(load_run(folder))
+    labels = tuple(args.labels or (args.run_a.name, args.run_b.name))
+    r = compare_runs(*runs)
+    if not r["papers"]:
+        print(f"no paper is finished in both runs ({len(runs[0])} in A, {len(runs[1])} in B)")
+        return 1
+    out = write_comparison(*runs, labels, args.out or args.run_b / f"vs_{args.run_a.name}.md")
+    va, vb = r["a"]["values"], r["b"]["values"]
+    print(f"{len(r['papers'])} paper(s) in both: {labels[0]} {pct(va['match_rate'])} vs {labels[1]} {pct(vb['match_rate'])} of "
+          f"{va['n']} hand-entered values match ({pct(va['match_rate_likely'])} vs {pct(vb['match_rate_likely'])} of those in the PDF text)")
+    print(f"report: {out}")
+    return 0
 
 
 def cmd_analyze(args) -> int:
@@ -436,15 +556,42 @@ def cmd_skills(args) -> int:
     return 0
 
 
+def cmd_agent_server(args) -> int:
+    import os
+    import secrets
+
+    from waitress import serve
+
+    from .web.agent_server import create_agent_app
+
+    token = os.environ.get("AGENT_SERVER_TOKEN")
+    if not token:
+        print("AGENT_SERVER_TOKEN is not set. The server drives your signed-in Chrome, so every request must carry a secret.\n"
+              "Add this line to .env (the web app reads the same file; restart it after):\n"
+              f"  AGENT_SERVER_TOKEN={secrets.token_urlsafe(24)}")
+        return 2
+    app = create_agent_app(args.pdf, token, model=args.model, budget=args.budget, profile=args.chrome_profile,
+                           cdp_url=args.cdp_url, wait_human=args.wait_human)
+    key = "set" if os.environ.get("OPENROUTER_API_KEY") else "MISSING (downloads will fail)"
+    print(f"agent server on http://{args.host}:{args.port}  ·  SI saved in {Path(args.pdf) / 'SI'}  ·  OPENROUTER_API_KEY {key}")
+    if args.host not in ("127.0.0.1", "localhost"):
+        print("warning: anyone on the network who has the token can drive your Chrome")
+    serve(app, host=args.host, port=args.port, threads=4)
+    return 0
+
+
 def cmd_serve(args) -> int:
     import os
 
     from .web import WebConfig, create_app
+    from .web.agent_server import AgentServer
 
+    url, token = os.environ.get("AGENT_SERVER_URL"), os.environ.get("AGENT_SERVER_TOKEN")
+    agent = AgentServer(url, token) if url and token else None
     app = create_app(WebConfig(root=Path(args.root), skills_dir=args.skills, runs_dir=args.runs,
-                               max_workers=args.workers))
+                               max_workers=args.workers, agent_server=agent))
     key = "set" if os.environ.get("OPENROUTER_API_KEY") else "MISSING (jobs will be refused)"
-    print(f"PSC Agent on http://{args.host}:{args.port}  ·  OPENROUTER_API_KEY {key}")
+    print(f"PSC Agent on http://{args.host}:{args.port}  ·  OPENROUTER_API_KEY {key}" + (f"  ·  agent server {url}" if agent else ""))
     if args.host not in ("127.0.0.1", "localhost"):
         print("warning: the service has no login; anyone who can reach this address can start paid model runs")
     if args.dev:
@@ -456,7 +603,7 @@ def cmd_serve(args) -> int:
     return 0
 
 
-COMMANDS = {"pairs": cmd_pairs, "si": cmd_si, "browser": cmd_browser, "columns": cmd_columns, "recheck": cmd_recheck, "extract": cmd_extract, "evaluate": cmd_evaluate, "analyze": cmd_analyze,
+COMMANDS = {"pairs": cmd_pairs, "si": cmd_si, "run": cmd_run, "browser": cmd_browser, "agent-server": cmd_agent_server, "columns": cmd_columns, "recheck": cmd_recheck, "extract": cmd_extract, "evaluate": cmd_evaluate, "compare": cmd_compare, "analyze": cmd_analyze,
             "map": cmd_map, "trace": cmd_trace, "learn": cmd_learn, "skills": cmd_skills, "serve": cmd_serve}
 
 if __name__ == "__main__":

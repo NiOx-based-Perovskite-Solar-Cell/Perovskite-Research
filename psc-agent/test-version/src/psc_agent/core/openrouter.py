@@ -141,18 +141,7 @@ class OpenRouterClient(CachedClient):
         ``tools`` = OpenAI-style function specs (send them on every call of a tool loop). Either one
         routes the request only to providers that support it. ``extra`` is merged into the body
         (e.g. ``{"reasoning": {"effort": "low"}}`` or ``{"provider": {"order": [...]}}``)."""
-        body: dict = {"model": model, "messages": messages, "max_tokens": max_tokens}
-        if schema is not None:
-            body["response_format"] = {"type": "json_schema", "json_schema": schema}
-        if tools:
-            body["tools"] = tools
-            if tool_choice is not None:
-                body["tool_choice"] = tool_choice
-        if schema is not None or tools:
-            body["provider"] = {"require_parameters": True}
-        for k, v in (extra or {}).items():
-            body[k] = {**body[k], **v} if isinstance(v, dict) and isinstance(body.get(k), dict) else v
-
+        body = self._body(model, messages, schema, tools, tool_choice, max_tokens, extra)
         key = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
         data = self._cache_get(key)
         cached = data is not None
@@ -162,6 +151,20 @@ class OpenRouterClient(CachedClient):
         if not cached:
             self._cache_put(key, data)
         return comp
+
+    def _body(self, model, messages, schema, tools, tool_choice, max_tokens, extra) -> dict:
+        body: dict = {"model": model, "messages": messages, "max_tokens": max_tokens}
+        if schema is not None:
+            body["response_format"] = {"type": "json_schema", "json_schema": schema}
+        if tools:
+            body["tools"] = tools
+            if tool_choice is not None:
+                body["tool_choice"] = tool_choice
+        if schema is not None or tools:
+            body["provider"] = {"require_parameters": True}  # OpenRouter: route only to providers that support them
+        for k, v in (extra or {}).items():
+            body[k] = {**body[k], **v} if isinstance(v, dict) and isinstance(body.get(k), dict) else v
+        return body
 
     def _post(self, body: dict) -> dict:
         for attempt in range(self.max_retries + 1):

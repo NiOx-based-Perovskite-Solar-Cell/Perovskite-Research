@@ -4,7 +4,7 @@ import json
 import tempfile
 import threading
 import unittest
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from _fake import last_user_text, runtime, tool_call
@@ -29,9 +29,11 @@ class Pages(BaseHTTPRequestHandler):
 
     def send(self, code, body, ctype="text/html"):
         self.send_response(code)
+        body = body if isinstance(body, bytes) else body.encode()
         self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(body)))  # without it a current Chrome drops the connection mid-body
         self.end_headers()
-        self.wfile.write(body if isinstance(body, bytes) else body.encode())
+        self.wfile.write(body)
 
     def do_GET(self):
         if self.path == "/article":
@@ -61,7 +63,7 @@ class RealChrome(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = Path(tempfile.mkdtemp())
         Pages.pdf = write_pdf(cls.tmp / "served.pdf", "Supporting Information. Table S1.", pages=2).read_bytes()
-        cls.server = HTTPServer(("127.0.0.1", 0), Pages)
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), Pages)  # Chrome opens spare connections: one thread per connection
         threading.Thread(target=cls.server.serve_forever, daemon=True).start()
         cls.base = f"http://127.0.0.1:{cls.server.server_port}"
         cls.browser = Browser(cls.tmp / "profile", headless=True, timeout=15)

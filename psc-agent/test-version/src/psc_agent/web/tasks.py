@@ -41,13 +41,54 @@ def run_recheck(cfg, job: Job) -> dict:
     return {"papers": len(reports), "counts": counts, "errors": [f"{r.paper}: {e}" for r in reports for e in r.errors]}
 
 
-def run_extract(cfg, job: Job) -> dict:
-    from ..extract import Extractor
+def run_si(cfg, job: Job) -> dict:
+    """Step 2 of an extraction with a model: it reads the paper's text for its reference to the SI (and the address, when the
+    paper prints one). Only when that leaves no link and the publisher's page does not follow from the DOI does the SI agent
+    search the web and answer with the addresses it saw (it downloads nothing)."""
+    from ..sources.pairing import SI_DIR, local_si
+    from ..sources.paper import load_paper
+    from ..sources.si import SiFinder, SiReader, intake_key, si_stage
 
     p = job.params
+    rt = _runtime(cfg, job, _models(cfg, p, "si_reader", "si_finder"))
+    paper = load_paper(Path(p["pdf_path"]))
+    key = intake_key(paper, p["pdf_path"])
+    res = si_stage(paper, key, cfg.pdf_dir / SI_DIR, local_si(cfg.pdf_dir, key), SiFinder(rt, download=False), SiReader(rt))
+    return {"key": key, "status": res.status, "links": res.links, "notes": res.notes}
+
+
+def run_si_download(cfg, job: Job) -> dict:
+    """Step 2 with the person's own Chrome: the agent server (outside Docker, where Chrome is) finds and downloads the SI
+    into ``SI/`` — the folder this app reads. No model runs here; the server pays for its own."""
+    from ..sources.paper import load_paper
+    from ..sources.si import intake_key
+
+    p = job.params
+    path = Path(p["pdf_path"])
+    key = intake_key(load_paper(path), path)
+    job.add_log("asking the agent server to download the SI with your Chrome: a window opens on your computer; sign in or pass a check there if asked")
+    res = cfg.agent_server.download_si(path, key, p.get("si_finder_model"))
+    job.add_log(f"{res['status']}: {len(res['files'])} file(s) saved. {res['notes'][:300]}")
+    return res
+
+
+def run_extract(cfg, job: Job) -> dict:
+    """The real extraction, after the SI step: the paper is read once together with the SI files saved for it."""
+    from ..extract import Extractor
+    from ..sources.pairing import local_si
+    from ..sources.paper import load_paper
+    from ..sources.si import intake_key
+
+    p = job.params
+    path = Path(p["pdf_path"])
+    paper = load_paper(path)
+    si = local_si(cfg.pdf_dir, intake_key(paper, path))
+    if si:
+        paper = load_paper(path, si=si)
+    job.add_log(f"supporting information: {len(si)} file(s) read with the paper" if si else "supporting information: none loaded")
     rt = _runtime(cfg, job, _models(cfg, p, "mapper", "decision"))
-    res = Extractor(rt, decide_rows=not p.get("no_decide")).extract(Path(p["pdf_path"]), job.out_dir)
-    return {"devices": len(res.devices), "rows": len(res.rows), "counts": res.counts(),
+    res = Extractor(rt, decide_rows=not p.get("no_decide")).extract(paper, job.out_dir)
+    return {"devices": len(res.devices), "rows": len(res.rows), "counts": res.counts(), "si_files": len(si),
             "files": [Path(f).name for f in res.files], "errors": res.errors}
 
 
@@ -79,17 +120,18 @@ def run_evaluate(cfg, job: Job) -> dict:
     p = job.params
     rt = _runtime(cfg, job, _models(cfg, p, "mapper", "auditor"))
     extractor = Extractor(rt, decide_rows=False)
-    auditor = Auditor(rt) if p.get("audit", True) else None
+    auditor = Auditor(rt) if p.get("audit") else None  # the auditor re-reads every cell that does not match: costs about as much again
     pairs = pair_folders(cfg.raw_dir, cfg.pdf_dir).pairs
     if p.get("dois"):
         wanted = [doi_key(o) for o in p["dois"]]
         pairs = [pair for pair in pairs if any(w in pair.key for w in wanted)]
     if p.get("limit"):
         pairs = pairs[: int(p["limit"])]
+    rt.hooks.emit("batch", papers=len(pairs))  # the progress bar counts papers
     evals = evaluate_pairs(extractor, pairs, job.out_dir, workers=int(p.get("workers") or 1),
                            force=bool(p.get("force")), auditor=auditor)
     write_report(evals, job.out_dir, {"provider": "openrouter", "model": p.get("model") or cfg.models["default"]})
     return {"papers": len(evals), "errors": [e for ev in evals for e in ev.errors]}
 
 
-TASKS = {"recheck": run_recheck, "extract": run_extract, "analyze": run_analyze, "learn": run_learn, "evaluate": run_evaluate}
+TASKS = {"recheck": run_recheck, "si": run_si, "si_download": run_si_download, "extract": run_extract, "analyze": run_analyze, "learn": run_learn, "evaluate": run_evaluate}

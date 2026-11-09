@@ -14,7 +14,7 @@ from ..core.skills import DEFAULT_DIR, SkillBook
 from .tasks import TASKS
 
 bp = Blueprint("api", __name__, url_prefix="/api")
-ROLES = ("recheck", "mapper", "extract", "judge", "decision", "planner", "analyst", "reporter", "learner", "auditor")
+ROLES = ("recheck", "mapper", "extract", "judge", "decision", "planner", "analyst", "reporter", "learner", "auditor", "si_finder", "si_reader")
 _MODEL = re.compile(r"^[\w.\-/:]{1,200}$")
 _SKILL = re.compile(r"^[a-z0-9][a-z0-9-]{0,49}$")
 READ_ONLY_SKILLS = {"data-map"}  # rebuilt from the data on every analyze run
@@ -141,6 +141,37 @@ def _si_dir() -> Path:
     return _cfg().pdf_dir / SI_DIR
 
 
+@bp.get("/si/plan")
+def si_plan():
+    """Step 2 of an extraction: what to do about this paper's SI before it is read. Local checks only, no model."""
+    from ..sources.pairing import local_si
+    from ..sources.paper import load_paper
+    from ..sources.si import intake_key, si_stage
+
+    path = _resolve_pdf(request.args.get("pdf", ""))
+    paper = load_paper(path)
+    key = intake_key(paper, path)
+    have = local_si(_cfg().pdf_dir, key)
+    r = si_stage(paper, key, _si_dir(), have, None)
+    status = "agent_needed" if r.status == "manual" else r.status  # have | not_referenced | pattern | agent_needed
+    return jsonify(key=key, doi=paper.doi, status=status, links=r.links, notes=r.notes, save_as=f"{key}_SI.pdf",
+                   files=[{"name": f.name, "size": f.stat().st_size} for f in have])
+
+
+@bp.get("/agent-server")
+def agent_server_status():
+    """Is there an agent server (a Chrome-driving agent outside Docker) and does it answer? Never exposes the token."""
+    from .agent_server import AgentServerError
+
+    srv = _cfg().agent_server
+    if srv is None:
+        return jsonify(configured=False)
+    try:
+        return jsonify(configured=True, reachable=True, url=srv.url, chrome=bool(srv.health().get("chrome")))
+    except AgentServerError as e:
+        return jsonify(configured=True, reachable=False, url=srv.url, error=str(e))
+
+
 @bp.get("/si")
 def list_si():
     d = _si_dir()
@@ -220,7 +251,7 @@ def create_job():
     for k, v in params.items():
         if k.endswith("model") and v and not _MODEL.match(str(v)):
             raise ApiError(f"bad model id: {v}")
-    needs_model = kind != "learn" or params.get("model")
+    needs_model = kind != "si_download" and (kind != "learn" or params.get("model"))  # si_download: the agent server has the key
     if needs_model and cfg.require_key and not os.environ.get("OPENROUTER_API_KEY"):
         raise ApiError("OPENROUTER_API_KEY is not set on the server: set it, then restart the server", 409)
     if params.get("budget") not in (None, ""):
@@ -236,6 +267,17 @@ def create_job():
         if not isinstance(dois, list) or not all(isinstance(d, str) for d in dois):
             raise ApiError("dois must be a list of DOI keys")
         params["workers"] = _clamp(params.get("workers"), 1, 8, 1)
+    elif kind == "evaluate":
+        dois = params.get("dois") or []
+        if not isinstance(dois, list) or not all(isinstance(d, str) for d in dois):
+            raise ApiError("dois must be a list of DOI keys")
+        params.update(workers=_clamp(params.get("workers"), 1, 4, 1), audit=bool(params.get("audit")), force=bool(params.get("force")))
+        if params.get("limit") not in (None, ""):
+            params["limit"] = _clamp(params["limit"], 1, 500, 500)
+    elif kind in ("si", "si_download"):
+        if kind == "si_download" and cfg.agent_server is None:
+            raise ApiError("no agent server is configured (AGENT_SERVER_URL and AGENT_SERVER_TOKEN): see the README, 'Agent server'", 409)
+        params["pdf_path"] = str(_resolve_pdf(str(params.get("pdf", ""))))
     elif kind == "extract":
         params["pdf_path"] = str(_resolve_pdf(str(params.get("pdf", ""))))
     elif kind == "analyze":

@@ -26,6 +26,7 @@ Each role can run on a different model: Big models plan and map, small models ju
 | `planner` (Big) | analysis plan: questions with acceptance criteria | psc-domain, data-map, analysis-method, plan-task |
 | `analyst` | answers one question with data tools | psc-domain, data-map, analysis-method, analyst-tools |
 | `reporter` (Big) | INSIGHTS.md from accepted claims | … insight-report |
+| `si_reader` | reads a paper's text: does it refer to supporting information, and which address does it print? | si-reader-task |
 | `si_finder` | finds and downloads a paper's supporting information on the web | si-finder-task |
 | `learner` | rules for the next run, from the trace | learner-task |
 
@@ -166,6 +167,52 @@ pip install "psc-agent[analysis] @ git+https://github.com/<owner>/<repo>.git#sub
 Python ≥ 3.10. Put `OPENROUTER_API_KEY=sk-or-...` in a `.env` file (copy `.env.example`; it is git-ignored; the CLI reads `./.env` and the
 project folder's `.env`), or set it as an environment variable (which wins over the file), or pass `api_key=`. The key only goes into the Authorization header.
 
+## One command for a paper: `psc-agent run`
+
+Per paper, cheapest step first, so the extract / recheck agent reads the paper **once**, together with its SI:
+
+1. **SI reader** (role `si_reader`, a model with no tools): reads the paper's own text. Does it refer to supporting information
+   ("Supporting Information", "supplementary material", "ESI", "Figure S3")? No: the SI is skipped (the sentence it relied on is
+   kept in the report). Does the paper print an address for its SI ("Supplementary data can be found online at ...")? That
+   link is enough (status `printed`; an address the paper does not contain is dropped). About $0.002 a paper with Haiku 5.5.
+   `--no-si-reader` swaps it for a text rule (no model, the same words plus two different "Figure S3" / "Table S1" references,
+   which flags 49 of the 53 papers and pulls out no address). If the model fails, the rule decides.
+2. **SI link (no model):** ACS and Wiley supplementary pages follow from the DOI: that link is enough.
+3. **SI agent** (role `si_finder`): only for the rest. It searches the web and answers with the SI addresses
+   (`--browser`: downloads through your signed-in Chrome). SI files already in `SI/` are used as they are.
+4. **One reading** with the SI appended: the **extract** agent (mapper, extract, decision) for a PDF with no workbooks, the
+   **recheck** agent (recheck, judge) for a paper with hand-entered workbooks (`--mode auto|extract|recheck`).
+
+Each agent is its own role with its own skills and model. Defaults: the **SI reader**, **extract** and **recheck** agents on **Haiku 5.5**,
+the **SI agent** (web search with tools) on **Sonnet 5.5**, through OpenRouter (`OPENROUTER_API_KEY`; billed per token).
+Change one with `--si-model`, `--extract-model`, `--recheck-model`, the others with `--model`, or use your Claude plan with
+`--provider claude-code` (then the tool calling of the SI agent is emulated and less reliable).
+
+```
+psc-agent run --raw "Raw Data" --pdf "original paper" --mode extract --limit 2 --out run_out
+```
+Outputs: `run_summary.csv` (one line per paper: mode, SI status, result, cost), `si_links.md` (SI to download by hand),
+`findings.csv` + `papers/` (recheck), `extract/<key>/` (drafts and review.csv). SI statuses: `have`, `not_referenced`,
+`pattern`, `found`, `links`, `blocked`, `not_found`, `manual`, `error`. Put downloaded SI in `original paper/SI/` and run again.
+
+## Providers (`--provider`)
+
+| provider | key | what it is good for | limits |
+|---|---|---|---|
+| `openrouter` (default) | `OPENROUTER_API_KEY` | any hosted model, tool calling, billed per token | |
+| `claude-code` | none (your Claude plan) | Claude models at no extra charge | Claude only; cost shown is API-equivalent |
+| `gemini` | `GOOGLE_GEMINI_API_KEY` (or `GEMINI_API_KEY`, `GOOGLE_API_KEY`) | reads the **whole PDF** (no page images), JSON bound to the schema; default `gemini-3.5-flash-lite` | no tool calling (no analyze); cost not priced; the free tier has only Flash models and rate limits (retried), Pro models need billing |
+| `ollama` | `OLLAMA_CLOUD_API_KEY` (or `OLLAMA_API_KEY`) | open models through Ollama Cloud (`https://ollama.com/v1`), tool calling; default `deepseek-v4-pro` | needs credits or a plan (HTTP 402 otherwise); cost not priced |
+
+`psc-agent si --provider ollama --model deepseek-v4-pro --urls-only` makes the agent search the web and answer with the
+SI addresses only (the file when a page shows it, else the page that lists it; only addresses it really saw are kept,
+the publisher page and the DOI link follow), written to `si_links.md` / `si_report.csv` with status `links`.
+
+Compare two runs on the papers both have, by the same rules: `psc-agent compare evaluate_out/runA evaluate_out/runB
+--labels A B` writes headline numbers, cell-by-cell agreement, per sheet, per core field, per paper and the cells where
+they disagree. Runs scored under older comparison rules should be scored again on a copy first:
+`cp -r runA runA_rescored; psc-agent evaluate ... --rescore --out runA_rescored` (no model call).
+
 ## Command line
 
 ```bash
@@ -206,6 +253,37 @@ model runs. `--provider claude-code` (the Claude subscription) needs the `claude
 available in the container; use OpenRouter. In Git Bash on Windows, prefix commands that take a `/path` argument with
 `MSYS_NO_PATHCONV=1`.
 
+## Agent server (your own Chrome, outside Docker)
+
+Publishers answer a script with 403 but serve a browser that is signed in through your institution. Docker has no Chrome
+and no sign-in, so the agent that needs the browser runs as a small server **on your computer**; the web app (in Docker
+or not) sends it a paper and gets the SI back. The server drives *your* signed-in Chrome: it is the same agent as
+`si --browser`, behind a token.
+
+```bash
+pip install playwright                          # drives the installed Chrome, no browser download
+python -m psc_agent browser login               # once: sign in to the publishers / your library in the window
+python -m psc_agent agent-server --pdf "../../original paper"        # http://127.0.0.1:5100
+```
+
+It needs `AGENT_SERVER_TOKEN` in `.env` (the command prints a random one to paste when it is missing) and
+`OPENROUTER_API_KEY` (the agent runs on `--model`, Sonnet 5.5 by default, at most `--budget` USD a paper). `--pdf` must be the folder the
+web app reads: the SI is saved in `<pdf folder>/SI/<doi key>_SI.pdf`, which Docker mounts, so the web app finds it by key.
+`docker-compose.yml` already points the web app at `http://host.docker.internal:5100`; outside Docker set
+`AGENT_SERVER_URL=http://127.0.0.1:5100` in `.env`. Restart the web app after adding the token.
+
+Then step 2 of *Extract* shows **Download the SI with my Chrome**: a Chrome window opens on your computer and the agent
+reads the publisher page and downloads the file. A sign-in page or a bot check is left to you (the window stays open,
+`--wait-human` seconds, 300 by default); the program never solves one. One paper at a time. If the server is not
+running the step says so. Only the token holder can use it, so keep the default `--host 127.0.0.1`.
+
+Limits: a page that only lets you *view* a file (a licence that blocks the download) still cannot be saved, and the agent
+cannot yet read a PDF it has not downloaded. Use it only for papers you would download by hand: some licences forbid
+automated downloading.
+
+API: `GET /health`, `POST /si/download` (multipart `pdf`, `key`, optional `model`; header `Authorization: Bearer <token>`).
+The web app: `GET /api/agent-server`, `POST /api/jobs {kind: "si_download"}`.
+
 ## Columns (what to keep for the analysis)
 
 `psc-agent columns` prints every column of the processed tables (289 in `processed/prepared_v2`) with its type, share
@@ -233,8 +311,9 @@ The app has six tabs:
 | tab | what it shows |
 |---|---|
 | Overview | pairing counts, data tables, recent jobs, setup |
+| Dashboard | accuracy of an extraction against the hand-entered workbooks (see below), and a form to run an evaluation |
 | Recheck | pick papers → findings table filtered by status |
-| Extract | pick or upload a PDF → review table and .xlsx drafts |
+| Extract | three steps: 1 pick or upload a PDF, 2 settle its SI (check, find the link, upload the file), 3 extract → review table and .xlsx drafts |
 | Analyze | goal → AC cards with verdicts and evidence, then INSIGHTS.md |
 | Skills | view and edit SKILL.md files, preview the exact system prompt of each role |
 | Jobs | live log and cost, Cancel, files, trace digest, "Learn from this run" |
@@ -256,6 +335,38 @@ The app has six tabs:
   - Files are served only from the job's own folder.
 - Styling: `app.css` is prebuilt and committed, so running the app needs no Node. After changing classes in
   `index.html` or `app.js`, rebuild it with `cd "agent for research/tailwind" && npm ci && npm run build`.
+
+### Extract in three steps
+
+1. **Choose a paper** (a PDF in the folder, or upload one).
+2. **Supporting information**, settled before the paper is read: the page first checks the paper's own text for references to an SI
+   with rules (free) and shows what to do: *SI loaded* (files already saved), *not referenced* (nothing to find), *pattern* (ACS and
+   Wiley: the publisher's page, open it and download), or *agent needed* (another publisher). **Read the paper for its SI (model)**
+   lets the SI reader (Haiku 5.5, under a cent) read the text instead: it can overrule the rule, and returns the address the paper
+   prints (*printed*); only when the paper prints none and the publisher has no known page does the SI agent search the web (it
+   answers with addresses and downloads nothing). Then **upload the SI file** if you have it (saved as `original paper/SI/<doi key>_SI.pdf`,
+   removable with the ✕). Uploading is optional.
+3. **Extract**: the button says what will be read ("Extract (paper + 1 SI file)" or "Extract without the SI"), and the paper
+   is read together with its SI once. Without the SI the rows only it holds are missing and flagged; upload it and extract again to fill them.
+
+API: `GET /api/si/plan?pdf=<id>`, `POST /api/jobs {kind: "si"}` (the SI reader, model `si_reader`, Haiku 5.5, then the SI agent `si_finder`, Sonnet 5.5, when needed),
+`POST /api/si` (upload), `POST /api/jobs {kind: "extract"}` (reads the SI saved for the paper).
+
+### Dashboard (accuracy)
+
+The Dashboard tab scores an `evaluate` run: the model reads each paper without the workbooks and every hand-entered value is
+compared with what it extracted. Tiles: **values that match**, **of those in the PDF text** (the fair measure: values only the
+SI holds cannot be found in a PDF), **correct when given** (precision), **values the model gave** (coverage), **core fields**
+and **rows found**; then by sheet, by core field and by paper (click a paper for its values that did not match), and a
+filterable list of the values that did not match with what the model gave instead.
+
+- Pick a second run in **Compare with** to see two runs side by side (two models, with and without the SI): A, B, the
+  difference in points, and the cells where only one of them matches. Only papers finished in both runs are compared.
+- Runs listed: the web's own evaluate jobs, and the folders `out/` and `evaluate_out/` (project root and working
+  folder; Docker mounts `evaluate_out/` read-only), so runs made with the CLI show up too.
+- **Run an evaluation** (bottom of the tab): choose papers that have workbooks, a model and a budget. It is a normal job
+  (progress and cancel in Jobs); each finished paper appears in the Dashboard at once. The auditor is off unless ticked.
+- API: `GET /api/dashboard/runs | run?id= | compare?a=&b= | cells?id=&status=&sheet=&paper=&core=1`.
 
 ## Python / backend
 

@@ -11,6 +11,9 @@ from .compare import SHEETS, Cell
 from .run import CELL_FIELDS, PaperEval
 from .text import property_key
 
+COST_NOTE = {"claude-code": "API-equivalent price, charged to the plan",
+             "gemini": "not priced: tokens are real, the free tier costs nothing",
+             "ollama": "not priced: credits or a plan, no per-token price reported"}
 RECORDED = ("match", "review", "mismatch", "unit_mismatch", "not_found")  # verdicts on hand-entered cells
 
 
@@ -87,7 +90,7 @@ def write_report(evals: list[PaperEval], out: str | Path, meta: dict | None = No
     lines.append(
         f"Provider **{meta.get('provider', '?')}** · model `{meta.get('model', '?')}` · {s['papers']} papers · "
         f"{calls} model calls · {tokens_in:,} tokens in, {tokens_out:,} out · ${cost:.2f} "
-        f"({'API-equivalent price, charged to the plan' if meta.get('provider') == 'claude-code' else 'billed'}) · "
+        f"({COST_NOTE.get(meta.get('provider'), 'billed')}) · "
         f"numeric tolerance {meta.get('tol', 0.01):.0%} plus rounding to either side's precision")
     lines += ["", "## Headline", "",
               f"- **{pct(v['match_rate'])}** of the {v['n']} hand-entered values match what the model extracted from the PDF alone "

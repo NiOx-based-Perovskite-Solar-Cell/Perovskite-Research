@@ -129,7 +129,7 @@ class Extractor:
         result.si_link, result.si_save_as = si_hint(paper)
         run = {"kind": "extract", "paper": paper.name}
         self.rt.hooks.emit("run_start", run=run, runtime=self.rt)
-        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, images=self.images)
+        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, images=self.images, pdf=self.rt.native_pdf)
         total = 2 + len(GROUPS)  # map, one call per sheet group, the verdicts
         tick = lambda done: self.rt.hooks.emit("progress", scope=paper.name, done=done, total=total)  # noqa: E731
         try:

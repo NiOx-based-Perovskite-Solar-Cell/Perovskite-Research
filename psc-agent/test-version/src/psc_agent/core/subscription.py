@@ -43,8 +43,9 @@ _TOOL_RULES = """
 You can call these tools. Each reply is JSON with two fields:
 - tool_calls: the calls to make now (several are allowed, they run in order); empty when you answer.
 - answer: your final answer, written only when tool_calls is empty; empty otherwise.
-The tools exist and work, but only through this reply: you have no other tool interface, so do not look for one and
-never answer that tools are unavailable. Call a tool whenever you need data: results come back in the next message,
+The tools exist and work, but only through this reply: the tool_calls field IS how you call them (any other tool you
+may see, such as StructuredOutput, is only the carrier of this reply, not a tool to use). Do not look for another
+interface and never answer that tools are unavailable. Call a tool whenever you need data: results come back in the next message,
 each labelled [Tn]. Do not guess values.
 
 Tools:
@@ -62,7 +63,11 @@ def find_claude() -> list[str]:
     if explicit:
         return [explicit]
     found = shutil.which("claude.exe") or shutil.which("claude")
-    if not found:
+    if not found:  # not on PATH (e.g. npm's global folder of another Node version): the VS Code extension bundles one
+        bundled = sorted(Path.home().glob(".vscode/extensions/anthropic.claude-code-*/resources/native-binary/claude*"))
+        bundled = [b for b in bundled if b.suffix.lower() in (".exe", "")]
+        if bundled:
+            return [str(bundled[-1])]
         raise SubscriptionError("Claude Code CLI not found: install it (npm i -g @anthropic-ai/claude-code) or set CLAUDE_BIN")
     p = Path(found)
     if p.suffix.lower() in (".cmd", ".bat", ".ps1", ""):  # npm shim: call the exe it points to, so JSON args survive
