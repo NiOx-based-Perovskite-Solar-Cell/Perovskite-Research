@@ -1,0 +1,290 @@
+﻿table,column,relevance,role,dtype,rows,non_null,pct,distinct,papers,examples,description,why,catalog_note
+device_layer_flags,device_id,,คีย์,text,134,134,100.0,134,45,10.1002_advs.202309111_Sample1 | 10.1002_advs.202309111_Sample2 | 10.1002_smtd.202200787_Sample1,,,รหัสอุปกรณ์
+device_layer_flags,is_coated,,ธงคุณภาพ,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,n_coating_layers,,ตัวแปรต้น X,number,134,134,100.0,4,45,2 | 1 | 3,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,coat_htl,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,coat_psk,,ตัวแปรต้น X,flag,134,134,100.0,2,45,False | True,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,coat_etl,,ธงคุณภาพ,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,anneal_htl,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,anneal_psk,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,htl_mod_kind,,ตัวแปรต้น X,text,134,75,56.0,2,36,coating | additive,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+device_layer_flags,psk_mod_kind,,ตัวแปรต้น X,text,134,43,32.1,1,15,coating,,,ซ้ำกับใน devices/target_table — ไฟล์นี้มีไว้ join เบา ๆ
+devices,device_id,,คีย์,text,134,134,100.0,134,45,10.1002_advs.202309111_Sample1 | 10.1002_advs.202309111_Sample2 | 10.1002_smtd.202200787_Sample1,,,รหัสอุปกรณ์
+devices,doi_raw,,ที่มา/หลักฐาน,text,134,134,100.0,45,45,10.1039_d5ya00072f | 10.1021_acsaem.4c02471 | 10.1038_s41598-023-32697-z,,,DOI ของเปเปอร์ตามที่ปรากฏในชื่อไฟล์
+devices,sample_no,,ที่มา/หลักฐาน,number,134,134,100.0,6,45,1 | 2 | 3,,,หมายเลข Sample ภายในเปเปอร์
+devices,source_file,,ที่มา/หลักฐาน,text,134,134,100.0,134,45,10.1002_advs.202309111_Sample1.xlsx | 10.1002_advs.202309111_Sample2.xlsx | 10.1002_smtd.202200787_Sample1.xlsx,,,ชื่อไฟล์ Excel ต้นทางใน `Raw Data/` — ใช้ย้อนกลับไปดูต้นฉบับ
+devices,is_coated,,ธงคุณภาพ,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,n_coating_layers,,ตัวแปรต้น X,number,134,134,100.0,4,45,2 | 1 | 3,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,coat_htl,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,coat_psk,,ตัวแปรต้น X,flag,134,134,100.0,2,45,False | True,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,coat_etl,,ธงคุณภาพ,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,anneal_htl,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,anneal_psk,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,htl_mod_kind,,ตัวแปรต้น X,text,134,75,56.0,2,36,coating | additive,,,ซ้ำกับใน target_table โดยตั้งใจ
+devices,psk_mod_kind,,ตัวแปรต้น X,text,134,43,32.1,1,15,coating,,,ซ้ำกับใน target_table โดยตั้งใจ
+layers,device_id,,คีย์,text,1072,1072,100.0,134,45,10_1002_solr_202400534_Sample1 | 10_1002_solr_202400534_Sample2 | 10.1002_advs.202309111_Sample1,,,รหัสอุปกรณ์
+layers,layer_id,,คีย์,number,1072,1072,100.0,8,45,7 | 1 | 2,,,เลขชั้น 1-8 จากล่างขึ้นบน: 1 ขั้วโปร่งแสง · 2 HTL · **3 เคลือบ HTL** · 4 perovskite · **5 เคลือบ PSK** · 6 ETL · **7 เคลือบ ETL** · 8 ขั้วโลหะ
+layers,layer_type,,ที่มา/หลักฐาน,text,1072,1069,99.7,11,45,Anode | HTL | PSK,,,ชื่อชั้นตามที่เปเปอร์เรียก เช่น 'ETL treatment (1)/(2)' ตอนชั้นเดียวมี 2 วัสดุ
+layers,material,,ตัวแปรต้น X,text,1072,913,85.2,160,45,Ag | BCP | ITO,,,ชื่อวัสดุของชั้นนั้น — ชั้น 4 จะเป็นสูตรเคมี ABX₃ เต็ม ๆ
+layers,thickness_nm,,ค่าดิบ,text,1072,362,33.8,53,45,100.0 | 40.0 | 5.0,,,ความหนาตามที่เปเปอร์เขียน (ยังเป็นข้อความ อาจเป็นช่วง)
+layers,thickness_nm_parsed,,ตัวแปรต้น X,number,1072,362,33.8,39,45,100.0 | 40.0 | 20.0,,,ความหนาที่แปลงเป็นตัวเลข nm แล้ว (แปลง Å → nm ให้แล้ว) — ใช้ตัวนี้
+layers,thickness_nm_min,,ร่องรอยการคลีน,number,1072,362,33.8,38,45,100.0 | 40.0 | 20.0,,,ขอบล่างถ้าเปเปอร์เขียนเป็นช่วง
+layers,thickness_nm_max,,ร่องรอยการคลีน,number,1072,362,33.8,37,45,100.0 | 40.0 | 20.0,,,ขอบบนถ้าเปเปอร์เขียนเป็นช่วง
+layers,thickness_nm_note,,ร่องรอยการคลีน,text,1072,21,2.0,9,7,"ช่วงค่า: ใช้ค่ากลาง 425 (min=400, max=4… | ชั้นซ้อนคั่นด้วย /: ผลรวม 26 nm (ชั้นย่… | ช่วงค่า: ใช้ค่ากลาง 300 (min=280, max=3…",,,เหตุผลที่ค่าที่แปลงต่างจากค่าดิบ
+layers,material_family,,ตัวควบคุม,text,1072,705,65.8,10,45,TCO | NiOx | Metal electrode,,,ตระกูลวัสดุ — ⚠️ ว่างเยอะโดยตั้งใจ: ชั้น 4 ใช้ psk_composition แทน ส่วนชั้น 1/2/8 ทุกเครื่องเหมือนกันหมด
+layers,layer_kind,,ธงคุณภาพ,text,1072,913,85.2,3,45,main | coating | additive,,,`main` ชั้นหลัก / `coating` เคลือบทับจริง / `additive` ผสมในน้ำหมึก ไม่ได้เป็นชั้นแยก
+materials,device_id,,คีย์,text,1650,1650,100.0,134,45,10.1021_acsenergylett.3c00697_Sample2 | 10.1021_acsenergylett.3c00697_Sample3 | 10.1021_acsaem.2c03434_Sample1,,,รหัสอุปกรณ์
+materials,layer_id,,คีย์,number,1650,1650,100.0,8,45,4 | 2 | 6,,,ชั้นที่สารนี้ถูกใช้
+materials,material,,ตัวแปรต้น X,text,1650,1500,90.9,138,45,Ag | CsI | PbI2,,,"ชื่อสารตั้งต้น (precursor) เช่น PbI₂, FAI, CsI หรือตัวทำละลาย"
+materials,type,,ที่มา/หลักฐาน,text,1650,1158,70.2,38,45,Precursor | Solution | Additive,,,บทบาทของสาร: Solution / Additive / Solvent ฯลฯ
+materials,solvent,,ค่าดิบ,text,1650,1016,61.6,50,45,DMF/DMSO (4:1 v/v) | IPA | Chlorobenzene,,,ตัวทำละลายตามที่เปเปอร์เขียน (อาจเป็นระบบผสม 'DMF:DMSO 4:1')
+materials,amount,,ค่าดิบ,text,1650,923,55.9,145,45,20.0 | 1.0 | 0.5,,,ปริมาณตามที่เปเปอร์เขียน
+materials,unit,,ค่าดิบ,text,1650,896,54.3,35,45,mg | M | mg mL-1,,,"หน่วยของปริมาณ (M, mg/ml, mmol ...)"
+materials,amount_parsed,,ตัวแปรต้น X,number,1650,918,55.6,137,45,20.0 | 1.0 | 0.5,,,ปริมาณที่แปลงเป็นตัวเลขแล้ว — ใช้ตัวนี้ · เป็นฐานคำนวณสูตรเคมีจาก precursor
+materials,amount_ratio,,ตัวแปรต้น X,number,1650,2,0.1,1,1,0.02,,,กรณีเปเปอร์ให้เป็นอัตราส่วนแทนปริมาณสัมบูรณ์
+materials,amount_note,,ร่องรอยการคลีน,text,1650,7,0.4,5,3,อัตราส่วน 1:50 (หน่วย 'v:v') ไม่ใช่ปริม… | recheck §8.9: CsI 0.7 -> 0.07 M (typo ใ… | parse ไม่ได้: '2.62 mg / 10 mL',,,เหตุผลที่ค่าที่แปลงต่างจากค่าดิบ
+materials,material_family,,ตัวควบคุม,text,1650,794,48.1,10,45,Metal electrode | TCO | PbI2,,,ตระกูลวัสดุ — ว่างเป็นปกติ สารในตารางนี้ส่วนใหญ่เป็น precursor/solvent ที่ไม่มี 'ตระกูล'
+materials,solvent_1,,ตัวแปรต้น X,text,1650,1016,61.6,13,45,DMF | IPA | Chlorobenzene,,,ตัวทำละลายหลักหลัง normalize
+materials,solvent_2,,ตัวแปรต้น X,text,1650,615,37.3,8,42,DMSO | Water | NMP,,,ตัวทำละลายรอง
+materials,solvent_ratio,,ตัวแปรต้น X,number,1650,601,36.4,13,42,4.0 | 5.0 | 0.25,,,อัตราส่วนผสมของสองตัว
+materials,solvent_system,,ตัวแปรต้น X,text,1650,1016,61.6,31,45,DMF:DMSO (4:1) | IPA | Chlorobenzene,,,ระบบตัวทำละลายแบบ normalize แล้ว (ยุบจาก 27 แบบเหลือ 16)
+materials,solvent_note,,ร่องรอยการคลีน,text,1650,1,0.1,1,1,วงเล็บไม่ใช่อัตราส่วน: (15 mg/mL),,,ร่องรอยการ normalize ตัวทำละลาย
+process,device_id,,คีย์,text,1972,1972,100.0,134,45,10.1016j.nanoen.2021.106285_Sample3 | 10.1002admi.202500231_Sample2 | 10.1002admi.202500231_Sample3,,,รหัสอุปกรณ์
+process,source_sheet,,ธงคุณภาพ,text,1972,1972,100.0,2,45,Process | NiOx synthesis,,,⚠️ **ต้องกรองก่อนใช้เสมอ** `Process` = ขั้นตอนสร้างเซลล์จริง / `NiOx synthesis` = สูตรสังเคราะห์ผง NiOx ของเปเปอร์เดียว **ห้ามใช้เป็น feature**
+process,layer_id,,คีย์,number,1972,1972,100.0,8,45,4 | 2 | 1,,,ชั้นที่ขั้นตอนนี้ทำกับมัน — ⚠️ `Annealing__C` ปนทุกชั้น ต้องกรอง layer_id ก่อน
+process,step_order,,คีย์,number,1972,1835,93.1,5,45,1.0 | 2.0 | 3.0,,,ลำดับขั้นตอนภายในชั้น
+process,process_type,,ตัวแปรต้น X,text,1972,1834,93.0,35,45,Spin coating | Annealing | Thermal evaporation,,,ชนิดขั้นตอน เช่น Spin coating / Annealing / AntiSolvent — ⚠️ ว่าง = แถว placeholder ของ template ต้องกรอง `.notna()` ทิ้ง
+process,description,,ที่มา/หลักฐาน,text,1972,394,20.0,92,45,CB | N2 | O2,,,รายละเอียดที่เปเปอร์เขียน เช่น ชื่อ antisolvent ที่ใช้
+process,parameter,,ค่าดิบ,text,1972,1560,79.1,238,45,"4000, 30 | 3000, 30 | 100, 10",,,ค่าพารามิเตอร์ดิบ — หลายค่าคั่นด้วยจุลภาค จับคู่กับ unit ตามตำแหน่ง
+process,unit,,ค่าดิบ,text,1972,1560,79.1,48,45,"RPM, sec | C, min | C, sec",,,หน่วยของพารามิเตอร์ดิบ
+process,note,,ที่มา/หลักฐาน,text,1972,20,1.0,1,1,NiOx synthesis,,,หมายเหตุจากผู้กรอก
+process,param_fixed,,ร่องรอยการคลีน,flag,1972,1972,100.0,2,45,False | True,,,"ธงว่าแถวนี้ถูกแก้ค่าที่กรอกติดกัน (เช่น `100108000` → 100 °C, 1800 s)"
+process,param_recovered,,ร่องรอยการคลีน,flag,1972,1972,100.0,2,45,False | True,,,ธงว่าค่ากู้มาจากช่องที่กรอกผิดคอลัมน์
+process,param_note,,ร่องรอยการคลีน,number,1972,0,0.0,0,0,,,,เหตุผลของการแก้
+process,ALD__C,,,number,1972,6,0.3,1,1,100.0,,,
+process,Annealing__C,,ตัวแปรต้น X,number,1972,414,21.0,22,45,100.0 | 120.0 | 300.0,,,พารามิเตอร์ของขั้น **Annealing** หน่วย C (องศาเซลเซียส)
+process,Annealing__C/min,,,number,1972,3,0.2,2,1,1.0 | 5.0,,,
+process,Annealing__hr,,ตัวแปรต้น X,number,1972,27,1.4,3,7,1.0 | 3.0 | 10.0,,,พารามิเตอร์ของขั้น **Annealing** หน่วย hr (ชั่วโมง)
+process,Annealing__min,,ตัวแปรต้น X,number,1972,230,11.7,13,30,10.0 | 20.0 | 30.0,,,พารามิเตอร์ของขั้น **Annealing** หน่วย min (นาที)
+process,Annealing__sec,,ตัวแปรต้น X,number,1972,149,7.6,11,15,600.0 | 1800.0 | 300.0,,,พารามิเตอร์ของขั้น **Annealing** หน่วย sec (วินาที)
+process,AntiSolvent__ml,,ตัวแปรต้น X,number,1972,4,0.2,1,1,0.25,,,พารามิเตอร์ของขั้น **AntiSolvent** หน่วย ml (มิลลิลิตร)
+process,AntiSolvent__sec,,ตัวแปรต้น X,number,1972,96,4.9,13,35,10.0 | 25.0 | 20.0,,,พารามิเตอร์ของขั้น **AntiSolvent** หน่วย sec (วินาที)
+process,AntiSolvent__uL,,ตัวแปรต้น X,number,1972,94,4.8,8,32,300.0 | 150.0 | 200.0,,,พารามิเตอร์ของขั้น **AntiSolvent** หน่วย uL (ไมโครลิตร)
+process,BladeCoating__mm/sec,,ตัวแปรต้น X,number,1972,19,1.0,2,1,10.0 | 30.0,,,พารามิเตอร์ของขั้น **BladeCoating** หน่วย mm/sec (มิลลิเมตรต่อวินาที)
+process,BladeCoating__µm,,ตัวแปรต้น X,number,1972,19,1.0,2,1,150.0 | 100.0,,,พารามิเตอร์ของขั้น **BladeCoating** หน่วย µm (ไมโครเมตร)
+process,ChemicalBathDeposition__min,,,number,1972,1,0.1,1,1,5.0,,,
+process,Dip-Coating__sec,,ตัวแปรต้น X,number,1972,4,0.2,1,1,300.0,,,พารามิเตอร์ของขั้น **Dip-Coating** หน่วย sec (วินาที)
+process,Dissolve__M,,ตัวแปรต้น X,number,1972,4,0.2,1,1,6.0,,,พารามิเตอร์ของขั้น **Dissolve** หน่วย M (โมลาร์)
+process,Dry__C,,ตัวแปรต้น X,number,1972,23,1.2,4,9,80.0 | 60.0 | 100.0,,,พารามิเตอร์ของขั้น **Dry** หน่วย C (องศาเซลเซียส)
+process,Dry__hr,,ตัวแปรต้น X,number,1972,8,0.4,2,3,12.0 | 1.0,,,พารามิเตอร์ของขั้น **Dry** หน่วย hr (ชั่วโมง)
+process,Dry__min,,,number,1972,6,0.3,2,3,10.0 | 5.0,,,
+process,E-beamEvaporation__Pa,,,number,1972,9,0.5,2,3,0.0007 | 0.0006,,,
+process,ElectronBeamEvaporation__C,,ตัวแปรต้น X,number,1972,3,0.2,1,1,25.0,,,พารามิเตอร์ของขั้น **ElectronBeamEvaporation** หน่วย C (องศาเซลเซียส)
+process,ElectronBeamEvaporation__Pa,,ตัวแปรต้น X,number,1972,3,0.2,1,1,0.0006,,,พารามิเตอร์ของขั้น **ElectronBeamEvaporation** หน่วย Pa (ปาสคาล)
+process,ElectronBeamEvaporation__Å/s,,ตัวแปรต้น X,number,1972,3,0.2,1,1,0.2,,,พารามิเตอร์ของขั้น **ElectronBeamEvaporation** หน่วย Å/s (อังสตรอมต่อวินาที)
+process,EthanolWash__RPM,,ตัวแปรต้น X,number,1972,3,0.2,1,2,4000.0,,,พารามิเตอร์ของขั้น **EthanolWash** หน่วย RPM (รอบต่อนาที)
+process,EthanolWash__sec,,ตัวแปรต้น X,number,1972,3,0.2,2,2,30.0 | 40.0,,,พารามิเตอร์ของขั้น **EthanolWash** หน่วย sec (วินาที)
+process,Magnetic Stir__C,,ตัวแปรต้น X,number,1972,4,0.2,1,1,60.0,,,พารามิเตอร์ของขั้น **Magnetic Stir** หน่วย C (องศาเซลเซียส)
+process,Magnetic Stir__sec,,ตัวแปรต้น X,number,1972,4,0.2,1,1,3600.0,,,พารามิเตอร์ของขั้น **Magnetic Stir** หน่วย sec (วินาที)
+process,MagnetronSputtering__W,,ตัวแปรต้น X,number,1972,2,0.1,1,1,80.0,,,พารามิเตอร์ของขั้น **MagnetronSputtering** หน่วย W (วัตต์)
+process,MagnetronSputtering__mbar,,ตัวแปรต้น X,number,1972,2,0.1,1,1,0.03,,,พารามิเตอร์ของขั้น **MagnetronSputtering** หน่วย mbar (มิลลิบาร์)
+process,MagnetronSputtering__sec,,ตัวแปรต้น X,number,1972,2,0.1,1,1,500.0,,,พารามิเตอร์ของขั้น **MagnetronSputtering** หน่วย sec (วินาที)
+process,Mixing__C,,ตัวแปรต้น X,number,1972,4,0.2,1,1,70.0,,,พารามิเตอร์ของขั้น **Mixing** หน่วย C (องศาเซลเซียส)
+process,Mixing__hr,,ตัวแปรต้น X,number,1972,1,0.1,1,1,24.0,,,พารามิเตอร์ของขั้น **Mixing** หน่วย hr (ชั่วโมง)
+process,Mixing__sec,,ตัวแปรต้น X,number,1972,4,0.2,1,1,1440.0,,,พารามิเตอร์ของขั้น **Mixing** หน่วย sec (วินาที)
+process,Plasma Treat__RPM,,ตัวแปรต้น X,number,1972,1,0.1,1,1,6000.0,,,พารามิเตอร์ของขั้น **Plasma Treat** หน่วย RPM (รอบต่อนาที)
+process,Plasma Treat__W,,ตัวแปรต้น X,number,1972,4,0.2,1,1,155.0,,,พารามิเตอร์ของขั้น **Plasma Treat** หน่วย W (วัตต์)
+process,Plasma Treat__mtorr,,ตัวแปรต้น X,number,1972,4,0.2,1,1,600.0,,,พารามิเตอร์ของขั้น **Plasma Treat** หน่วย mtorr (มิลลิทอร์)
+process,Plasma Treat__sec,,ตัวแปรต้น X,number,1972,21,1.1,4,6,600.0 | 900.0 | 120.0,,,พารามิเตอร์ของขั้น **Plasma Treat** หน่วย sec (วินาที)
+process,Plasma Treatment__Pa,,ตัวแปรต้น X,number,1972,2,0.1,1,1,21.0,,,พารามิเตอร์ของขั้น **Plasma Treatment** หน่วย Pa (ปาสคาล)
+process,Plasma Treatment__V,,ตัวแปรต้น X,number,1972,2,0.1,1,1,10.0,,,พารามิเตอร์ของขั้น **Plasma Treatment** หน่วย V (โวลต์)
+process,Plasma Treatment__W,,ตัวแปรต้น X,number,1972,2,0.1,1,1,30.0,,,พารามิเตอร์ของขั้น **Plasma Treatment** หน่วย W (วัตต์)
+process,Plasma Treatment__min,,ตัวแปรต้น X,number,1972,6,0.3,2,2,3.0 | 2.5,,,พารามิเตอร์ของขั้น **Plasma Treatment** หน่วย min (นาที)
+process,Plasma Treatment__sec,,ตัวแปรต้น X,number,1972,4,0.2,1,1,15.0,,,พารามิเตอร์ของขั้น **Plasma Treatment** หน่วย sec (วินาที)
+process,Postannealing__C,,ตัวแปรต้น X,number,1972,2,0.1,1,1,100.0,,,พารามิเตอร์ของขั้น **Postannealing** หน่วย C (องศาเซลเซียส)
+process,Postannealing__sec,,ตัวแปรต้น X,number,1972,2,0.1,1,1,1800.0,,,พารามิเตอร์ของขั้น **Postannealing** หน่วย sec (วินาที)
+process,Presputtering__W,,ตัวแปรต้น X,number,1972,2,0.1,1,1,50.0,,,พารามิเตอร์ของขั้น **Presputtering** หน่วย W (วัตต์)
+process,Presputtering__min,,ตัวแปรต้น X,number,1972,5,0.3,1,2,10.0,,,พารามิเตอร์ของขั้น **Presputtering** หน่วย min (นาที)
+process,Presputtering__sec,,ตัวแปรต้น X,number,1972,4,0.2,2,2,900.0 | 120.0,,,พารามิเตอร์ของขั้น **Presputtering** หน่วย sec (วินาที)
+process,RFSputtering__Torr,,ตัวแปรต้น X,number,1972,1,0.1,1,1,0.002,,,พารามิเตอร์ของขั้น **RFSputtering** หน่วย Torr (ทอร์)
+process,RFSputtering__W,,ตัวแปรต้น X,number,1972,3,0.2,1,3,200.0,,,พารามิเตอร์ของขั้น **RFSputtering** หน่วย W (วัตต์)
+process,RFSputtering__mbar,,ตัวแปรต้น X,number,1972,3,0.2,2,2,3.86 | 1e-07,,,พารามิเตอร์ของขั้น **RFSputtering** หน่วย mbar (มิลลิบาร์)
+process,RFSputtering__min,,ตัวแปรต้น X,number,1972,1,0.1,1,1,5.0,,,พารามิเตอร์ของขั้น **RFSputtering** หน่วย min (นาที)
+process,RFSputtering__sec,,ตัวแปรต้น X,number,1972,2,0.1,1,1,1200.0,,,พารามิเตอร์ของขั้น **RFSputtering** หน่วย sec (วินาที)
+process,SlotDieCoating__MPa,,ตัวแปรต้น X,flag,1972,4,0.2,1,1,1.0,,,พารามิเตอร์ของขั้น **SlotDieCoating** หน่วย MPa (เมกะปาสคาล)
+process,SlotDieCoating__mm/sec,,ตัวแปรต้น X,number,1972,4,0.2,1,1,12.0,,,พารามิเตอร์ของขั้น **SlotDieCoating** หน่วย mm/sec (มิลลิเมตรต่อวินาที)
+process,Sonication__hr,,ตัวแปรต้น X,number,1972,1,0.1,1,1,3.0,,,พารามิเตอร์ของขั้น **Sonication** หน่วย hr (ชั่วโมง)
+process,Sonication__sec,,ตัวแปรต้น X,number,1972,4,0.2,1,1,3600.0,,,พารามิเตอร์ของขั้น **Sonication** หน่วย sec (วินาที)
+process,Spin coating__RPM,,ตัวแปรต้น X,number,1972,559,28.3,16,44,4000.0 | 1000.0 | 3000.0,,,พารามิเตอร์ของขั้น **Spin coating** หน่วย RPM (รอบต่อนาที)
+process,Spin coating__RPM/s,,ตัวแปรต้น X,number,1972,26,1.3,7,4,2000.0 | 500.0 | 200.0,,,พารามิเตอร์ของขั้น **Spin coating** หน่วย RPM/s (อัตราเร่งรอบ)
+process,Spin coating__min,,ตัวแปรต้น X,number,1972,2,0.1,1,1,3.0,,,พารามิเตอร์ของขั้น **Spin coating** หน่วย min (นาที)
+process,Spin coating__sec,,ตัวแปรต้น X,number,1972,543,27.5,14,44,30.0 | 40.0 | 10.0,,,พารามิเตอร์ของขั้น **Spin coating** หน่วย sec (วินาที)
+process,SprayPyrolysis__C,,,number,1972,2,0.1,1,1,500.0,,,
+process,Sputtering__Pa,,ตัวแปรต้น X,number,1972,4,0.2,1,1,0.0001,,,พารามิเตอร์ของขั้น **Sputtering** หน่วย Pa (ปาสคาล)
+process,Sputtering__Torr,,ตัวแปรต้น X,number,1972,2,0.1,1,1,0.01,,,พารามิเตอร์ของขั้น **Sputtering** หน่วย Torr (ทอร์)
+process,Sputtering__W,,ตัวแปรต้น X,number,1972,2,0.1,1,1,80.0,,,พารามิเตอร์ของขั้น **Sputtering** หน่วย W (วัตต์)
+process,Sputtering__min,,ตัวแปรต้น X,number,1972,1,0.1,1,1,10.0,,,พารามิเตอร์ของขั้น **Sputtering** หน่วย min (นาที)
+process,Sputtering__sec,,ตัวแปรต้น X,number,1972,2,0.1,1,1,600.0,,,พารามิเตอร์ของขั้น **Sputtering** หน่วย sec (วินาที)
+process,Stir__C,,ตัวแปรต้น X,number,1972,5,0.3,1,1,25.0,,,พารามิเตอร์ของขั้น **Stir** หน่วย C (องศาเซลเซียส)
+process,Stir__hr,,,number,1972,14,0.7,3,3,2.0 | 4.0 | 1.0,,,
+process,Stir__min,,,number,1972,2,0.1,1,1,30.0,,,
+process,Stir__sec,,,number,1972,3,0.2,1,1,7200.0,,,
+process,Thermal evaporation__Pa,,ตัวแปรต้น X,number,1972,11,0.6,3,4,0.0001 | 0.0006 | 0.0008,,,พารามิเตอร์ของขั้น **Thermal evaporation** หน่วย Pa (ปาสคาล)
+process,Thermal evaporation__Torr,,ตัวแปรต้น X,number,1972,42,2.1,6,8,1e-06 | 1e-07 | 8e-06,,,พารามิเตอร์ของขั้น **Thermal evaporation** หน่วย Torr (ทอร์)
+process,Thermal evaporation__mbar,,ตัวแปรต้น X,number,1972,8,0.4,3,3,1e-05 | 1.8e-06 | 6e-06,,,พารามิเตอร์ของขั้น **Thermal evaporation** หน่วย mbar (มิลลิบาร์)
+process,Thermal evaporation__Å/s,,ตัวแปรต้น X,number,1972,10,0.5,2,2,1.0 | 0.5,,,พารามิเตอร์ของขั้น **Thermal evaporation** หน่วย Å/s (อังสตรอมต่อวินาที)
+process,Treatment__RPM,,ตัวแปรต้น X,number,1972,2,0.1,1,1,5000.0,,,พารามิเตอร์ของขั้น **Treatment** หน่วย RPM (รอบต่อนาที)
+process,Treatment__min,,ตัวแปรต้น X,number,1972,4,0.2,3,3,30.0 | 2.5 | 15.0,,,พารามิเตอร์ของขั้น **Treatment** หน่วย min (นาที)
+process,Treatment__sec,,ตัวแปรต้น X,number,1972,2,0.1,1,1,35.0,,,พารามิเตอร์ของขั้น **Treatment** หน่วย sec (วินาที)
+process,UV Treat__sec,,ตัวแปรต้น X,number,1972,2,0.1,1,1,1800.0,,,พารามิเตอร์ของขั้น **UV Treat** หน่วย sec (วินาที)
+process,UV Treatment__min,,,number,1972,2,0.1,1,1,30.0,,,
+process,UV/Ozone Treat__min,,ตัวแปรต้น X,number,1972,55,2.8,6,18,15.0 | 30.0 | 20.0,,,พารามิเตอร์ของขั้น **UV/Ozone Treat** หน่วย min (นาที)
+process,UV/Ozone Treat__sec,,ตัวแปรต้น X,number,1972,14,0.7,2,5,900.0 | 600.0,,,พารามิเตอร์ของขั้น **UV/Ozone Treat** หน่วย sec (วินาที)
+process,VacuumDegas__Pa,,,number,1972,2,0.1,1,1,5.0,,,
+process,VacuumDegas__sec,,,number,1972,2,0.1,1,1,60.0,,,
+process,VacuumEvacuation__sec,,ตัวแปรต้น X,number,1972,4,0.2,1,1,39.0,,,พารามิเตอร์ของขั้น **VacuumEvacuation** หน่วย sec (วินาที)
+process,Wash__RPM,,ตัวแปรต้น X,number,1972,2,0.1,1,1,4000.0,,,พารามิเตอร์ของขั้น **Wash** หน่วย RPM (รอบต่อนาที)
+process,Wash__min,,ตัวแปรต้น X,number,1972,60,3.0,4,21,20.0 | 15.0 | 30.0,,,พารามิเตอร์ของขั้น **Wash** หน่วย min (นาที)
+process,Wash__sec,,ตัวแปรต้น X,number,1972,45,2.3,5,14,900.0 | 1200.0 | 600.0,,,พารามิเตอร์ของขั้น **Wash** หน่วย sec (วินาที)
+process,Wash__times,,ตัวแปรต้น X,number,1972,4,0.2,1,1,4.0,,,พารามิเตอร์ของขั้น **Wash** หน่วย times (จำนวนครั้ง)
+process,pH adjustment__M,,ตัวแปรต้น X,number,1972,4,0.2,1,1,7.0,,,พารามิเตอร์ของขั้น **pH adjustment** หน่วย M (โมลาร์)
+process,Annealing__time_s,,ตัวแปรต้น X,number,1972,406,20.6,16,45,600.0 | 1200.0 | 3600.0,,,เวลารวมของขั้น **Annealing** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,ChemicalBathDeposition__time_s,,,number,1972,1,0.1,1,1,300.0,,,
+process,Dry__time_s,,ตัวแปรต้น X,number,1972,14,0.7,4,5,43200.0 | 3600.0 | 600.0,,,เวลารวมของขั้น **Dry** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Mixing__time_s,,ตัวแปรต้น X,number,1972,5,0.3,2,2,1440.0 | 86400.0,,,เวลารวมของขั้น **Mixing** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Plasma Treatment__time_s,,ตัวแปรต้น X,number,1972,10,0.5,3,3,180.0 | 15.0 | 150.0,,,เวลารวมของขั้น **Plasma Treatment** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Presputtering__time_s,,ตัวแปรต้น X,number,1972,9,0.5,3,4,600.0 | 900.0 | 120.0,,,เวลารวมของขั้น **Presputtering** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,RFSputtering__time_s,,ตัวแปรต้น X,number,1972,3,0.2,2,2,1200.0 | 300.0,,,เวลารวมของขั้น **RFSputtering** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Sonication__time_s,,ตัวแปรต้น X,number,1972,5,0.3,2,2,3600.0 | 10800.0,,,เวลารวมของขั้น **Sonication** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Spin coating__time_s,,ตัวแปรต้น X,number,1972,545,27.6,15,44,30.0 | 40.0 | 10.0,,,เวลารวมของขั้น **Spin coating** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Sputtering__time_s,,ตัวแปรต้น X,number,1972,3,0.2,1,2,600.0,,,เวลารวมของขั้น **Sputtering** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Stir__time_s,,,number,1972,19,1.0,4,5,7200.0 | 14400.0 | 3600.0,,,
+process,Treatment__time_s,,ตัวแปรต้น X,number,1972,6,0.3,4,3,35.0 | 1800.0 | 150.0,,,เวลารวมของขั้น **Treatment** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,UV Treatment__time_s,,,number,1972,2,0.1,1,1,1800.0,,,
+process,UV/Ozone Treat__time_s,,ตัวแปรต้น X,number,1972,69,3.5,6,23,900.0 | 1800.0 | 600.0,,,เวลารวมของขั้น **UV/Ozone Treat** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,Wash__time_s,,ตัวแปรต้น X,number,1972,105,5.3,6,33,1200.0 | 900.0 | 1800.0,,,เวลารวมของขั้น **Wash** (วินาที) — รวม sec/min/hr ให้เป็นหน่วยเดียวแล้ว ⭐ ใช้ตัวนี้แทนคอลัมน์ sec/min/hr แยก
+process,AntiSolvent__vol_uL,,ตัวแปรต้น X,number,1972,98,5.0,8,33,300.0 | 150.0 | 200.0,,,ปริมาณ antisolvent รวมหน่วยแล้ว (µL)
+process,AntiSolvent__timing_s,,ตัวแปรต้น X,number,1972,96,4.9,13,35,10.0 | 25.0 | 20.0,,,จังหวะหยด antisolvent (วินาที) — ยังมี 2 จุดอ้างอิง ดู timing_ref ประกอบ
+process,AntiSolvent__timing_ref,,ที่มา/หลักฐาน,text,1972,96,4.9,2,35,after_start | before_end,,,จุดอ้างอิงของจังหวะหยด: after_start / before_end
+properties,device_id,,คีย์,text,1577,1577,100.0,134,45,10.1021_acsomega.1c01378_Sample1 | 10.1021_acsomega.1c01378_Sample2 | 10_1021_acsami_5c16972_Sample1,,,รหัสอุปกรณ์
+properties,property,,ค่าดิบ,text,1577,1577,100.0,140,45,Champion PCE | Champion Voc | Champion FF,,,"ชื่อค่าที่วัด ตามที่เปเปอร์เขียนเต็ม ๆ เช่น 'PCE (Champion, RS)'"
+properties,value,,ค่าดิบ,text,1577,1551,98.4,1093,45,1.06 | 1.17 | 1.13,,,ค่าตามที่เปเปอร์เขียน (ยังเป็นข้อความ)
+properties,error,,ค่าดิบ,number,1577,253,16.0,137,20,0.01 | 0.02 | 1.0,,,ค่าความคลาดเคลื่อน ± ถ้าเปเปอร์ให้
+properties,unit,,ค่าดิบ,text,1577,1553,98.5,25,45,% | V | mA cm-2,,,หน่วยตามที่เปเปอร์เขียน
+properties,remarks,,ที่มา/หลักฐาน,text,1577,862,54.7,178,34,Table 1 | Table 2 | Table S4,,,"หมายเหตุจากผู้กรอก เช่น 'From SEM', 'Figure S8b' — **มีค่ามากตอนตามรอยว่าตัวเลขมาจากรูปไหน**"
+properties,unit_corrected,,ร่องรอยการคลีน,text,1577,1553,98.5,24,45,% | V | mA cm-2,,,หน่วยหลังแก้ (เช่น ติดป้าย % ผิดเป็น V)
+properties,value_after_unit_fix,,ร่องรอยการคลีน,number,1577,1551,98.4,1086,45,1.06 | 1.17 | 1.13,,,ค่าหลังแก้หน่วย
+properties,unit_fix_note,,ร่องรอยการคลีน,text,1577,25,1.6,15,7,unit เดิม '%' ผิดชนิด แก้เป็น 'V' (ไม่แ… | unit เดิม '%' ผิดชนิด แก้เป็น 'mA cm-2'… | ค่าขอบล่าง >200: ใช้ 200 -- ค่าจริงสูงก…,,,เหตุผลที่แก้หน่วย
+properties,base_property,,คีย์,text,1577,1577,100.0,64,45,PCE | FF | Voc,,,"ชื่อค่าที่วัดแบบล้วน ๆ หลังถอดวงเล็บออก เช่น `PCE`, `Grain size`, `VTFL` ⭐ ใช้ตัวนี้กรอง"
+properties,stat,,คีย์,text,1577,854,54.2,5,42,champion | average | avg,,,Champion / Average / ว่าง — แตกมาจากชื่อ property
+properties,scan,,คีย์,text,1577,366,23.2,2,15,RS | FS,,,RS (reverse) / FS (forward) / ว่าง
+properties,layer,,คีย์,text,1577,23,1.5,2,5,HTL | PSK,,,ชั้นที่ค่านี้วัด (บางค่าวัดเฉพาะชั้น เช่น contact angle ของผิว HTL)
+properties,carrier,,คีย์,text,1577,24,1.5,2,8,hole | electron,,,พาหะที่ค่านี้เกี่ยวข้อง (hole/electron) — สำคัญกับ trap density
+properties,value_parsed,,ผลลัพธ์ Y,number,1577,1551,98.4,1086,45,1.06 | 1.17 | 1.13,,,**ค่าตัวเลขสุดท้ายที่ควรใช้เสมอ** ผ่านการแก้หน่วยและ parse แล้ว
+properties,value_note,,ร่องรอยการคลีน,text,1577,75,4.8,24,22,recheck §8.8b: ยังชี้ไม่ได้ว่าเป็น mobi… | recheck §4.0c: ยุบชื่อย่อ 'WF' เข้ากับ … | FF scale: fraction -> % (x100),,,เหตุผลทุกครั้งที่ value_parsed ต่างจาก value_after_unit_fix
+psk_composition,device_id,,คีย์,text,134,134,100.0,134,45,10.1002_advs.202309111_Sample1 | 10.1002_advs.202309111_Sample2 | 10.1002_smtd.202200787_Sample1,,,รหัสอุปกรณ์
+psk_composition,comp_source,,ที่มา/หลักฐาน,text,134,134,100.0,3,45,formula | precursor | ไม่มีข้อมูล,,,สูตรมาจากไหน: `formula` อ่านจากชื่อชั้น / `precursor` คำนวณย้อนจากเกลือที่ชั่ง
+psk_composition,cross_check,,ที่มา/หลักฐาน,text,134,60,44.8,6,21,"ตรง | -- (สูตรแตกไม่ได้) | ต่าง: Br, Cs, FA, I, MA",,,⭐ เทียบ 2 แหล่งอิสระแล้วตรงกันไหม — `ตรง` = มั่นใจสูงสุด / ว่าง = ไม่มีแหล่งที่สอง / `ต่าง:` = ขัดกัน ควรเปิดเปเปอร์ก่อนอ้าง
+psk_composition,b_site,,ตัวควบคุม,text,134,128,95.5,1,44,Pb,,,โลหะใน B-site — เป็น Pb ทั้งหมดในชุดนี้ variance 0
+psk_composition,layer_material,,ที่มา/หลักฐาน,text,134,132,98.5,44,45,(FA0.83MA0.17)0.95Cs0.05Pb(I0.9Br0.1)3 | Cs0.05FA0.85MA0.1PbI3 | Cs0.08(MA0.17FA0.83)0.92Pb(I0.83Br0.17)3,,,ข้อความสูตรดิบจากชั้น 4 ที่ใช้ parse
+psk_composition,precursor_status,,ที่มา/หลักฐาน,text,134,134,100.0,14,45,ok (mass) | ไม่มีแถว precursor | ok (molar),,,เหตุผลที่คำนวณฝั่ง precursor ได้/ไม่ได้ เช่น 'ตกหล่น: MABr'
+psk_composition,a_Cs,,ตัวควบคุม,number,134,127,94.8,14,44,0.05 | 0.1 | 0.08,,,ซีเซียมใน A-site
+psk_composition,a_MA,,ตัวควบคุม,number,134,125,93.3,25,43,0.1 | 0.14 | 0.05,,,methylammonium ใน A-site — **ไม่ได้ถูกดึงเข้า target_table** ต้องมาเอาจากไฟล์นี้
+psk_composition,a_FA,,ตัวควบคุม,number,134,128,95.5,23,44,0.81 | 0.85 | 0.788,,,formamidinium ใน A-site
+psk_composition,x_I,,ตัวควบคุม,number,134,128,95.5,20,44,0.85 | 1.0 | 0.83,,,ไอโอไดด์ใน X-site — ไม่ได้ถูกดึงเข้า target_table (= 1 − x_Br)
+psk_composition,x_Br,,ตัวควบคุม,number,134,112,83.6,19,38,0.15 | 0.17 | 0.1,,,โบรไมด์ใน X-site
+psk_composition,a_Rb,,ตัวควบคุม,number,134,4,3.0,1,1,0.05,,,รูบิเดียมใน A-site — พบน้อยมาก
+stability,device_id,,คีย์,text,134,134,100.0,86,38,10.1002_solr.202400534_Sample1 | 10.1002_solr.202400534_Sample2 | 10.1016_j.joule.2022.06.026_Sample3,,,รหัสอุปกรณ์ — **หนึ่งเครื่องมีได้หลายแถว** ถ้าทดสอบหลายเงื่อนไข
+stability,environment,,คีย์,text,134,134,100.0,43,38,Ambient air | N2 | Ambient,,,บรรยากาศ/โปรโตคอลตามที่เปเปอร์เขียน — 22 แบบ เขียนไม่เหมือนกันเลย
+stability,encapsulation,,ตัวควบคุม,text,134,132,98.5,2,37,N | Y,,,ห่อหุ้มกันอากาศไหม Y/N — **ตัวควบคุมสำคัญ** เครื่องที่ห่อย่อมทนกว่าโดยไม่เกี่ยวกับคุณภาพฟิล์ม
+stability,temperature_c,,ค่าดิบ,text,134,103,76.9,14,29,25 | 85 | 65,,,อุณหภูมิทดสอบตามที่เปเปอร์เขียน
+stability,humidity_pct,,ค่าดิบ,text,134,63,47.0,27,23,50-60 | 30-40 | 25.0,,,ความชื้นสัมพัทธ์ตามที่เปเปอร์เขียน
+stability,time_hr,,คีย์,number,134,127,94.8,35,36,1000.0 | 1200.0 | 500.0,,,⭐ ระยะเวลาทดสอบ (ชั่วโมง) — **ตัวแปรที่ทำให้เทียบข้ามเปเปอร์ไม่ได้มากที่สุด** ชุดนี้กว้าง 0.83-5000 ชม.
+stability,retention_pct,,ค่าดิบ,text,134,118,88.1,72,35,80 | 90 | 85,,,PCE ที่เหลือ (%) ตามที่เปเปอร์เขียน
+stability,t80_hr,,เสถียรภาพ,text,134,2,1.5,2,2,> 1300 | 22,,,เวลาที่ PCE ตกถึง 80% — มาตรฐานวงการ แต่ชุดนี้มีแค่ 2 แถว ใช้ไม่ได้
+stability,initial_pce,,เสถียรภาพ,number,134,4,3.0,4,1,16.31 | 17.11 | 16.97,,,PCE ก่อนทดสอบ
+stability,final_pce,,เสถียรภาพ,number,134,4,3.0,4,1,14.5 | 10.5 | 11.8,,,PCE หลังทดสอบ
+stability,temperature_c_parsed,,เสถียรภาพ,number,134,105,78.4,8,29,25.0 | 85.0 | 65.0,,,อุณหภูมิที่แปลงเป็นตัวเลขแล้ว — ใช้ตัวนี้
+stability,temperature_c_note,,ร่องรอยการคลีน,text,134,12,9.0,4,5,RT (room temperature) -> 25 C [assumpti… | ค่ากลาง±คลาดเคลื่อน: ใช้ 50 C (±5) | ค่ากลาง±คลาดเคลื่อน: ใช้ 20 C (±5),,,ร่องรอยการแปลงอุณหภูมิ
+stability,humidity_pct_parsed,,เสถียรภาพ,number,134,63,47.0,13,23,40.0 | 25.0 | 55.0,,,ความชื้นที่แปลงแล้ว (กลางช่วงถ้าเปเปอร์ให้เป็นช่วง)
+stability,humidity_pct_min,,ร่องรอยการคลีน,number,134,63,47.0,12,23,50.0 | 30.0 | 25.0,,,ขอบล่างของช่วงความชื้น
+stability,humidity_pct_max,,ร่องรอยการคลีน,number,134,63,47.0,13,23,60.0 | 40.0 | 50.0,,,ขอบบนของช่วงความชื้น
+stability,humidity_pct_note,,ร่องรอยการคลีน,text,134,40,29.9,14,16,"ช่วงค่า: ใช้ค่ากลาง 55 (min=50, max=60) | ช่วงค่า: ใช้ค่ากลาง 40 (min=30, max=50) | ช่วงค่า: ใช้ค่ากลาง 35 (min=30, max=40)",,,ร่องรอยการแปลงความชื้น
+stability,t80_hr_parsed,,เสถียรภาพ,number,134,2,1.5,2,2,1300.0 | 22.0,,,T80 ที่แปลงแล้ว
+stability,t80_hr_censor,,ธงคุณภาพ,text,134,1,0.7,1,1,>,,,ค่า censored เช่น '>1000'
+stability,t80_hr_note,,ร่องรอยการคลีน,text,134,1,0.7,1,1,ค่า censored: รู้แค่ว่า สูงกว่า 1300 — …,,,ร่องรอย T80
+stability,retention_pct_parsed,,เสถียรภาพ,number,134,122,91.0,64,36,80.0 | 90.0 | 85.0,,,⭐ **ค่า retention ที่ควรใช้** — ตัวเลขที่ parse แล้ว
+stability,retention_pct_censor,,ธงคุณภาพ,text,134,6,4.5,2,5,< | >,,,ค่า censored เช่น '<55'
+stability,retention_pct_note,,ร่องรอยการคลีน,text,134,15,11.2,10,10,คำนวณจาก final_pce/initial_pce x100 | > 100% (เป็นไปได้จาก light-soaking) เก็… | สเกล: x100 [ยืนยันแล้ว: ต้นฉบับใช้ Exce…,,,ร่องรอย retention เช่น เกิน 100% จาก light-soaking
+stability,stress_group,,คีย์,text,134,134,100.0,6,38,light/operational | ambient air | inert (N2),,,⭐ **ยุบ environment 22 แบบเหลือ 6 กลุ่ม**: light/operational · ambient air · inert (N2) · thermal · dark storage · other — §8 ใช้ตัวนี้เป็นหน่วยเทียบ
+target_table,device_id,,คีย์,text,134,134,100.0,134,45,10.1002_advs.202309111_Sample1 | 10.1002_advs.202309111_Sample2 | 10.1002_smtd.202200787_Sample1,,,รหัสอุปกรณ์ = DOI ของเปเปอร์ + หมายเลข Sample · ตัดที่ `_Sample` ได้ชื่อเปเปอร์ ใช้เป็น group ใน LOPO
+target_table,is_coated,,ธงคุณภาพ,flag,134,134,100.0,2,45,True | False,,,มีชั้นเคลือบผิวอย่างน้อย 1 ชั้นไหม — **True ทั้ง 95 เครื่อง** (ทุกเครื่องมี BCP ที่ L7) variance 0 ใช้เป็นตัวแปรไม่ได้
+target_table,n_coating_layers,,ตัวแปรต้น X,number,134,134,100.0,4,45,2 | 1 | 3,,,นับชั้นเคลือบผิวจริง (L3/L5/L7) 0-3 ชั้น — เกือบทั้งหมดขยับตาม coat_htl
+target_table,coat_htl,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,เคลือบผิว HTL (L3) ไหม — ฟิล์มบางทับผิว NiOx ก่อนวาง perovskite เพื่ออุด defect ที่ 'รอยต่อฝังใต้ดิน'
+target_table,coat_psk,,ตัวแปรต้น X,flag,134,134,100.0,2,45,False | True,,,เคลือบผิว perovskite (L5) ไหม — เกือบทั้งหมดคือ PEAI ที่สร้างชั้น 2D บาง ๆ ทับหน้า
+target_table,coat_etl,,ธงคุณภาพ,flag,134,134,100.0,2,45,True | False,,,เคลือบผิว ETL (L7) ไหม — True ทั้ง 95 เครื่อง variance 0 เก็บไว้ sanity check เท่านั้น
+target_table,anneal_htl,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,มีขั้นอบ HTL ไหม (NiOx อบ 270-450 °C)
+target_table,anneal_psk,,ตัวแปรต้น X,flag,134,134,100.0,2,45,True | False,,,มีขั้นอบ perovskite ไหม (อบ 100-150 °C ร้อนกว่านี้สารอินทรีย์สลาย)
+target_table,htl_mod_kind,,ตัวแปรต้น X,text,134,75,56.0,2,36,coating | additive,,,ชนิดการดัดแปลง HTL: `coating` เคลือบทับเป็นชั้นแยก / `additive` ผสมในน้ำหมึกแล้ว spin ครั้งเดียว / ว่าง = ไม่ดัดแปลง ⭐ ตัวแปรต้นที่ดีที่สุดของชุดนี้
+target_table,psk_mod_kind,,ตัวแปรต้น X,text,134,43,32.1,1,15,coating,,,ชนิดการดัดแปลงผิว perovskite — coating ทั้งหมด ไม่มี additive
+target_table,jv_variant,,ที่มา/หลักฐาน,text,134,133,99.3,4,45,champion | plain | average,,,ค่า J-V ชุดไหน: `champion` เซลล์ดีที่สุด / `average` เฉลี่ยหลายเซลล์ / `plain` ไม่ระบุ — **ปนกันไม่ได้** เพราะ champion สูงกว่า average เป็นระบบ
+target_table,jv_scan,,ที่มา/หลักฐาน,text,134,133,99.3,2,45,- | RS,,,ทิศทางการสแกนวัด: `RS` reverse scan / `-` ไม่ระบุ — reverse scan ให้ค่าสูงกว่า forward เป็นระบบ (hysteresis)
+target_table,pce,,ผลลัพธ์ Y,number,134,131,97.8,119,45,20.37 | 24.21 | 16.97,,,**ประสิทธิภาพรวม (%)** = Voc × Jsc × FF / 100 · แปลงแสงเป็นไฟได้กี่ % ของที่ตกกระทบ · ตัวชี้วัดหลักของทั้งงาน
+target_table,voc,,ผลลัพธ์ Y,number,134,132,98.5,55,45,1.02 | 1.06 | 1.08,,,แรงดันวงจรเปิด (V) — แรงดันสูงสุดตอนไม่จ่ายกระแส บอก 'คุณภาพ' ของประจุ · defect เยอะ Voc ตก
+target_table,jsc,,ผลลัพธ์ Y,number,134,130,97.0,112,45,24.5 | 24.2 | 24.8,,,กระแสลัดวงจร (mA cm⁻²) — กระแสสูงสุดตอนลัดวงจร บอก 'ปริมาณ' แสงที่เก็บได้ · ขึ้นกับ bandgap และความหนา PSK
+target_table,ff,,ผลลัพธ์ Y,number,134,132,98.5,107,45,80.4 | 77.3 | 72.0,,,ฟิลล์แฟกเตอร์ (%) — ความ 'เหลี่ยม' ของกราฟ J-V บอกการสูญเสียจากความต้านทานภายในและกระแสรั่ว
+target_table,afm_rms,,ค่าดิบ,number,134,43,32.1,39,21,13.2 | 7.33 | 6.37,,,—
+target_table,contact_angle,,ค่าดิบ,number,134,41,30.6,40,18,20.0 | 32.2 | 46.6,,,—
+target_table,grain_size,,ค่าดิบ,number,134,24,17.9,23,10,200.0 | 150.0 | 257.0,,,—
+target_table,hi,,ค่าดิบ,number,134,26,19.4,25,10,4.4 | 7.46 | 5.2,,,—
+target_table,rrec,,ตัวกลาง,number,134,23,17.2,19,10,32909.0 | 2881.0 | 3817.0,,,ความต้านทาน recombination (Ω) จากการวัดอิมพีแดนซ์ — **สูง = ดี** (ประจุตายยาก) · n น้อยและสเกลข้ามเปเปอร์ไม่ตรงกัน
+target_table,rs,,ตัวกลาง,number,134,39,29.1,36,15,14.12 | 4.76 | 3.76,,,ความต้านทานอนุกรม (Ω cm²) — **ต่ำ = ดี** · กินค่า FF โดยตรง
+target_table,vbm,,ค่าดิบ,number,134,51,38.1,41,21,-5.42 | -5.3 | -5.4,,,—
+target_table,vtfl,,ตัวกลาง,number,134,65,48.5,51,26,0.68 | 0.74 | 0.66,,,⛔ **ตัดออกจากการวิเคราะห์ในโน้ตบุ๊กนี้ตามที่ผู้ใช้กำหนด** — แรงดันจุด trap-filled limit จาก SCLC · เก็บไว้ในพจนานุกรมเพื่อความครบเท่านั้น
+target_table,work_function,,ค่าดิบ,number,134,24,17.9,23,11,4.69 | 4.38 | 4.54,,,—
+target_table,trap_density,,ตัวกลาง,number,134,57,42.5,53,21,2900000000000000.0 | 2240000000000000.0 | 1140000000000000.0,,,ความหนาแน่นของ trap ฝั่งโฮล (cm⁻³) — **ต่ำ = ดี** · trap คือ 'หลุม' ในผลึกที่ดักประจุให้ตายก่อนถึงขั้ว · ตัวกลางหลักที่ใช้แทน VTFL
+target_table,trap_density_electron,,ตัวกลาง,number,134,3,2.2,3,1,4100000000000000.0 | 2690000000000000.0 | 2270000000000000.0,,,trap ฝั่งอิเล็กตรอน — มีแค่ 3 เครื่องจากเปเปอร์เดียว ใช้วิเคราะห์ไม่ได้
+target_table,defect_density_reported,,ตัวกลาง,number,134,2,1.5,2,1,2.7e+18 | 1.97e+18,,,ค่า defect density ที่เปเปอร์รายงานเอง (คนละนิยามกับ trap_density) — 2 เครื่อง
+target_table,trap_implied_thickness_nm,,ธงคุณภาพ,number,134,53,39.6,52,20,379.7821272799732 | 523.3030474757455 | 523.0620605656712,,,ความหนาที่ย้อนคำนวณได้จากสูตร trap↔VTFL — ใช้ตรวจว่าค่า trap ของเปเปอร์นั้นอยู่สเกลเดียวกับคนอื่นไหม
+target_table,trap_scale_flag,,ธงคุณภาพ,text,134,59,44.0,3,22,ok | scale_suspect | no_vtfl,,,`ok` / `scale_suspect` (สเกลน่าสงสัย เทียบข้ามเปเปอร์ไม่ได้) / `no_vtfl` — **ไม่ใช่ feature** เป็นใบอนุญาตว่าค่าไหนเอาไปเทียบได้
+target_table,rrec_scale_flag,,ธงคุณภาพ,text,134,23,17.2,2,10,ok | scale_suspect,,,เหมือน trap_scale_flag แต่ของ Rrec
+target_table,sheet_resistance_htl,,ที่มา/หลักฐาน,number,134,2,1.5,2,1,124000.0 | 53400.0,,,ความต้านทานแผ่นของ HTL (Ω/sq) — ย้ายออกจาก rs เพราะคนละปริมาณ · 2 เครื่อง
+target_table,hi_def_flag,,ค่าดิบ,text,134,26,19.4,2,10,ok | def_suspect,,,—
+target_table,afm_layer,,ค่าดิบ,text,134,43,32.1,2,21,ไม่ระบุ | HTL,,,—
+target_table,retention_25c,,เสถียรภาพ,number,134,43,32.1,26,20,80.0 | 90.0 | 90.31,,,PCE เหลือกี่ % หลังทดสอบที่อุณหภูมิห้อง — **ปัญหา: รวมหลาย timescale และหลายบรรยากาศเข้าด้วยกัน** §8 เสนอหน่วยเทียบที่ดีกว่า
+target_table,degradation_rate,,เสถียรภาพ,number,134,43,32.1,36,20,0.0166666666666666 | 0.0067291666666666 | -0.0005902777777777,,,อัตราการเสื่อม (% ต่อชั่วโมง) — เทียบข้าม timescale ตรง ๆ ไม่ได้ เพราะการเสื่อมไม่เป็นเส้นตรง (ช่วงแรกตกเร็ว)
+target_table,retention_dark_ambient,,,number,134,29,21.6,22,14,80.0 | 85.0 | 87.0,,,
+target_table,retention_dark_ambient_hr,,,number,134,29,21.6,12,14,1000.0 | 1100.0 | 500.0,,,
+target_table,retention_dark_ambient_censored,,,flag,134,29,21.6,1,14,False,,,
+target_table,retention_dark_inert,,,number,134,19,14.2,15,8,90.31 | 100.85 | 90.0,,,
+target_table,retention_dark_inert_hr,,,number,134,19,14.2,6,8,1440.0 | 120.0 | 1400.0,,,
+target_table,retention_dark_inert_censored,,,flag,134,19,14.2,2,8,False | True,,,
+target_table,retention_light_mpp,,,number,134,4,3.0,4,2,82.0 | 88.0 | 95.0,,,
+target_table,retention_light_mpp_hr,,,number,134,4,3.0,2,2,1.0 | 144.0,,,
+target_table,retention_light_mpp_censored,,,flag,134,4,3.0,1,2,False,,,
+target_table,retention_n_family,,,number,134,43,32.1,2,20,1.0 | 2.0,,,
+target_table,psk_spin_rpm,,ตัวแปรต้น X,number,134,119,88.8,6,42,4000.0 | 5000.0 | 6000.0,,,ความเร็วปั่นเคลือบชั้น perovskite (RPM) — เร็วขึ้น ฟิล์มบางลง/แห้งเร็วขึ้น กระทบจังหวะเกิดผลึก
+target_table,psk_anneal_C,,ตัวแปรต้น X,number,134,128,95.5,7,42,100.0 | 110.0 | 120.0,,,อุณหภูมิอบ perovskite (°C) ใช้ค่าสูงสุดของทุกขั้น
+target_table,psk_anneal_time_s,,ตัวแปรต้น X,number,134,128,95.5,8,42,1200.0 | 1800.0 | 600.0,,,เวลารวมของทุกขั้นอบ perovskite (วินาที) — ⚠️ เครื่องที่อบสองขั้นจะรวมเวลาขั้นอุ่นต่ำเข้ามาด้วย
+target_table,antisolvent_vol_uL,,ตัวแปรต้น X,number,134,98,73.1,8,33,300.0 | 150.0 | 200.0,,,ปริมาณ antisolvent ที่หยด (µL) — ตัวทำละลายที่ perovskite ไม่ละลาย หยดลงไประหว่างปั่นเพื่อบังคับให้ตกผลึกพร้อมกันทั้งแผ่น
+target_table,antisolvent_timing_s,,ค่าดิบ,number,134,96,71.6,13,35,10.0 | 25.0 | 20.0,,,"จังหวะหยดตามที่เปเปอร์เขียน — ⚠️ ยังมี 2 จุดอ้างอิงปนกัน (บวก = หลังเริ่มปั่น, ลบ = ก่อนหยุดปั่น) อย่าใช้ตรง ๆ"
+target_table,antisolvent_timing_ref,,ที่มา/หลักฐาน,text,134,96,71.6,2,35,after_start | before_end,,,จุดอ้างอิงของค่าข้างบน: `after_start` / `before_end`
+target_table,htl_anneal_C,,ตัวแปรต้น X,number,134,114,85.1,12,38,300.0 | 150.0 | 100.0,,,อุณหภูมิอบ HTL (°C) — คนละกลไกกับ psk_anneal_C ห้ามรวมคอลัมน์
+target_table,psk_spin_last_s,,ตัวแปรต้น X,number,134,115,85.8,8,40,40.0 | 30.0 | 20.0,,,ความยาวของขั้นปั่นสุดท้าย (วินาที)
+target_table,antisolvent_drop_s,,ตัวแปรต้น X,number,134,96,71.6,12,35,10.0 | 25.0 | 20.0,,,จังหวะหยดที่แปลงให้อยู่แกนเดียวกันหมดแล้ว (วินาทีนับจากเริ่มปั่นขั้นสุดท้าย)
+target_table,antisolvent_drop_frac_of_last,,ตัวแปรต้น X,number,134,93,69.4,20,33,0.5 | 0.625 | 0.6666666666666666,,,จังหวะหยดเป็นสัดส่วนของขั้นปั่นสุดท้าย 0-1
+target_table,psk_spin_total_s,,ตัวแปรต้น X,number,134,115,85.8,8,40,50.0 | 40.0 | 30.0,,,ความยาวโปรแกรมปั่นทั้งหมด (วินาที)
+target_table,antisolvent_drop_frac_of_total,,ตัวแปรต้น X,number,134,93,69.4,20,33,0.5 | 0.2857142857142857 | 0.9,,,จังหวะหยดเป็นสัดส่วนของโปรแกรมปั่นทั้งหมด 0-1 — ⚠️ อย่าใส่คู่กับ timing_s/drop_s เพราะเป็นข้อมูลชุดเดียวกัน
+target_table,a_Cs,,ตัวควบคุม,number,134,128,95.5,15,44,0.05 | 0.1 | 0.08,,,สัดส่วนซีเซียมใน A-site (0-1) — อะตอมเล็กช่วยล็อกโครงผลึกให้เสถียร นิยม 5-15%
+target_table,a_FA,,ตัวควบคุม,number,134,128,95.5,23,44,0.81 | 0.85 | 0.788,,,สัดส่วน formamidinium ใน A-site — bandgap แคบ ดูดแสงกว้าง Jsc ดี แต่เสถียรภาพแย่ถ้าใช้ล้วน
+target_table,x_Br,,ตัวควบคุม,number,134,128,95.5,20,44,0.15 | 0.0 | 0.17,,,สัดส่วนโบรไมด์ใน X-site — **bandgap กว้างขึ้น → Voc สูงขึ้น แต่ Jsc ลด** ⭐ ตัวควบคุมข้ามเปเปอร์ที่ทรงพลังที่สุด (§7)
+target_table,etl_family,,ตัวควบคุม,text,134,134,100.0,4,45,PCBM | C60 | SnO2,,,ตระกูลวัสดุ ETL: PCBM / C60 / SnO2 / BCP — กระทบการเก็บอิเล็กตรอนที่รอยต่อ
+target_table,year,,ตัวควบคุม,number,134,134,100.0,7,45,2025.0 | 2023.0 | 2024.0,,,ปีตีพิมพ์ที่อ่านจากรูปแบบ DOI (โน้ตบุ๊กนี้เติมเอง ไม่มีในไฟล์) — ใช้ทดสอบว่า 'ยุคของงาน' อธิบายความต่างข้ามเปเปอร์ได้ไหม
+vendors,device_id,,คีย์,text,2018,2018,100.0,134,45,10.1038_s41598-023-32697-z_Sample1 | 10.1038_s41598-023-32697-z_Sample2 | 10.1038_s41598-023-32697-z_Sample3,,,รหัสอุปกรณ์
+vendors,material,,คีย์,text,2018,2018,100.0,194,45,PbI2 | FAI | DMF,,,ชื่อสาร
+vendors,purity,,ค่าดิบ,text,2018,871,43.2,42,33,99.9 | 99.99 | 99.8,,,ความบริสุทธิ์ตามที่เปเปอร์เขียน
+vendors,vendor,,ที่มา/หลักฐาน,text,2018,1747,86.6,122,43,Sigma-Aldrich | Alfa Aesar | TCI,,,ผู้ขาย/ยี่ห้อ — ⭐ ตัวแทนของ 'ล็อตสารเดียวกันไหม' ซึ่งเป็นส่วนหนึ่งของลายนิ้วมือแล็บ
+vendors,purity_pct,,ที่มา/หลักฐาน,number,2018,839,41.6,19,31,99.9 | 99.99 | 99.0,,,ความบริสุทธิ์เป็นตัวเลข %
+vendors,purity_qualifier,,ที่มา/หลักฐาน,text,2018,839,41.6,4,31,= | ≥ | >,,,"คำขยาย เช่น '≥', 'anhydrous'"
+vendors,purity_kind,,ที่มา/หลักฐาน,text,2018,2018,100.0,7,45,missing | percent | percent_lower_bound,,,"ชนิดของค่าที่ให้มา (%, เกรด, ความต้านทานแผ่น)"
+vendors,material_family,,ตัวควบคุม,text,2018,660,32.7,10,45,PbI2 | BCP | TCO,,,ตระกูลวัสดุ
