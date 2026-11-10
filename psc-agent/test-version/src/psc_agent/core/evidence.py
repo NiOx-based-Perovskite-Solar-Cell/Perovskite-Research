@@ -60,6 +60,12 @@ def normalize_text(text: str) -> str:
     return re.sub(r"\s+", " ", t).strip()
 
 
+def squash(text: str) -> str:
+    """Only the letters and digits, lowercase: a quote and its page then agree although a model spaced a superscript
+    differently ("2.70 x 10 18 cm 3" vs "2.7010 18cm3") or the PDF dropped the multiplication sign."""
+    return re.sub(r"[\W_]+", "", normalize_text(text))
+
+
 def quote_on_page(pages: list[str], page: int | None, quote: str | None, source: str | None = None,
                   min_ratio: float = 0.8) -> bool | None:
     """True if ``quote`` is on the cited page (or the page next to it), False if not, None when the
@@ -69,10 +75,11 @@ def quote_on_page(pages: list[str], page: int | None, quote: str | None, source:
     if not page or not 1 <= page <= len(pages):
         return False
     q = normalize_text(quote).strip("\"' .")
+    squashed = squash(quote)
     for i in (page, page - 1, page + 1):
         if 1 <= i <= len(pages):
             text = normalize_text(pages[i - 1])
-            if q in text:
+            if q in text or (len(squashed) >= 10 and squashed in squash(text)):
                 return True
             m = SequenceMatcher(None, text, q, autojunk=False).find_longest_match(0, len(text), 0, len(q))
             if m.size >= min_ratio * len(q):

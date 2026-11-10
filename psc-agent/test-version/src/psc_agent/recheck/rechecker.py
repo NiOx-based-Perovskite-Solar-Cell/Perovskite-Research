@@ -101,7 +101,7 @@ class Rechecker:
                              devices=[DeviceInfo(ref=r, device=d.name) for r, d in refs.items()])
         run = {"kind": "recheck", "paper": paper.name, "devices": len(devices)}
         self.rt.hooks.emit("run_start", run=run, runtime=self.rt)
-        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages)
+        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, pdf=self.rt.native_pdf)
 
         groups = _sheet_groups(devices)
         total = len(groups) + 1  # one call per sheet group, then the judge

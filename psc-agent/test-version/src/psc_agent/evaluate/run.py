@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import json
 import logging
+import re
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, fields
@@ -78,6 +79,23 @@ def evaluate_paper(extractor: Extractor, pair: PaperPair, out: str | Path, *, to
         cells = auditor.audit(paper, cells, usage=res.usage)
     ev = PaperEval(pair.key, pair.pdf.name, cells, pairing, res.usage.model_dump(), list(res.errors),
                    round(time.time() - started, 1))
+    _write(folder, ev)
+    return ev
+
+
+def rescore_paper(pair: PaperPair, out: str | Path, *, tol: float = 0.01, use_si: bool = True) -> PaperEval | None:
+    """Score the extraction a finished run saved (``<out>/<paper>/extracted/*.xlsx``) again with the current comparison
+    rules. No model is called; usage, errors and time of the original run are kept. None if the paper has no saved run."""
+    folder = Path(out) / pair.key
+    old = load_eval(folder)
+    files = sorted((folder / "extracted").glob("*.xlsx"),
+                   key=lambda f: int(m.group(1)) if (m := re.search(r"_Sample(\d+)\.xlsx$", f.name)) else 0)
+    if old is None or not files:
+        return None
+    paper = load_paper(pair.pdf, si=pair.si if use_si else ())
+    cells, pairing = compare_devices([load_workbook(p) for p in pair.workbooks], [load_workbook(f) for f in files],
+                                     pages=paper.pages, tol=tol)
+    ev = PaperEval(pair.key, pair.pdf.name, cells, pairing, old.usage, old.errors, old.seconds)
     _write(folder, ev)
     return ev
 

@@ -133,7 +133,7 @@ class Auditor:
         if not to_query:
             return cells
 
-        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, images=self.images)
+        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, images=self.images, pdf=self.rt.native_pdf)
 
         # Process in batches
         for chunk_idx in range(0, len(to_query), self.batch_size):

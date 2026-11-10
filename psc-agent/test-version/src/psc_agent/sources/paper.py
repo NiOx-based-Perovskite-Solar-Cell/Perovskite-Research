@@ -84,10 +84,19 @@ def load_paper(src: Source, name: str | None = None, si: Sequence[Source] = ()) 
     return Paper(name, data, pages, meta, n_main)
 
 
-def paper_parts(paper: Paper, *, dpi: int, all_pages: bool, images: bool = True) -> list[dict]:
+def paper_parts(paper: Paper, *, dpi: int, all_pages: bool, images: bool = True, pdf: bool = False) -> list[dict]:
     """The paper as model message parts: page images (unless ``images`` is off), then the text layer marked as a
-    cache breakpoint (it is resent with every call about the same paper)."""
+    cache breakpoint (it is resent with every call about the same paper).
+
+    ``pdf``: send the whole PDF as one file part instead of page images, for models that read PDFs natively (Gemini:
+    no page cutting, the model sees every page, the supporting information appended). The text layer still follows,
+    because its ``=== Page N ===`` labels are what evidence quotes are checked against."""
     parts: list[dict] = []
+    if pdf:
+        name = paper.name if paper.name.lower().endswith(".pdf") else paper.name + ".pdf"
+        parts.append({"type": "file", "file": {"filename": name,
+                                               "file_data": "data:application/pdf;base64," + base64.b64encode(paper.data).decode()}})
+        images = False
     for i, jpg in paper.page_images(dpi=dpi, all_pages=all_pages) if images else []:
         parts.append({"type": "text", "text": f"[Image of page {i + 1}]"})
         parts.append({"type": "image_url",

@@ -28,7 +28,7 @@
       padding: 3rem 2rem;
     }
 
-    .frame { max-width: 1200px; width: 100%; }
+    .frame { max-width: 1360px; width: 100%; }
     /* The SVG holds its readable width (min-width == the viewBox width, so the
        type ramp is never silently scaled down). This wrapper lets a narrow
        screen scroll the diagram instead of the whole page. */
@@ -54,7 +54,7 @@
       margin-bottom: 1.5rem;
     }
 
-    svg { width: 100%; min-width: 1120px; display: block; }
+    svg { width: 100%; min-width: 1280px; display: block; }
     /* Paper has no scrollbar, so the local scroller would clip instead of
        scroll. Let the diagram scale down to the sheet: smaller but whole
        beats sharp but cut off. Must come after the svg rule above - a media
@@ -67,107 +67,61 @@
 </head>
 <body>
   <div class="frame">
-    <p class="eyebrow">Architecture · psc-agent</p>
+    <p class="eyebrow">Architecture · psc-agent · current</p>
     <h1>How psc-agent turns papers into checked data</h1>
 
-    <!-- Replace psc-agent-workflow with a unique slug for this diagram before export. -->
     <div class="diagram-container">
-      <svg viewBox="0 0 1120 608" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="psc-agent-workflow-title psc-agent-workflow-desc">
+      <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="psc-agent-workflow-title psc-agent-workflow-desc">
         <title id="psc-agent-workflow-title">How psc-agent turns papers into checked data</title>
-        <desc id="psc-agent-workflow-desc">Papers and their supporting information are paired with hand-entered workbooks, then four workflows (extract, recheck, evaluate, analyze) call one runtime of skills, hooks and a model provider.</desc>
+        <desc id="psc-agent-workflow-desc">Papers pass an SI step, then extract, a second reader and a precision gate that stages only what both readers agree on; recheck, evaluate and analyze run beside that loop, and one runtime of skills, hooks and model providers serves them all.</desc>
         <defs>
           <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
-          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bf4520"/></marker>
           <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
-
-          <!-- OPTIONAL: dot-pattern background. Uncomment the <pattern> and the second <rect> below if you want the dotted paper look. -->
-          <!--
-          <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
-            <circle cx="1" cy="1" r="0.9" fill="rgba(45,49,66,0.10)"/>
-          </pattern>
-          -->
         </defs>
 
         <rect width="100%" height="100%" fill="#f5f5f5"/>
-        <!-- <rect width="100%" height="100%" fill="url(#dots)" opacity="0.55"/> -->
 
-        <path d="M240 136 H262 a8 8 0 0 1 8 8 V201 a8 8 0 0 0 8 8 H300" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
-<path d="M240 336 H274 a8 8 0 0 0 8 -8 V271 a8 8 0 0 1 8 -8 H300" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
-<path d="M500 196 H512 a8 8 0 0 0 8 -8 V104 a8 8 0 0 1 8 -8 H600" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
-<path d="M500 216 H600" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
-<path d="M500 276 H544 a8 8 0 0 1 8 8 V328 a8 8 0 0 0 8 8 H600" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
-<path d="M500 456 H600" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
-<path d="M820 96 H880" fill="none" stroke="#bf4520" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-<path d="M820 216 H880" fill="none" stroke="#bf4520" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-<path d="M820 336 H880" fill="none" stroke="#bf4520" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-<path d="M820 456 H880" fill="none" stroke="#bf4520" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-<rect x="40" y="100" width="200" height="72" rx="6" fill="#f5f5f5"/>
-<rect x="40" y="100" width="200" height="72" rx="6" fill="#ececec" stroke="#4f5d75" stroke-width="1"/>
-<text x="56" y="128" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Papers</text>
-<text x="56" y="146" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">PDF + SI/ folder</text>
-<text x="56" y="160" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">original paper/</text>
-<rect x="40" y="300" width="200" height="72" rx="6" fill="#f5f5f5"/>
-<rect x="40" y="300" width="200" height="72" rx="6" fill="#ececec" stroke="#4f5d75" stroke-width="1"/>
-<text x="56" y="328" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Hand-entered workbooks</text>
-<text x="56" y="346" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">Raw Data/*.xlsx</text>
-<text x="56" y="360" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">6 sheets per device</text>
-<rect x="300" y="156" width="200" height="160" rx="6" fill="#f5f5f5"/>
-<rect x="300" y="156" width="200" height="160" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/>
-<text x="316" y="184" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Pairing &amp; SI finder</text>
-<text x="316" y="202" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">pairs: PDF ↔ workbooks (DOI)</text>
-<text x="316" y="216" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">si: web search → SI/ PDFs</text>
-<text x="316" y="230" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">blocked? gives links to open</text>
-<text x="316" y="244" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">--no-si ignores the SI</text>
-<rect x="300" y="420" width="200" height="72" rx="6" fill="#f5f5f5"/>
-<rect x="300" y="420" width="200" height="72" rx="6" fill="#ececec" stroke="#4f5d75" stroke-width="1"/>
-<text x="316" y="448" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Processed tables</text>
-<text x="316" y="466" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">processed/prepared_v2 CSV</text>
-<text x="316" y="480" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">column catalog</text>
-<rect x="600" y="60" width="220" height="72" rx="6" fill="#f5f5f5"/>
-<rect x="600" y="60" width="220" height="72" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/>
-<text x="616" y="88" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Extract</text>
-<text x="616" y="106" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">PDF (+SI) → draft .xlsx</text>
-<text x="616" y="120" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">review.csv (verify_more)</text>
-<rect x="600" y="180" width="220" height="72" rx="6" fill="#f5f5f5"/>
-<rect x="600" y="180" width="220" height="72" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/>
-<text x="616" y="208" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Recheck</text>
-<text x="616" y="226" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">blind re-read of each row</text>
-<text x="616" y="240" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ findings.csv</text>
-<rect x="600" y="300" width="220" height="72" rx="6" fill="#f5f5f5"/>
-<rect x="600" y="300" width="220" height="72" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/>
-<text x="616" y="328" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Evaluate</text>
-<text x="616" y="346" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">extract, then score vs record</text>
-<text x="616" y="360" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ report.md, cells_all.csv</text>
-<rect x="600" y="420" width="220" height="72" rx="6" fill="#f5f5f5"/>
-<rect x="600" y="420" width="220" height="72" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/>
-<text x="616" y="448" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Analyze</text>
-<text x="616" y="466" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">tools + claims, sign tests</text>
-<text x="616" y="480" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ PLAN.md, INSIGHTS.md</text>
-<rect x="880" y="60" width="200" height="432" rx="6" fill="#f5f5f5"/>
-<rect x="880" y="60" width="200" height="432" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.5"/>
-<text x="896" y="82" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.18em" fill="#bf4520">SKILLS + HOOKS</text>
-<text x="896" y="102" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Runtime</text>
-<text x="896" y="120" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">skills = system prompts</text>
-<text x="896" y="134" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">hooks = checkpoints:</text>
-<text x="896" y="148" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  trace · budget · quotes</text>
-<text x="896" y="162" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580"></text>
-<text x="896" y="176" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">provider (--provider):</text>
-<text x="896" y="190" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  claude-code (subscription)</text>
-<text x="896" y="204" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  openrouter (API key)</text>
-<text x="896" y="218" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580"></text>
-<text x="896" y="232" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">one client interface,</text>
-<text x="896" y="246" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">cache on disk, retries</text>
-<line x1="40" y1="548" x2="1080" y2="548" stroke="#bfc0c0" stroke-width="1"/>
-<rect x="40" y="568" width="28" height="14" rx="3" fill="#ececec" stroke="#4f5d75"/>
-<text x="76" y="579" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">DATA / FILES</text>
-<rect x="196" y="568" width="28" height="14" rx="3" fill="#f5f5f5" stroke="#2d3142"/>
-<text x="232" y="579" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">STEP</text>
-<rect x="312" y="568" width="28" height="14" rx="3" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.5"/>
-<text x="348" y="579" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">MODEL ENGINE</text>
-<line x1="480" y1="575" x2="512" y2="575" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
-<text x="520" y="579" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">FILES FLOW</text>
-<line x1="640" y1="575" x2="672" y2="575" stroke="#bf4520" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-<text x="680" y="579" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">MODEL CALLS</text>
+<rect x="236" y="72" width="192" height="296" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/><rect x="248" y="76" width="118" height="12" rx="2" fill="#f5f5f5"/><text x="307" y="85" fill="#5a6580" font-size="7" font-family="Geist Mono, monospace" text-anchor="middle" letter-spacing="0.14em">SI · BEFORE READING</text>
+<rect x="444" y="72" width="608" height="140" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/><rect x="456" y="76" width="135" height="12" rx="2" fill="#f5f5f5"/><text x="524" y="85" fill="#5a6580" font-size="7" font-family="Geist Mono, monospace" text-anchor="middle" letter-spacing="0.14em">LOOP · NO PERSON IN IT</text>
+<path d="M208 146 H248" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M416 146 H456" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M624 146 H664" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M832 146 H872" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M332 196 V252" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<path d="M208 428 H456" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M208 456 H228 a8 8 0 0 1 8 8 V544 a8 8 0 0 0 8 8 H456" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M832 440 H872" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M1040 146 H1080" fill="none" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+<path d="M1040 440 H1080" fill="none" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+<path d="M624 552 H1080" fill="none" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+<rect x="340" y="218" width="57" height="14" fill="#f5f5f5"/><text x="344" y="228" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">DOWNLOADS</text>
+<rect x="40" y="110" width="168" height="72" rx="6" fill="#f5f5f5"/><rect x="40" y="110" width="168" height="72" rx="6" fill="#ececec" stroke="#4f5d75" stroke-width="1"/><text x="56" y="138" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Papers</text><text x="56" y="156" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">PDF + SI/ folder</text><text x="56" y="170" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">original paper/</text>
+<rect x="248" y="96" width="168" height="100" rx="6" fill="#f5f5f5"/><rect x="248" y="96" width="168" height="100" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/><text x="264" y="124" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">SI step</text><text x="264" y="142" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">reader (model): SI?</text><text x="264" y="156" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">prints its address?</text><text x="264" y="170" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">ACS · Wiley link pattern</text><text x="264" y="184" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">web agent: links only</text>
+<rect x="248" y="252" width="168" height="92" rx="6" fill="#f5f5f5"/><rect x="248" y="252" width="168" height="92" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1" stroke-dasharray="4,3"/><text x="264" y="280" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Agent server</text><text x="264" y="298" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">outside Docker, host</text><text x="264" y="312" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">your signed-in Chrome</text><text x="264" y="326" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">token · saves to SI/</text>
+<rect x="456" y="96" width="168" height="100" rx="6" fill="#f5f5f5"/><rect x="456" y="96" width="168" height="100" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/><text x="472" y="124" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Extract</text><text x="472" y="142" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">paper map, then rows</text><text x="472" y="156" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">decision per row</text><text x="472" y="170" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">asks failed sheets again</text><text x="472" y="184" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ drafts + review.csv</text>
+<rect x="664" y="96" width="168" height="100" rx="6" fill="#f5f5f5"/><rect x="664" y="96" width="168" height="100" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/><text x="680" y="124" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Second reader</text><text x="680" y="142" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">Recheck, another model</text><text x="680" y="156" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">each cell vs the paper</text><text x="680" y="170" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">confirmed · disputed</text>
+<rect x="872" y="96" width="168" height="100" rx="6" fill="#f5f5f5"/><rect x="872" y="96" width="168" height="100" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/><text x="888" y="124" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Gate · staged/</text><text x="888" y="142" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">both readers agree</text><text x="888" y="156" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">calibrated: ≥ 90% right</text><text x="888" y="170" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ staged/ · held.csv</text>
+<rect x="40" y="404" width="168" height="72" rx="6" fill="#f5f5f5"/><rect x="40" y="404" width="168" height="72" rx="6" fill="#ececec" stroke="#4f5d75" stroke-width="1"/><text x="56" y="432" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Workbooks</text><text x="56" y="450" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">Raw Data/*.xlsx</text><text x="56" y="464" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">hand-entered: the key</text>
+<rect x="456" y="404" width="168" height="72" rx="6" fill="#f5f5f5"/><rect x="456" y="404" width="168" height="72" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/><text x="472" y="432" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Recheck</text><text x="472" y="450" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">workbook vs paper</text><text x="472" y="464" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ findings.csv</text>
+<rect x="456" y="520" width="168" height="76" rx="6" fill="#f5f5f5"/><rect x="456" y="520" width="168" height="76" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/><text x="472" y="548" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Evaluate</text><text x="472" y="566" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">extract, score vs record</text><text x="472" y="580" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ report · Dashboard</text>
+<rect x="664" y="404" width="168" height="72" rx="6" fill="#f5f5f5"/><rect x="664" y="404" width="168" height="72" rx="6" fill="#ececec" stroke="#4f5d75" stroke-width="1"/><text x="680" y="432" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Processed tables</text><text x="680" y="450" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">processed/prepared_v2</text><text x="680" y="464" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">prepare-data: by hand</text>
+<rect x="872" y="404" width="168" height="72" rx="6" fill="#f5f5f5"/><rect x="872" y="404" width="168" height="72" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/><text x="888" y="432" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Analyze</text><text x="888" y="450" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">tools, claims, tests</text><text x="888" y="464" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">→ INSIGHTS.md</text>
+<rect x="1080" y="96" width="160" height="500" rx="6" fill="#f5f5f5"/><rect x="1080" y="96" width="160" height="500" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.5"/><text x="1096" y="118" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.18em" fill="#bf4520">SKILLS + HOOKS</text><text x="1096" y="138" font-family="Geist, system-ui, sans-serif" font-size="12" font-weight="600" fill="#2d3142">Runtime</text><text x="1096" y="156" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">every model call goes</text><text x="1096" y="170" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">through this one client</text><text x="1096" y="184" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580"></text><text x="1096" y="198" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">skills = system prompts</text><text x="1096" y="212" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">hooks = checkpoints:</text><text x="1096" y="226" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  trace · budget</text><text x="1096" y="240" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  quote check · cancel</text><text x="1096" y="254" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580"></text><text x="1096" y="268" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">provider (--provider):</text><text x="1096" y="282" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  gemini 3.5 flash</text><text x="1096" y="296" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  openrouter (Claude)</text><text x="1096" y="310" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  claude-code (plan)</text><text x="1096" y="324" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  ollama cloud</text><text x="1096" y="338" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580"></text><text x="1096" y="352" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">disk cache, retries</text><text x="1096" y="366" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">gemini: no tool use</text><text x="1096" y="380" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  (no Analyze)</text><text x="1096" y="394" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580"></text><text x="1096" y="408" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">set with</text><text x="1096" y="422" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  --provider (CLI)</text><text x="1096" y="436" font-family="Geist Mono, monospace" font-size="9" fill="#5a6580">  PSC_PROVIDER (web)</text>
+<line x1="40" y1="632" x2="1240" y2="632" stroke="#bfc0c0" stroke-width="1"/>
+<rect x="40" y="652" width="28" height="14" rx="3" fill="#ececec" stroke="#4f5d75" stroke-width="1"/>
+<text x="76" y="663" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">DATA / FILES</text>
+<rect x="196" y="652" width="28" height="14" rx="3" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/>
+<text x="232" y="663" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">STEP</text>
+<rect x="300" y="652" width="28" height="14" rx="3" fill="#f5f5f5" stroke="#2d3142" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="336" y="663" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">OUTSIDE DOCKER</text>
+<rect x="500" y="652" width="28" height="14" rx="3" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.5"/>
+<text x="536" y="663" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">MODEL ENGINE</text>
+<line x1="680" y1="659" x2="712" y2="659" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text x="720" y="663" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">FILES FLOW</text>
+<line x1="840" y1="659" x2="872" y2="659" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<text x="880" y="663" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">DOWNLOAD</text>
+<line x1="1000" y1="659" x2="1032" y2="659" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+<text x="1040" y="663" font-family="Geist Mono, monospace" font-size="8" letter-spacing="0.06em" fill="#4f5d75">MODEL CALLS</text>
 
       </svg>
     </div>

@@ -15,7 +15,10 @@ from pathlib import Path
 from typing import Callable
 
 DEFAULT_MODELS = {"default": "anthropic/claude-sonnet-5.5", "decision": "anthropic/claude-haiku-5.5",
-                  "judge": "anthropic/claude-haiku-5.5"}
+                  "judge": "anthropic/claude-haiku-5.5", "si_finder": "anthropic/claude-sonnet-5.5",
+                  "si_reader": "anthropic/claude-haiku-5.5"}
+GEMINI_MODEL = "gemini-3.5-flash"
+PROVIDER_MODELS = {"openrouter": DEFAULT_MODELS, "gemini": {role: GEMINI_MODEL for role in DEFAULT_MODELS}}
 
 
 @dataclass
@@ -30,13 +33,19 @@ class WebConfig:
     catalog: Path | None = None
     skills_dir: Path | None = None
     runs_dir: Path | None = None
-    models: dict = field(default_factory=lambda: dict(DEFAULT_MODELS))
+    eval_dirs: list | None = None  # folders holding `evaluate` runs (the Dashboard lists their sub-folders)
+    provider: str = "openrouter"  # openrouter | gemini: who answers the model calls (gemini has no tool calling: no analyze / web-search agent)
+    models: dict | None = None  # role -> model id; default: PROVIDER_MODELS[provider]
     max_workers: int = 2
     default_budget: float = 5.0  # USD per job when the request gives none
     require_key: bool = True
     runtime_factory: Callable | None = None  # (models, hooks, config) -> Runtime; tests inject a fake model
+    agent_server: object | None = None  # agent_server.AgentServer: downloads SI with the person's Chrome, outside Docker
 
     def __post_init__(self):
+        if self.provider not in PROVIDER_MODELS:
+            raise ValueError(f"provider must be one of: {', '.join(PROVIDER_MODELS)}")
+        self.models = dict(self.models or PROVIDER_MODELS[self.provider])
         self.root = Path(self.root).resolve()
         home = self.root / "agent for research" if (self.root / "agent for research").is_dir() else self.root
         self.raw_dir = Path(self.raw_dir or self.root / "Raw Data")
@@ -45,6 +54,19 @@ class WebConfig:
         self.skills_dir = Path(self.skills_dir or home / "skills")
         self.runs_dir = Path(self.runs_dir or home / "runs")
         self.catalog = Path(self.catalog) if self.catalog else None
+        if self.eval_dirs is None:  # runs made on the command line: out/ and evaluate_out/ in the project and the working folder
+            seen: dict[Path, None] = {}
+            for base in (self.root, Path.cwd().resolve()):
+                for name in ("out", "evaluate_out"):
+                    seen.setdefault((base / name).resolve(), None)
+            self.eval_dirs = list(seen)
+
+    @property
+    def key_names(self) -> tuple[str, ...]:
+        """Environment variables that may hold the key of the provider."""
+        from ..core.gemini import KEY_NAMES
+
+        return KEY_NAMES if self.provider == "gemini" else ("OPENROUTER_API_KEY",)
 
     @property
     def uploads_dir(self) -> Path:
@@ -55,6 +77,7 @@ def create_app(config: WebConfig):
     from flask import Flask
 
     from .api import bp
+    from .dashboard import dash
     from .jobs import JobManager
 
     app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -63,6 +86,7 @@ def create_app(config: WebConfig):
     config.runs_dir.mkdir(parents=True, exist_ok=True)
     app.config["JOBS"] = JobManager(config.runs_dir, max_workers=config.max_workers)
     app.register_blueprint(bp)
+    app.register_blueprint(dash)
 
     @app.get("/")
     def index():
