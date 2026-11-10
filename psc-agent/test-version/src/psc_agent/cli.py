@@ -1,4 +1,4 @@
-"""Command line: psc-agent pairs | si | run | browser | agent-server | columns | recheck | extract | evaluate | analyze | map | trace | learn | skills | serve."""
+"""Command line: psc-agent pairs | si | run | loop | browser | agent-server | columns | recheck | extract | evaluate | analyze | map | trace | learn | skills | serve."""
 from __future__ import annotations
 
 import argparse
@@ -13,7 +13,7 @@ from .core.skills import SkillBook
 from .recheck.report import STATUSES
 
 DEFAULT_MODEL = {"openrouter": "anthropic/claude-sonnet-5.5", "claude-code": "claude-sonnet-5-5",
-                 "gemini": "gemini-3.5-flash-lite", "ollama": "deepseek-v4-pro"}
+                 "gemini": "gemini-3.5-flash", "ollama": "deepseek-v4-pro"}
 
 
 # `run`: the extract and recheck agents start on Haiku 5.5, the SI agent (web search with tools) on Sonnet 5.5
@@ -131,6 +131,28 @@ def main(argv: list[str] | None = None) -> int:
     rn.add_argument("--dpi", type=int, default=150)
     rn.add_argument("--all-pages", action="store_true")
 
+    lp = sub.add_parser("loop", help="papers in, trusted rows out, no person in the loop: extract, a second reader (ideally another "
+                                     "model), a precision gate, staging")
+    lp.add_argument("--raw", required=True, help="folder of <doi>_Sample<N>.xlsx workbooks (papers that have some are not extracted)")
+    lp.add_argument("--pdf", required=True, help="folder of source PDFs (SI files live in <pdf folder>/SI/)")
+    _model_args(lp, "loop_out")
+    lp.add_argument("--verifier-provider", choices=list(DEFAULT_MODEL), help="provider of the second reader (default: --provider)")
+    lp.add_argument("--verifier-model", help="model of the second reader (default: the provider's default when it is another provider "
+                                             "than --provider, else --model: then it is the same model, which repeats its own mistakes)")
+    lp.add_argument("--only", nargs="+", metavar="DOI", help="only these DOIs (any part of the DOI)")
+    lp.add_argument("--limit", type=int, help="at most this many papers")
+    lp.add_argument("--workers", type=int, default=1, help="papers in parallel")
+    lp.add_argument("--rounds", type=int, default=2, help="how often a failed sheet group or second reading is asked again (default 2)")
+    lp.add_argument("--min-precision", type=float, default=0.9, help="the gate: staged rows need a calibrated precision of at least this")
+    lp.add_argument("--sample", type=float, default=0.05, help="share of the accepted rows written to audit_sample.csv (blocks nothing)")
+    lp.add_argument("--calibrate", action="store_true",
+                    help="instead of staging: run on papers that HAVE hand-entered workbooks, measure the accepted rows against them "
+                         "and write the calibration the gate needs")
+    lp.add_argument("--calibration", default="calibration.json", help="where the calibration is written and read (default ./calibration.json)")
+    lp.add_argument("--no-si-agent", action="store_true", help="never call the SI web-search agent")
+    lp.add_argument("--no-si-reader", action="store_true", help="a text rule instead of a model decides whether the paper refers to an SI")
+    lp.add_argument("--dpi", type=int, default=150)
+
     br = sub.add_parser("browser", help="the Chrome window the agent uses: sign in to the publishers once")
     br.add_argument("action", choices=["login"], help="login: open the window, sign in by hand, press Enter here")
     br.add_argument("--url", default="about:blank", help="a page to open first, e.g. the login page of your library")
@@ -230,6 +252,9 @@ def main(argv: list[str] | None = None) -> int:
     w.add_argument("--skills", help="project skills folder (default: <root>/agent for research/skills)")
     w.add_argument("--runs", help="job folder (default: <root>/agent for research/runs)")
     w.add_argument("--workers", type=int, default=2, help="jobs that may run at the same time")
+    w.add_argument("--provider", dest="web_provider", choices=["openrouter", "gemini"],  # not `provider`: main() gives those a --model default
+                   help="who answers the model calls (default: $PSC_PROVIDER, else openrouter); gemini = gemini-3.5-flash for every role, "
+                        "no analyze and no web-search agent")
     w.add_argument("--dev", action="store_true", help="Flask development server instead of waitress")
 
     args = ap.parse_args(argv)
@@ -315,6 +340,9 @@ def cmd_run(args) -> int:
 
         browser = Browser(args.chrome_profile or DEFAULT_PROFILE, cdp_url=args.cdp_url, wait_human=args.wait_human)
         args.workers = 1
+    if args.provider == "gemini" and not args.no_si_agent:  # the Gemini client has no tool calling: no web-search agent
+        print("note: --provider gemini cannot run the SI web-search agent; the SI reader (Gemini) and the publisher patterns still run")
+        args.no_si_agent = True
     finder = None if args.no_si_agent else SiFinder(rt, browser=browser, download=browser is not None)
     reader = None if args.no_si_reader else SiReader(rt)
     extractor = Extractor(rt, dpi=args.dpi, all_pages=args.all_pages, decide_rows=not args.no_decide)
@@ -332,6 +360,51 @@ def cmd_run(args) -> int:
     print(f"\n{len(outcomes)} paper(s), ${sum(o.cost for o in outcomes):.2f} as reported, tokens/cost per call in {out / 'trace.jsonl'}")
     print(f"summary: {out / 'run_summary.csv'}  SI to download by hand: {out / 'si_links.md'}")
     return 1 if any(o.errors for o in outcomes) else 0
+
+
+def cmd_loop(args) -> int:
+    import argparse as _argparse
+
+    from .autoloop import calibrate, gate_status, run_loop
+    from .evaluate.report import pct
+    from .extract import Extractor
+    from .extract.verify import Verifier
+    from .recheck import Rechecker
+    from .runner import collect
+    from .sources.si import SiFinder, SiReader
+
+    out = Path(args.out)
+    items = collect(args.raw, args.pdf, only=args.only, limit=args.limit, mode="recheck" if args.calibrate else "extract")
+    if not items:
+        print("no paper selected" + ("" if args.calibrate else " (papers that already have workbooks are not extracted: use --calibrate to measure on them)"))
+        return 1
+    rt = _runtime(args, out, {"default": args.model, "si_finder": SONNET.get(args.provider)})
+    v_provider = args.verifier_provider or args.provider
+    v_model = args.verifier_model or (DEFAULT_MODEL[v_provider] if v_provider != args.provider else args.model)
+    vargs = _argparse.Namespace(**{**vars(args), "provider": v_provider, "model": v_model})
+    (out / "verifier").mkdir(parents=True, exist_ok=True)
+    vrt = _runtime(vargs, out / "verifier", {"default": v_model, "recheck": v_model, "judge": v_model})
+    if (v_provider, v_model) == (args.provider, args.model):
+        print("note: the second reader is the same model as the extractor; give --verifier-model or --verifier-provider for an independent one")
+    finder = None if args.no_si_agent or args.provider == "gemini" else SiFinder(rt, download=False)
+    reader = None if args.no_si_reader else SiReader(rt)
+    extractor = Extractor(rt, dpi=args.dpi)
+    verifier = Verifier(Rechecker(runtime=vrt, dpi=args.dpi))
+    kw = dict(finder=finder, reader=reader, extractor=extractor, verifier=verifier, out=out, rounds=args.rounds, workers=args.workers)
+    print(f"{len(items)} paper(s) · extract {args.model} ({args.provider}) · second reader {v_model} ({v_provider})")
+    if args.calibrate:
+        cal = calibrate(items, calibration=Path(args.calibration), **kw)
+        a, b = cal["all_rows"], cal["accepted"]
+        print(f"calibration on {cal['papers']} paper(s), {a['n']} hand-entered values -> {args.calibration}")
+        print(f"  extractor alone : found {pct(a['found_rate'])}, correct when found {pct(a['accuracy_when_found'])}")
+        print(f"  accepted by both: found {pct(b['found_rate'])}, correct when found {pct(b['accuracy_when_found'])}")
+        print("gate:", gate_status(Path(args.calibration), args.min_precision, args.model, v_model)[1])
+        return 0
+    loops, open_, why = run_loop(items, calibration=Path(args.calibration), min_precision=args.min_precision, sample=args.sample, **kw)
+    for lp in loops:
+        print(f"  {lp.key[:40]:40s} rows {len(lp.records):4d}  accepted {lp.accepted:4d}  held {lp.held:4d}" + (f"  ERRORS {len(lp.errors)}" if lp.errors else ""))
+    print(f"\ngate {'OPEN' if open_ else 'CLOSED'}: {why}\nreport: {out / 'REPORT.md'}")
+    return 1 if any(lp.errors for lp in loops) else 0
 
 
 def cmd_si(args) -> int:
@@ -588,10 +661,11 @@ def cmd_serve(args) -> int:
 
     url, token = os.environ.get("AGENT_SERVER_URL"), os.environ.get("AGENT_SERVER_TOKEN")
     agent = AgentServer(url, token) if url and token else None
-    app = create_app(WebConfig(root=Path(args.root), skills_dir=args.skills, runs_dir=args.runs,
-                               max_workers=args.workers, agent_server=agent))
-    key = "set" if os.environ.get("OPENROUTER_API_KEY") else "MISSING (jobs will be refused)"
-    print(f"PSC Agent on http://{args.host}:{args.port}  ·  OPENROUTER_API_KEY {key}" + (f"  ·  agent server {url}" if agent else ""))
+    cfg = WebConfig(root=Path(args.root), skills_dir=args.skills, runs_dir=args.runs, max_workers=args.workers, agent_server=agent,
+                    provider=args.web_provider or os.environ.get("PSC_PROVIDER") or "openrouter")
+    app = create_app(cfg)
+    key = "set" if any(os.environ.get(n) for n in cfg.key_names) else "MISSING (jobs will be refused)"
+    print(f"PSC Agent on http://{args.host}:{args.port}  ·  {cfg.provider} ({cfg.models['default']})  ·  {cfg.key_names[0]} {key}" + (f"  ·  agent server {url}" if agent else ""))
     if args.host not in ("127.0.0.1", "localhost"):
         print("warning: the service has no login; anyone who can reach this address can start paid model runs")
     if args.dev:
@@ -603,7 +677,7 @@ def cmd_serve(args) -> int:
     return 0
 
 
-COMMANDS = {"pairs": cmd_pairs, "si": cmd_si, "run": cmd_run, "browser": cmd_browser, "agent-server": cmd_agent_server, "columns": cmd_columns, "recheck": cmd_recheck, "extract": cmd_extract, "evaluate": cmd_evaluate, "compare": cmd_compare, "analyze": cmd_analyze,
+COMMANDS = {"pairs": cmd_pairs, "si": cmd_si, "run": cmd_run, "loop": cmd_loop, "browser": cmd_browser, "agent-server": cmd_agent_server, "columns": cmd_columns, "recheck": cmd_recheck, "extract": cmd_extract, "evaluate": cmd_evaluate, "compare": cmd_compare, "analyze": cmd_analyze,
             "map": cmd_map, "trace": cmd_trace, "learn": cmd_learn, "skills": cmd_skills, "serve": cmd_serve}
 
 if __name__ == "__main__":

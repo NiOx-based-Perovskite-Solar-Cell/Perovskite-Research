@@ -5,6 +5,7 @@ import tempfile
 import time
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from _fake import last_user_text, runtime
 from _fixtures import write_pdf
@@ -175,6 +176,39 @@ class Flow(unittest.TestCase):
         self.assertTrue(any("none loaded" in line for line in job.log))
         review = self.c.get(f"/api/jobs/{job.id}/files").get_json()["files"]
         self.assertTrue(any(f["path"] == "review.csv" for f in review))
+
+
+class GeminiProvider(unittest.TestCase):
+    def app(self, **kw):
+        root = Path(tempfile.mkdtemp())
+        (root / "Raw Data").mkdir()
+        (root / "original paper").mkdir()
+        write_pdf(root / "original paper" / "p.pdf", OTHER)
+        a = create_app(WebConfig(root=root, max_workers=1, eval_dirs=[], provider="gemini", **kw))
+        return a.test_client()
+
+    def test_every_role_defaults_to_gemini_3_8_flash(self):
+        c = self.app()
+        s = c.get("/api/status").get_json()
+        self.assertEqual((s["provider"], s["key_name"]), ("gemini", "GOOGLE_GEMINI_API_KEY"))
+        self.assertEqual(set(s["models"].values()), {"gemini-3.5-flash"})
+        self.assertIn("si_reader", s["models"])
+
+    def test_the_key_check_uses_the_gemini_key_and_analyze_is_refused(self):
+        c = self.app()
+        env = {"GOOGLE_GEMINI_API_KEY": "", "GEMINI_API_KEY": "", "GOOGLE_API_KEY": "", "OPENROUTER_API_KEY": "sk-x"}
+        with mock.patch.dict("os.environ", env):
+            r = c.post("/api/jobs", json={"kind": "extract", "params": {"pdf": "pdf:p.pdf"}})
+            self.assertEqual(r.status_code, 409)
+            self.assertIn("GOOGLE_GEMINI_API_KEY", r.get_json()["error"])
+        with mock.patch.dict("os.environ", {**env, "GOOGLE_GEMINI_API_KEY": "g-key"}):
+            r = c.post("/api/jobs", json={"kind": "analyze", "params": {"goal": "x"}})
+            self.assertEqual(r.status_code, 409)
+            self.assertIn("tool calling", r.get_json()["error"])
+
+    def test_unknown_provider_is_refused(self):
+        with self.assertRaises(ValueError):
+            WebConfig(root=Path(tempfile.mkdtemp()), provider="nope")
 
 
 if __name__ == "__main__":

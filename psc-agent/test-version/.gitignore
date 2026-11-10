@@ -16,3 +16,5 @@ flow_out/
 # secrets: the API key lives here
 .env
 out/
+loop_out/
+calibration.json

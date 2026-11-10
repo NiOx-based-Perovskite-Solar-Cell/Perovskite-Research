@@ -16,6 +16,11 @@ def _runtime(cfg, job: Job, models: dict, extra_hooks=()) -> Runtime:
     models = {k: v for k, v in models.items() if v}
     if cfg.runtime_factory:
         return cfg.runtime_factory(models, hooks, cfg)
+    if cfg.provider == "gemini":  # whole PDFs, no page images
+        from ..core.gemini import GeminiClient
+
+        return Runtime(models, client=GeminiClient(cache_dir=cfg.runs_dir / ".cache"), skills_dirs=[cfg.skills_dir], hooks=hooks,
+                       native_pdf=True)
     return Runtime(models, cache_dir=cfg.runs_dir / ".cache", skills_dirs=[cfg.skills_dir], hooks=hooks)
 
 
@@ -53,7 +58,8 @@ def run_si(cfg, job: Job) -> dict:
     rt = _runtime(cfg, job, _models(cfg, p, "si_reader", "si_finder"))
     paper = load_paper(Path(p["pdf_path"]))
     key = intake_key(paper, p["pdf_path"])
-    res = si_stage(paper, key, cfg.pdf_dir / SI_DIR, local_si(cfg.pdf_dir, key), SiFinder(rt, download=False), SiReader(rt))
+    finder = None if cfg.provider == "gemini" else SiFinder(rt, download=False)  # no tool calling on Gemini: no web-search agent
+    res = si_stage(paper, key, cfg.pdf_dir / SI_DIR, local_si(cfg.pdf_dir, key), finder, SiReader(rt))
     return {"key": key, "status": res.status, "links": res.links, "notes": res.notes}
 
 
@@ -130,7 +136,7 @@ def run_evaluate(cfg, job: Job) -> dict:
     rt.hooks.emit("batch", papers=len(pairs))  # the progress bar counts papers
     evals = evaluate_pairs(extractor, pairs, job.out_dir, workers=int(p.get("workers") or 1),
                            force=bool(p.get("force")), auditor=auditor)
-    write_report(evals, job.out_dir, {"provider": "openrouter", "model": p.get("model") or cfg.models["default"]})
+    write_report(evals, job.out_dir, {"provider": cfg.provider, "model": p.get("model") or cfg.models["default"]})
     return {"papers": len(evals), "errors": [e for ev in evals for e in ev.errors]}
 
 

@@ -74,15 +74,21 @@ def collect(raw_dir, pdf_dir, *, only: list[str] | None = None, limit: int | Non
     return items[:limit] if limit else items
 
 
-def run_item(item: Item, *, finder: SiFinder | None, extractor: Extractor, rechecker: Rechecker, out, use_si: bool = True,
-             reader: SiReader | None = None) -> Outcome:
-    started = time.time()
-    out = Path(out)
+def settle_si(item: Item, *, finder: SiFinder | None, reader: SiReader | None, use_si: bool = True):
+    """The SI step of one paper: -> (the paper, with its SI appended when there is one, the SiResult)."""
     have = item.si if use_si else []
     paper = load_paper(item.pdf, si=have)
     si = si_stage(paper, item.key, item.pdf.parent / SI_DIR, have, finder if use_si else None, reader if use_si else None)
     if si.status == "found" and si.files:  # downloaded a moment ago: the paper is read together with it, once
         paper = load_paper(item.pdf, si=si.files)
+    return paper, si
+
+
+def run_item(item: Item, *, finder: SiFinder | None, extractor: Extractor, rechecker: Rechecker, out, use_si: bool = True,
+             reader: SiReader | None = None) -> Outcome:
+    started = time.time()
+    out = Path(out)
+    paper, si = settle_si(item, finder=finder, reader=reader, use_si=use_si)
     mode = "recheck" if item.workbooks else "extract"
     outcome = Outcome(item, mode, si, cost=si.usage.cost_usd)
     try:

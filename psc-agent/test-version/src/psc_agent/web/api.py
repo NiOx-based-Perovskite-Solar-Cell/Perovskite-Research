@@ -52,7 +52,8 @@ def _rows(path: Path, limit: int = 20000) -> list[dict]:
 @bp.get("/status")
 def status():
     cfg = _cfg()
-    return jsonify(key_set=bool(os.environ.get("OPENROUTER_API_KEY")), require_key=cfg.require_key, models=cfg.models,
+    return jsonify(key_set=any(os.environ.get(n) for n in cfg.key_names), key_name=cfg.key_names[0], provider=cfg.provider,
+                   require_key=cfg.require_key, models=cfg.models,
                    default_budget=cfg.default_budget, roles=ROLES,
                    paths={k: str(getattr(cfg, k)) for k in ("root", "raw_dir", "pdf_dir", "data_dir", "skills_dir",
                                                             "runs_dir")})
@@ -252,8 +253,10 @@ def create_job():
         if k.endswith("model") and v and not _MODEL.match(str(v)):
             raise ApiError(f"bad model id: {v}")
     needs_model = kind != "si_download" and (kind != "learn" or params.get("model"))  # si_download: the agent server has the key
-    if needs_model and cfg.require_key and not os.environ.get("OPENROUTER_API_KEY"):
-        raise ApiError("OPENROUTER_API_KEY is not set on the server: set it, then restart the server", 409)
+    if needs_model and cfg.require_key and not any(os.environ.get(n) for n in cfg.key_names):
+        raise ApiError(f"{cfg.key_names[0]} is not set on the server: set it, then restart the server", 409)
+    if cfg.provider == "gemini" and kind == "analyze":
+        raise ApiError("analyze needs tool calling, which the Gemini provider does not have: start the server with --provider openrouter", 409)
     if params.get("budget") not in (None, ""):
         try:
             budget = float(params["budget"])

@@ -195,13 +195,40 @@ Outputs: `run_summary.csv` (one line per paper: mode, SI status, result, cost), 
 `findings.csv` + `papers/` (recheck), `extract/<key>/` (drafts and review.csv). SI statuses: `have`, `not_referenced`,
 `pattern`, `found`, `links`, `blocked`, `not_found`, `manual`, `error`. Put downloaded SI in `original paper/SI/` and run again.
 
+## The full loop, no person in it: `psc-agent loop`
+
+Papers in, trusted rows out. Per paper: SI (as in `run`) -> **extract** (a sheet group that failed, e.g. a 503, is asked
+again, `--rounds`) -> **second reader**: a `Rechecker` on another model reads the paper against every cell of the drafts
+-> **final status**: a row is `accepted` only when the second reader confirmed it (and the first pass did not say
+`revise`), otherwise `held` with the reason -> **gate** -> `staged/`.
+
+```bash
+# 1. measure the pipeline once, on papers that have hand-entered workbooks (this costs model calls)
+psc-agent loop --raw "Raw Data" --pdf "original paper" --calibrate --limit 4 --provider openrouter --model anthropic/claude-haiku-5.5                --verifier-model anthropic/claude-sonnet-5.5 --out loop_out/cal
+# 2. then run on the PDFs that have no workbooks: accepted rows are staged only if the calibrated precision >= --min-precision
+psc-agent loop --raw "Raw Data" --pdf "original paper" --provider openrouter --model anthropic/claude-haiku-5.5                --verifier-model anthropic/claude-sonnet-5.5 --out loop_out/run1
+```
+
+- `--calibrate` compares what the extractor alone produced and what both readers accepted with the hand-entered
+  workbooks and writes `calibration.json` (extract model, second-reader model, found rate, correct-when-found rate).
+- The gate opens only with a calibration made with these very models, over at least 100 hand-entered values, whose
+  precision of the accepted rows reaches `--min-precision` (default 0.9). Otherwise the accepted drafts wait in
+  `papers/<key>/accepted/` and nothing is staged. It never writes into `Raw Data/` and never runs prepare-data.
+- Outputs: `provenance.csv` (every row, both readings, final status, both models), `held.csv`, `staged/*.xlsx` (accepted
+  rows only, Raw Data layout), `audit_sample.csv` (`--sample`, 5% of the accepted rows, for an occasional look; it blocks nothing),
+  `loop_summary.csv`, `REPORT.md`.
+- A second reader on the **same** model repeats its own mistakes: use `--verifier-model` / `--verifier-provider`.
+- Values read off a figure stay `confidence = figure` even when both readers agree (two readings of a plot are estimates).
+- What it cannot do: values only in an SI that could not be downloaded stay missing, and the Gemini free tier (about 20
+  requests a day per model) is too small for a loop: a 429 stops the paper and is reported in `REPORT.md`.
+
 ## Providers (`--provider`)
 
 | provider | key | what it is good for | limits |
 |---|---|---|---|
 | `openrouter` (default) | `OPENROUTER_API_KEY` | any hosted model, tool calling, billed per token | |
 | `claude-code` | none (your Claude plan) | Claude models at no extra charge | Claude only; cost shown is API-equivalent |
-| `gemini` | `GOOGLE_GEMINI_API_KEY` (or `GEMINI_API_KEY`, `GOOGLE_API_KEY`) | reads the **whole PDF** (no page images), JSON bound to the schema; default `gemini-3.5-flash-lite` | no tool calling (no analyze); cost not priced; the free tier has only Flash models and rate limits (retried), Pro models need billing |
+| `gemini` | `GOOGLE_GEMINI_API_KEY` (or `GEMINI_API_KEY`, `GOOGLE_API_KEY`) | reads the **whole PDF** (no page images), JSON bound to the schema; default `gemini-3.5-flash` | no tool calling (no analyze, and `run` skips the SI web-search agent; the SI reader and extract run on Gemini); cost not priced; the free tier has only Flash models and rate limits (retried), Pro models need billing |
 | `ollama` | `OLLAMA_CLOUD_API_KEY` (or `OLLAMA_API_KEY`) | open models through Ollama Cloud (`https://ollama.com/v1`), tool calling; default `deepseek-v4-pro` | needs credits or a plan (HTTP 402 otherwise); cost not priced |
 
 `psc-agent si --provider ollama --model deepseek-v4-pro --urls-only` makes the agent search the web and answer with the

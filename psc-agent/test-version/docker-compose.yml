@@ -14,6 +14,7 @@ services:
     env_file: [.env]
     # the agent server (python -m psc_agent agent-server, outside Docker, with your Chrome); it needs AGENT_SERVER_TOKEN in .env
     environment:
+      PSC_PROVIDER: ${PSC_PROVIDER:-gemini}   # gemini (gemini-3.5-flash, GOOGLE_GEMINI_API_KEY) or openrouter (Claude, OPENROUTER_API_KEY)
       AGENT_SERVER_URL: ${AGENT_SERVER_URL:-http://host.docker.internal:5100}
     extra_hosts: ["host.docker.internal:host-gateway"]
     volumes:

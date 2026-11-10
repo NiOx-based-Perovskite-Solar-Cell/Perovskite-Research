@@ -61,6 +61,8 @@ class ExtractResult(BaseModel):
     rows: list[XRow] = Field(default_factory=list)
     verdicts: dict[str, Verdict] = Field(default_factory=dict)
     files: list[str] = Field(default_factory=list)
+    locations: dict[str, tuple[str, str, int]] = Field(default_factory=dict)  # row id -> (workbook stem, sheet, index in the sheet)
+    failed_groups: list[str] = Field(default_factory=list)  # sheet groups whose call failed, e.g. "Vender/Materials": fill_missing asks again
     si_link: str = ""  # where to download the SI when none was loaded: recipes and suppliers are usually only there
     si_save_as: str = ""
     usage: Usage = Field(default_factory=Usage)
@@ -144,6 +146,7 @@ class Extractor:
                 self._rows(paper, parts, group, result)
             except FAILURES as e:
                 result.errors.append(f"{'/'.join(group)}: {e}")
+                result.failed_groups.append("/".join(group))
                 log.error("%s: %s", paper.name, e)
             tick(i)
         result.verdicts = self._decide(paper, result)
@@ -151,6 +154,27 @@ class Extractor:
         self._write(paper, out, result)
         self.rt.hooks.emit("run_end", run=run, summary={"devices": len(result.devices), "rows": len(result.rows),
                                                         "verdicts": result.counts(), "errors": len(result.errors)})
+        return result
+
+    def fill_missing(self, paper: Paper | Source, out_dir, result: ExtractResult) -> ExtractResult:
+        """Ask again for the sheet groups whose call failed (a 503, a bad answer), keep what was already extracted, then
+        decide and write everything again. A result with nothing failed comes back unchanged."""
+        paper = paper if isinstance(paper, Paper) else load_paper(paper)
+        if not result.failed_groups:
+            return result
+        parts = paper_parts(paper, dpi=self.dpi, all_pages=self.all_pages, images=self.images, pdf=self.rt.native_pdf)
+        for name in list(result.failed_groups):
+            group = next(g for g in GROUPS if "/".join(g) == name)
+            try:
+                self._rows(paper, parts, group, result)
+            except FAILURES as e:
+                log.error("%s: %s (again): %s", paper.name, name, e)
+                continue
+            result.failed_groups.remove(name)
+            result.errors = [e for e in result.errors if not e.startswith(f"{name}: ")]
+        result.files = []
+        result.verdicts = self._decide(paper, result)
+        self._write(paper, Path(out_dir), result)
         return result
 
     def _map(self, paper: Paper, parts, result: ExtractResult) -> None:
@@ -186,7 +210,7 @@ class Extractor:
     def _decide(self, paper: Paper, result: ExtractResult) -> dict[str, Verdict]:
         verdicts, items = {}, []
         for i, r in enumerate(result.rows):
-            rid = f"{r.device}:{r.sheet}:{i}"
+            rid = row_id(i, r)
             claim = f"{r.device} {r.sheet}: " + "; ".join(f"{k}={v}" for k, v in r.cells().items())
             if r.quote_ok is False:
                 verdicts[rid] = rule(rid, "verify_more", f"quote not found on page {r.page}")
@@ -212,26 +236,45 @@ class Extractor:
         return verdicts
 
     def _write(self, paper: Paper, out: Path, result: ExtractResult) -> None:
-        stem = (paper.doi or Path(paper.name).stem[:40].strip()).replace("/", "_")  # a long title would pass Windows' path limit
-        for n, d in enumerate(result.devices, 1):
-            sheets: dict[str, list[dict]] = {}
-            for r in result.rows:
-                if r.device == d.sample:
-                    sheets.setdefault(r.sheet, []).append(r.cells())
-            for name, key in (("Layer", ("LayerID",)), ("Process", ("LayerID", "StepOrder"))):
-                sheets.get(name, []).sort(key=lambda c: tuple(_as_float(c.get(k)) for k in key))
-            result.files.append(str(write_workbook(sheets, out / f"{stem}_Sample{n}.xlsx")))
+        result.files, result.locations = write_drafts(result, out, draft_stem(paper))
         with open(out / "review.csv", "w", newline="", encoding="utf-8-sig") as fh:
             w = csv.writer(fh)
             w.writerow(["row_id", "device", "sheet", "values", "page", "source", "evidence", "quote_ok", "decision",
                         "p", "reason", "note", "si_link", "si_save_as"])
             for i, r in enumerate(result.rows):
-                rid = f"{r.device}:{r.sheet}:{i}"
+                rid = row_id(i, r)
                 v = result.verdicts.get(rid)
                 w.writerow([rid, r.device, r.sheet, json.dumps(r.cells(), ensure_ascii=False), r.page, r.source,
                             r.evidence, r.quote_ok, v.choice if v else "", v.p if v else "", v.reason if v else "",
                             r.note, result.si_link, result.si_save_as])
         (out / "extraction.json").write_text(result.model_dump_json(indent=2), encoding="utf-8")
+
+
+def draft_stem(paper: Paper) -> str:
+    """The start of the draft workbooks' names: the DOI, else the start of the file name (a long title would pass Windows' path limit)."""
+    return (paper.doi or Path(paper.name).stem[:40].strip()).replace("/", "_")
+
+
+def row_id(i: int, r: XRow) -> str:
+    return f"{r.device}:{r.sheet}:{i}"
+
+
+def write_drafts(result: ExtractResult, out: Path, stem: str, keep: set[str] | None = None):
+    """One workbook per device in the Raw Data layout. ``keep``: only the rows with these ids (default: all). Returns
+    the files and where each written row sits: {row id: (workbook stem, sheet, index in that sheet)}."""
+    files, locations = [], {}
+    for n, d in enumerate(result.devices, 1):
+        sheets: dict[str, list[tuple[str, dict]]] = {}
+        for i, r in enumerate(result.rows):
+            if r.device == d.sample and (keep is None or row_id(i, r) in keep):
+                sheets.setdefault(r.sheet, []).append((row_id(i, r), r.cells()))
+        for name, key in (("Layer", ("LayerID",)), ("Process", ("LayerID", "StepOrder"))):
+            sheets.get(name, []).sort(key=lambda t: tuple(_as_float(t[1].get(k)) for k in key))
+        name = f"{stem}_Sample{n}"
+        for sheet, rows in sheets.items():
+            locations.update({rid: (name, sheet, pos) for pos, (rid, _) in enumerate(rows)})
+        files.append(str(write_workbook({s: [c for _, c in rows] for s, rows in sheets.items()}, out / f"{name}.xlsx")))
+    return files, locations
 
 
 def _as_float(v) -> float:

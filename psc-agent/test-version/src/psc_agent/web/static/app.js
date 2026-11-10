@@ -336,7 +336,7 @@ async function loadOverview() {
     `<div class="card"><div class="stat">${esc(v)}</div><div class="mt-1 text-xs text-slate-500">${esc(k)}</div></div>`).join("");
   const s = state.status;
   $("#overview-setup").innerHTML = `
-    <div>${s.key_set ? badge("OPENROUTER_API_KEY set", "done") : badge("OPENROUTER_API_KEY missing", "failed")}</div>
+    <div>${s.key_set ? badge(`${s.key_name} set`, "done") : badge(`${s.key_name} missing`, "failed")} ${badge(`provider: ${s.provider}`, "queued")}</div>
     ${s.key_set ? "" : `<p class="text-xs text-rose-700">Set it in the server's environment and restart. The key never reaches this page.</p>`}
     <div class="space-y-1">${Object.entries(s.models).map(([role, model]) =>
       `<div class="flex justify-between gap-2"><span class="text-slate-500">${esc(role)}</span><code class="text-xs">${esc(model)}</code></div>`).join("")}</div>
