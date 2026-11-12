@@ -10,6 +10,11 @@ headers (first row):
 - Layer: LayerID | LayerType | Material | Thickness (nm)
 - Vender: Material | %Purity | Vender (the supplier)
 - Materials: LayerID | Material | Type | Solvent (with ratio, e.g. DMF:DMSO (4:1 v/v)) | Amount | Unit (the unit of Amount)
+  Amount is the number; Unit says what it is an amount of solution: when the paper gives a mass or an amount of
+  substance dissolved in a stated volume, the volume belongs in Unit ("18 mg CsI ... in 1 mL mixed solvent" ->
+  Amount 18, Unit "mg in 1 mL"; "0.5 mmol in 5 mL" -> Amount 0.5, Unit "mmol in 5 mL"). Several materials dissolved
+  together share that volume: repeat it on each. A concentration the paper states itself stays as it is (5 mM, 20
+  mg/mL). Only when the paper gives no volume is the Unit the bare unit (mg, mmol).
 - Process: LayerID | StepOrder (1, 2, ... within that layer) | ProcessType | Descriptions | Parameter | Unit
 - Properties: Properties | Values | Errors (± spread) | Unit | Remarks (scan direction, condition, figure)
 - Stability: Environment (the test condition) | Encapsulation (Y or N) | Temperature (°C) | Humidity (%) |

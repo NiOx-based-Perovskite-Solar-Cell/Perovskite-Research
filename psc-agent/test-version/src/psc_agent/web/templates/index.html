@@ -17,7 +17,6 @@
     </div>
     <nav id="tabs" class="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4">
       <a href="#overview" data-tab="overview" class="tab">Overview</a>
-      <a href="#dashboard" data-tab="dashboard" class="tab">Dashboard</a>
       <a href="#recheck" data-tab="recheck" class="tab">Recheck</a>
       <a href="#extract" data-tab="extract" class="tab">Extract</a>
       <a href="#analyze" data-tab="analyze" class="tab">Analyze</a>
@@ -46,40 +45,6 @@
           <p class="hint">The data map is the analysts' compass (a generated skill). It also rebuilds itself when data files change.</p>
         </div>
       </div>
-    </section>
-
-    <!-- Dashboard -->
-    <section id="tab-dashboard" class="tab-panel hidden space-y-6">
-      <div class="card space-y-3">
-        <h2 class="card-title">How accurate is the extraction?</h2>
-        <p class="text-sm text-slate-600">The model reads each paper (without seeing the workbooks) and its answer is compared, value by value, with what a person entered by hand.
-          Pick a run to see its accuracy, or pick a second run to compare two (two models, or with and without the supporting information).
-          The fairest single number is <b>Match, of those in the PDF text</b>: some hand-entered values (recipes, suppliers) are only in the supporting information, which a PDF-only run cannot find.</p>
-        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end">
-          <div><label class="label" for="dash-a">Run</label><select id="dash-a" class="input" style="min-width:24rem"></select></div>
-          <div><label class="label" for="dash-b">Compare with (optional)</label><select id="dash-b" class="input" style="min-width:24rem"></select></div>
-          <button id="dash-refresh" class="btn-ghost">Refresh</button>
-        </div>
-      </div>
-      <div id="dash-body" class="space-y-6"></div>
-      <details class="card space-y-3">
-        <summary class="card-title cursor-pointer">Run an evaluation</summary>
-        <p class="text-sm text-slate-600">Extracts the chosen papers (only papers that have hand-entered workbooks) and scores the result against them. The finished papers appear above as soon as each one is done.
-          It costs model calls: roughly 4 per paper, about $0.1 to $0.8 per paper depending on the model. Supporting information in <code>original paper/SI/</code> is read too.</p>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:end">
-          <div><label class="label" for="dash-search">Search DOI or PDF name</label><input id="dash-search" class="input" style="width:16rem" placeholder="e.g. smtd"></div>
-          <button id="dash-all" class="btn-ghost">Select all shown</button><button id="dash-none" class="btn-ghost">Clear</button>
-        </div>
-        <div id="dash-papers" style="max-height:20rem;overflow:auto" class="rounded-lg border border-slate-200"></div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:end">
-          <div><label class="label" for="dash-model">Model</label><input id="dash-model" class="input" list="model-list" style="width:17rem"></div>
-          <div><label class="label" for="dash-mapper">Paper-map model</label><input id="dash-mapper" class="input" list="model-list" style="width:17rem"></div>
-          <div><label class="label" for="dash-workers">Papers in parallel</label><input id="dash-workers" class="input" type="number" min="1" max="4" value="2" style="width:6rem"></div>
-          <div><label class="label" for="dash-budget">Budget (USD)</label><input id="dash-budget" class="input" type="number" min="0.1" step="0.1" value="3" style="width:6rem"></div>
-          <label class="text-sm" style="display:flex;gap:.4rem;align-items:center;padding-bottom:.5rem" title="A second model re-reads every value that did not match and settles whether the paper really says otherwise. It costs about as much again."><input id="dash-audit" type="checkbox"> also run the auditor</label>
-        </div>
-        <button id="dash-run" class="btn" disabled>Select papers to evaluate</button>
-      </details>
     </section>
 
     <!-- Recheck -->
@@ -257,12 +222,8 @@
   </main>
 
   <datalist id="model-list">
-    <option value="anthropic/claude-sonnet-5.5"></option>
-    <option value="anthropic/claude-opus-5.5"></option>
-    <option value="anthropic/claude-haiku-5.5"></option>
-    <option value="google/gemini-3.5-flash"></option>
-    <option value="openai/gpt-5.6-luna"></option>
-  </datalist>
+    {% for m in suggested_models %}<option value="{{ m }}"></option>
+    {% endfor %}  </datalist>
   <div id="toast" class="fixed right-4 bottom-4 z-50 hidden max-w-md rounded-lg px-4 py-3 text-sm text-white shadow-lg"></div>
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>

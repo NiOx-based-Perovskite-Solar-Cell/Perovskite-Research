@@ -9,13 +9,14 @@ Layout of ``out_dir``::
 from __future__ import annotations
 
 import csv
+import json
 import logging
 import os
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from ..sources.pairing import Pairing, PaperPair, doi_key, pair_folders
-from ..sources.paper import load_paper
+from ..sources.paper import load_paper, source_record
 from .rechecker import Rechecker
 from .report import STATUSES, Finding, PaperReport
 
@@ -63,6 +64,12 @@ def recheck_folders(
         if should_stop and should_stop():
             return None
         _write_atomic(out / "papers" / f"{pair.key}.json", report.model_dump_json(indent=2))
+        try:  # where the review page finds the paper and SI behind each finding
+            (out / "sources").mkdir(exist_ok=True)
+            _write_atomic(out / "sources" / f"{pair.key}.json",
+                          json.dumps({**source_record(pair.pdf, pair.si if use_si else ()), "key": pair.key}, ensure_ascii=False))
+        except Exception:
+            log.exception("%s: sources not saved", pair.pdf.name)
         log.info("%s: %s, $%.4f", pair.pdf.name, report.counts(), report.usage.cost_usd)
         return report
 

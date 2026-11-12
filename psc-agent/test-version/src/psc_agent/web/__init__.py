@@ -14,11 +14,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
 
-DEFAULT_MODELS = {"default": "anthropic/claude-sonnet-5.5", "decision": "anthropic/claude-haiku-5.5",
-                  "judge": "anthropic/claude-haiku-5.5", "si_finder": "anthropic/claude-sonnet-5.5",
-                  "si_reader": "anthropic/claude-haiku-5.5"}
-GEMINI_MODEL = "gemini-3.5-flash"
-PROVIDER_MODELS = {"openrouter": DEFAULT_MODELS, "gemini": {role: GEMINI_MODEL for role in DEFAULT_MODELS}}
+from ..models import SUGGESTED, role_models
+
+PROVIDER_MODELS = {p: role_models(p) for p in ("openrouter", "gemini")}  # models.py is the only place that names models
 
 
 @dataclass
@@ -33,7 +31,6 @@ class WebConfig:
     catalog: Path | None = None
     skills_dir: Path | None = None
     runs_dir: Path | None = None
-    eval_dirs: list | None = None  # folders holding `evaluate` runs (the Dashboard lists their sub-folders)
     provider: str = "openrouter"  # openrouter | gemini: who answers the model calls (gemini has no tool calling: no analyze / web-search agent)
     models: dict | None = None  # role -> model id; default: PROVIDER_MODELS[provider]
     max_workers: int = 2
@@ -54,12 +51,6 @@ class WebConfig:
         self.skills_dir = Path(self.skills_dir or home / "skills")
         self.runs_dir = Path(self.runs_dir or home / "runs")
         self.catalog = Path(self.catalog) if self.catalog else None
-        if self.eval_dirs is None:  # runs made on the command line: out/ and evaluate_out/ in the project and the working folder
-            seen: dict[Path, None] = {}
-            for base in (self.root, Path.cwd().resolve()):
-                for name in ("out", "evaluate_out"):
-                    seen.setdefault((base / name).resolve(), None)
-            self.eval_dirs = list(seen)
 
     @property
     def key_names(self) -> tuple[str, ...]:
@@ -77,7 +68,6 @@ def create_app(config: WebConfig):
     from flask import Flask
 
     from .api import bp
-    from .dashboard import dash
     from .jobs import JobManager
 
     app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -86,12 +76,17 @@ def create_app(config: WebConfig):
     config.runs_dir.mkdir(parents=True, exist_ok=True)
     app.config["JOBS"] = JobManager(config.runs_dir, max_workers=config.max_workers)
     app.register_blueprint(bp)
-    app.register_blueprint(dash)
+
+    @app.get("/review/<job_id>")
+    def review_page(job_id):  # its own page (opened from a row's evidence link), not a tab
+        from flask import render_template
+
+        return render_template("review.html", job_id=job_id)
 
     @app.get("/")
     def index():
         from flask import render_template
 
-        return render_template("index.html")
+        return render_template("index.html", suggested_models=SUGGESTED)
 
     return app

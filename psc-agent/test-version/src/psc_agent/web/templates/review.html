@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Check extracted rows</title>
+  <style>
+    :root { --bg:#f8fafc; --card:#fff; --ink:#1e293b; --mute:#64748b; --line:#e2e8f0; --accent:#4338ca;
+            --accept:#d1fae5; --accept-t:#065f46; --more:#fef3c7; --more-t:#92400e; --rev:#ffe4e6; --rev-t:#9f1239; --hr:#ede9fe; --hr-t:#5b21b6; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#0f172a; --card:#1e293b; --ink:#e2e8f0; --mute:#94a3b8; --line:#334155; --accent:#a5b4fc;
+            --accept:#064e3b; --accept-t:#a7f3d0; --more:#78350f; --more-t:#fde68a; --rev:#881337; --rev-t:#fecdd3; --hr:#4c1d95; --hr-t:#ddd6fe; } }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.4 system-ui, sans-serif; height:100vh; display:flex; flex-direction:column; }
+    header { padding:.6rem 1rem; border-bottom:1px solid var(--line); background:var(--card); display:flex; gap:1rem; align-items:baseline; flex-wrap:wrap; }
+    header h1 { font-size:1rem; margin:0; }
+    header .mute { color:var(--mute); font-size:.8rem; }
+    main { flex:1; min-height:0; display:flex; }
+    #side { width:min(30rem,42vw); border-right:1px solid var(--line); display:flex; flex-direction:column; background:var(--card); }
+    #tools { padding:.5rem; border-bottom:1px solid var(--line); display:flex; gap:.4rem; flex-wrap:wrap; align-items:center; }
+    #tools input { flex:1 1 8rem; padding:.3rem .5rem; border:1px solid var(--line); border-radius:.4rem; background:var(--bg); color:var(--ink); }
+    #list { overflow:auto; flex:1; }
+    .row { padding:.5rem .7rem; border-bottom:1px solid var(--line); cursor:pointer; }
+    .row:hover { background:var(--bg); }
+    .row.sel { background:var(--bg); box-shadow:inset 3px 0 0 var(--accent); }
+    .row .top { display:flex; gap:.4rem; align-items:center; font-size:.75rem; color:var(--mute); }
+    .row .vals { font-size:.8rem; word-break:break-word; margin-top:.2rem; }
+    .badge { display:inline-block; padding:0 .45rem; border-radius:.6rem; font-size:.7rem; font-weight:600; }
+    .mismatch { background:var(--rev); color:var(--rev-t); } .unit_mismatch { background:#ffedd5; color:#9a3412; }
+    .missing_in_record { background:var(--hr); color:var(--hr-t); } .review { background:var(--more); color:var(--more-t); }
+    .paper_more_detail { background:#ccfbf1; color:#115e59; }
+    .match { background:var(--accept); color:var(--accept-t); } .not_found, .needs_si, .not_checked { background:var(--line); color:var(--mute); }
+    #cmp { display:flex; gap:.6rem; align-items:stretch; flex-wrap:wrap; }
+    #cmp .side { flex:1 1 14rem; padding:.55rem .8rem; border-radius:.6rem; background:var(--bg); border:2px solid var(--line); min-width:0; }
+    #cmp .person { border-color:#64748b; } #cmp .agent { border-color:var(--accent); }
+    #cmp .lab { font-size:.7rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--mute); }
+    #cmp .agent .lab { color:var(--accent); } #cmp .lab span { font-weight:400; text-transform:none; letter-spacing:0; }
+    #cmp .val { font-size:1.2rem; font-weight:700; line-height:1.3; margin-top:.15rem; word-break:break-word; }
+    #cmp .verdict { display:flex; align-items:center; order:0; }
+    #cmp .verdict .badge { font-size:.8rem; padding:.2rem .7rem; }
+    @media (max-width:760px) { #cmp .verdict { flex-basis:100%; justify-content:center; } }
+    #audit { margin-top:.5rem; padding:.5rem .7rem; border-radius:.5rem; border-left:4px solid var(--mute); background:var(--bg); font-size:.85rem; }
+    #audit.ok { border-left-color:#16a34a; } #audit.bad { border-left-color:#dc2626; } #audit.unk { border-left-color:#d97706; }
+    #pager button.on { border-color:var(--accent); color:var(--accent); font-weight:600; }
+    .accept { background:var(--accept); color:var(--accept-t); } .verify_more { background:var(--more); color:var(--more-t); }
+    .revise { background:var(--rev); color:var(--rev-t); } .human_read { background:var(--hr); color:var(--hr-t); }
+    button.chip { border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:.6rem; padding:.1rem .5rem; font-size:.75rem; cursor:pointer; }
+    button.chip.on { border-color:var(--accent); color:var(--accent); }
+    #view { flex:1; min-width:0; display:flex; flex-direction:column; }
+    #info { padding:.6rem .9rem; border-bottom:1px solid var(--line); background:var(--card); font-size:.85rem; }
+    #info .where { font-weight:600; }
+    #info blockquote { margin:.4rem 0 0; padding:.4rem .7rem; border-left:3px solid var(--accent); background:var(--bg); font-size:.85rem; max-height:7.5rem; overflow:auto; }
+    #info .reason { color:var(--mute); font-size:.8rem; margin-top:.3rem; }
+    #info a, #info button.link { color:var(--accent); background:none; border:0; padding:0; font:inherit; cursor:pointer; text-decoration:underline; }
+    #pagebox { flex:1; overflow:auto; background:var(--bg); padding:1rem; }
+    #page { position:relative; margin:0 auto; max-width:100%; box-shadow:0 1px 4px rgba(0,0,0,.2); background:#fff; }
+    #page img { display:block; width:100%; height:auto; }
+    .hl { position:absolute; background:rgba(250,204,21,.38); outline:2px solid rgba(234,88,12,.85); border-radius:2px; pointer-events:none; }
+    .hl.value { background:rgba(56,189,248,.3); outline-color:rgba(2,132,199,.85); }
+    #pager { display:flex; gap:.5rem; align-items:center; font-size:.8rem; margin-top:.35rem; }
+    #pager button { border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:.4rem; padding:.1rem .5rem; cursor:pointer; }
+    .found { color:#16a34a; font-weight:600; } .notfound { color:#dc2626; font-weight:600; } .weak { color:#0284c7; font-weight:600; }
+    #empty { padding:2rem; color:var(--mute); }
+    @media (max-width: 760px) { main { flex-direction:column; } #side { width:100%; height:40vh; border-right:0; border-bottom:1px solid var(--line); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">Check against the paper</h1>
+    <span class="mute" id="meta">job {{ job_id }}</span>
+  </header>
+  <main>
+    <section id="side">
+      <div id="tools"><span id="chips"></span><input id="q" type="search" placeholder="Search rows"></div>
+      <div id="list"></div>
+    </section>
+    <section id="view">
+      <div id="info"><span class="mute">Pick a row: the paper opens at the page its evidence came from.</span></div>
+      <div id="pagebox" hidden><div id="page"><img id="pageimg" alt="the cited page"></div></div>
+      <div id="empty" hidden></div>
+    </section>
+  </main>
+  <script>window.REVIEW_JOB = {{ job_id|tojson }};</script>
+  <script src="{{ url_for('static', filename='review.js') }}"></script>
+</body>
+</html>

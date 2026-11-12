@@ -146,5 +146,55 @@ class JudgeOnce(unittest.TestCase):
         self.assertEqual([f.status for f in report.findings], ["match", "match"])
 
 
+class JudgeThreeWays(unittest.TestCase):
+    """Wording alone is never a mismatch: the judge says same, paper_more_detail or different, with a probability."""
+
+    def check(self, recorded, paper_value, verdict):
+        tmp = Path(tempfile.mkdtemp())
+        sheet = {"Materials": [("LayerID", "Material", "Solvent"), (2, "Nickel acetylacetonate", recorded)]}
+        wb = write_workbook(tmp / "10.1234_test.5678_Sample1.xlsx", sheet)
+        pdf = write_pdf(tmp / "p.pdf", f"doi 10.1234/test.5678 It was dissolved in {paper_value}.")
+
+        def recheck(body):
+            ids = re.findall(r"^(D\d+:[^|]+?:\d+) \|", last_user_text(body), re.M)
+            return {"devices": [{"device_id": "D1", "paper_device": "c"}], "rows": [row(i, True, Solvent=paper_value) for i in ids]}
+
+        def judge(body):
+            ids = re.findall(r'"id":\s*"(\d+)"', last_user_text(body))
+            return {"verdicts": [{"id": i, **verdict} for i in ids]}
+
+        rt, _ = runtime({"recheck": recheck, "judge": judge})
+        (f,) = Rechecker(runtime=rt, judge=True).recheck(pdf, [wb]).findings
+        return f
+
+    def test_the_paper_saying_more_is_not_a_mismatch(self):
+        f = self.check("Acetonitrile + Ethanol", "acetonitrile:ethanol (38:2 v/v)",
+                       {"choice": "paper_more_detail", "p": 0.9, "reason": "the paper adds the 38:2 ratio"})
+        self.assertEqual(f.status, "paper_more_detail")
+        self.assertEqual(f.paper_value, "acetonitrile:ethanol (38:2 v/v)")  # what the agent extracted is kept
+        self.assertEqual(f.recorded, "Acetonitrile + Ethanol")  # and the record is not touched
+        self.assertIn("judge: the paper adds the 38:2 ratio", f.detail)
+
+    def test_a_contradiction_is_a_mismatch_and_same_is_a_match(self):
+        self.assertEqual(self.check("DMF", "ethanol", {"choice": "different", "p": 0.95, "reason": "another solvent"}).status, "mismatch")
+        self.assertEqual(self.check("EtOH", "ethanol", {"choice": "same", "p": 0.95, "reason": "abbreviation"}).status, "match")
+
+    def test_an_unsure_judge_leaves_it_for_a_person(self):
+        f = self.check("DMF mix", "DMF:DMSO", {"choice": "different", "p": 0.5, "reason": "unclear what the mix is"})
+        self.assertEqual(f.status, "review")
+        self.assertIn("escalate: judge said different at p=0.50", f.detail)
+
+    def test_the_old_answer_shape_still_reads(self):
+        self.assertEqual(self.check("EtOH", "ethanol", {"same": True, "reason": "abbreviation"}).status, "match")
+        self.assertEqual(self.check("DMF", "ethanol", {"same": False, "reason": "another solvent"}).status, "mismatch")
+
+    def test_the_skill_tells_the_judge_the_rule(self):
+        from psc_agent.core.skills import SkillBook
+        text = SkillBook().prompt("judge")
+        for word in ("paper_more_detail", "never spelling", "A missing detail alone is never"):
+            self.assertIn(word, text)
+
+
+
 if __name__ == "__main__":
     unittest.main()

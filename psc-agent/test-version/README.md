@@ -61,7 +61,7 @@ event refuses the action.
 **recheck**: blind re-extraction. The model sees each row's key columns (layer, material, step, property)
 but never the recorded values. Values come back with page + quote and pass the quote check. Code compares
 them (units, rounding, figure tolerance), and the judge settles text that still differs. Output is
-`findings.csv`, with status per cell: mismatch, unit_mismatch, missing_in_record, not_found, needs_si, review,
+`findings.csv`, with status per cell: mismatch, unit_mismatch, missing_in_record, not_found, needs_si, review, paper_more_detail,
 not_checked, match. Rules that keep the list honest:
 - the paper giving more values than the record (a thickness next to a pressure) is not a mismatch: each recorded
   value is paired with a paper value of its own unit, and the extra ones are noted ("paper also gives 100 nm");
@@ -343,7 +343,6 @@ The app has six tabs:
 | tab | what it shows |
 |---|---|
 | Overview | pairing counts, data tables, recent jobs, setup |
-| Dashboard | accuracy of an extraction against the hand-entered workbooks (see below), and a form to run an evaluation |
 | Recheck | pick papers → findings table filtered by status |
 | Extract | three steps: 1 pick or upload a PDF, 2 settle its SI (check, find the link, upload the file), 3 extract → review table and .xlsx drafts |
 | Analyze | goal → AC cards with verdicts and evidence, then INSIGHTS.md |
@@ -383,22 +382,6 @@ The app has six tabs:
 
 API: `GET /api/si/plan?pdf=<id>`, `POST /api/jobs {kind: "si"}` (the SI reader, model `si_reader`, Haiku 5.5, then the SI agent `si_finder`, Sonnet 5.5, when needed),
 `POST /api/si` (upload), `POST /api/jobs {kind: "extract"}` (reads the SI saved for the paper).
-
-### Dashboard (accuracy)
-
-The Dashboard tab scores an `evaluate` run: the model reads each paper without the workbooks and every hand-entered value is
-compared with what it extracted. Tiles: **values that match**, **of those in the PDF text** (the fair measure: values only the
-SI holds cannot be found in a PDF), **correct when given** (precision), **values the model gave** (coverage), **core fields**
-and **rows found**; then by sheet, by core field and by paper (click a paper for its values that did not match), and a
-filterable list of the values that did not match with what the model gave instead.
-
-- Pick a second run in **Compare with** to see two runs side by side (two models, with and without the SI): A, B, the
-  difference in points, and the cells where only one of them matches. Only papers finished in both runs are compared.
-- Runs listed: the web's own evaluate jobs, and the folders `out/` and `evaluate_out/` (project root and working
-  folder; Docker mounts `evaluate_out/` read-only), so runs made with the CLI show up too.
-- **Run an evaluation** (bottom of the tab): choose papers that have workbooks, a model and a budget. It is a normal job
-  (progress and cancel in Jobs); each finished paper appears in the Dashboard at once. The auditor is off unless ticked.
-- API: `GET /api/dashboard/runs | run?id= | compare?a=&b= | cells?id=&status=&sheet=&paper=&core=1`.
 
 ## Python / backend
 

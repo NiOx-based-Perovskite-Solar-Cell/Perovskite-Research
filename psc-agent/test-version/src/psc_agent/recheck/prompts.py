@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import json
 
-from pydantic import BaseModel
+from typing import Literal
+
+from pydantic import BaseModel, Field, model_validator
 
 from ..core.evidence import EvidenceRow
 from ..sources.workbook import UNIT_COLUMN, Device, Row
@@ -92,9 +94,13 @@ def judge_task(items: list[dict]) -> str:
     return "Decide for each item:\n" + "\n".join(json.dumps(i, ensure_ascii=False) for i in items)
 
 
+JUDGE_CHOICES = ("same", "paper_more_detail", "different")
+
+
 def judge_schema() -> dict:
-    verdict = {"type": "object", "additionalProperties": False, "required": ["id", "same", "reason"],
-               "properties": {"id": {"type": "string"}, "same": {"type": "boolean"}, "reason": {"type": "string"}}}
+    verdict = {"type": "object", "additionalProperties": False, "required": ["id", "choice", "p", "reason"],
+               "properties": {"id": {"type": "string"}, "choice": {"type": "string", "enum": list(JUDGE_CHOICES)},
+                              "p": {"type": "number"}, "reason": {"type": "string"}}}
     return {"name": "judge", "strict": True, "schema": {
         "type": "object", "additionalProperties": False, "required": ["verdicts"],
         "properties": {"verdicts": {"type": "array", "items": verdict}}}}
@@ -117,10 +123,53 @@ class ExtractionAnswer(BaseModel):
 
 
 class JudgeVerdict(BaseModel):
+    """same: one meaning. paper_more_detail: they agree and the paper adds something the record leaves out.
+    different: they contradict each other. ``p`` is the judge's probability that its choice is right."""
+
     id: str
-    same: bool
+    choice: Literal["same", "paper_more_detail", "different"]
+    p: float = Field(default=1.0, ge=0.0, le=1.0)
     reason: str = ""
+
+    @model_validator(mode="before")
+    @classmethod
+    def _legacy_same(cls, v):  # answers written as {"same": true | false}, before the three-way choice
+        if isinstance(v, dict) and "choice" not in v and "same" in v:
+            v = {**v, "choice": "same" if v["same"] else "different"}
+            v.pop("same")
+        return v
 
 
 class JudgeAnswer(BaseModel):
     verdicts: list[JudgeVerdict]
+
+
+AUDIT_CHOICES = ("human_correct", "agent_correct", "both_correct", "neither", "unclear")
+
+
+def audit_task(items: list[dict]) -> str:
+    return ("Audit each item against the paper above. \"recorded\" was typed by a person, \"agent\" was extracted from the paper:\n"
+            + "\n".join(json.dumps(i, ensure_ascii=False) for i in items))
+
+
+def audit_schema() -> dict:
+    audit = {"type": "object", "additionalProperties": False, "required": ["id", "verdict", "p", "evidence", "page", "explanation"],
+             "properties": {"id": {"type": "string"}, "verdict": {"type": "string", "enum": list(AUDIT_CHOICES)},
+                            "p": {"type": "number"}, "evidence": {"type": ["string", "null"]},
+                            "page": {"type": ["integer", "null"]}, "explanation": {"type": "string"}}}
+    return {"name": "recheck_audit", "strict": True, "schema": {
+        "type": "object", "additionalProperties": False, "required": ["audits"],
+        "properties": {"audits": {"type": "array", "items": audit}}}}
+
+
+class AuditItem(BaseModel):
+    id: str
+    verdict: Literal["human_correct", "agent_correct", "both_correct", "neither", "unclear"]
+    p: float = Field(default=0.0, ge=0.0, le=1.0)
+    evidence: str | None = None
+    page: int | None = None
+    explanation: str = ""
+
+
+class AuditAnswer(BaseModel):
+    audits: list[AuditItem] = Field(default_factory=list)

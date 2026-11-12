@@ -28,7 +28,11 @@ class FakeRouter:
     def __call__(self, request: httpx.Request) -> httpx.Response:
         body = json.loads(request.content)
         self.requests.append(body)
-        reply = self.responders[self.role_of(body)](body)
+        role = self.role_of(body)
+        if role == "recheck_auditor" and role not in self.responders:  # tests written before the auditor: it audits nothing
+            reply = {"audits": []}
+        else:
+            reply = self.responders[role](body)
         if isinstance(reply, dict) and "tool_calls" in reply:
             message, finish = {"role": "assistant", "content": None, "tool_calls": reply["tool_calls"]}, "tool_calls"
         else:

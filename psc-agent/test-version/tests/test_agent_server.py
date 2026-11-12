@@ -155,7 +155,7 @@ class Live(Base):
     def web(self, agent, **cfg):
         root = self.tmp  # the web app reads the same folder the server writes
         (root / "Raw Data").mkdir(exist_ok=True)
-        app = create_app(WebConfig(root=root, require_key=False, max_workers=1, eval_dirs=[], agent_server=agent, **cfg))
+        app = create_app(WebConfig(root=root, require_key=False, max_workers=1, agent_server=agent, **cfg))
         app.testing = True
         return app, app.test_client()
 
@@ -224,7 +224,7 @@ class Live(Base):
 
     def test_the_job_needs_no_model_key_in_the_web_app_and_a_configured_server(self):
         write_pdf(self.pdfs / "other.pdf", PAPER)
-        app = create_app(WebConfig(root=self.tmp, require_key=True, max_workers=1, eval_dirs=[], agent_server=AgentServer(self.url, TOKEN)))
+        app = create_app(WebConfig(root=self.tmp, require_key=True, max_workers=1, agent_server=AgentServer(self.url, TOKEN)))
         c = app.test_client()
         with mock.patch.dict(os.environ, {"OPENROUTER_API_KEY": ""}):
             self.assertEqual(c.post("/api/jobs", json={"kind": "si", "params": {"pdf": "pdf:other.pdf"}}).status_code, 409)  # a model job

@@ -12,13 +12,7 @@ from .core.runtime import Runtime
 from .core.skills import SkillBook
 from .recheck.report import STATUSES
 
-DEFAULT_MODEL = {"openrouter": "anthropic/claude-sonnet-5.5", "claude-code": "claude-sonnet-5-5",
-                 "gemini": "gemini-3.5-flash", "ollama": "deepseek-v4-pro"}
-
-
-# `run`: the extract and recheck agents start on Haiku 5.5, the SI agent (web search with tools) on Sonnet 5.5
-HAIKU = {"claude-code": "claude-haiku-5-5", "openrouter": "anthropic/claude-haiku-5.5"}
-SONNET = {"claude-code": "claude-sonnet-5-5", "openrouter": "anthropic/claude-sonnet-5.5"}
+from .models import DEFAULT_MODEL, finder_model, run_model  # noqa: E402  (every model id lives in models.py)
 
 
 def _model_args(p: argparse.ArgumentParser, out: str) -> None:
@@ -80,6 +74,7 @@ def main(argv: list[str] | None = None) -> int:
     _model_args(r, "recheck_out")
     r.add_argument("--judge-model", help="model for text equivalence (default: --model)")
     r.add_argument("--no-judge", action="store_true", help="leave differing text as 'review'")
+    r.add_argument("--no-audit", action="store_true", help="skip the auditor's second reading of the cells that disagree")
     r.add_argument("--only", nargs="+", metavar="DOI", help="only these DOIs")
     r.add_argument("--limit", type=int, help="at most this many papers")
     r.add_argument("--workers", type=int, default=1, help="papers in parallel")
@@ -127,6 +122,7 @@ def main(argv: list[str] | None = None) -> int:
     rn.add_argument("--cdp-url", help="attach to a Chrome started with --remote-debugging-port")
     rn.add_argument("--wait-human", type=float, default=300.0, help="seconds to leave a bot check open for you (default 300)")
     rn.add_argument("--no-judge", action="store_true", help="recheck: leave differing text as 'review'")
+    rn.add_argument("--no-audit", action="store_true", help="recheck: skip the auditor's second reading of the cells that disagree")
     rn.add_argument("--no-decide", action="store_true", help="extract: rules only, no decision model")
     rn.add_argument("--dpi", type=int, default=150)
     rn.add_argument("--all-pages", action="store_true")
@@ -238,7 +234,7 @@ def main(argv: list[str] | None = None) -> int:
     ag.add_argument("--pdf", required=True, help="folder of source PDFs, the one the web app reads; SI is saved in <pdf folder>/SI/")
     ag.add_argument("--host", default="127.0.0.1", help="127.0.0.1 = this computer only (Docker Desktop reaches it as host.docker.internal)")
     ag.add_argument("--port", type=int, default=5100)
-    ag.add_argument("--model", default=DEFAULT_MODEL["openrouter"], help="model of the SI agent (OpenRouter; the key comes from .env)")
+    ag.add_argument("--model", default=finder_model("openrouter"), help="model of the SI agent (OpenRouter; the key comes from .env)")
     ag.add_argument("--budget", type=float, default=1.0, help="USD per paper")
     ag.add_argument("--chrome-profile", help="Chrome profile folder (default ~/.psc-agent/chrome; sign in once with `browser login`)")
     ag.add_argument("--cdp-url", help="attach to a Chrome you started with --remote-debugging-port instead (e.g. http://127.0.0.1:9222)")
@@ -259,9 +255,9 @@ def main(argv: list[str] | None = None) -> int:
 
     args = ap.parse_args(argv)
     if hasattr(args, "provider"):
-        args.model = args.model or (HAIKU.get(args.provider) if args.cmd == "run" else None) or DEFAULT_MODEL[args.provider]
+        args.model = args.model or (run_model(args.provider) if args.cmd == "run" else None) or DEFAULT_MODEL[args.provider]
         if args.cmd == "run":
-            args.si_model = args.si_model or SONNET.get(args.provider)
+            args.si_model = args.si_model or finder_model(args.provider)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)
     return COMMANDS[args.cmd](args)
@@ -346,7 +342,7 @@ def cmd_run(args) -> int:
     finder = None if args.no_si_agent else SiFinder(rt, browser=browser, download=browser is not None)
     reader = None if args.no_si_reader else SiReader(rt)
     extractor = Extractor(rt, dpi=args.dpi, all_pages=args.all_pages, decide_rows=not args.no_decide)
-    rechecker = Rechecker(runtime=rt, judge=not args.no_judge, dpi=args.dpi, all_pages=args.all_pages)
+    rechecker = Rechecker(runtime=rt, judge=not args.no_judge, audit=not args.no_audit, dpi=args.dpi, all_pages=args.all_pages)
     print(f"{len(items)} paper(s): {sum(bool(i.workbooks) for i in items)} to recheck, {sum(not i.workbooks for i in items)} to extract; "
           f"every agent on {args.model} unless set per role")
     try:
@@ -378,7 +374,7 @@ def cmd_loop(args) -> int:
     if not items:
         print("no paper selected" + ("" if args.calibrate else " (papers that already have workbooks are not extracted: use --calibrate to measure on them)"))
         return 1
-    rt = _runtime(args, out, {"default": args.model, "si_finder": SONNET.get(args.provider)})
+    rt = _runtime(args, out, {"default": args.model, "si_finder": finder_model(args.provider)})
     v_provider = args.verifier_provider or args.provider
     v_model = args.verifier_model or (DEFAULT_MODEL[v_provider] if v_provider != args.provider else args.model)
     vargs = _argparse.Namespace(**{**vars(args), "provider": v_provider, "model": v_model})
@@ -466,7 +462,7 @@ def cmd_recheck(args) -> int:
 
     out = Path(args.out)
     rt = _runtime(args, out, {"default": args.model, "judge": args.judge_model})
-    rechecker = Rechecker(runtime=rt, judge=not args.no_judge, dpi=args.dpi, all_pages=args.all_pages)
+    rechecker = Rechecker(runtime=rt, judge=not args.no_judge, audit=not args.no_audit, dpi=args.dpi, all_pages=args.all_pages)
     reports = recheck_folders(rechecker, args.raw, args.pdf, out, only=args.only, limit=args.limit,
                               workers=args.workers, force=args.force, use_si=not args.no_si)
     total = {s: sum(r.counts().get(s, 0) for r in reports) for s in STATUSES}

@@ -84,6 +84,45 @@ def load_paper(src: Source, name: str | None = None, si: Sequence[Source] = ()) 
     return Paper(name, data, pages, meta, n_main)
 
 
+def si_layout(main: Source, si: Sequence[Source] = ()) -> dict:
+    """Where each page of a paper read together with its SI comes from: ``{"main_pages": n, "si": [{"name", "pages"}]}``.
+    Page ``n + 1`` onwards belong to the SI files in order, each cut like ``load_paper`` cuts it (``MAX_SI_PAGES`` in all),
+    so a page number in an evidence row can be turned back into (file, page in that file)."""
+    def count(src):
+        with _FITZ_LOCK, fitz.open(stream=src if isinstance(src, bytes) else Path(src).read_bytes(), filetype="pdf") as d:
+            return len(d)
+    out, used = [], 0
+    for extra in si:
+        if used >= MAX_SI_PAGES:
+            break
+        n = min(count(extra), MAX_SI_PAGES - used)
+        out.append({"name": "SI" if isinstance(extra, bytes) else Path(extra).name, "pages": n})
+        used += n
+    return {"main_pages": count(main), "si": out}
+
+
+def source_record(main, si: Sequence = ()) -> dict:
+    """What a job saves (``sources.json``) so its review page can open the PDF and SI files behind its evidence rows."""
+    main = Path(main)
+    return {**si_layout(main, si), "pdf": main.name, "pdf_path": str(main.resolve()),
+            "si_files": [Path(f).name for f in si], "si_paths": [str(Path(f).resolve()) for f in si]}
+
+
+def locate_page(layout: dict, page: int) -> tuple[int, int] | None:
+    """(source index, page in that file), both starting at 1 for the page: source 0 is the main PDF, 1.. the SI files.
+    None when the page is outside the paper."""
+    if page < 1:
+        return None
+    if page <= layout["main_pages"]:
+        return 0, page
+    left = page - layout["main_pages"]
+    for i, f in enumerate(layout["si"], 1):
+        if left <= f["pages"]:
+            return i, left
+        left -= f["pages"]
+    return None
+
+
 def paper_parts(paper: Paper, *, dpi: int, all_pages: bool, images: bool = True, pdf: bool = False) -> list[dict]:
     """The paper as model message parts: page images (unless ``images`` is off), then the text layer marked as a
     cache breakpoint (it is resent with every call about the same paper).
