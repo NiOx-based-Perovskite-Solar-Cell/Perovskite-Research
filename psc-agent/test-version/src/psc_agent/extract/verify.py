@@ -9,18 +9,20 @@ the drafts. Each extracted row then has two independent readings, and the outcom
     unverified   the second reader could not find the row / a cell, or its evidence is not on the page it cites
 
 The final status of a row (``final_status``) is ``accepted`` only when the second reader confirmed it and the first
-pass did not mark it ``revise``; everything else is ``held`` with the reason. Values read off a figure stay ``figure``
-in the confidence column: even when two readers agree they are estimates, and an analysis may want to drop them.
+pass did not mark it ``revise``; everything else is ``held`` with the reason. A row whose number the model read off a plot
+is ``human_read``: the draft keeps the estimate, a person reads the plot again, and the second reader is not asked about it.
 """
 from __future__ import annotations
 
 import logging
+import tempfile
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from ..recheck.rechecker import Rechecker
 from ..sources.paper import Paper
 from ..sources.workbook import load_workbook
-from .extractor import ExtractResult, row_id
+from .extractor import ExtractResult, draft_stem, row_id, write_drafts
 
 log = logging.getLogger(__name__)
 
@@ -64,12 +66,19 @@ class Verifier:
         self.rechecker = rechecker
 
     def verify(self, paper: Paper, result: ExtractResult) -> Verification:
-        """Read the paper again against the draft workbooks of ``result``; one verdict per extracted row."""
+        """Read the paper again against the draft rows of ``result``; one verdict per row. A row marked human_read (a plot
+        estimate) is not given to the second reader: a person reads that plot again, two estimates would settle nothing."""
         out = Verification(model=self.rechecker.model)
-        if not result.files:
-            out.errors.append("no draft workbooks to verify")
+        if not result.rows:
+            out.errors.append("no draft rows to verify")
             return out
-        devices = [load_workbook(f) for f in result.files]
+        keep = {row_id(i, r) for i, r in enumerate(result.rows)
+                if not (result.verdicts.get(row_id(i, r)) and result.verdicts[row_id(i, r)].choice == "human_read")}
+        if not keep:
+            return out
+        with tempfile.TemporaryDirectory() as tmp:  # the drafts without the plot rows: what the second reader is shown
+            files, locations = write_drafts(result, Path(tmp), draft_stem(paper), keep=keep)
+            devices = [load_workbook(f) for f in files]
         report = self.rechecker.recheck(paper, devices)
         out.errors, out.cost_usd = list(report.errors), report.usage.cost_usd
         by_row: dict[tuple[str, str, int], list] = {}
@@ -78,7 +87,9 @@ class Verifier:
         sheets = {d.name: d.sheets for d in devices}
         for i, r in enumerate(result.rows):
             rid = row_id(i, r)
-            loc = result.locations.get(rid)
+            if rid not in keep:
+                continue
+            loc = locations.get(rid)
             rows = sheets.get(loc[0], {}).get(loc[1], []) if loc else []
             if not loc or loc[2] >= len(rows):
                 out.verdicts[rid] = RowVerdict(rid, "unverified", "the row is not in the draft workbooks")
@@ -89,8 +100,10 @@ class Verifier:
 
 def final_status(first, source: str | None, v: RowVerdict | None) -> tuple[str, str, str]:
     """(final, confidence, why) of one row from the first pass (``first``: its decision Verdict or None), the row's
-    ``source`` (text | table | figure) and the second reader's verdict."""
-    confidence = "figure" if source == "figure" else "two readers"
+    ``source`` (text | table | figure) and the second reader's verdict. final is accepted | held | human_read."""
+    confidence = "two readers"
+    if first is not None and first.choice == "human_read":
+        return "human_read", "", first.reason
     if first is not None and first.choice == "revise":
         return "held", "", f"first pass: revise ({first.reason})"
     if v is None:

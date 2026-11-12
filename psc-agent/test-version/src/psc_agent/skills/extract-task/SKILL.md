@@ -25,7 +25,8 @@ follow evidence-rules for every row.
   number of the step in Parameter and the units in Unit, in the same order.
 - Properties: every measured value the paper reports for the device: the champion and average PCE, Voc, Jsc and FF
   (a table gives them; for scan directions use the suffix), then trap density, VTFL, band gap, contact angle, grain
-  size and so on, each with its unit. A value read off a plot has source "figure".
+  size and so on, each with its unit. A value read off a plot has source "figure" and a note on what the graph shows
+  (read-figures): it is an estimate that a person reads again.
 - Stability: one row per test condition and device: the Environment, Encapsulation, Temperature, Humidity, the Time
   and the Retention reached at that time.
 

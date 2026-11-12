@@ -80,6 +80,18 @@ def pair_folders(raw_dir, pdf_dir) -> Pairing:
         else:
             still.append(pdf)
 
+    # Third pass: PDFs and workbooks still without a partner, matched against the full text (e.g.
+    # Science articles where the DOI is printed on the final page under Supplementary Materials).
+    for pdf in list(still):
+        free = [k for k in groups if k not in by_key]
+        if not free:
+            break
+        paper = load_paper(pdf)
+        hit = match_key(" ".join(paper.pages), free)
+        if hit:
+            by_key[hit].append(pdf)
+            still.remove(pdf)
+
     pairs = []
     for k, pdfs in sorted(by_key.items()):
         pdfs = sorted(pdfs, key=lambda p: -p.stat().st_size)  # keep the largest copy

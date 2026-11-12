@@ -4,7 +4,9 @@
     extract   (any model)    rows of the other sheets for all devices, each with page + quote
     hooks                    after_answer → QuoteCheckHook marks quotes that are not on the cited page
     decision  (small model)  accept / verify_more / revise per row against its evidence; rules first:
-                             no quote / quote not on the page / value read off a figure → verify_more,
+                             a number the model read off a plot → human_read (the draft keeps the estimate; the row says which
+                             figure and what the graph shows, and a person reads the plot again),
+                             no quote / quote not on the page → verify_more,
                              and table values reach the model only if every number is in the page text
 
 Writes ``<out>/<doi>_Sample<N>.xlsx`` (Raw Data layout, drafts for review), review.csv (every row with
@@ -95,6 +97,10 @@ def _schema(name: str, sheets: list[str], with_devices: bool) -> dict:
                            "description": {"type": ["string", "null"]}}}}
     return {"name": name, "strict": True, "schema": {"type": "object", "additionalProperties": False,
                                                     "required": list(props), "properties": props}}
+
+
+# The cells that hold a measured number: on a plot row they hold the model's estimate, which a person reads again.
+FIGURE_NUMBER_COLUMNS = {"Properties": ("Values", "Errors"), "Stability": ("Retention (%)", "T80 (hr)"), "Layer": ("Thickness (nm)",)}
 
 
 def _columns_text(sheets) -> str:
@@ -212,10 +218,11 @@ class Extractor:
         for i, r in enumerate(result.rows):
             rid = row_id(i, r)
             claim = f"{r.device} {r.sheet}: " + "; ".join(f"{k}={v}" for k, v in r.cells().items())
-            if r.quote_ok is False:
+            if r.source == "figure":  # the model read the number off a plot: the draft keeps it, a person reads the plot again
+                verdicts[rid] = rule(rid, "human_read", f"the model's reading off {r.evidence or 'a figure'} (page {r.page}): a person "
+                                                        "reads the plot again" + (f". The graph: {r.note}" if r.note else ""))
+            elif r.quote_ok is False:
                 verdicts[rid] = rule(rid, "verify_more", f"quote not found on page {r.page}")
-            elif r.source == "figure":
-                verdicts[rid] = rule(rid, "verify_more", f"read off a figure ({r.evidence or 'no label'}): check it")
             elif r.quote_ok is None:  # a table label or no quote: the values themselves must be on the page
                 found, snippet = _values_on_page(r, paper.pages)
                 if not found:

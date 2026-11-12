@@ -24,13 +24,13 @@ ROWS = [
     ("Layer", {"LayerID": "1", "LayerType": "Anode", "Material": "ITO", "Thickness (nm)": "150"}, "text", "ITO was the anode."),
     ("Layer", {"LayerID": "2", "LayerType": "HTL", "Material": "NiOx", "Thickness (nm)": "20"}, "text", "The NiOx film is 20 nm thick."),
     ("Properties", {"Properties": "PCE", "Values": "20.1", "Unit": "%"}, "text", "The device reached a PCE of 20.1 % with a trap"),
-    ("Properties", {"Properties": "VOC", "Values": "1.10", "Unit": "V"}, "figure", "Figure 3"),
+    ("Properties", {"Properties": "VOC", "Values": "1.10", "Unit": "V"}, "figure", "Figure 3"),  # a plot: the model's estimate is kept, a person reads it again
 ]
 
 
 def xrow(sheet, cells, source, evidence, page=1):
     return {"device": "S1", "sheet": sheet, "values": [{"column": k, "value": v} for k, v in cells.items()], "page": page,
-            "source": source, "evidence": evidence}
+            "source": source, "evidence": evidence, "note": "J-V curves, S1 control: Voc where J = 0" if source == "figure" else None}
 
 
 def mapper(body):
@@ -99,13 +99,23 @@ class QuoteCheck(unittest.TestCase):
         self.assertFalse(quote_on_page(pages, 1, "trap density of 9.99 x 10 20 cm 3 in the control film"))  # another number
 
 
+class FigureRows(unittest.TestCase):
+    def test_the_extraction_skills_read_plots_and_say_what_the_graph_shows(self):
+        rt, _ = runtime({})
+        for role in ("extract", "mapper", "recheck"):
+            self.assertIn("Voc where J = 0", rt.system(role))  # how to read a curve
+        for role in ("extract", "mapper"):
+            self.assertIn("a person reads that plot again", rt.system(role))
+            self.assertIn("what the graph shows", rt.system(role))
+
+
 class Loop(Setup):
     def test_rows_both_readers_agree_on_are_accepted_and_staged_only_through_an_open_gate(self):
         self.pipeline()
         cal = self.tmp / "calibration.json"
         loops, open_, why = run_loop(self.item(), calibration=cal, **self.kw)
         (lp,) = loops
-        self.assertEqual((len(lp.records), lp.accepted, lp.held), (4, 4, 0))
+        self.assertEqual((len(lp.records), lp.accepted, lp.held, lp.human), (4, 3, 0, 1))  # the plot row is for a person
         self.assertFalse(open_)  # no calibration: nothing is staged
         self.assertIn("no calibration", why)
         self.assertFalse((self.out / "staged").exists())
@@ -113,7 +123,21 @@ class Loop(Setup):
         prov = {r["row_id"]: r for r in self.rows()}
         self.assertEqual({r["extractor_model"] for r in prov.values()}, {"m/extract"})
         self.assertEqual({r["verifier_model"] for r in prov.values()}, {"m/verifier"})
-        self.assertEqual({r["confidence"] for r in prov.values() if r["source"] == "figure"}, {"figure"})  # agreed, still an estimate
+        (plot,) = [r for r in prov.values() if r["source"] == "figure"]
+        self.assertEqual((plot["final"], plot["second_reader"]), ("human_read", ""))  # the second reader was not asked about it
+        self.assertEqual(json.loads(plot["values"])["Values"], "1.10")  # the model's estimate stays in the draft
+        self.assertIn("Figure 3", plot["why"])
+        self.assertIn("reads the plot again", plot["why"])
+        self.assertIn("Voc where J = 0", plot["why"])  # what the graph shows
+        (todo,) = self.rows("human_read.csv")
+        self.assertEqual((todo["figure"], todo["unit"], todo["value"]), ("Figure 3", "V", ""))  # value: the person's reading
+        self.assertEqual(json.loads(todo["row"]), {"Properties": "VOC"})
+        self.assertEqual(json.loads(todo["model_estimate"]), {"Values": "1.10"})
+        review = next((self.out / "papers").glob("*/extract/review.csv")).read_text(encoding="utf-8-sig")
+        self.assertIn("1.10", review)  # in review.csv too
+        draft = next((self.out / "papers").glob("*/extract/*.xlsx"))
+        self.assertIn(1.1, [r.cells.get("Values") for r in load_workbook(draft).sheets["Properties"]])  # and in the draft workbook
+        self.assertNotIn("VOC", " ".join(str(b) for b in self.ver_fake.requests))  # no second reader saw the plot row
         self.assertIn("CLOSED", (self.out / "REPORT.md").read_text(encoding="utf-8"))
 
     def test_a_disputed_or_unfound_row_is_held_with_the_reason_and_left_out_of_the_accepted_workbook(self):
@@ -129,7 +153,7 @@ class Loop(Setup):
         accepted = [load_workbook(f) for f in lp.accepted_files]
         sheets = {s: rows for d in accepted for s, rows in d.sheets.items()}
         self.assertEqual([r.cells.get("Material") for r in sheets["Layer"]], ["NiOx"])  # ITO (unverified) is not in it
-        self.assertNotIn("PCE", [r.cells.get("Properties") for r in sheets["Properties"]])
+        self.assertNotIn("PCE", [r.cells.get("Properties") for r in sheets.get("Properties", [])])
 
     def test_a_failed_sheet_group_is_asked_again(self):
         self.fail_rows_once = True
@@ -139,7 +163,7 @@ class Loop(Setup):
         self.assertEqual(lp.rounds, 1)
         self.assertEqual(lp.errors, [])
         self.assertEqual(len(lp.records), 4)  # the Properties rows arrived on the second ask
-        self.assertEqual(lp.accepted, 4)
+        self.assertEqual((lp.accepted, lp.human), (3, 1))
 
     def test_without_retries_the_failure_stays_and_is_reported(self):
         self.fail_rows_once = True
@@ -158,7 +182,7 @@ class Loop(Setup):
         self.assertEqual(len(loops), 2)
         bad, good = sorted(loops, key=lambda lp: not lp.errors)
         self.assertTrue(bad.errors and not bad.records)
-        self.assertEqual((good.errors, good.accepted), ([], 4))
+        self.assertEqual((good.errors, good.accepted), ([], 3))
 
 
 class Gate(Setup):
@@ -181,7 +205,7 @@ class Gate(Setup):
         self.assertTrue(open_)
         staged = sorted((self.out / "staged").glob("*.xlsx"))
         self.assertEqual([p.name for p in staged], ["10.1016_j.test.2024.1_Sample1.xlsx"])
-        self.assertEqual(sum(len(r) for r in load_workbook(staged[0]).sheets.values()), 4)
+        self.assertEqual(sum(len(r) for r in load_workbook(staged[0]).sheets.values()), 3)  # not the plot row
 
     def test_the_audit_sample_is_a_reproducible_share_of_the_accepted_rows(self):
         recs = [{"final": "accepted", "n": i} for i in range(100)] + [{"final": "held", "n": 0}] * 10

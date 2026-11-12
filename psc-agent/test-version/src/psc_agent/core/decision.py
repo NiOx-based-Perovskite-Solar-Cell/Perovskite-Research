@@ -18,7 +18,8 @@ ESCALATE_BELOW = 0.7
 
 class Verdict(BaseModel):
     id: str
-    choice: Literal["accept", "verify_more", "revise"]
+    # human_read is only ever set by a rule (a value that exists only in a plot: a person reads it), never by the decision model
+    choice: Literal["accept", "verify_more", "revise", "human_read"]
     p: float = Field(ge=0.0, le=1.0)
     reason: str = ""
     by: str = ""  # model id, or "rule" for deterministic pre-checks

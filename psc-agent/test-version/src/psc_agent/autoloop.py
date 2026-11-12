@@ -3,15 +3,17 @@
     1. SI           the SI reader / publisher pattern / (SI files already in SI/), as in ``run``
     2. extract      the extractor drafts the workbooks; a sheet group that failed (a 503) is asked again (``--rounds``)
     3. second read  a Rechecker, ideally on ANOTHER model, reads the paper against every cell of the drafts (extract.verify)
-    4. final        a row is ``accepted`` only when the second reader confirmed it; the rest is ``held`` with the reason
+    4. final        a row is ``accepted`` only when the second reader confirmed it; the rest is ``held`` with the reason.
+                    A number the model read off a plot is ``human_read``: the draft keeps the estimate, but the row is never
+                    accepted and no second model reads the plot; a person reads it again (``human_read.csv`` is that list)
     5. gate         accepted rows go to ``<out>/staged/`` only when the pipeline has been measured against the hand-entered
                     workbooks (``--calibrate``) and its precision is at least ``--min-precision`` with these very models
     6. audit sample a few percent of the accepted rows are written to ``audit_sample.csv`` for an occasional look: it blocks nothing
 
-What it cannot do: values that are only in an SI that could not be downloaded stay missing (held or absent), and values
-read off a figure are marked ``figure`` in the confidence column, since two readers agreeing on a plot reading are still estimates.
+What it cannot do: values that are only in an SI that could not be downloaded stay missing (held or absent), and numbers
+read off a plot are estimates (``human_read``): the draft has them, a person reads the plot again, nothing stages them.
 
-Outputs under ``<out>``: ``provenance.csv`` (every extracted row: both readers, final status, models), ``held.csv``, ``staged/*.xlsx``
+Outputs under ``<out>``: ``provenance.csv`` (every extracted row: both readers, final status, models), ``held.csv``, ``human_read.csv``, ``staged/*.xlsx``
 (gate open), ``audit_sample.csv``, ``loop_summary.csv``, ``REPORT.md``, and per paper ``papers/<key>/`` (drafts, accepted drafts).
 ``calibration.json`` (``--calibration``, default ./calibration.json) is what ``--calibrate`` writes and the gate reads.
 """
@@ -31,7 +33,7 @@ from pathlib import Path
 from .evaluate.compare import compare_devices
 from .evaluate.report import pct, stats
 from .extract import Extractor
-from .extract.extractor import draft_stem, row_id, write_drafts
+from .extract.extractor import FIGURE_NUMBER_COLUMNS, draft_stem, row_id, write_drafts
 from .extract.verify import Verification, Verifier, final_status
 from .runner import Item, settle_si
 from .sources.paper import Paper
@@ -64,6 +66,10 @@ class PaperLoop:
     @property
     def held(self) -> int:
         return sum(r["final"] == "held" for r in self.records)
+
+    @property
+    def human(self) -> int:
+        return sum(r["final"] == "human_read" for r in self.records)
 
 
 def _confirmed(v: Verification) -> int:
@@ -197,12 +203,27 @@ def run_loop(items: list[Item], *, finder, reader, extractor: Extractor, verifie
                 shutil.copy2(f, staged / Path(f).name)
     _write_csv(out / "provenance.csv", PROVENANCE_FIELDS, records)
     _write_csv(out / "held.csv", PROVENANCE_FIELDS, [r for r in records if r["final"] == "held"])
+    _write_csv(out / "human_read.csv", ["paper", "device", "sheet", "row", "figure", "page", "what_to_read", "model_estimate", "value", "unit"],
+               [_human_row(r) for r in records if r["final"] == "human_read"])
     _write_csv(out / "audit_sample.csv", [*PROVENANCE_FIELDS, "human_ok"], [{**r, "human_ok": ""} for r in audit_sample(records, sample, seed=seed)])
-    _write_csv(out / "loop_summary.csv", ["paper", "si", "rounds", "rows", "accepted", "held", "errors", "cost_usd", "seconds"],
+    _write_csv(out / "loop_summary.csv", ["paper", "si", "rounds", "rows", "accepted", "held", "human_read", "errors", "cost_usd", "seconds"],
                [{"paper": lp.key, "si": lp.si_status, "rounds": lp.rounds, "rows": len(lp.records), "accepted": lp.accepted,
-                 "held": lp.held, "errors": len(lp.errors), "cost_usd": round(lp.cost, 4), "seconds": lp.seconds} for lp in loops])
+                 "held": lp.held, "human_read": lp.human, "errors": len(lp.errors), "cost_usd": round(lp.cost, 4),
+                 "seconds": lp.seconds} for lp in loops])
     _write_report(out, loops, open_, why, extractor.rt.model_for("extract"), verifier.rechecker.model)
     return loops, open_, why
+
+
+def _human_row(r: dict) -> dict:
+    """One line of the person's reading list: the row's identity, the figure, what the graph shows and the model's estimate;
+    ``value`` is the person's own reading of the plot, to fill in."""
+    cells = json.loads(r["values"])
+    numbers = {c for cols in FIGURE_NUMBER_COLUMNS.values() for c in cols}
+    estimate = {k: v for k, v in cells.items() if k in numbers}
+    ident = {k: v for k, v in cells.items() if k not in numbers and k != "Unit"}
+    return {"paper": r["paper"], "device": r["device"], "sheet": r["sheet"], "row": json.dumps(ident, ensure_ascii=False),
+            "figure": r["evidence"], "page": r["page"], "what_to_read": r["why"],
+            "model_estimate": json.dumps(estimate, ensure_ascii=False) if estimate else "", "value": "", "unit": cells.get("Unit", "")}
 
 
 def _write_csv(path: Path, fields: list[str], rows: list[dict]) -> None:
@@ -218,12 +239,14 @@ def _write_report(out: Path, loops: list[PaperLoop], gate_open: bool, why: str, 
     acc = sum(lp.accepted for lp in loops)
     lines = ["# psc-agent loop", "",
              f"- extract: `{extract_model}`, second reader: `{verifier_model}`",
-             f"- papers: {len(loops)}, rows extracted: {rows}, **accepted {acc}** ({pct(acc / rows) if rows else '–'}), held {rows - acc}",
+             f"- papers: {len(loops)}, rows extracted: {rows}, **accepted {acc}** ({pct(acc / rows) if rows else '–'}), held {sum(lp.held for lp in loops)}, "
+             f"**plot estimates for a person to re-read {sum(lp.human for lp in loops)}**",
              f"- gate: **{'OPEN' if gate_open else 'CLOSED'}**: {why}",
              f"- {'accepted rows are in `staged/`' if gate_open else 'nothing was staged: the accepted drafts are in papers/<key>/accepted/ for when the gate opens'}",
-             "- `provenance.csv`: every row with both readings; `held.csv`: rows to settle; `audit_sample.csv`: a sample of accepted rows for an occasional look", "",
-             "| paper | SI | rows | accepted | held | errors | cost |", "|---|---|---|---|---|---|---|"]
-    lines += [f"| {lp.key[:40]} | {lp.si_status} | {len(lp.records)} | {lp.accepted} | {lp.held} | {len(lp.errors)} | ${lp.cost:.3f} |" for lp in loops]
+             "- `provenance.csv`: every row with both readings; `held.csv`: rows to settle; `human_read.csv`: numbers the model read off a plot, "
+             "with the figure, what the graph shows and the estimate, for a person to read again; `audit_sample.csv`: a sample of accepted rows for an occasional look", "",
+             "| paper | SI | rows | accepted | held | plot (person) | errors | cost |", "|---|---|---|---|---|---|---|---|"]
+    lines += [f"| {lp.key[:40]} | {lp.si_status} | {len(lp.records)} | {lp.accepted} | {lp.held} | {lp.human} | {len(lp.errors)} | ${lp.cost:.3f} |" for lp in loops]
     errors = [f"- {lp.key[:40]}: {e}" for lp in loops for e in lp.errors]
     if errors:
         lines += ["", "## Errors", *errors[:40]]

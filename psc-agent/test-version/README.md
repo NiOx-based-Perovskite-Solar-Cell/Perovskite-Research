@@ -19,8 +19,8 @@ Each role can run on a different model: Big models plan and map, small models ju
 | role | job | default skills |
 |---|---|---|
 | `recheck` | re-extract the hidden cells of existing rows | psc-domain, workbook-schema, evidence-rules, read-figures, recheck-task |
-| `mapper` (Big) | paper map: every device with its layer stack | … extract-task |
-| `extract` | rows of the other sheets for every device | … extract-task |
+| `mapper` (Big) | paper map: every device with its layer stack | … extract-task, read-figures |
+| `extract` | rows of the other sheets for every device | … extract-task, read-figures |
 | `judge` | is recorded text the same as the paper's? | psc-domain, judge-equivalence |
 | `decision` (small) | accept / verify_more / revise + probability per claim | psc-domain, evidence-rules, analysis-method, data-map, decision-rubric |
 | `planner` (Big) | analysis plan: questions with acceptance criteria | psc-domain, data-map, analysis-method, plan-task |
@@ -80,8 +80,11 @@ not_checked, match. Rules that keep the list honest:
 **extract**: the mapper (Big model) lists the devices, control first, with their layer stacks. The extract
 model then fills Vender+Materials, Process and Properties+Stability rows for all devices. Rules run before the
 decision model:
+- a number the model read off a plot → **human_read**: the draft keeps the estimate, and the row says which figure and what the graph
+  shows (`note`: quantity, axes, which curve or bar, how it is read), so a person can read the plot again. A number printed anywhere
+  (text, table, inset, bar label, caption) is not a plot reading. SI pages arrive as text only: for an SI figure the model gives no
+  estimate, only what the caption says it shows.
 - a quote that is not on its page → verify_more
-- a value read off a figure → verify_more
 - a table value goes to the model only if the number is in the page text
 
 The small decision model judges the rest. Output: `<doi>_Sample<N>.xlsx` drafts in the Raw Data layout, and
@@ -218,7 +221,9 @@ psc-agent loop --raw "Raw Data" --pdf "original paper" --provider openrouter --m
   rows only, Raw Data layout), `audit_sample.csv` (`--sample`, 5% of the accepted rows, for an occasional look; it blocks nothing),
   `loop_summary.csv`, `REPORT.md`.
 - A second reader on the **same** model repeats its own mistakes: use `--verifier-model` / `--verifier-provider`.
-- Values read off a figure stay `confidence = figure` even when both readers agree (two readings of a plot are estimates).
+- A number the model read off a plot is an estimate: the row is `human_read` (the draft keeps the estimate, but it is never accepted or
+  staged and the second reader is not asked about it) and `human_read.csv` lists them for a person: paper, device, sheet, the row's
+  identity, the figure, the page, what the graph shows, the model's estimate, and an empty `value` column for your own reading.
 - What it cannot do: values only in an SI that could not be downloaded stay missing, and the Gemini free tier (about 20
   requests a day per model) is too small for a loop: a 429 stops the paper and is reported in `REPORT.md`.
 
@@ -423,7 +428,7 @@ hooks are thread-safe, so share them across requests. `run_tools(rt, role, messa
   per role. Try one paper (`--only`, a single PDF) and set `--budget` before a full run.
 - Supporting Information is not read: those values come back null with note "SI".
 - When two samples of one paper have identical layer stacks, the model may mix them up. Check `paper_device`.
-- Figure values are estimates. `figure_tolerance` (recheck) sets how strict to be, and extract always leaves
-  them to a person.
+- Figure values are estimates. `figure_tolerance` (recheck) sets how strict to be, and extract marks every such row `human_read`
+  so that a person reads the plot again.
 - TypeSafe's Jev fits the decision contract (typed choice + probability) but is not wired in: there is no key,
   and its SDK schema is unverified. To try it, call it where `decide` calls the decision role.

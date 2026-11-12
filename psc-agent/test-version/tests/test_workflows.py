@@ -136,7 +136,7 @@ def extractor(body):
         return {"rows": [pce("S1", "20.1", "Table 1", "table"),
                          pce("S2", "22.5", "the target device reached 23.9% efficiency in our lab", "text"),
                          {"device": "S2", "sheet": "Stability", "page": 2, "source": "figure", "evidence": "Fig. 5a",
-                          "note": None, "values": [{"column": "Environment", "value": "Ambient air"},
+                          "note": "stability curve: normalized PCE vs time, S2", "values": [{"column": "Environment", "value": "Ambient air"},
                                                    {"column": "Retention (%)", "value": "85"}]}]}
     return {"rows": []}
 
@@ -162,7 +162,7 @@ class Extract(unittest.TestCase):
         self.assertEqual([r.cells["Material"] for r in d2.sheets["Layer"]], ["ITO", "NiOx", "PEAI"])
         step = d2.sheets["Process"][0].cells
         self.assertEqual((step["LayerID"], step["Parameter"], step["Unit"]), (2, "300, 60", "C, min"))  # numbers typed
-        self.assertEqual(d2.sheets["Stability"][0].cells["Retention (%)"], 85)
+        self.assertEqual(d2.sheets["Stability"][0].cells["Retention (%)"], 85)  # the model's reading of the plot stays in the draft
 
         with open(tmp / "out" / "review.csv", encoding="utf-8-sig") as fh:
             review = {(r["device"], r["sheet"], r["values"][:40]): r for r in csv.DictReader(fh)}
@@ -170,13 +170,15 @@ class Extract(unittest.TestCase):
         fake_quote = next(v for k, v in by_reason.items() if k[0] == "S2" and k[1] == "Properties")
         self.assertEqual(fake_quote, ("verify_more", "quote not found on page 2"))
         figure = next(v for k, v in by_reason.items() if k[1] == "Stability")
-        self.assertEqual(figure[0], "verify_more")
-        self.assertIn("read off a figure", figure[1])
+        self.assertEqual(figure[0], "human_read")
+        self.assertIn("Fig. 5a", figure[1])
+        self.assertIn("reads the plot again", figure[1])
+        self.assertIn("stability curve", figure[1])  # the model's note on what the graph shows
         table = next(v for k, v in by_reason.items() if k[0] == "S1" and k[1] == "Properties")
         self.assertEqual(table[0], "accept")  # 20.1 is in the page text, so the model judged it
         # 5 Layer + 2 Process quotes verified on page 1, the table value found on page 2 -> 8 judged and accepted;
-        # the invented quote and the figure value stop at the rules -> 2 verify_more
-        self.assertEqual(res.counts(), {"accept": 8, "verify_more": 2})
+        # the invented quote stops at the rules -> verify_more; the plot estimate is for a person to read again -> human_read
+        self.assertEqual(res.counts(), {"accept": 8, "verify_more": 1, "human_read": 1})
 
 
 class RecheckQuoteCheckpoint(unittest.TestCase):

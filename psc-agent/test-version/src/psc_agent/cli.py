@@ -402,7 +402,7 @@ def cmd_loop(args) -> int:
         return 0
     loops, open_, why = run_loop(items, calibration=Path(args.calibration), min_precision=args.min_precision, sample=args.sample, **kw)
     for lp in loops:
-        print(f"  {lp.key[:40]:40s} rows {len(lp.records):4d}  accepted {lp.accepted:4d}  held {lp.held:4d}" + (f"  ERRORS {len(lp.errors)}" if lp.errors else ""))
+        print(f"  {lp.key[:40]:40s} rows {len(lp.records):4d}  accepted {lp.accepted:4d}  held {lp.held:4d}  plot {lp.human:4d}" + (f"  ERRORS {len(lp.errors)}" if lp.errors else ""))
     print(f"\ngate {'OPEN' if open_ else 'CLOSED'}: {why}\nreport: {out / 'REPORT.md'}")
     return 1 if any(lp.errors for lp in loops) else 0
 
