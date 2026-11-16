@@ -15,15 +15,15 @@ const BADGE = {
   accept: "bg-emerald-100 text-emerald-800", verify_more: "bg-amber-100 text-amber-800", revise: "bg-rose-100 text-rose-800",
   human_read: "bg-violet-100 text-violet-800",
   match: "bg-emerald-100 text-emerald-800", mismatch: "bg-rose-100 text-rose-800", unit_mismatch: "bg-orange-100 text-orange-800",
-  missing_in_record: "bg-violet-100 text-violet-800", not_found: "bg-slate-100 text-slate-700", needs_si: "bg-sky-100 text-sky-800", review: "bg-amber-100 text-amber-800",
+  paper_more_detail: "bg-teal-100 text-teal-800", missing_in_record: "bg-violet-100 text-violet-800", not_found: "bg-slate-100 text-slate-700", needs_si: "bg-sky-100 text-sky-800", review: "bg-amber-100 text-amber-800",
   core: "bg-emerald-100 text-emerald-800", context: "bg-sky-100 text-sky-800", provenance: "bg-slate-100 text-slate-700",
   drop: "bg-rose-100 text-rose-800",
   not_checked: "bg-slate-200 text-slate-700", project: "bg-indigo-100 text-indigo-800", generated: "bg-teal-100 text-teal-800",
   role: "bg-slate-100 text-slate-600", other: "bg-slate-100 text-slate-700",
 };
 const badge = (text, kind = text) => `<span class="badge ${BADGE[kind] || BADGE.other}">${esc(text)}</span>`;
-const FINDING_ORDER = ["mismatch", "unit_mismatch", "missing_in_record", "not_found", "needs_si", "review", "not_checked", "match"];
-const TABS = ["overview", "dashboard", "recheck", "extract", "analyze", "columns", "skills", "jobs"];
+const FINDING_ORDER = ["mismatch", "unit_mismatch", "missing_in_record", "not_found", "needs_si", "review", "not_checked", "paper_more_detail", "match"];
+const TABS = ["overview", "recheck", "extract", "analyze", "columns", "skills", "jobs"];
 
 const state = { status: null, pairs: null, pdfs: [], pdfChoice: null, selected: new Set(), skills: [], roles: [],
   skill: null, jobs: [], job: null, rows: [], filter: "", timers: {} };
@@ -95,179 +95,6 @@ function stopPolling() {
   clearInterval(state.timers.jobs);
 }
 
-// ---------------------------------------------------------------- dashboard: accuracy against the hand-entered workbooks
-
-const pctTxt = (v, d = 0) => (v == null ? "–" : `${(v * 100).toFixed(d)}%`);
-const tone = (v) => (v == null ? "#94a3b8" : v >= 0.7 ? "#16a34a" : v >= 0.4 ? "#d97706" : "#dc2626");
-const COLOR_A = "#475569", COLOR_B = "#0284c7";
-const enc = encodeURIComponent;
-const pbar = (v, color) => `<div style="height:.45rem;border-radius:.25rem;background:#e2e8f0;overflow:hidden"><div style="height:100%;width:${v == null ? 0 : Math.round(v * 100)}%;background:${color || tone(v)}"></div></div>`;
-const delta = (a, b) => (a == null || b == null ? "" : `<span style="color:${b >= a ? "#16a34a" : "#dc2626"}">${b >= a ? "+" : "−"}${Math.abs((b - a) * 100).toFixed(0)} pts</span>`);
-const rateCell = (vals) => (vals.length === 1
-  ? `<div>${pctTxt(vals[0])}</div>${pbar(vals[0])}`
-  : vals.map((v, i) => `<div style="display:flex;gap:.5rem;align-items:center"><span style="width:2.6rem">${pctTxt(v)}</span><div style="flex:1">${pbar(v, i ? COLOR_B : COLOR_A)}</div></div>`).join("") +
-    `<div class="text-xs">${delta(vals[0], vals[1])}</div>`);
-const share = (part, whole) => (whole ? `${part} of ${whole}` : "–");
-
-// [label, what it means, rate, "x of y"]: every tile of the headline row
-const DASH_METRICS = [
-  ["Values that match", "Of all the hand-entered values, the share the model extracted correctly. It also counts values that only the supporting information holds, which a PDF cannot give.",
-    (s) => s.values.match_rate, (s) => share(s.values.match, s.values.n)],
-  ["…of those in the PDF text", "The fair measure. Only hand-entered values that really appear in the PDF text are counted, so what the paper itself does not say is not held against the model.",
-    (s) => s.values.match_rate_likely, (s) => (s.values.likely ? share(Math.round(s.values.match_rate_likely * s.values.likely), s.values.likely) : "–")],
-  ["Correct when given", "When the model gave a value, how often it was right (precision).",
-    (s) => s.values.accuracy_when_found, (s) => share(s.values.match, s.values.found)],
-  ["Values the model gave", "The share of hand-entered values for which the model gave any value (coverage). Low coverage is the usual reason for a low score.",
-    (s) => s.values.found_rate, (s) => share(s.values.found, s.values.n)],
-  ["Core fields", "Champion PCE, Voc, Jsc and FF, and the materials of the HTL, its treatment, the perovskite and the ETL: the cells an analysis cannot do without.",
-    (s) => s.core.match_rate, (s) => share(s.core.match, s.core.n)],
-  ["Rows found", "A layer, material, process step, property or test of the record that the model also listed (whatever its values).",
-    (s) => s.rows.match_rate, (s) => share(s.rows.match, s.rows.n)],
-];
-
-async function loadDashboard() {
-  await getPairs().catch(() => null); // the run form lists the papers that have workbooks
-  const { runs } = await api("/api/dashboard/runs");
-  const d = (state.dash = state.dash || {});
-  d.runs = runs;
-  const label = (r) => `${r.label} · ${r.model || r.provider || "?"} · ${r.papers} paper${r.papers > 1 ? "s" : ""} · ${(r.modified || "").slice(0, 16).replace("T", " ")}`;
-  const prevA = $("#dash-a").value, prevB = $("#dash-b").value;
-  $("#dash-a").innerHTML = runs.map((r) => `<option value="${esc(r.id)}">${esc(label(r))}</option>`).join("");
-  $("#dash-b").innerHTML = `<option value="">— no comparison —</option>` + runs.map((r) => `<option value="${esc(r.id)}">${esc(label(r))}</option>`).join("");
-  $("#dash-a").value = runs.some((r) => r.id === prevA) ? prevA : (runs[0]?.id || "");
-  $("#dash-b").value = runs.some((r) => r.id === prevB) ? prevB : "";
-  renderDashPapers();
-  await drawDashboard();
-}
-
-async function drawDashboard() {
-  const a = $("#dash-a").value, b = $("#dash-b").value;
-  const body = $("#dash-body");
-  if (!a) {
-    body.innerHTML = `<div class="card text-sm text-slate-500">No evaluation has finished yet. Choose papers below and press Evaluate: when the first paper is done it appears here.
-      Runs made on the command line (folders out/ and evaluate_out/) are listed too.</div>`;
-    return;
-  }
-  body.innerHTML = `<div class="card text-sm text-slate-500">Reading the run…</div>`;
-  try {
-    if (b && b !== a) {
-      const c = await api(`/api/dashboard/compare?a=${enc(a)}&b=${enc(b)}`);
-      state.dash.view = { labels: c.labels, meta: c.meta, sums: [c.a, c.b], totals: c.totals, papers: c.papers, agree: c.agree,
-        compared: c.cells_compared, differing: c.differing, differingTotal: c.differing_total,
-        perPaper: c.papers.map((k) => ({ key: k, values: [c.by_paper[k].a, c.by_paper[k].b] })) };
-    } else {
-      const r = await api(`/api/dashboard/run?id=${enc(a)}`);
-      state.dash.view = { labels: [r.label], meta: [r.meta], sums: [r.summary], totals: [r.totals], papers: r.papers.map((p) => p.key),
-        perPaper: r.papers.map((p) => ({ key: p.key, pdf: p.pdf, values: [p.values], devices: `${p.paired_devices} of ${p.record_devices}`, errors: p.errors })) };
-    }
-  } catch (e) {
-    body.innerHTML = `<div class="card text-sm text-rose-700">${esc(e.message)}</div>`;
-    return;
-  }
-  renderDashBody();
-  await drawDashCells();
-}
-
-function tileHtml(m, sums) {
-  const [label, hint, rate, of] = m;
-  const vals = sums.map(rate);
-  const inner = sums.length === 1
-    ? `<div style="font-size:2rem;font-weight:700;line-height:1.1;color:${tone(vals[0])}">${pctTxt(vals[0])}</div>${pbar(vals[0])}<div class="text-xs text-slate-500" style="margin-top:.25rem">${of(sums[0])}</div>`
-    : sums.map((s, i) => `<div style="display:flex;justify-content:space-between;align-items:baseline"><span class="text-xs text-slate-500">${i ? "B" : "A"}</span>
-        <span style="font-size:1.5rem;font-weight:700;color:${i ? COLOR_B : COLOR_A}">${pctTxt(vals[i])}</span></div>${pbar(vals[i], i ? COLOR_B : COLOR_A)}
-        <div class="text-xs text-slate-500" style="margin:.15rem 0 .4rem">${of(s)}</div>`).join("") + `<div class="text-xs">B − A: ${delta(vals[0], vals[1])}</div>`;
-  return `<div class="card" title="${esc(hint)}" style="flex:1 1 11rem;min-width:11rem"><div class="text-xs text-slate-500" style="margin-bottom:.35rem">${esc(label)} <span title="${esc(hint)}" style="cursor:help">ⓘ</span></div>${inner}</div>`;
-}
-
-function renderDashBody() {
-  const v = state.dash.view, two = v.sums.length === 2;
-  const heads = v.labels.map((l, i) => `<div><b>${two ? (i ? "B" : "A") + ": " : ""}${esc(l)}</b> <span class="text-slate-500">${esc([v.meta[i]?.provider, v.meta[i]?.model].filter(Boolean).join(" · "))}</span></div>`).join("");
-  const tot = v.totals.map((t, i) => `<div class="text-xs text-slate-600">${two ? (i ? "B" : "A") + ": " : ""}${t.calls} model calls · ${Number(t.tokens_in).toLocaleString()} tokens in, ${Number(t.tokens_out).toLocaleString()} out ·
-      ${t.cost > 0 ? "$" + Number(t.cost).toFixed(2) : "cost not priced"} · ${Math.round(t.seconds)} s${t.errors ? ` · <span style="color:#dc2626">${t.errors} error(s)</span>` : ""}</div>`).join("");
-  const sheets = Object.keys(v.sums[0].by_sheet).filter((s) => v.sums.some((x) => x.by_sheet[s].values.n || x.by_sheet[s].rows.n));
-  const cell = (stats, key) => stats?.[key];
-  const sheetRows = sheets.map((s) => {
-    const vs = v.sums.map((x) => x.by_sheet[s].values);
-    return `<tr><td class="td font-medium">${esc(s)}</td><td class="td tabular-nums">${vs[0].n}</td><td class="td" style="min-width:11rem">${rateCell(vs.map((x) => x.match_rate))}</td>
-      <td class="td">${rateCell(vs.map((x) => x.found_rate))}</td><td class="td">${rateCell(vs.map((x) => x.accuracy_when_found))}</td>
-      <td class="td">${rateCell(vs.map((x) => x.match_rate_likely))}</td></tr>`;
-  }).join("");
-  const groups = [...new Set(v.sums.flatMap((x) => Object.keys(x.core_groups)))].sort();
-  const coreRows = groups.map((g) => {
-    const cs = v.sums.map((x) => x.core_groups[g]);
-    return `<tr><td class="td font-medium">${esc(g)}</td><td class="td tabular-nums">${(cs[0] || cs[1]).n}</td><td class="td" style="min-width:11rem">${rateCell(cs.map((x) => cell(x, "match_rate")))}</td></tr>`;
-  }).join("");
-  const paperRows = v.perPaper.map((p) => `<tr data-dashpaper="${esc(p.key)}" style="cursor:pointer" title="show this paper's values that did not match">
-      <td class="td font-mono text-xs">${esc(p.key)}${p.pdf ? `<div class="text-slate-400" style="font-family:inherit">${esc(p.pdf.length > 60 ? p.pdf.slice(0, 58) + "…" : p.pdf)}</div>` : ""}</td>
-      <td class="td tabular-nums text-xs">${p.values[0].n}${p.devices ? `<div class="text-slate-400">devices matched ${esc(p.devices)}</div>` : ""}</td>
-      <td class="td" style="min-width:11rem">${rateCell(p.values.map((x) => x.match_rate))}</td>
-      <td class="td">${rateCell(p.values.map((x) => x.match_rate_likely))}</td>
-      <td class="td text-xs">${(p.errors || []).length ? `<span style="color:#dc2626">${esc(p.errors[0].slice(0, 80))}</span>` : ""}</td></tr>`).join("");
-  const th = (t, hint) => `<th class="th" title="${esc(hint || "")}">${t}</th>`;
-  const agree = two ? `<div class="card space-y-2"><h3 class="card-title">Cell by cell (${v.compared} hand-entered values in both runs)</h3>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap">${[["Both match", v.agree.both], ["Only A matches", v.agree.only_a], ["Only B matches", v.agree.only_b], ["Neither matches", v.agree.neither]]
-        .map(([k, n]) => `<div style="flex:1 1 9rem"><div class="stat">${n}</div><div class="text-xs text-slate-500">${k}</div></div>`).join("")}</div>
-      <details><summary class="cursor-pointer text-sm font-medium">Where they disagree (${Math.min(v.differing.length, 300)} of ${v.differingTotal})</summary>
-      <div style="max-height:24rem;overflow:auto"><table class="w-full"><thead><tr>${["Paper", "Cell", "Hand-entered", "A gave", "B gave"].map((h) => th(h)).join("")}</tr></thead><tbody>
-      ${v.differing.map((d) => `<tr><td class="td font-mono text-xs">${esc(d.paper)}</td><td class="td text-xs">${esc(d.sheet)} · ${esc(d.row)}<div class="text-slate-400">${esc(d.column)}</div></td>
-        <td class="td text-xs">${esc(d.record)} ${esc(d.record_unit)}</td><td class="td text-xs">${badge(d.status)} ${esc(d.extracted)}</td><td class="td text-xs">${badge(d.other_status)} ${esc(d.other_extracted)}</td></tr>`).join("")}
-      </tbody></table></div></details></div>` : "";
-  const sheetOpts = sheets.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
-  const paperOpts = v.papers.map((k) => `<option value="${esc(k)}">${esc(k)}</option>`).join("");
-  $("#dash-body").innerHTML = `
-    <div class="card space-y-1">${heads}${tot}<div class="text-xs text-slate-500">${v.papers.length} paper${v.papers.length > 1 ? "s" : ""}${two ? " present in both runs" : ""}. Hover a tile for what it measures.</div></div>
-    <div style="display:flex;gap:1rem;flex-wrap:wrap">${DASH_METRICS.map((m) => tileHtml(m, v.sums)).join("")}</div>
-    ${agree}
-    <div class="card space-y-2"><h3 class="card-title">By sheet</h3><div style="overflow:auto"><table class="w-full"><thead><tr>${th("Sheet")}${th("Values in record")}${th("Match", "Share of the hand-entered values that match")}
-      ${th("Model gave", "Share of hand-entered values the model gave any value for")}${th("Correct when given")}${th("Match, of those in the PDF text", "The fair measure")}</tr></thead><tbody>${sheetRows}</tbody></table></div></div>
-    <div class="card space-y-2"><h3 class="card-title">Core fields</h3><div style="overflow:auto"><table class="w-full"><thead><tr>${th("Field")}${th("In record")}${th("Match")}</tr></thead><tbody>${coreRows}</tbody></table></div></div>
-    <div class="card space-y-2"><h3 class="card-title">By paper <span class="text-xs text-slate-500" style="font-weight:400">(click a row to see its values that did not match)</span></h3>
-      <div style="max-height:28rem;overflow:auto"><table class="w-full"><thead><tr>${th("Paper")}${th("Values")}${th("Match")}${th("Match, of those in the PDF text")}${th("Errors")}</tr></thead><tbody>${paperRows}</tbody></table></div></div>
-    <div class="card space-y-3"><h3 class="card-title">Values that did not match${two ? " (run A)" : ""}</h3>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:end">
-        <div><label class="label" for="dash-cstatus">Status</label><select id="dash-cstatus" class="input"><option value="">All that did not match</option><option value="mismatch">mismatch (a different value)</option>
-          <option value="unit_mismatch">unit_mismatch</option><option value="review">review (text that may mean the same)</option><option value="not_found">not_found (the model gave nothing)</option><option value="match">match</option></select></div>
-        <div><label class="label" for="dash-csheet">Sheet</label><select id="dash-csheet" class="input"><option value="">All</option>${sheetOpts}</select></div>
-        <div><label class="label" for="dash-cpaper">Paper</label><select id="dash-cpaper" class="input"><option value="">All</option>${paperOpts}</select></div>
-        <label class="text-sm" style="display:flex;gap:.4rem;align-items:center;padding-bottom:.5rem"><input id="dash-ccore" type="checkbox"> core fields only</label></div>
-      <div id="dash-cells" style="max-height:28rem;overflow:auto"></div></div>`;
-}
-
-async function drawDashCells() {
-  const box = $("#dash-cells");
-  if (!box) return;
-  const q = new URLSearchParams({ id: $("#dash-a").value, status: $("#dash-cstatus").value, sheet: $("#dash-csheet").value, paper: $("#dash-cpaper").value, limit: "200" });
-  if ($("#dash-ccore").checked) q.set("core", "1");
-  const r = await api(`/api/dashboard/cells?${q}`);
-  box.innerHTML = `<div class="text-xs text-slate-500" style="margin-bottom:.25rem">${r.cells.length} of ${r.total} values</div>
-    <table class="w-full"><thead><tr>${["Status", "Paper", "Cell", "Hand-entered", "Model gave", "Detail"].map((h) => `<th class="th">${h}</th>`).join("")}</tr></thead><tbody>
-    ${r.cells.map((c) => `<tr><td class="td">${badge(c.status)}${c.core ? `<div class="text-xs text-slate-400">core</div>` : ""}</td><td class="td font-mono text-xs">${esc(c.paper)}</td>
-      <td class="td text-xs">${esc(c.sheet)} · ${esc(c.row)}<div class="text-slate-400">${esc(c.column)}</div></td><td class="td text-xs">${esc(c.record)} ${esc(c.record_unit)}</td>
-      <td class="td text-xs">${esc(c.extracted)} ${esc(c.extracted_unit)}</td><td class="td text-xs text-slate-500">${esc(c.detail)}${c.likely ? "" : `<div class="text-slate-400">not in the PDF text</div>`}</td></tr>`).join("")}</tbody></table>
-    ${r.cells.length ? "" : `<p class="p-4 text-sm text-slate-500">Nothing here.</p>`}`;
-}
-
-// the run form: the papers that have hand-entered workbooks
-function dashPaperRows() {
-  const q = ($("#dash-search")?.value || "").trim().toLowerCase();
-  const key = q.replace(/[^0-9a-z]/g, "");
-  return ((state.pairs && state.pairs.pairs) || []).filter((p) => p.workbooks && (!q || (key && p.key.includes(key)) || p.pdf.toLowerCase().includes(q)));
-}
-
-function renderDashPapers() {
-  state.dashSel = state.dashSel || new Set();
-  $("#dash-papers").innerHTML = `<table class="w-full"><thead><tr><th class="th"></th><th class="th">DOI key</th><th class="th">PDF</th><th class="th">Devices</th><th class="th">SI</th></tr></thead><tbody>
-    ${dashPaperRows().map((p) => `<tr><td class="td"><input type="checkbox" data-dashdoi="${esc(p.key)}" ${state.dashSel.has(p.key) ? "checked" : ""}></td>
-      <td class="td font-mono text-xs">${esc(p.key)}</td><td class="td text-xs">${esc(p.pdf)}</td><td class="td tabular-nums">${p.workbooks}</td><td class="td text-xs">${p.si ? `${p.si} file(s)` : ""}</td></tr>`).join("")}</tbody></table>`;
-  updateDashButton();
-}
-
-function updateDashButton() {
-  const n = state.dashSel.size;
-  $("#dash-run").disabled = n === 0;
-  $("#dash-run").textContent = n ? `Evaluate ${n} paper${n > 1 ? "s" : ""}` : "Select papers to evaluate";
-}
-
 // ---------------------------------------------------------------- columns
 
 const RELEVANCE = ["core", "context", "provenance", "drop"];
@@ -315,7 +142,7 @@ async function loadStatus() {
     "#recheck-model": m.default, "#recheck-judge": m.judge || m.default, "#extract-model": m.default,
     "#extract-mapper": m.mapper || m.default, "#extract-decision": m.decision || m.default, "#analyze-model": m.default,
     "#analyze-analyst": m.analyst || m.default, "#analyze-decision": m.decision || m.default,
-    "#dash-model": m.default, "#dash-mapper": m.mapper || m.default, "#extract-simodel": m.si_finder || m.default,
+    "#extract-simodel": m.si_finder || m.default,
   };
   for (const [sel, v] of Object.entries(defaults)) if (!$(sel).value) $(sel).value = v;
 }
@@ -775,7 +602,8 @@ async function loadFiles(job) {
 
 async function loadResults(job) {
   const id = encodeURIComponent(job.id);
-  if (job.kind === "recheck") return renderRows((await api(`/api/jobs/${id}/findings`)).rows, "findings");
+  state.jobId = job.id;
+  if (job.kind === "recheck") return renderRows((await api(`/api/jobs/${id}/findings`)).rows.map((r, i) => ({ ...r, row_id: `f${i}` })), "findings");
   if (job.kind === "extract") return renderRows((await api(`/api/jobs/${id}/review`)).rows, "review");
   if (job.kind === "analyze") return renderAnalysis(job, await api(`/api/jobs/${id}/analysis`));
   if (job.kind === "learn") {
@@ -787,6 +615,9 @@ async function loadResults(job) {
 
 // one table component for recheck findings and extract review rows
 const sample = (device) => `<span title="${esc(device)}">${esc(String(device ?? "").replace(/^.*_(Sample\s*\d+)$/i, "$1"))}</span>`;
+// opens the paper (or its SI) at the cited page, on its own page beside this row, to check what was extracted
+const sourceLink = (r) => (state.jobId && r.page ? `<a class="text-indigo-700 hover:underline" target="_blank" rel="noopener"
+  href="/review/${encodeURIComponent(state.jobId)}?row=${encodeURIComponent(r.row_id)}">open in the paper ↗</a>` : "");
 const where = (r) => `${r.page ? `p${esc(r.page)} ` : ""}${r.source ? `[${esc(r.source)}] ` : ""}${esc(r.evidence)}`;
 // The SI link repeats on every row of a paper, so it is shown once: one entry per distinct link, beside the table,
 // with the rows it could settle. Clicking an entry shows only those rows.
@@ -849,12 +680,12 @@ const ROW_VIEWS = {
     cells: (r) => [badge(r.status), `${sample(r.device)}<div class="text-slate-400">${esc(r.sheet)} · row ${esc(r.excel_row)}</div>`,
       `${esc(r.column)}<div class="text-slate-400">${esc(r.keys)}</div>`,
       `<span class="font-medium">${esc(r.recorded)} ${esc(r.recorded_unit)}</span> → <span class="font-medium">${esc(r.paper_value)} ${esc(r.paper_unit)}</span>`,
-      `${esc(r.detail)}<div class="text-slate-400">${where(r)}</div>`] },
+      `${esc(r.detail)}<div class="text-slate-400">${where(r)}</div>${sourceLink(r)}`] },
   review: { key: "decision", order: ["revise", "verify_more", "human_read", "accept", ""], title: "Extracted rows (review before moving into Raw Data)",
     head: ["Decision", "Row", "Values", "Evidence", "Reason"],
     cells: (r) => [`${badge(r.decision || "none")}<div class="text-slate-400">${r.p ? `p=${esc(Number(r.p).toFixed(2))}` : ""}</div>`,
       `${esc(r.device)}<div class="text-slate-400">${esc(r.sheet)}</div>`, esc(r.values),
-      `${where(r)}<div class="text-slate-400">quote on page: ${esc(r.quote_ok || "not checked")}</div>`, esc(r.reason)] },
+      `${where(r)}<div class="text-slate-400">quote on page: ${esc(r.quote_ok || "not checked")}</div>${sourceLink(r)}`, esc(r.reason)] },
 };
 
 function renderRows(rows, view) {
@@ -866,7 +697,7 @@ function renderRows(rows, view) {
   const counts = rows.reduce((c, r) => ((c[r[v.key]] = (c[r[v.key]] || 0) + 1), c), {});
   $("#job-results").innerHTML = `<div class="card space-y-3">
     <div class="flex flex-wrap items-center gap-2"><h3 class="card-title mr-2 mb-0">${esc(v.title)}</h3>
-      ${v.order.filter((s) => counts[s]).map((s) => `<button data-filter="${esc(s)}">${badge(`${s || "none"} ${counts[s]}`, s)}</button>`).join("")}
+      ${v.order.filter((s) => counts[s] || (v.key === "decision" && (s === "verify_more" || s === "human_read"))).map((s) => `<button data-filter="${esc(s)}">${badge(`${s || "none"} ${counts[s] || 0}`, s)}</button>`).join("")}
       <button data-filter="" class="btn-ghost">all ${rows.length}</button>
       <input id="rows-search" class="input ml-auto w-56" placeholder="Search rows"></div>
 
@@ -916,7 +747,7 @@ async function showTrace() {
 // ---------------------------------------------------------------- wiring
 
 const LOADERS = {
-  overview: () => guard(loadOverview), dashboard: () => guard(loadDashboard), recheck: () => guard(loadRecheck), extract: () => guard(loadExtract),
+  overview: () => guard(loadOverview), recheck: () => guard(loadRecheck), extract: () => guard(loadExtract),
   analyze: () => guard(loadAnalyze), columns: () => guard(loadColumns), skills: () => guard(loadSkills), jobs: (id) => guard(() => loadJobs(id)),
 };
 
@@ -948,8 +779,6 @@ function wire() {
       });
       return;
     }
-    const dp = e.target.closest("[data-dashpaper]");
-    if (dp) { $("#dash-cpaper").value = dp.dataset.dashpaper; guard(drawDashCells); $("#dash-cells").scrollIntoView({ behavior: "smooth", block: "nearest" }); return; }
     const del = e.target.closest("[data-sidelete]");
     if (del) {
       guard(async () => {
@@ -966,11 +795,6 @@ function wire() {
     const actions = {
       "btn-map": async () => { const r = await api("/api/data/map", { method: "POST" }); toast(`Data map rebuilt (${r.chars.toLocaleString()} characters)`); },
       "btn-show-map": async () => { const r = await api("/api/data/map", { method: "POST" }); $("#map-text").textContent = r.text; $("#map-text").classList.remove("hidden"); },
-      "dash-refresh": loadDashboard,
-      "dash-all": () => { dashPaperRows().forEach((p) => state.dashSel.add(p.key)); renderDashPapers(); },
-      "dash-none": () => { state.dashSel.clear(); renderDashPapers(); },
-      "dash-run": () => runJob("evaluate", { dois: [...state.dashSel], model: val("#dash-model"), mapper_model: val("#dash-mapper"),
-        workers: num("#dash-workers"), budget: num("#dash-budget"), audit: $("#dash-audit").checked }, $("#dash-run")),
       "recheck-all": () => { recheckRows().forEach((p) => state.selected.add(p.key)); renderRecheck(); },
       "recheck-none": () => { state.selected.clear(); renderRecheck(); },
       "recheck-run": () => runJob("recheck", { dois: [...state.selected], model: val("#recheck-model"), judge_model: val("#recheck-judge"),
@@ -992,13 +816,6 @@ function wire() {
   });
   document.addEventListener("change", (e) => {
     const id = e.target.id || "";
-    if (e.target.dataset.dashdoi) {
-      e.target.checked ? state.dashSel.add(e.target.dataset.dashdoi) : state.dashSel.delete(e.target.dataset.dashdoi);
-      updateDashButton();
-      return;
-    }
-    if (id === "dash-a" || id === "dash-b") { guard(drawDashboard); return; }
-    if (["dash-cstatus", "dash-csheet", "dash-cpaper", "dash-ccore"].includes(id)) { guard(drawDashCells); return; }
     if (e.target.dataset.doi) {
       e.target.checked ? state.selected.add(e.target.dataset.doi) : state.selected.delete(e.target.dataset.doi);
       updateRecheckButton();
@@ -1010,7 +827,6 @@ function wire() {
   document.addEventListener("input", (e) => {
     if (e.target.id === "recheck-search") renderRecheck();
     else if (e.target.id === "rows-search") drawRows();
-    else if (e.target.id === "dash-search") renderDashPapers();
   });
 }
 

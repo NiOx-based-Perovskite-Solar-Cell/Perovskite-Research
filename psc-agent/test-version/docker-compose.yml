@@ -14,7 +14,7 @@ services:
     env_file: [.env]
     # the agent server (python -m psc_agent agent-server, outside Docker, with your Chrome); it needs AGENT_SERVER_TOKEN in .env
     environment:
-      PSC_PROVIDER: ${PSC_PROVIDER:-gemini}   # gemini (gemini-3.5-flash, GOOGLE_GEMINI_API_KEY) or openrouter (Claude, OPENROUTER_API_KEY)
+      PSC_PROVIDER: ${PSC_PROVIDER:-openrouter}   # openrouter (models in src/psc_agent/models.py, OPENROUTER_API_KEY, cost shown) or gemini (Google API direct, cost 0)
       AGENT_SERVER_URL: ${AGENT_SERVER_URL:-http://host.docker.internal:5100}
     extra_hosts: ["host.docker.internal:host-gateway"]
     volumes:
@@ -22,7 +22,6 @@ services:
       - "../../original paper:/data/original paper"   # writable: downloaded SI goes to SI/
       - "../../processed:/data/processed:ro"
       - "./skills:/data/skills"                         # the data map and learned rules are written here
-      - "./evaluate_out:/data/evaluate_out:ro"                 # runs made earlier with `evaluate`: the Dashboard lists them
       - "./out:/data/out"                               # results of CLI runs: --out out/<name>
       - "psc-runs:/runs"                                # one folder per web job
 volumes:

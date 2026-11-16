@@ -56,6 +56,8 @@ class FakeOpenRouter:
                     for i in ids if i in PAPER]
             content = {"devices": [{"device_id": "D1", "paper_device": "control"},
                                    {"device_id": "D2", "paper_device": "FTO device"}], "rows": rows}
+        elif name == "recheck_audit":  # the auditor is tested on its own (test_recheck_audit.py)
+            content = {"audits": []}
         else:  # judge: everything it is asked about is the same
             items = [json.loads(line) for line in body["messages"][1]["content"].splitlines()[1:]]
             content = {"verdicts": [{"id": i["id"], "same": True, "reason": "synonyms"} for i in items]}
@@ -107,8 +109,8 @@ class RecheckEndToEnd(unittest.TestCase):
         self.assertEqual(len(report.errors), 1)
 
         self.assertEqual([d.paper_device for d in report.devices], ["control", "FTO device"])
-        self.assertEqual(report.usage.calls, 4)  # Layer, Process, Properties+Stability, judge (Notes failed)
-        self.assertAlmostEqual(report.usage.cost_usd, 0.04)
+        self.assertEqual(report.usage.calls, 5)  # Layer, Process, Properties+Stability, judge, auditor (Notes failed)
+        self.assertAlmostEqual(report.usage.cost_usd, 0.05)
         self.assertNotIn("judgeable", report.model_dump_json())
 
         first = self.fake.requests[0]
@@ -136,7 +138,7 @@ class RecheckEndToEnd(unittest.TestCase):
         again = recheck_folders(rechecker, self.tmp / "raw", self.tmp / "pdf", out, force=True)[0]
         self.assertEqual(len(self.fake.requests), n + 1)  # only the failed (uncached) call is retried
         self.assertEqual(again.usage.cost_usd, 0)
-        self.assertEqual(again.usage.cached_calls, 4)
+        self.assertEqual(again.usage.cached_calls, 5)
 
 
 if __name__ == "__main__":

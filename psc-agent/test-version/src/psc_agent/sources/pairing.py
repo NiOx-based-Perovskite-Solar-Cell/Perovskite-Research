@@ -6,7 +6,9 @@ that the PDF text layer wraps across lines (``10.1\\n016/j.jpowsour...``).
 """
 from __future__ import annotations
 
+import logging
 import re
+import shutil
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -14,12 +16,42 @@ from pathlib import Path
 from .paper import load_paper
 from .workbook import parse_device_name
 
+log = logging.getLogger(__name__)
+
 
 def doi_key(s: str) -> str:
     return re.sub(r"[^0-9a-z]", "", s.lower())
 
 
 SI_DIR = "SI"
+
+
+def sync_si_folders(*roots) -> list[tuple[Path, Path]]:
+    """Mirror the SI PDFs between the ``<root>/SI/`` folders (e.g. ``Raw Data/SI`` and ``original paper/SI``), so an SI
+    saved in one place is used from the other and never searched or downloaded again. Only copies a file missing
+    in a folder that exists or whose root exists; never overwrites (a same-name file with other content is logged and kept).
+    Returns the (source, copy) pairs made."""
+    folders = []
+    for r in roots:
+        f = Path(r) / SI_DIR
+        if f not in folders and (f.is_dir() or Path(r).is_dir()):
+            folders.append(f)
+    made: list[tuple[Path, Path]] = []
+    for src_dir in folders:
+        if not src_dir.is_dir():
+            continue
+        for src in sorted(src_dir.glob("*.pdf")):
+            for dst_dir in folders:
+                if dst_dir == src_dir:
+                    continue
+                dst = dst_dir / src.name
+                if not dst.exists():
+                    dst_dir.mkdir(exist_ok=True)
+                    shutil.copy2(src, dst)
+                    made.append((src, dst))
+                elif dst.stat().st_size != src.stat().st_size:
+                    log.warning("SI sync: %s differs from %s; both kept", src, dst)
+    return made
 
 
 def local_si(pdf_dir, key: str) -> list[Path]:
@@ -54,7 +86,10 @@ def match_key(text: str, keys) -> str | None:
     return min(hits)[2] if hits else None
 
 
-def pair_folders(raw_dir, pdf_dir) -> Pairing:
+def pair_folders(raw_dir, pdf_dir, *, sync_si: bool = True) -> Pairing:
+    if sync_si:  # an SI saved under Raw Data/SI or original paper/SI is used from both
+        for src, dst in sync_si_folders(raw_dir, pdf_dir):
+            log.info("SI sync: %s -> %s", src, dst)
     groups: dict[str, list[Path]] = defaultdict(list)
     for p in sorted(Path(raw_dir).glob("*.xlsx")):
         if not p.name.startswith("~$"):

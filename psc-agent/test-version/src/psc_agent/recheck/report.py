@@ -10,7 +10,9 @@ from ..core.runtime import Usage
 
 # worst first
 # needs_si: the recorded value is not in the main text and no SI was loaded: it probably comes from the SI
-Status = Literal["mismatch", "unit_mismatch", "missing_in_record", "not_found", "needs_si", "review", "not_checked", "match"]
+# paper_more_detail: the record and the paper agree, but the paper says more (a ratio, a condition) than the record holds
+Status = Literal["mismatch", "unit_mismatch", "missing_in_record", "not_found", "needs_si", "review", "not_checked",
+                 "paper_more_detail", "match"]
 STATUSES: tuple[str, ...] = get_args(Status)
 
 
@@ -34,6 +36,13 @@ class Finding(BaseModel):
     evidence: str | None = None
     si_link: str = ""  # where to download the SI, on rows the SI could settle (needs_si, not_found)
     si_save_as: str = ""  # the file name to save it under, in the SI/ folder next to the PDFs
+    # the auditor's second reading of a cell where the record and the agent disagree (None = not audited)
+    audit: str | None = None  # human_correct | agent_correct | both_correct | neither | unclear
+    audit_p: float | None = None  # the auditor's probability that its verdict is right
+    audit_page: int | None = None
+    audit_evidence: str | None = None  # the quote the auditor decided on (for human_correct: where the recorded value is)
+    audit_quote_ok: bool | None = None  # the quote is on that page (checked by code)
+    audit_note: str = ""
     judgeable: bool = Field(default=False, exclude=True)
 
 

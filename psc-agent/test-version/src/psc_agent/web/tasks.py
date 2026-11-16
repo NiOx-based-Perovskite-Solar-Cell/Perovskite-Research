@@ -1,6 +1,7 @@
 """Job functions: request parameters → a psc_agent workflow run in the job's folder."""
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from ..core.hooks import BudgetHook, QuoteCheckHook, TraceHook
@@ -35,8 +36,8 @@ def run_recheck(cfg, job: Job) -> dict:
     from ..recheck import Rechecker, recheck_folders
 
     p = job.params
-    rt = _runtime(cfg, job, _models(cfg, p, "judge"))
-    rechecker = Rechecker(runtime=rt, judge=not p.get("no_judge"))
+    rt = _runtime(cfg, job, _models(cfg, p, "judge", "recheck_auditor"))
+    rechecker = Rechecker(runtime=rt, judge=not p.get("no_judge"), audit=not p.get("no_audit"))
     reports = recheck_folders(rechecker, cfg.raw_dir, cfg.pdf_dir, job.out_dir, only=p.get("dois") or None,
                               workers=int(p.get("workers") or 1), force=True, should_stop=job.cancel.is_set)
     counts: dict[str, int] = {}
@@ -92,6 +93,10 @@ def run_extract(cfg, job: Job) -> dict:
     if si:
         paper = load_paper(path, si=si)
     job.add_log(f"supporting information: {len(si)} file(s) read with the paper" if si else "supporting information: none loaded")
+    from ..sources.paper import source_record
+
+    (Path(job.out_dir) / "sources.json").write_text(  # the review page turns a page number back into the file it came from
+        json.dumps(source_record(path, si), ensure_ascii=False), encoding="utf-8")
     rt = _runtime(cfg, job, _models(cfg, p, "mapper", "decision"))
     res = Extractor(rt, decide_rows=not p.get("no_decide")).extract(paper, job.out_dir)
     return {"devices": len(res.devices), "rows": len(res.rows), "counts": res.counts(), "si_files": len(si),
@@ -118,26 +123,4 @@ def run_learn(cfg, job: Job) -> dict:
     return {"skill": str(path), "traces": len(traces)}
 
 
-def run_evaluate(cfg, job: Job) -> dict:
-    from ..evaluate import Auditor, evaluate_pairs, write_report
-    from ..extract import Extractor
-    from ..sources.pairing import doi_key, pair_folders
-
-    p = job.params
-    rt = _runtime(cfg, job, _models(cfg, p, "mapper", "auditor"))
-    extractor = Extractor(rt, decide_rows=False)
-    auditor = Auditor(rt) if p.get("audit") else None  # the auditor re-reads every cell that does not match: costs about as much again
-    pairs = pair_folders(cfg.raw_dir, cfg.pdf_dir).pairs
-    if p.get("dois"):
-        wanted = [doi_key(o) for o in p["dois"]]
-        pairs = [pair for pair in pairs if any(w in pair.key for w in wanted)]
-    if p.get("limit"):
-        pairs = pairs[: int(p["limit"])]
-    rt.hooks.emit("batch", papers=len(pairs))  # the progress bar counts papers
-    evals = evaluate_pairs(extractor, pairs, job.out_dir, workers=int(p.get("workers") or 1),
-                           force=bool(p.get("force")), auditor=auditor)
-    write_report(evals, job.out_dir, {"provider": cfg.provider, "model": p.get("model") or cfg.models["default"]})
-    return {"papers": len(evals), "errors": [e for ev in evals for e in ev.errors]}
-
-
-TASKS = {"recheck": run_recheck, "si": run_si, "si_download": run_si_download, "extract": run_extract, "analyze": run_analyze, "learn": run_learn, "evaluate": run_evaluate}
+TASKS = {"recheck": run_recheck, "si": run_si, "si_download": run_si_download, "extract": run_extract, "analyze": run_analyze, "learn": run_learn}

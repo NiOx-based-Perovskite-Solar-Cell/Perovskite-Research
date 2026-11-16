@@ -30,6 +30,7 @@ from flask import Flask, jsonify, request
 from ..core.browser import DEFAULT_PROFILE, Browser, find_chrome
 from ..core.hooks import BudgetHook
 from ..core.runtime import Runtime
+from ..models import finder_model
 from ..sources.pairing import SI_DIR
 from ..sources.paper import load_paper
 from ..sources.si import SiFinder
@@ -43,7 +44,7 @@ class AgentServerError(Exception):
     """The agent server could not be used; the message says what to do."""
 
 
-def create_agent_app(pdf_dir, token: str, *, model: str = "anthropic/claude-sonnet-5.5", budget: float = 1.0, profile=None,
+def create_agent_app(pdf_dir, token: str, *, model: str = finder_model("openrouter"), budget: float = 1.0, profile=None,
                      cdp_url: str | None = None, wait_human: float = 300.0, browser_factory=None, runtime_factory=None) -> Flask:
     """``browser_factory() -> Browser`` and ``runtime_factory(model) -> Runtime`` are for tests; they default to the
     person's Chrome (``profile`` or ``cdp_url``) and the OpenRouter runtime."""

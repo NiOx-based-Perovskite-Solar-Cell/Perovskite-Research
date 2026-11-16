@@ -229,6 +229,9 @@ def delete_si(name):
     if not path.is_file():
         raise ApiError(f"no such SI file: {name}", 404)
     path.unlink()
+    mirror = _cfg().raw_dir / path.parent.name / name  # the synced copy would otherwise come back on the next pairing
+    if mirror.is_file():
+        mirror.unlink()
     return jsonify(deleted=name)
 
 
@@ -270,13 +273,6 @@ def create_job():
         if not isinstance(dois, list) or not all(isinstance(d, str) for d in dois):
             raise ApiError("dois must be a list of DOI keys")
         params["workers"] = _clamp(params.get("workers"), 1, 8, 1)
-    elif kind == "evaluate":
-        dois = params.get("dois") or []
-        if not isinstance(dois, list) or not all(isinstance(d, str) for d in dois):
-            raise ApiError("dois must be a list of DOI keys")
-        params.update(workers=_clamp(params.get("workers"), 1, 4, 1), audit=bool(params.get("audit")), force=bool(params.get("force")))
-        if params.get("limit") not in (None, ""):
-            params["limit"] = _clamp(params["limit"], 1, 500, 500)
     elif kind in ("si", "si_download"):
         if kind == "si_download" and cfg.agent_server is None:
             raise ApiError("no agent server is configured (AGENT_SERVER_URL and AGENT_SERVER_TOKEN): see the README, 'Agent server'", 409)
@@ -353,6 +349,135 @@ def job_findings(job_id):
 @bp.get("/jobs/<job_id>/review")
 def job_review(job_id):
     return jsonify(rows=_rows(Path(_job(job_id).out_dir) / "review.csv"))
+
+
+def _job_sources(job, key: str | None = None) -> dict:
+    """The PDF a job read and its SI files, with page counts. An extract job has one paper (sources.json); a recheck job one per
+    DOI key (sources/<key>.json). Jobs made before these files existed are rebuilt from the job's PDF and the SI saved now."""
+    out = Path(job.out_dir)
+    if job.kind == "recheck":
+        if not key or not re.fullmatch(r"[0-9a-z]{4,120}", key):
+            raise ApiError("paper (the DOI key) is required for a recheck job", 400)
+        saved = out / "sources" / f"{key}.json"
+        if saved.is_file():
+            return json.loads(saved.read_text(encoding="utf-8"))
+        from ..sources.pairing import pair_folders
+        from ..sources.paper import source_record
+
+        pair = next((p for p in pair_folders(_cfg().raw_dir, _cfg().pdf_dir).pairs if p.key == key), None)
+        if pair is None:
+            raise ApiError(f"no paper {key}", 404)
+        return {**source_record(pair.pdf, pair.si), "key": key}
+    saved = out / "sources.json"
+    if saved.is_file():
+        return json.loads(saved.read_text(encoding="utf-8"))
+    from ..sources.pairing import local_si
+    from ..sources.paper import load_paper, source_record
+    from ..sources.si import intake_key
+
+    pdf = Path(job.params.get("pdf_path") or "")
+    if not pdf.is_file():
+        raise ApiError("this job has no paper to open", 404)
+    return source_record(pdf, local_si(_cfg().pdf_dir, intake_key(load_paper(pdf), pdf)))
+
+
+@bp.get("/jobs/<job_id>/sources")
+def job_sources(job_id):
+    src = dict(_job_sources(_job(job_id), request.args.get("paper")))
+    return jsonify({k: v for k, v in src.items() if not k.endswith("_path") and not k.endswith("_paths")})
+
+
+def _source_path(job, idx: int, key: str | None = None) -> Path:
+    """The paper (idx 0) or its idx-th SI file, only from the folders this app reads."""
+    src = _job_sources(job, key)
+    paths = [src.get("pdf_path"), *src.get("si_paths", [])]
+    if not 0 <= idx < len(paths) or not paths[idx]:
+        raise ApiError("no such source", 404)
+    path = Path(paths[idx]).resolve()
+    cfg = _cfg()
+    if path.suffix.lower() != ".pdf" or not any(b.resolve() in path.parents for b in (cfg.pdf_dir, cfg.uploads_dir)):
+        raise ApiError("no such source", 404)
+    if not path.is_file():
+        raise ApiError("the file is gone", 404)
+    return path
+
+
+@bp.get("/jobs/<job_id>/source/<int:idx>")
+def job_source(job_id, idx):
+    """The PDF itself, to open in the browser's viewer (#page=N). ``?paper=<doi key>`` for a recheck job."""
+    path = _source_path(_job(job_id), idx, request.args.get("paper"))
+    return send_file(path, mimetype="application/pdf", download_name=path.name)
+
+
+@bp.get("/jobs/<job_id>/source/<int:idx>/page/<int:page>.png")
+def job_source_page(job_id, idx, page):
+    from ..sources.locate import page_count, page_png
+
+    path = _source_path(_job(job_id), idx, request.args.get("paper"))
+    if not 1 <= page <= page_count(path):
+        raise ApiError("no such page", 404)
+    dpi = _clamp(request.args.get("dpi"), 60, 200, 110)
+    return current_app.response_class(page_png(path, page, dpi), mimetype="image/png",
+                                      headers={"Cache-Control": "private, max-age=3600"})
+
+
+def _evidence_rows(job) -> list[dict]:
+    """The rows a review page lists: review.csv (extract) or findings.csv (recheck), each with a ``row_id``."""
+    if job.kind == "recheck":
+        rows = _rows(Path(job.out_dir) / "findings.csv")
+        for i, r in enumerate(rows):
+            r["row_id"] = f"f{i}"
+        return rows
+    return _rows(Path(job.out_dir) / "review.csv")
+
+
+@bp.get("/jobs/<job_id>/locate")
+def job_locate(job_id):
+    """Where a row's quote is: the file, the page and the boxes to highlight. The cited page is tried first, then the pages next
+    to it (the quote check accepts those too). For a recheck finding the paper's value is the fallback to mark."""
+    from ..sources.locate import find_quote, page_count, value_terms
+    from ..sources.paper import locate_page
+
+    job = _job(job_id)
+    rid = request.args.get("row", "")
+    row = next((r for r in _evidence_rows(job) if r.get("row_id") == rid), None)
+    if row is None:
+        raise ApiError(f"no row {rid}", 404)
+    audit = request.args.get("which") == "audit" and bool(row.get("audit_page"))  # the auditor's quote instead of the agent's
+    quote = row.get("audit_evidence") if audit else row.get("evidence")
+    try:
+        cited = int(float((row.get("audit_page") if audit else row.get("page")) or 0))
+    except ValueError:
+        cited = 0
+    none = {"source": None, "page": None, "rects": [], "how": "", "combined_page": None}
+    if cited < 1:  # the row cites no page: nothing to point at
+        return jsonify(none)
+    key = None
+    if job.kind == "recheck":
+        from ..sources.pairing import doi_key
+
+        key = doi_key(row.get("doi") or "")
+    layout = _job_sources(job, key)
+    if job.kind != "recheck":
+        terms = value_terms(row.get("values"))
+    else:  # the number to mark when the quote is not found: the recorded one for the auditor's quote, the agent's otherwise
+        terms = [t for t in ((row.get("recorded"), row.get("paper_value")) if audit else (row.get("paper_value"), row.get("recorded"))) if t]
+    first = None
+    for n in (cited, cited - 1, cited + 1):
+        loc = locate_page(layout, n)
+        if loc is None:
+            continue
+        idx, page = loc
+        path = _source_path(job, idx, key)
+        if page > page_count(path):
+            continue
+        hit = {**find_quote(path, page, quote or "", terms), "source": idx, "combined_page": n, "paper": key,
+               "file": layout["pdf"] if idx == 0 else layout["si_files"][idx - 1], "is_si": idx > 0,
+               "pages": layout["main_pages"] if idx == 0 else layout["si"][idx - 1]["pages"]}
+        first = first or hit
+        if hit["rects"]:
+            return jsonify(hit)
+    return jsonify(first or {**none, "combined_page": cited})
 
 
 @bp.get("/jobs/<job_id>/analysis")

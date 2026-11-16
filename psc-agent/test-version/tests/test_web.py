@@ -135,6 +135,24 @@ class Web(unittest.TestCase):
         rows = self.c.get(f"/api/jobs/{job['id']}/findings").get_json()["rows"]
         self.assertEqual({r["status"] for r in rows}, {"mismatch", "missing_in_record"})  # NiOx 20 vs 25; ITO empty vs 25
 
+    def test_recheck_review_opens_the_paper_at_each_finding(self):
+        res = self.c.post("/api/jobs", json={"kind": "recheck", "params": {"dois": ["101016jtest2020123"], "no_judge": True}})
+        job = wait(self.c, res.get_json()["id"])
+        jid, key = job["id"], "101016jtest2020123"
+        src = self.c.get(f"/api/jobs/{jid}/sources?paper={key}").get_json()
+        self.assertEqual((src["pdf"], src["si"]), ("paper one.pdf", []))
+        self.assertNotIn("pdf_path", src)  # server paths stay on the server
+        self.assertEqual(self.c.get(f"/api/jobs/{jid}/sources").status_code, 400)  # a recheck job has one paper per key
+        r = self.c.get(f"/api/jobs/{jid}/source/0?paper={key}")
+        self.assertEqual((r.status_code, r.mimetype), (200, "application/pdf"))
+        self.assertEqual(self.c.get(f"/api/jobs/{jid}/source/1?paper={key}").status_code, 404)
+        self.assertEqual(self.c.get(f"/api/jobs/{jid}/source/0?paper=../../etc").status_code, 400)
+        hit = self.c.get(f"/api/jobs/{jid}/locate?row=f0").get_json()
+        self.assertEqual(hit["paper"], key)
+        self.assertEqual(self.c.get(f"/api/jobs/{jid}/locate?row=f999").status_code, 404)
+        self.assertIn(b"review.js", self.c.get(f"/review/{jid}").data)
+
+
     def test_extract_job_from_an_upload(self):
         pdf = (self.root / "original paper" / "new paper.pdf").read_bytes()
         up = self.c.post("/api/uploads", data={"files": [(__import__("io").BytesIO(pdf), "My Paper (v2).pdf")]},

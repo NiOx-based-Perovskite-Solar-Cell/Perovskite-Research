@@ -1,4 +1,5 @@
 """The web extraction in three steps: choose a paper, settle its SI (check, find, upload), then extract with the SI."""
+import csv
 import io
 import json
 import tempfile
@@ -33,7 +34,7 @@ class Flow(unittest.TestCase):
         write_pdf(self.pdfs / "plain.pdf", PLAIN)
         self.seen: list[dict] = []
         self.reading = {"refers_to_si": True, "evidence": "e", "address": "", "holds": ""}  # what the SI reader model answers
-        self.app = create_app(WebConfig(root=self.root, require_key=False, runtime_factory=self.factory, max_workers=1, eval_dirs=[]))
+        self.app = create_app(WebConfig(root=self.root, require_key=False, runtime_factory=self.factory, max_workers=1))
         self.app.testing = True
         self.c = self.app.test_client()
 
@@ -130,7 +131,7 @@ class Flow(unittest.TestCase):
     def test_the_model_reads_the_paper_with_the_default_small_model_and_no_tools(self):
         self.si_job("acs.pdf")
         (asked,) = [s for s in self.seen if s["role"] == "si_reader"]
-        self.assertEqual((asked["model"], asked["tools"]), ("anthropic/claude-haiku-5.5", []))
+        self.assertEqual((asked["model"], asked["tools"]), ("google/gemini-3.6-flash", []))
         self.si_job("acs.pdf", si_reader_model="big/reader")
         self.assertEqual([s["model"] for s in self.seen if s["role"] == "si_reader"][-1], "big/reader")
 
@@ -177,6 +178,47 @@ class Flow(unittest.TestCase):
         review = self.c.get(f"/api/jobs/{job.id}/files").get_json()["files"]
         self.assertTrue(any(f["path"] == "review.csv" for f in review))
 
+    def test_review_page_opens_the_paper_and_its_si_at_the_cited_page(self):
+        self.upload_si("101016jtest20241")  # a 3-page SI
+        job = self.extract("other.pdf")
+        src = self.c.get(f"/api/jobs/{job.id}/sources").get_json()
+        self.assertEqual([f["pages"] for f in src["si"]], [3])
+        self.assertEqual(src["pdf"], "other.pdf")
+        for idx in (0, 1):  # the paper and the SI file, as PDFs
+            r = self.c.get(f"/api/jobs/{job.id}/source/{idx}")
+            self.assertEqual((r.status_code, r.mimetype), (200, "application/pdf"))
+        self.assertEqual(self.c.get(f"/api/jobs/{job.id}/source/2").status_code, 404)
+        self.assertEqual(self.c.get("/api/jobs/nope/sources").status_code, 404)
+        html = self.c.get(f"/review/{job.id}").get_data(as_text=True)  # its own page, not a tab
+        self.assertIn("review.js", html)
+        self.assertNotIn('data-tab="review"', self.c.get("/").get_data(as_text=True))
+
+    def test_review_sources_for_a_job_made_before_sources_json(self):
+        self.upload_si("101016jtest20241")
+        job = self.extract("other.pdf")
+        (Path(job.out_dir) / "sources.json").unlink()
+        src = self.c.get(f"/api/jobs/{job.id}/sources").get_json()
+        self.assertEqual((src["pdf"], len(src["si"])), ("other.pdf", 1))
+
+    def test_locate_points_at_the_quote_in_the_si(self):
+        self.upload_si("101016jtest20241")
+        job = self.extract("other.pdf")
+        src = self.c.get(f"/api/jobs/{job.id}/sources").get_json()
+        si_page = src["main_pages"] + 1  # the first SI page, as the model numbers it
+        with open(Path(job.out_dir) / "review.csv", "w", newline="", encoding="utf-8") as fh:
+            w = csv.writer(fh)
+            w.writerow(["row_id", "device", "sheet", "values", "page", "source", "evidence", "decision"])
+            w.writerow(["r1", "S1", "Process", '{"Parameter": "4000"}', si_page, "text", "4000 rpm", "accept"])
+            w.writerow(["r2", "S1", "Process", '{"Parameter": "1"}', "", "none", "", "verify_more"])
+        hit = self.c.get(f"/api/jobs/{job.id}/locate?row=r1").get_json()
+        self.assertEqual((hit["source"], hit["page"], hit["how"]), (1, 1, "quote"))
+        self.assertTrue(hit["rects"])
+        self.assertIsNone(self.c.get(f"/api/jobs/{job.id}/locate?row=r2").get_json()["source"])
+        self.assertEqual(self.c.get(f"/api/jobs/{job.id}/locate?row=zz").status_code, 404)
+        png = self.c.get(f"/api/jobs/{job.id}/source/1/page/1.png")
+        self.assertEqual((png.status_code, png.mimetype), (200, "image/png"))
+        self.assertEqual(self.c.get(f"/api/jobs/{job.id}/source/1/page/99.png").status_code, 404)
+
 
 class GeminiProvider(unittest.TestCase):
     def app(self, **kw):
@@ -184,7 +226,7 @@ class GeminiProvider(unittest.TestCase):
         (root / "Raw Data").mkdir()
         (root / "original paper").mkdir()
         write_pdf(root / "original paper" / "p.pdf", OTHER)
-        a = create_app(WebConfig(root=root, max_workers=1, eval_dirs=[], provider="gemini", **kw))
+        a = create_app(WebConfig(root=root, max_workers=1, provider="gemini", **kw))
         return a.test_client()
 
     def test_every_role_defaults_to_gemini_3_8_flash(self):

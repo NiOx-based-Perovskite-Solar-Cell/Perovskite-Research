@@ -11,6 +11,8 @@ import logging
 import re
 from collections.abc import Iterable
 
+from ..core.decision import ESCALATE_BELOW
+from ..core.evidence import quote_on_page
 from ..core.hooks import HookBlock, QuoteCheckHook
 from ..core.openrouter import OpenRouterClient, OpenRouterError
 from ..core.runtime import Runtime, Usage
@@ -20,8 +22,11 @@ from ..sources.paper import Paper, load_paper, paper_parts
 from ..sources.workbook import Device, Row, Source, is_process_like, load_workbook
 from .compare import compare_values
 from .prompts import (
+    AuditAnswer,
     ExtractionAnswer,
     JudgeAnswer,
+    audit_schema,
+    audit_task,
     extraction_schema,
     extraction_task,
     judge_schema,
@@ -58,6 +63,7 @@ class Rechecker:
         cache_dir=None,
         judge: bool = True,
         judge_model: str | None = None,
+        audit: bool = True,
         skills_dirs=(),
         hooks=None,
         dpi: int = 150,
@@ -75,6 +81,7 @@ class Rechecker:
                               hooks=[QuoteCheckHook()] if hooks is None else hooks, max_tokens=max_tokens, extra=extra)
         self.rt = runtime
         self.judge = judge
+        self.audit = audit
         self.dpi = dpi
         self.all_pages = all_pages
         self.rel_tolerance = rel_tolerance
@@ -124,6 +131,8 @@ class Rechecker:
         self.rt.hooks.emit("progress", scope=paper.name, done=total - 1, total=total)
         if self.judge:
             self._judge(report)
+        if self.audit:
+            self._audit(report, paper, parts)
         link, save_as = si_hint(paper)
         for f in report.findings:
             if link and f.status in ("needs_si", "not_found"):
@@ -205,9 +214,63 @@ class Rechecker:
             v = verdicts.get(str(members[0][0]))
             if v:
                 for _, f in members:
-                    f.status = "match" if v.same else "mismatch"
+                    if v.p < ESCALATE_BELOW:  # the judge is not sure: a person looks (the rule the decision model follows too)
+                        f.detail = _join(f.detail, f"escalate: judge said {v.choice} at p={v.p:.2f}: {v.reason}")
+                        continue
+                    f.status = _JUDGED[v.choice]
                     f.detail = _join(f.detail, f"judge: {v.reason}")
 
+
+    def _audit(self, report: PaperReport, paper: Paper, parts) -> None:
+        """Second, open reading of the cells that still disagree: the auditor sees both values and says which one the paper
+        supports, with a probability and a quote. Neither value is changed; a sure verdict settles the status."""
+        pending = [(i, f) for i, f in enumerate(report.findings)
+                   if f.status in AUDIT_STATUSES and f.column != "(row keys)" and (f.recorded or "").strip()]
+        if not pending:
+            return
+        groups: dict[tuple, list[tuple[int, Finding]]] = {}
+        for i, f in pending:
+            groups.setdefault((f.sheet, f.column, f.keys, f.recorded, f.recorded_unit, f.paper_value, f.paper_unit), []).append((i, f))
+        heads = list(groups.values())[:AUDIT_MAX]
+        items = [{"id": str(members[0][0]), "device": f.device_ref, "field": f"{f.sheet} / {f.column}", "row": f.keys,
+                  "recorded": _join(f.recorded, f.recorded_unit, sep=" "), "agent": _join(f.paper_value, f.paper_unit, sep=" ") or None,
+                  "agent_evidence": f.evidence, "compared_as": f"{f.status}: {f.detail}"[:300]}
+                 for members in heads for f in [members[0][1]]]
+        audits = {}
+        for start in range(0, len(items), AUDIT_BATCH):
+            try:
+                answer = self.rt.ask_json("recheck_auditor", [*parts, {"type": "text", "text": audit_task(items[start: start + AUDIT_BATCH])}],
+                                          AuditAnswer, schema=audit_schema(), usage=report.usage)
+            except FAILURES as e:
+                report.errors.append(f"auditor: {e}")
+                log.error("%s: auditor failed: %s", report.paper, e)
+                continue
+            audits.update({a.id: a for a in answer.audits})
+        for members in heads:
+            a = audits.get(str(members[0][0]))
+            if not a:
+                continue
+            ok = quote_on_page(paper.pages, a.page, a.evidence) if a.evidence else False
+            for _, f in members:
+                f.audit, f.audit_p, f.audit_page, f.audit_evidence, f.audit_quote_ok = a.verdict, round(a.p, 2), a.page, a.evidence, ok
+                f.audit_note = a.explanation
+                sure = a.p >= ESCALATE_BELOW and ok is not False and a.verdict in _AUDITED
+                if sure:
+                    f.status = _AUDITED[a.verdict]
+                    f.detail = _join(f.detail, f"auditor ({a.verdict}, p={a.p:.2f}): {a.explanation}")
+                else:
+                    why = "its quote is not on the page" if ok is False else f"p={a.p:.2f}"
+                    f.detail = _join(f.detail, f"escalate: auditor said {a.verdict} ({why}): {a.explanation}")
+
+
+# the judge's choice -> the finding's status; the paper value the agent extracted is kept as it is in every case
+_JUDGED = {"same": "match", "paper_more_detail": "paper_more_detail", "different": "mismatch"}
+# the auditor's verdict -> the finding's status, when it is sure (p >= ESCALATE_BELOW) and its quote is on the page
+_AUDITED = {"human_correct": "match", "both_correct": "match", "agent_correct": "mismatch", "neither": "mismatch"}
+# where the record and the agent do not agree. unit_mismatch is left out: the numbers agree and the code has already named
+# what is wrong with the recorded unit, which a "the person is right" verdict would hide.
+AUDIT_STATUSES = ("mismatch", "review", "not_found")
+AUDIT_BATCH, AUDIT_MAX = 20, 80
 
 _FREE_TEXT = {"Descriptions", "Remarks"}
 # the model's own remark that the paper points elsewhere (an SI, a previous report) or does not give the value
